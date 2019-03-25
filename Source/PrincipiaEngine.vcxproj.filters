@@ -1,0 +1,1574 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Rendering">
+      <UniqueIdentifier>{a6afb5ad-e27c-4fe5-b72f-a07018be3695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ArtemisFramework">
+      <UniqueIdentifier>{3b867a11-d9ba-4e31-a854-0466805dbff3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ArtemisFramework\Artemis">
+      <UniqueIdentifier>{72c6d347-a127-4efb-90ad-c96002f929f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Shaders">
+      <UniqueIdentifier>{d6630cf4-eaa3-4210-89ef-a575d931f67e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{d3c56795-39dc-4cb2-922c-0aa26cc92e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tinyxml2">
+      <UniqueIdentifier>{5de2b5c7-58bd-4c3a-9af9-535ec4df198e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{3587b331-f09f-4654-8f34-039794cb2432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{d06408fb-2950-4ff9-84ea-dec46369cec3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{7285dd09-ec61-45b4-bb6c-99e51c7e779e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{10bfad8b-c601-4f99-ba06-99b2f269c9e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics\bullet3">
+      <UniqueIdentifier>{c556636e-e5eb-4dd1-a542-dfa23d41a4f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{8ef85904-2949-4ad7-8f9d-49a3ea00c133}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Systems">
+      <UniqueIdentifier>{c25900cc-4d58-4916-b8b5-0cad682a9da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{0de41b11-bdbf-4b86-a1ec-96f284cc4ee9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\Texture.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\Component.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\ComponentType.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\ComponentTypeManager.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\DelayedEntityProcessingSystem.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\DelayedEntitySystem.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\Entity.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\EntityManager.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\EntityProcessingSystem.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\EntitySystem.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\GroupManager.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\SystemBitManager.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\SystemManager.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\TagManager.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="ArtemisFrameWork\World.cpp">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\rendermanagers.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\renderbase.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\tinyxml2</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\resourceManager.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\scene.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btBroadphaseProxy.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btDbvt.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btDbvtBroadphase.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btDispatcher.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btOverlappingPairCache.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btQuantizedBvh.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btSimpleBroadphase.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btBoxBoxDetector.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionDispatcher.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionDispatcherMt.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionWorld.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionWorldImporter.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCompoundCompoundCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btGhostObject.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btHashedSimplePairCache.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btInternalEdgeUtility.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btManifoldResult.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSimulationIslandManager.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btUnionFind.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\SphereTriangleDetector.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btBox2dShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btBoxShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCapsuleShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCollisionShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCompoundShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConcaveShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConeShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvex2dShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexHullShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexInternalShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexPointCloudShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexPolyhedron.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCylinderShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btEmptyShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMiniSDF.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMinkowskiSumShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMultiSphereShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btOptimizedBvh.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btPolyhedralConvexShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btSdfCollisionShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btShapeHull.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btSphereShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btStaticPlaneShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btStridingMeshInterface.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTetrahedronShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleBuffer.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleCallback.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleMesh.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleMeshShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btUniformScalingShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btContactProcessing.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btGenericPoolAllocator.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactBvh.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactQuantizedBvh.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactShape.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\btTriangleShapeEx.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_box_set.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_contact.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_memory.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_tri_collision.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btConvexCast.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkEpa2.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btPersistentManifold.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btRaycastCallback.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Character\btKinematicCharacterController.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btBatchedConstraints.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btConeTwistConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btContactConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btFixedConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGearConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGeneric6DofSpring2Constraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btHinge2Constraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btHingeConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btNNCGConstraintSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolverMt.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSliderConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btTypedConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btUniversalConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Dynamics\btDiscreteDynamicsWorldMt.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Dynamics\btRigidBody.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Dynamics\btSimpleDynamicsWorld.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Dynamics\btSimulationIslandManagerMt.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBody.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyFixedConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyGearConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyJointMotor.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyMLCPConstraintSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyPoint2Point.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodySliderConstraint.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btDantzigLCP.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btLemkeAlgorithm.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btMLCPSolver.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Vehicle\btRaycastVehicle.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\BulletDynamics\Vehicle\btWheelInfo.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btAlignedAllocator.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btConvexHull.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btConvexHullComputer.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btGeometryUtil.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btPolarDecomposition.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btQuickprof.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btSerializer.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btSerializer64.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btThreads.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\btVector3.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\TaskScheduler\btTaskScheduler.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\TaskScheduler\btThreadSupportPosix.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\bullet3\LinearMath\TaskScheduler\btThreadSupportWin32.cpp">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Systems\characterController.cpp">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\gameSystem.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\animationSystem.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\engineUISystem.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\renderSystem.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\physicsSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\transformSystem.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\inputSystem.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\movementState.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\audioSystem.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\collisionSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Systems\buttonSystem.cpp">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\window.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Input.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Rendering\Shaders\basic.frag">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\basic.vert">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="ArtemisFrameWork\zzReadMe.md">
+      <Filter>Source Files\ArtemisFramework</Filter>
+    </None>
+    <None Include="Rendering\Shaders\raytracing.comp">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\texture.frag">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\texture.vert">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\pbr.frag">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="..\Lib\imgui\README.md">
+      <Filter>imgui</Filter>
+    </None>
+    <None Include="..\Lib\imgui\.travis.yml">
+      <Filter>imgui</Filter>
+    </None>
+    <None Include="Rendering\Shaders\uioverlay.frag">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\uioverlay.vert">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Rendering\Texture.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\Artemis.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\BitSize.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\Component.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\ComponentMapper.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\ComponentType.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\ComponentTypeManager.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\DelayedEntityProcessingSystem.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\DelayedEntitySystem.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\Entity.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\EntityManager.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\EntityProcessingSystem.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\EntitySystem.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\GroupManager.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\ImmutableBag.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\SystemBitManager.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\SystemManager.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\TagManager.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\TypeInfoComparator.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="ArtemisFrameWork\Artemis\World.h">
+      <Filter>Source Files\ArtemisFramework\Artemis</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\vulkanbase.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\rendermanagers.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\model.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\VulkanInitializers.hpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\renderbase.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\camera.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\tinyxml2\tinyxml2.h">
+      <Filter>Source Files\tinyxml2</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\primitive.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\octree.hpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\bvh.hpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\quadtree.hpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\resourceManager.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\shaderStructures.hpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\nodeComponent.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\transformComponent.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\geometryComponents.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\collisionComponents.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\componentIncludes.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\light.hpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\constantbuffer.hpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\physicsSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\renderSystem.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\transformSystem.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\key.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\mouse.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\VulkanBuffer.hpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\stb_rect_pack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\stb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\stb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\engineUISystem.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\lightComponent.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\cameraComponent.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scene.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\materialComponent.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3Internal.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btBroadphaseInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btBroadphaseProxy.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btDbvt.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btDbvtBroadphase.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btDispatcher.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btOverlappingPairCache.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btOverlappingPairCallback.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btQuantizedBvh.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\BroadphaseCollision\btSimpleBroadphase.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btActivatingCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btBox2dBox2dCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btBoxBoxCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btBoxBoxDetector.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionConfiguration.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionCreateFunc.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionDispatcher.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionDispatcherMt.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObjectWrapper.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionWorld.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionWorldImporter.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCompoundCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btCompoundCompoundCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvex2dConvex2dAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvexConcaveCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvexConvexAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btConvexPlaneCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btDefaultCollisionConfiguration.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btEmptyCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btGhostObject.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btHashedSimplePairCache.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btInternalEdgeUtility.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btManifoldResult.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSimulationIslandManager.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSphereBoxCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSphereSphereCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btSphereTriangleCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\btUnionFind.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionDispatch\SphereTriangleDetector.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btBox2dShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btBoxShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btBvhTriangleMeshShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCapsuleShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCollisionMargin.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCollisionShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCompoundShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConcaveShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConeShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvex2dShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexHullShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexInternalShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexPointCloudShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexPolyhedron.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btConvexTriangleMeshShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btCylinderShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btEmptyShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btHeightfieldTerrainShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMaterial.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMiniSDF.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMinkowskiSumShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMultimaterialTriangleMeshShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btMultiSphereShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btOptimizedBvh.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btPolyhedralConvexShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btScaledBvhTriangleMeshShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btSdfCollisionShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btShapeHull.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btSphereShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btStaticPlaneShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btStridingMeshInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTetrahedronShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleBuffer.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleCallback.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleIndexVertexArray.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleIndexVertexMaterialArray.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleMesh.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleMeshShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\CollisionShapes\btUniformScalingShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btBoxCollision.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btClipPolygon.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btCompoundFromGimpact.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btContactProcessing.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btContactProcessingStructs.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGenericPoolAllocator.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGeometryOperations.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactBvh.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactBvhStructs.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactMassUtil.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactQuantizedBvh.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactQuantizedBvhStructs.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btGImpactShape.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btQuantization.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\btTriangleShapeEx.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_array.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_basic_geometry_operations.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_bitset.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_box_collision.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_box_set.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_clip_polygon.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_contact.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_geometry.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_geom_types.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_hash_table.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_linear_math.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_math.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_memory.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_radixsort.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\Gimpact\gim_tri_collision.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btComputeGjkEpaPenetration.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btContinuousConvexCollision.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btConvexCast.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btConvexPenetrationDepthSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btDiscreteCollisionDetectorInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkCollisionDescription.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkConvexCast.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkEpa2.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkEpa3.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkEpaPenetrationDepthSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btGjkPairDetector.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btManifoldPoint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btMinkowskiPenetrationDepthSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btMprPenetration.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btPersistentManifold.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btPointCollector.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btPolyhedralContactClipping.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btRaycastCallback.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btSimplexSolverInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btSubSimplexConvexCast.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletCollision\NarrowPhaseCollision\btVoronoiSimplexSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Character\btCharacterControllerInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Character\btKinematicCharacterController.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btBatchedConstraints.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btConeTwistConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btConstraintSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btContactConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btContactSolverInfo.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btFixedConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGearConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGeneric6DofConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGeneric6DofSpring2Constraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btGeneric6DofSpringConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btHinge2Constraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btHingeConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btJacobianEntry.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btNNCGConstraintSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btPoint2PointConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSequentialImpulseConstraintSolverMt.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSliderConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSolve2LinearConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSolverBody.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btSolverConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btTypedConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\ConstraintSolver\btUniversalConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btActionInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btDiscreteDynamicsWorld.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btDiscreteDynamicsWorldMt.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btDynamicsWorld.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btRigidBody.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btSimpleDynamicsWorld.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Dynamics\btSimulationIslandManagerMt.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBody.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyConstraintSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyDynamicsWorld.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyFixedConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyGearConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyJointFeedback.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyJointLimitConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyJointMotor.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyLink.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyLinkCollider.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyMLCPConstraintSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodyPoint2Point.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodySliderConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Featherstone\btMultiBodySolverConstraint.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btDantzigLCP.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btDantzigSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btLemkeAlgorithm.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btLemkeSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btMLCPSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btMLCPSolverInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btPATHSolver.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\MLCPSolvers\btSolveProjectedGaussSeidel.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Vehicle\btRaycastVehicle.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Vehicle\btVehicleRaycaster.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\BulletDynamics\Vehicle\btWheelInfo.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btAabbUtil2.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btAlignedAllocator.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btAlignedObjectArray.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btConvexHull.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btConvexHullComputer.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btCpuFeatureUtility.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btDefaultMotionState.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btGeometryUtil.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btGrahamScan2dConvexHull.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btHashMap.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btIDebugDraw.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btList.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btMatrix3x3.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btMatrixX.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btMinMax.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btMotionState.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btPolarDecomposition.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btPoolAllocator.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btQuadWord.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btQuaternion.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btQuickprof.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btRandom.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btScalar.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btSerializer.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btSpatialAlgebra.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btStackAlloc.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btThreads.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btTransform.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btTransformUtil.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\btVector3.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\LinearMath\TaskScheduler\btThreadSupportInterface.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\btBulletCollisionCommon.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\bullet3\btBulletDynamicsCommon.h">
+      <Filter>Source Files\Physics\bullet3</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\resourceStructs.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\animationComponent.hpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\animationSystem.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\scriptComponent.h">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Systems\characterController.h">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\gameSystem.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\inputComponent.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\inputSystem.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Systems\stateMachine.hpp">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\movementState.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\audioSystem.h">
+      <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\characterComponent.hpp">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\collisionSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ButtonComponents.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Systems\buttonSystem.h">
+      <Filter>Source Files\Game\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\helpers.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Input.h" />
+    <ClInclude Include="Utility\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.h">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="..\Lib\imgui\LICENSE.txt">
+      <Filter>imgui</Filter>
+    </Text>
+    <Text Include="..\Lib\imgui\TODO.txt">
+      <Filter>imgui</Filter>
+    </Text>
+    <Text Include="..\Lib\imgui\CHANGELOG.txt">
+      <Filter>imgui</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

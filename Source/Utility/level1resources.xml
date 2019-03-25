@@ -1,0 +1,14 @@
+<Data>
+	<NumMeshFiles n='9'/>
+	<Meshes>
+		<mesh m='../../Assets/Models/Barrel.tem'/>
+		<mesh m='../../Assets/Models/Chimney1.tem'/>
+		<mesh m='../../Assets/Models/CrateLong.tem'/>
+		<mesh m='../../Assets/Models/Diamond.tem'/>
+		<mesh m='../../Assets/Models/HouseBricksLarge2.tem'/>
+		<mesh m='../../Assets/Models/HouseTower.tem'/>
+		<mesh m='../../Assets/Models/StonePillar.tem'/>
+		<mesh m='../../Assets/Models/Wheel.tem'/>
+		<mesh m='../../Assets/Models/CellarEntrance.tem'/>
+	</Meshes>
+</Data>

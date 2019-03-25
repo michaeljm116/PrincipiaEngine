@@ -1,0 +1,37 @@
+﻿  main.cpp
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(499): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(511): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(517): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(528): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(555): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(559): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(572): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(592): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(596): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(597): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(600): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(601): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(609): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(614): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(634): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(647): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(650): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(664): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(671): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(715): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(719): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(739): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(741): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(753): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(763): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(767): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(772): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(781): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(787): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(789): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(791): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(799): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(718): warning C4101: 'nodey': unreferenced local variable
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(837): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\principiamodelmaker\modelconverter\main.cpp(852): warning C4018: '<': signed/unsigned mismatch
+  ModelConverter.vcxproj -> C:\Users\Mike\PrincipiaEngine\Tools\PrincipiaModelMaker\ModelConverter\Debug\ModelConverter.exe
