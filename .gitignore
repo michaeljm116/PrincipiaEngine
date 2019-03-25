@@ -34,3 +34,5 @@
 # others
 *.ipch
 *.VC
+*.db
+*.suo
