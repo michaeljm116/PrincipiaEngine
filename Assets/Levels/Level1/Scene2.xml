@@ -1,0 +1,112 @@
+<Root>
+    <Scene Num="1"/>
+    <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
+        <Transform>
+            <Position x="-3.5598564" y="4.441185" z="0.73974609"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="3.0699999"/>
+        </Transform>
+        <LookAt x="0" y="0.5" z="0"/>
+        <FOV fov="10"/>
+    </Node>
+    <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
+        <Transform>
+            <Position x="-2.2991943" y="5" z="1.25"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Color r="255" g="255" b="255"/>
+        <Intensity i="1000"/>
+        <ID id="0"/>
+    </Node>
+    <Node Name="Board" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="10" y="0.001" z="10"/>
+        </Transform>
+        <Material ID="377009792"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="Pins" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="1" z="2"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="0.25" y="1" z="0.74000001"/>
+        </Transform>
+        <Material ID="1448951240"/>
+        <Object ID="-3"/>
+    </Node>
+    <Node Name="Pins" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="1" z="-1"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="0.25" y="1" z="1"/>
+        </Transform>
+        <Material ID="-842150451"/>
+        <Object ID="-3"/>
+    </Node>
+    <Node Name="UnderPin" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="2"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="0.0099999998" z="0.5"/>
+        </Transform>
+        <Material ID="-842150451"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="UnderPin" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="-1"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="0.0099999998" z="0.5"/>
+        </Transform>
+        <Material ID="-842150451"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="BlackBoxy" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="0.390625"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.37" y="1" z="0.52999997"/>
+        </Transform>
+        <Material ID="-1265764904"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="plater" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="-1.05" y="-3.8146973e-05" z="1.95"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.30000001" y="0.0099999998" z="0.40000001"/>
+        </Transform>
+        <Material ID="-412033456"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="platel" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="-2.6400001" y="0" z="1.95"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.30000001" y="0.0099999998" z="0.40000001"/>
+        </Transform>
+        <Material ID="-842150451"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="smtmid" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="-1.84" y="0" z="1.95"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="0.40000001" z="0.30000001"/>
+        </Transform>
+        <Material ID="85114800"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="smtl" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="-2.5090001" y="0" z="1.95"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.2" y="0.46000001" z="0.31999999"/>
+        </Transform>
+        <Material ID="-412033456"/>
+        <Object ID="-2"/>
+    </Node>
+</Root>
