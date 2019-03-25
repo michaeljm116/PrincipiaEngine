@@ -14,12 +14,6 @@ static const int MAXINDS		= 100000;
 static const int MAXOBJS		= 10000;
 static const int MAXLIGHTS		= 10;
 
-/*
-save the cat
-story robbert mckee
-*/
-
-
 // Setup and fill the compute shader storage buffers containing primitives for the raytraced scene
 void RenderSystem::prepareStorageBuffers()
 {

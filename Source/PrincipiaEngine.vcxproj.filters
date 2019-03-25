@@ -1554,8 +1554,12 @@
     <ClInclude Include="Utility\helpers.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\Input.h" />
-    <ClInclude Include="Utility\window.h" />
+    <ClInclude Include="Utility\Input.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\window.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.h">
