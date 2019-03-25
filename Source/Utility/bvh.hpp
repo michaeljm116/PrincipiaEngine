@@ -17,6 +17,42 @@ The way it works is:
 	- if there's more than 4 objects in a quadrant, do the tree thing again
 	
 - finally to convert it into an array do a breadth first search, recording the indexes as you go
+
+
+OKAY SO IGNORE EVERYTHING ABOVE 
+So you need two levels of acceleration structures. a top level and a bottom level one
+for right now however, you just focus on top level ones especially since you might try doing quads instead of tris because you can
+Psevdocode:
+
+okay so you need a tree and a node what does a node have and what does a tree have?
+a node has...
+- bounds
+- center
+- pointer to left
+- pointer to right
+- bool isLeaf
+- pointer to object if leaf == true
+
+Question, is there any fundamental difference betwween a TLAS and a BLAS?
+only thing i can think of is... a BLAS probably doesn't update much if at all
+the only time a BLAS would update is IF its an animation
+...right?
+
+Well for now lets just worry bout TLAS okay so
+a node has been defined, what is a tree?
+- root node
++ functions to build the tree
++ - build tree
++ - insert node
++ - delete node
++ - insert leaf
++ - delete leaf
++ - flattentree (returns an arrayish)
+
+question is where the data comes from, is there gonna be an organized or disorganized list of data
+another question is if you should do a quadBVH or just a regular BVH
+another another question is should you be working on this OR PREPARING FOR INTERVIEWS
+...well technically by doing this you are preparing for interviews so...
 */
 
 #pragma once
