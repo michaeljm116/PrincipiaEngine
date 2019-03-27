@@ -41,6 +41,8 @@ the only time a BLAS would update is IF its an animation
 Well for now lets just worry bout TLAS okay so
 a node has been defined, what is a tree?
 - root node
+- list of objects
+
 + functions to build the tree
 + - build tree
 + - insert node
@@ -53,6 +55,9 @@ question is where the data comes from, is there gonna be an organized or disorga
 another question is if you should do a quadBVH or just a regular BVH
 another another question is should you be working on this OR PREPARING FOR INTERVIEWS
 ...well technically by doing this you are preparing for interviews so...
+
+There's a couple common operations you'd want too such as the union thing shown in the PBR book
+
 */
 
 #pragma once

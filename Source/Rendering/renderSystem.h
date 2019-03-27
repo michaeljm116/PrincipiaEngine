@@ -113,6 +113,7 @@ private:
 			VBuffer<ssLight> lights;
 
 		} storageBuffers;
+
 		VkQueue queue;								// Separate queue for compute commands (queue family may differ from the one used for graphics)
 		VkCommandPool commandPool;					// Use a separate command pool (queue family may differ from the one used for graphics)
 		VkCommandBuffer commandBuffer;				// Command buffer storing the dispatch commands and barriers
@@ -123,7 +124,7 @@ private:
 		VkPipeline pipeline;						// Compute raytracing pipeline
 		struct UBOCompute {							// Compute shader uniform block object
 			glm::vec3 pos = glm::vec3(0.0f, 0.0f, 4.0f);
-			float aspectRatio;						
+			float aspectRatio;
 			glm::vec3 lookat = glm::vec3(0.0f, 0.5f, 0.0f);
 			float fov = 10.0f;
 		} ubo;

@@ -604,13 +604,13 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;..\Lib\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.97.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;..\Lib\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.97.0\Lib32;ArtemisFrameWork;..\Lib\glm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -633,7 +633,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;..\Lib\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.97.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;..\Lib\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
@@ -641,7 +641,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.97.0\Lib32;ArtemisFrameWork;..\Lib\glm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
