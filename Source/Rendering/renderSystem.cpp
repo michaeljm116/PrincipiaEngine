@@ -7,12 +7,12 @@
 //#include "../Utility/octree.hpp"
 
 static int currId = 0;	// Id used to identify objects by the ray tracing shader
-static const int MAXMATERIALS	= 1000;
-static const int MAXMESHES		= 1000;
-static const int MAXVERTS		= 100000;
-static const int MAXINDS		= 100000;
-static const int MAXOBJS		= 10000;
-static const int MAXLIGHTS		= 10;
+static const int MAXMATERIALS	= 256;
+static const int MAXMESHES		= 256;
+static const int MAXVERTS		= 256;
+static const int MAXINDS		= 256;
+static const int MAXOBJS		= 256;
+static const int MAXLIGHTS		= 256;
 
 // Setup and fill the compute shader storage buffers containing primitives for the raytraced scene
 void RenderSystem::prepareStorageBuffers()
@@ -1253,8 +1253,8 @@ void RenderSystem::setupUI()
 	createInfo.width = WINDOW.getWidth();
 	createInfo.height = WINDOW.getHeight();
 	createInfo.shaders = { 
-		vkDevice.createShader("../Rendering/Shaders/uioverlay.vert.spv", VK_SHADER_STAGE_VERTEX_BIT),
-		vkDevice.createShader("../Rendering/Shaders/uioverlay.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) 
+		vkDevice.createShader("Rendering/Shaders/uioverlay.vert.spv", VK_SHADER_STAGE_VERTEX_BIT),
+		vkDevice.createShader("Rendering/Shaders/uioverlay.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) 
 	};
 	//ui = new EngineUI(createInfo);
 	ui->init(createInfo);

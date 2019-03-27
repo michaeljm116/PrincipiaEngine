@@ -201,7 +201,7 @@ struct VulkanDevice {
 			char* shaderCode = new char[size];
 			is.read(shaderCode, size);
 			is.close();
-
+			std::string shaderString = shaderCode;
 			//assert(size > 0);
 
 			VkShaderModule shaderModule;

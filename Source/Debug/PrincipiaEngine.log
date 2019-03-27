@@ -6,8 +6,11 @@
   transformSystem.cpp
   collisionSystem.cpp
   physicsSystem.cpp
+  Texture.cpp
   engineUISystem.cpp
   renderSystem.cpp
+  renderbase.cpp
+  rendermanagers.cpp
   main.cpp
   Generating Code...
   PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Debug\Principia Engine.exe

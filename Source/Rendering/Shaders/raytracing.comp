@@ -65,6 +65,7 @@ struct Mesh{
 struct Material{
 	vec3 diffuse;
 	float reflective;
+
 	float roughness;
 	float transparency;
 	float refractiveIndex;
