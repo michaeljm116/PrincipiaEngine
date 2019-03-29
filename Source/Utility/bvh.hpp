@@ -1,62 +1,15 @@
 /* BVH Class Copyright (C) by Mike Murrell 2019
-
-notes: Basically what you want is a bvh that's organized into quads
-quads is perfect for this engine since its focused on top-down games
-so you only have to worry about the X & Z coordinates
-The way it works is:
-- you have an array of objects
-- sort them by their X value by....
-	- finding the min and max X and dividing by 2
-	- BST tree where the initial value is the center
-- DONT FORGET THE EXTENTS, be calcing the extents during all this as well
-- then do an InOrder Tree Traversal to get a sorted list
-- then you have 2 arrays of objects
-- sort them by their Y value
-
-- Then finish by having 4 trees of objects
-	- if there's more than 4 objects in a quadrant, do the tree thing again
-	
-- finally to convert it into an array do a breadth first search, recording the indexes as you go
-
-
-OKAY SO IGNORE EVERYTHING ABOVE 
-So you need two levels of acceleration structures. a top level and a bottom level one
-for right now however, you just focus on top level ones especially since you might try doing quads instead of tris because you can
-Psevdocode:
-
-okay so you need a tree and a node what does a node have and what does a tree have?
-a node has...
-- bounds
-- center
-- pointer to left
-- pointer to right
-- bool isLeaf
-- pointer to object if leaf == true
+big ups to http://www.pbr-book.org/3ed-2018/Primitives_and_Intersection_Acceleration/Bounding_Volume_Hierarchies.html#fig:bvh-split-middle
 
 Question, is there any fundamental difference betwween a TLAS and a BLAS?
 only thing i can think of is... a BLAS probably doesn't update much if at all
 the only time a BLAS would update is IF its an animation
 ...right?
 
-Well for now lets just worry bout TLAS okay so
-a node has been defined, what is a tree?
-- root node
-- list of objects
-
-+ functions to build the tree
-+ - build tree
-+ - insert node
-+ - delete node
-+ - insert leaf
-+ - delete leaf
-+ - flattentree (returns an arrayish)
-
 question is where the data comes from, is there gonna be an organized or disorganized list of data
 another question is if you should do a quadBVH or just a regular BVH
 another another question is should you be working on this OR PREPARING FOR INTERVIEWS
 ...well technically by doing this you are preparing for interviews so...
-
-There's a couple common operations you'd want too such as the union thing shown in the PBR book
 
 
 MAJOR QUESITON: what is gonna be the relationship between a BVH and ECS? 
@@ -90,7 +43,7 @@ enum class SplitMethod {
 
 struct BVHNode {
 	glm::vec2 bounds;
-	BVHNode* children[2];
+	std::shared_ptr<BVHNode> children[2];
 	int splitAxis;
 	int firstPrimOffset;
 	int nPrims;
@@ -102,7 +55,7 @@ struct BVHNode {
 		children[0] = children[1] = nullptr;
 	}
 
-	void initInterior(int axis, BVHNode *c0, BVHNode *c1) {
+	void initInterior(int axis, std::shared_ptr<BVHNode> c0, std::shared_ptr<BVHNode> c1) {
 		children[0] = c0;
 		children[1] = c1;
 		//bounds = c0->bounds.union2D(c1->bounds);
@@ -111,8 +64,22 @@ struct BVHNode {
 	}
 };
 
+//This is what will eventually end up in the GPU, a bvh flattened to an array
+//Preordered DFS, Binary with the parent having an index to the 2nd child
+struct ssBVHNode {
+	glm::vec2 center;	//8bytes
+	glm::vec2 extents;	//8bytes
+	union {
+		int primOffset; 
+		int secChild;   
+	};					//4bytes
+	int numPrims;		//4bytes
+	int axis;			//4bytes
+	int _pad;			//4bytes
+};	//32bytes total
+
 struct BVHTree {
-	BVHNode* root;
+	std::shared_ptr<BVHNode> root;
 	int totalNodes = 0;
 	std::vector<ssPrimitive> orderedPrims;
 	SplitMethod splitMethod;
@@ -123,9 +90,9 @@ struct BVHTree {
 			root = recursiveBuild(pi, 0, pi.size(), &totalNodes, prims, orderedPrims);
 		}
 	}
-	BVHNode* recursiveBuild(std::vector<PrimitiveComponent*> &primInfo, int start, int end, int* totalNodes, std::vector<ssPrimitive> &prims, std::vector<ssPrimitive> &orderedPrims) {
+	std::shared_ptr<BVHNode> recursiveBuild(std::vector<PrimitiveComponent*> &primInfo, int start, int end, int* totalNodes, std::vector<ssPrimitive> &prims, std::vector<ssPrimitive> &orderedPrims) {
 		*totalNodes++;
-		BVHNode* node = new BVHNode();
+		std::shared_ptr<BVHNode> node(new BVHNode);
 		glm::vec2 bounds = computeBounds(prims, start, end);
 
 		//Check if leaf
@@ -166,6 +133,7 @@ struct BVHTree {
 				});
 				break;
 			}
+			//Note: using SAH will make it so your bvh actually doesn't suck
 			case SplitMethod::SAH:
 			{}
 			default:
@@ -179,6 +147,8 @@ struct BVHTree {
 		node->bounds = bounds;
 		return node;
 	}
+
+	std::vector<ssBVHNode> flattenBVH() {};
 
 private:
 	glm::vec2 computeBounds(const std::vector<ssPrimitive> &prims, int s, int e) {
@@ -205,151 +175,3 @@ private:
 		return glm::vec2((max - min) * 0.5f);
 	}
 };
-
-/*
-class bvh {
-
-public: 
-	glm::vec2 center;					 //8bytes
-	glm::vec2 extents;					 //8bytes
-
-	bvh*	  quadrants[4];				 //16bytes
-	std::vector<PrimitiveComponent*> comps; //16bytes
-
-	bool	  isLeaf;					 //4bytes
-	int		  numObjs = 0;				 //4bytes
-	glm::vec2 pad;						 //8bytes
-	//64bytes total :)
-
-	bvh* build(const std::vector<PrimitiveComponent*> objects) {
-		if (objects.size() <= MAX_BVH_OBJECTS) {
-			isLeaf = true;
-			if (objects.size() > 0) {
-				for (int i = 0; i < objects.size(); ++i) {
-					numObjs++;
-					comps.push_back(objects[i]);
-				}
-			}
-			return this;
-		}
-		//find max X and extents X @same time
-		float cMaxX = -FLT_MAX;  float eMaxX = -FLT_MAX;
-		float cMinX = FLT_MAX;  float eMinX = FLT_MAX;
-
-		float cMaxY = -FLT_MAX;  float eMaxY = -FLT_MAX;
-		float cMinY = FLT_MAX;  float eMinY = FLT_MAX;
-
-	
-		//for (itr = objects.begin(); itr != objects.end(); itr++) {
-		//	itr->center.x;
-		//	if (itr->center.x > cMaxX) cMaxX = itr->center.x;
-		//	if (itr->center.x < cMinX) cMinX = itr->center.x;
-		//	if (itr->extents.x > eMaxX) eMaxX = itr->extents.x;
-		//	if (itr->extents.x < eMinX) eMinX = itr->extents.x;
-		//
-		//	if (itr->center.y > cMaxX) cMaxX = itr->center.y;
-		//	if (itr->center.y < cMinX) cMinX = itr->center.y;
-		//	if (itr->extents.y > eMaxX) eMaxX = itr->extents.y;
-		//	if (itr->extents.y < eMinX) eMinX = itr->extents.y;
-		//}
-
-		for (int i = 0; i < objects.size(); ++i) {
-			if (objects[i]->center.x > cMaxX) cMaxX = objects[i]->center.x;
-			if (objects[i]->center.x < cMinX) cMinX = objects[i]->center.x;
-			if (objects[i]->extents.x > eMaxX) eMaxX = objects[i]->extents.x;
-			if (objects[i]->extents.x < eMinX) eMinX = objects[i]->extents.x;
-			
-			if (objects[i]->center.y > cMaxY) cMaxY = objects[i]->center.y;
-			if (objects[i]->center.y < cMinY) cMinY = objects[i]->center.y;
-			if (objects[i]->extents.y > eMaxY) eMaxY = objects[i]->extents.y;
-			if (objects[i]->extents.y < eMinY) eMinY = objects[i]->extents.y;
-		}
-		
-		//Calc the halfextent
-		center.x = cMinX + ((cMaxX - cMinX) * 0.5f);
-		extents.x = (eMaxX - eMinX) * 0.5f;
-		center.y = cMinY + ((cMaxY - cMinY) * 0.5f);
-		extents.y = (eMaxY - eMinY) * 0.5f;
-		
-		//Construct a tree
-		std::vector<PrimitiveComponent*> left;
-		std::vector<PrimitiveComponent*> right;
-		for (int i = 0; i < objects.size(); ++i) {
-			objects[i]->center.x <= center.x ? left.push_back(objects[i]) : right.push_back(objects[i]);
-		}
-
-		//construct the quads
-		std::vector<PrimitiveComponent*> leftUp;
-		std::vector<PrimitiveComponent*> leftDown;
-		for (int i = 0; i < left.size(); ++i) {
-			left[i]->center.y > center.y ? leftUp.push_back(left[i]) : leftDown.push_back(left[i]);
-		}
-
-		//construct the quads
-		std::vector<PrimitiveComponent*> rightUp;
-		std::vector<PrimitiveComponent*> rightDown;
-		for (int i = 0; i < right.size(); ++i) {
-			right[i]->center.y > center.y ? rightUp.push_back(right[i]) : rightDown.push_back(right[i]);
-		}
-
-		quadrants[0] = build(leftUp);
-		quadrants[1] = build(leftDown);
-		quadrants[2] = build(rightUp);
-		quadrants[3] = build(rightDown);
-
-		return this;
-	}
-
-	void insert(PrimitiveComponent* object) {
-		//this is the end case for the leaf
-		if (isLeaf) {
-			if (numObjs >= MAX_BVH_OBJECTS) {
-				//redo tree
-				comps.push_back(object);
-				*this = *build(comps);
-				comps.clear();
-				isLeaf = false;
-			}
-			else {
-				comps.push_back(object);
-				numObjs++;
-				return;
-			}
-		}
-		//if its not a leaf then just continue down the tree
-		else {
-			if (object->center.x < center.x) {
-				if (object->center.y < center.y)
-					quadrants[1]->insert(object);
-				else
-					quadrants[0]->insert(object);
-			}
-			else {
-				if (object->center.y < center.y)
-					quadrants[3]->insert(object);
-				else
-					quadrants[2]->insert(object);
-			}
-		}
-	}
-
-	bvh() {
-		center = glm::vec2(0, 0);
-		extents = glm::vec2(0, 0);
-		isLeaf = false;
-	};
-	~bvh() {
-		for (int i = 0; i < 4; ++i) {
-			if(quadrants[i] != nullptr)
-				delete quadrants[i];
-		}
-	};
-private:
-	//find center and extents/ so you're gven an array of objects and you fin
-	//void findCenterExtents(glm::vec2& center, glm::vec2& extents, const std::vector<ssPrimitive>& objects) {
-	//	glm::vec2 max
-	//}
-	
-};
-
-*/

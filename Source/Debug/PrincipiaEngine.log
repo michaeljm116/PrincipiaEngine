@@ -10,6 +10,4 @@
   renderSystem.cpp
   main.cpp
   Generating Code...
-  LINK : C:\Users\Mike\PrincipiaEngine\Source\Debug\Principia Engine.exe not found or not built by the last incremental link; performing full link
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Debug\Principia Engine.exe
