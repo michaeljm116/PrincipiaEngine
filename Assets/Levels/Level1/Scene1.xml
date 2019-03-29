@@ -131,7 +131,7 @@
     </Node>
     <Node Name="Player" hasChildren="false" Flags="122887" Dynamic="true">
         <Transform>
-            <Position x="-0.97271585" y="1.0107903" z="6.8730206"/>
+            <Position x="-0.97271585" y="1.01" z="6.8729897"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -231,13 +231,49 @@
         <Rigid Rigid="true"/>
         <Node Name="Door" hasChildren="false" Flags="40967" Dynamic="false">
             <Transform>
-                <Position x="-10.460005" y="0" z="0"/>
+                <Position x="-5.6499958" y="1.08" z="21.749954"/>
                 <Rotation x="0" y="9.9999997e-05" z="0"/>
                 <Scale x="1" y="1" z="1"/>
             </Transform>
             <Material ID="-348345232"/>
             <Object ID="-2"/>
             <Rigid Rigid="true"/>
+        </Node>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="42019" Dynamic="true">
+        <Transform>
+            <Position x="0.57001114" y="6.8395801" z="17.840023"/>
+            <Rotation x="0" y="0.001" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="679186593"/>
+        <Rigid Rigid="true"/>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186595"/>
         </Node>
     </Node>
 </Root>

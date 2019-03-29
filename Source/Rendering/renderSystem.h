@@ -141,8 +141,7 @@ private:
 	std::vector<LightComponent*> lightComps;
 
 	std::vector<MeshIdAssigner> miaList;
-	bvh* staticBVH;
-
+	BVHTree topLevelBVH;
 	Scripto testScript;
 
 
