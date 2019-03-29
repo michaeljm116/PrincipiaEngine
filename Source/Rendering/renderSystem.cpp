@@ -703,8 +703,8 @@ void RenderSystem::recreateSwapChain()
 
 void RenderSystem::buildBVH()
 {
-	staticBVH = new bvh();
-	staticBVH->build(objectComps);
+	topLevelBVH.build(SplitMethod::Middle, TreeType::Recursive, objectComps, objects);
+	int a = 4;
 }
 
 void RenderSystem::createGraphicsPipeline() {
@@ -779,9 +779,6 @@ void RenderSystem::createGraphicsPipeline() {
 	fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
 	fragShaderStageInfo.module = fragShaderModule;
 	fragShaderStageInfo.pName = "main";
-
-	//VkPipelineShaderStageCreateInfo vertShaderStageInfo = vkDevice.createShader("../Rendering/Shaders/texture.vert.spv", VK_SHADER_STAGE_VERTEX_BIT);
-	//VkPipelineShaderStageCreateInfo fragShaderStageInfo = vkDevice.createShader("../Rendering/Shaders/texture.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT);
 
 	std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = { vertShaderStageInfo, fragShaderStageInfo };
 

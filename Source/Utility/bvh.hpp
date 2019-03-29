@@ -58,6 +58,19 @@ another another question is should you be working on this OR PREPARING FOR INTER
 
 There's a couple common operations you'd want too such as the union thing shown in the PBR book
 
+
+MAJOR QUESITON: what is gonna be the relationship between a BVH and ECS? 
+because ultimately, both the physics and the rendering would use the bvh 
+esp physics with a top level bvh so like should there be a top level bvh 
+graph thing thats global or.... just have like a top level bvh system bu
+t how do you like... make it so that... each entity could have a bvh node
+component? although technically its a bvh leaf component so there's like 
+a system that takes the structure well that will couple it too much like
+how do you do it so that.... okay so both the render and the physics sys
+will have access to a bvh right... but you dont wanna make it necessary 
+for them to talk to each other, despite both sharing the same exact bvh
+what if you create singleton entity that how bout you 
+
 */
 
 #pragma once
@@ -76,13 +89,13 @@ enum class SplitMethod {
 };
 
 struct BVHNode {
-	glm::vec3 bounds;
+	glm::vec2 bounds;
 	BVHNode* children[2];
 	int splitAxis;
 	int firstPrimOffset;
 	int nPrims;
 
-	void initLeaf(int first, int n, const glm::vec3& b) {
+	void initLeaf(int first, int n, const glm::vec2& b) {
 		firstPrimOffset = first;
 		nPrims = n;
 		bounds = b;
@@ -101,11 +114,97 @@ struct BVHNode {
 struct BVHTree {
 	BVHNode* root;
 	int totalNodes = 0;
-	std::vector<ObjectComponent> orderedPrims;
+	std::vector<ssObject> orderedPrims;
+	SplitMethod splitMethod;
+
+	void build(SplitMethod sm, TreeType tt, std::vector<ObjectComponent*> &pi, std::vector<ssObject> &prims) {
+		splitMethod = sm;
+		if (tt == TreeType::Recursive) {
+			root = recursiveBuild(pi, 0, pi.size(), &totalNodes, prims, orderedPrims);
+		}
+	}
+	BVHNode* recursiveBuild(std::vector<ObjectComponent*> &primInfo, int start, int end, int* totalNodes, std::vector<ssObject> &prims, std::vector<ssObject> &orderedPrims) {
+		*totalNodes++;
+		BVHNode* node = new BVHNode();
+		glm::vec2 bounds = computeBounds(prims, start, end);
+
+		//Check if leaf
+		int numPrims = end - start;
+		if (numPrims == 1) { //create leaf
+			int firstPrimOffset = orderedPrims.size();
+			for (int i = start; i < end; ++i) {
+				orderedPrims.push_back(prims[primInfo[i]->objIndex]);
+			}
+			node->initLeaf(firstPrimOffset, numPrims, bounds);
+		}
+		//Not a leaf, create a new node
+		else {
+			glm::vec2 center = computeCenter(prims, start, end);
+			int axis;
+			center.x > center.y ? axis = 0 : axis = 1;
+
+			int mid;// = (start + end) / 2;
+			//edgecase for if the max = min?
+
+			switch (splitMethod) {
+			//This takes the center of all the centers and partitions based off who is greater/less than
+			case SplitMethod::Middle:{
+				float pmid = center[axis];
+				ObjectComponent** midPtr = std::partition(&primInfo[start], &primInfo[end - 1] + 1, [axis, pmid](const ObjectComponent* pi){
+					return pi->center[axis] < pmid;
+				});
+				mid = midPtr - &primInfo[0];
+				if (mid != start && mid != end)
+					break;
+			}
+
+			//This evenly partitions it in half
+			case SplitMethod::EqualsCounts:{
+				mid = (start + end) / 2;
+				std::nth_element(&primInfo[start], &primInfo[mid], &primInfo[end - 1] + 1, [axis](const ObjectComponent* a, const ObjectComponent* b) {
+					return a->center[axis] < b->center[axis];
+				});
+				break;
+			}
+			case SplitMethod::SAH:
+			{}
+			default:
+				break;
+			}
+
+			node->initInterior(axis, recursiveBuild(primInfo, start, mid, totalNodes, prims, orderedPrims),
+				recursiveBuild(primInfo, mid, end, totalNodes, prims, orderedPrims));
+		}
+		return node;
+	}
+
+private:
+	glm::vec2 computeBounds(const std::vector<ssObject> &prims, int s, int e) {
+		//make an aabb of the entire scene basically
+		//find the minimum x and maximum x and bounds = max-min/2 = center
+		glm::vec2 min(FLT_MAX);
+		glm::vec2 max(-FLT_MAX);
+		for (int i = s; i < e; ++i) {
+			min = tulip::minV(min, glm::vec2(prims[i].center) + glm::vec2(prims[i].extents));
+			max = tulip::maxV(max, glm::vec2(prims[i].center) + glm::vec2(prims[i].extents));
+		}
+
+		return glm::vec2((max-min) * 0.5f);
+	}
+	glm::vec2 computeCenter(const std::vector<ssObject> &prims, int s, int e) {
+		glm::vec2 min(FLT_MAX);
+		glm::vec2 max(-FLT_MAX);
+		for (int i = s; i < e; ++i) {
+			min.length();
+			min = tulip::minV(min, glm::vec2(prims[i].center));
+			max = tulip::maxV(max, glm::vec2(prims[i].center));
+		}
+
+		return glm::vec2((max - min) * 0.5f);
+	}
 };
 
-
-//typedef bob(std::vector<ObjectComponent*>)
+/*
 class bvh {
 
 public: 
@@ -251,3 +350,4 @@ private:
 	
 };
 
+*/

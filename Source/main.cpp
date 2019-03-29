@@ -41,6 +41,8 @@ int main() {
 
 		GAMESYSTEM.init(world);
 
+		renderSys->buildBVH();
+
 		while (!glfwWindowShouldClose(WINDOW.getWindow())) {
 
 			glfwPollEvents();
