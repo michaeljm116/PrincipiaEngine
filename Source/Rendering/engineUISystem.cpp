@@ -1336,8 +1336,8 @@ void EngineUISystem::materialSelect()
 	activeMaterial->matUnqiueID = RESOURCEMANAGER.getMaterial(matIndex).uniqueID;
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 
-	if (activeNode->flags & COMPONENT_OBJECT) {
-		ObjectComponent* objComp = (ObjectComponent*)activeNode->data->getComponent<ObjectComponent>();
+	if (activeNode->flags & COMPONENT_PRIMITIVE) {
+		PrimitiveComponent* objComp = (PrimitiveComponent*)activeNode->data->getComponent<PrimitiveComponent>();
 		rs->getObject(objComp->objIndex).matId = matIndex;
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 	}

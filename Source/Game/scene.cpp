@@ -57,11 +57,11 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	//Add Mesh Component and make it a parent node
 	artemis::Entity* entity = &em->create();
 	TransformComponent* parentTransform = new TransformComponent(pos, rot, sca);
-	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_MODEL | COMPONENT_TRANSFORM | COMPONENT_AABB | COMPONENT_OBJECT);
+	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_MODEL | COMPONENT_TRANSFORM | COMPONENT_AABB | COMPONENT_PRIMITIVE);
 
 	//rMesh* mesh = &RESOURCEMANAGER.getModelU(resource);
 	entity->addComponent(new ModelComponent(RESOURCEMANAGER.getModelIndex(resource.uniqueID), resource.uniqueID));
-	entity->addComponent(new ObjectComponent(resource.uniqueID));
+	entity->addComponent(new PrimitiveComponent(resource.uniqueID));
 	entity->addComponent(new AABBComponent(pos, sca));	//MeshAABB's point to the physics system
 	entity->addComponent(parent);
 	entity->addComponent(parentTransform);
@@ -90,7 +90,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		child->addComponent(childTransform);
 
 		child->addComponent(new MeshComponent(resource.uniqueID, i));
-		child->addComponent(new ObjectComponent(resource.uniqueID + i));
+		child->addComponent(new PrimitiveComponent(resource.uniqueID + i));
 		child->addComponent(new MaterialComponent(0));
 		child->addComponent(new AABBComponent());	//SubsetAABB's point to the rendering system
 
@@ -100,7 +100,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		//childTransform->parentPM = &parentTransform->positionM;
 
 		childNode->name = resource.meshes[i].name;// "Child " + std::to_string(i);
-		childNode->flags |= COMPONENT_MESH | COMPONENT_MATERIAL | COMPONENT_AABB | COMPONENT_TRANSFORM | COMPONENT_OBJECT;
+		childNode->flags |= COMPONENT_MESH | COMPONENT_MATERIAL | COMPONENT_AABB | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE;
 		parent->children.push_back(childNode);
 		rs->addNode(childNode);
 
@@ -140,10 +140,10 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 void Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic)
 {
 	artemis::Entity* e = &em->create();
-	NodeComponent*		parent = new NodeComponent(e, name, COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_OBJECT);
+	NodeComponent*		parent = new NodeComponent(e, name, COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE);
 	TransformComponent* trans  = new TransformComponent(pos, glm::vec3(0.f), scale);
 	
-	e->addComponent(new ObjectComponent(type));
+	e->addComponent(new PrimitiveComponent(type));
 	e->addComponent(new MaterialComponent(matID));
 	e->addComponent(trans);
 	e->addComponent(parent);
@@ -264,8 +264,8 @@ void Scene::copyNode(NodeComponent * node, NodeComponent* parent, std::vector<No
 	if (node->flags & COMPONENT_LIGHT) {
 		e->addComponent(new LightComponent(*(LightComponent*)node->data->getComponent<LightComponent>()));
 	}
-	if (node->flags & COMPONENT_OBJECT) {
-		e->addComponent(new ObjectComponent(*(ObjectComponent*)node->data->getComponent<ObjectComponent>()));
+	if (node->flags & COMPONENT_PRIMITIVE) {
+		e->addComponent(new PrimitiveComponent(*(PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>()));
 	}
 	if (node->flags & COMPONENT_AABB) {
 		e->addComponent(new AABBComponent(*(AABBComponent*)node->data->getComponent<AABBComponent>()));
@@ -497,8 +497,8 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 		pNode->InsertEndChild(pFOV);
 	}
 
-	if (parent->flags & COMPONENT_OBJECT) {
-		ObjectComponent* obj = (ObjectComponent*)parent->data->getComponent<ObjectComponent>();
+	if (parent->flags & COMPONENT_PRIMITIVE) {
+		PrimitiveComponent* obj = (PrimitiveComponent*)parent->data->getComponent<PrimitiveComponent>();
 		XMLElement* pObj = doc->NewElement("Object");
 		pObj->SetAttribute("ID", obj->uniqueID);
 		pNode->InsertEndChild(pObj);
@@ -632,11 +632,11 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		//	Mesh->QueryIntAttribute("ResourceIndex", &ri);
 		//	e->addComponent(new MeshComponent(id, ri));
 		//}
-		if (flags & COMPONENT_OBJECT) {
+		if (flags & COMPONENT_PRIMITIVE) {
 			XMLElement* Object = start->FirstChildElement("Object");
 			int id;
 			Object->QueryIntAttribute("ID", &id);
-			e->addComponent(new ObjectComponent(id));
+			e->addComponent(new PrimitiveComponent(id));
 		}
 		if (flags & COMPONENT_AABB) {
 			e->addComponent(new AABBComponent());

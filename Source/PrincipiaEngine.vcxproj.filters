@@ -51,6 +51,9 @@
     <Filter Include="Source Files\Audio">
       <UniqueIdentifier>{0de41b11-bdbf-4b86-a1ec-96f284cc4ee9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\Shaders\rt">
+      <UniqueIdentifier>{16782e0e-9b56-4a74-a9d5-3d89422cccc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -651,6 +654,33 @@
     </None>
     <None Include="Rendering\Shaders\uioverlay.vert">
       <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\structs.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_main.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_mesh.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_sphere.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_box.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_bvh.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_cylinder.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_disk.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect_plane.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

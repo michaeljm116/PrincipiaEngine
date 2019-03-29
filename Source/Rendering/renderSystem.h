@@ -80,7 +80,7 @@ public:
 	//std::vector<ssTriangleVert>& getVertices() { return verts; };
 	//std::vector<ssMesh>& getMeshes() { return meshes; };
 	//ssMesh& getMesh(int i) { return meshes[i]; };
-	ssObject& getObject(int i) { return objects[i]; };
+	ssPrimitive& getObject(int i) { return objects[i]; };
 	ssLight& getLight(int i) { return lights[i]; };
 	void buildBVH();
 
@@ -108,7 +108,7 @@ private:
 			VBuffer<ssTriangleVert> verts;			// (Shader) storage buffer object with scene verts
 			VBuffer<ssTriangleIndex> indices;		// (Shader) storage buffer object with scene indices
 			VBuffer<ssMesh> meshes;				// (Shader) storage buffer object with scene Meshes;
-			VBuffer<ssObject> objects;
+			VBuffer<ssPrimitive> objects;
 			VBuffer<ssMaterial> materials;			// (Shader) storage buffer object with scene Materials
 			VBuffer<ssLight> lights;
 
@@ -132,12 +132,12 @@ private:
 	} compute;
 
 	
-	std::vector<ssObject> objects;
+	std::vector<ssPrimitive> objects;
 	std::vector<ssMaterial> materials;
 	std::vector<ssLight> lights;
 
 	std::vector<MeshComponent*> meshComps;
-	std::vector<ObjectComponent*> objectComps;
+	std::vector<PrimitiveComponent*> objectComps;
 	std::vector<LightComponent*> lightComps;
 
 	std::vector<MeshIdAssigner> miaList;

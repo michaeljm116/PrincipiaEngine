@@ -18,7 +18,7 @@ shader, everything must be 16byte aligned
 #include <iostream>
 #include "Artemis\Artemis.h"
 
-struct ssObject {
+struct ssPrimitive {
 	glm::mat4 world; //64bytes
 	glm::vec3 center; //12 bytes
 	int id; //4bytes
