@@ -40,15 +40,40 @@ enum class TreeType {
 enum class SplitMethod {
 	Middle, SAH, EqualsCounts
 };
+struct BVHBounds {
+	glm::vec2 center;
+	glm::vec2 extents;
+
+	BVHBounds(glm::vec2 c, glm::vec2 e) : center(c), extents(e) {};
+	BVHBounds() {};
+	glm::vec2 max() {
+		return center + extents;
+	}
+	glm::vec2 min() {
+		return center - extents;
+	}
+	
+	BVHBounds combine(BVHBounds b) {
+		//find the highest and the lowest x and y values
+		glm::vec2 max = tulip::maxV(this->max(), b.max());
+		glm::vec2 min = tulip::minV(this->min(), b.min());
+
+		//center = halfway between the two, extents = max-center
+		glm::vec2 c = (max + min) * 0.5f;
+		glm::vec2 e = max - c;
+
+		return BVHBounds(c, e);
+	}
+};
 
 struct BVHNode {
-	glm::vec2 bounds;
+	BVHBounds bounds;
 	std::shared_ptr<BVHNode> children[2];
 	int splitAxis;
 	int firstPrimOffset;
 	int nPrims;
 
-	void initLeaf(int first, int n, const glm::vec2& b) {
+	void initLeaf(int first, int n, const BVHBounds& b) {
 		firstPrimOffset = first;
 		nPrims = n;
 		bounds = b;
@@ -59,6 +84,7 @@ struct BVHNode {
 		children[0] = c0;
 		children[1] = c1;
 		//bounds = c0->bounds.union2D(c1->bounds);
+		bounds = c0->bounds.combine(c1->bounds);
 		splitAxis = axis;
 		nPrims = 0;
 	}
@@ -91,9 +117,9 @@ struct BVHTree {
 		}
 	}
 	std::shared_ptr<BVHNode> recursiveBuild(std::vector<PrimitiveComponent*> &primInfo, int start, int end, int* totalNodes, std::vector<ssPrimitive> &prims, std::vector<ssPrimitive> &orderedPrims) {
-		*totalNodes++;
+		*totalNodes += 1;
 		std::shared_ptr<BVHNode> node(new BVHNode);
-		glm::vec2 bounds = computeBounds(prims, start, end);
+		BVHBounds bounds = computeBounds(prims, start, end);
 
 		//Check if leaf
 		int numPrims = end - start;
@@ -144,14 +170,14 @@ struct BVHTree {
 				recursiveBuild(primInfo, mid, end, totalNodes, prims, orderedPrims));
 		}
 
-		node->bounds = bounds;
+		//node->bounds = bounds;
 		return node;
 	}
 
 	std::vector<ssBVHNode> flattenBVH() {};
 
 private:
-	glm::vec2 computeBounds(const std::vector<ssPrimitive> &prims, int s, int e) {
+	BVHBounds computeBounds(const std::vector<ssPrimitive> &prims, int s, int e) {
 		//make an aabb of the entire scene basically
 		//find the minimum x and maximum x and bounds = max-min/2 = center
 		glm::vec2 min(FLT_MAX);
@@ -160,8 +186,10 @@ private:
 			min = tulip::minV(min, glm::vec2(prims[i].center) + glm::vec2(prims[i].extents));
 			max = tulip::maxV(max, glm::vec2(prims[i].center) + glm::vec2(prims[i].extents));
 		}
-
-		return glm::vec2((max-min) * 0.5f);
+		glm::vec2 c = (max + min) * 0.5f;
+		glm::vec2 ex = max - c;
+		
+		return BVHBounds(c, ex);
 	}
 	glm::vec2 computeCenter(const std::vector<ssPrimitive> &prims, int s, int e) {
 		glm::vec2 min(FLT_MAX);
