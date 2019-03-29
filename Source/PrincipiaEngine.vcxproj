@@ -216,6 +216,15 @@
     <None Include="Rendering\Shaders\basic.vert" />
     <None Include="Rendering\Shaders\pbr.frag" />
     <None Include="Rendering\Shaders\raytracing.comp" />
+    <None Include="Rendering\Shaders\rt\intersect_box.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_bvh.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_cylinder.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_disk.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_main.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_mesh.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_plane.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect_sphere.glsl" />
+    <None Include="Rendering\Shaders\rt\structs.glsl" />
     <None Include="Rendering\Shaders\texture.frag" />
     <None Include="Rendering\Shaders\texture.vert" />
     <None Include="Rendering\Shaders\uioverlay.frag" />

@@ -47,8 +47,8 @@ void ButtonSystem::processEntity(artemis::Entity & e)
 			//rs->updateMaterial(mc->matID);
 			//rs->updateMaterial(dmc->matID);
 
-			ObjectComponent* oc = (ObjectComponent*)nc->data->getComponent<ObjectComponent>();
-			ObjectComponent* doc = (ObjectComponent*)nc->children[0]->data->getComponent<ObjectComponent>();
+			PrimitiveComponent* oc = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
+			PrimitiveComponent* doc = (PrimitiveComponent*)nc->children[0]->data->getComponent<PrimitiveComponent>();
 
 			rs->getObject(oc->objIndex).matId = mc->matID;
 			rs->getObject(doc->objIndex).matId = dmc->matID;

@@ -70,7 +70,7 @@ struct MeshComponent : artemis::Component {
 	MeshComponent(int id, int ri) : meshModelID(id), meshResourceIndex(ri) {};
 };
 
-struct ObjectComponent : artemis::Component {
+struct PrimitiveComponent : artemis::Component {
 	int objIndex;
 	int gpuIndex;
 	int uniqueID;
@@ -78,8 +78,8 @@ struct ObjectComponent : artemis::Component {
 	glm::vec3 extents;
 	
 
-	ObjectComponent() {};
-	ObjectComponent(int id) : uniqueID(id) {};
+	PrimitiveComponent() {};
+	PrimitiveComponent(int id) : uniqueID(id) {};
 };
 
 struct ModelComponent : artemis::Component {

@@ -7,7 +7,7 @@ PhysicsSystem::PhysicsSystem()
 {
 	addComponentType<RigidBodyComponent>();
 	addComponentType<NodeComponent>();
-	addComponentType<ObjectComponent>();
+	addComponentType<PrimitiveComponent>();
 }
 
 
@@ -181,7 +181,7 @@ void PhysicsSystem::addNode(NodeComponent * node)
 {
 	TransformComponent* tc = (TransformComponent*)node->data->getComponent<TransformComponent>();
 	RigidBodyComponent* rbc = (RigidBodyComponent*)node->data->getComponent<RigidBodyComponent>();
-	ObjectComponent* oc = (ObjectComponent*)node->data->getComponent<ObjectComponent>();
+	PrimitiveComponent* oc = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
 	btVector3 inertia = btVector3(0.f, 0.f, 0.f);
 	if (!node->isDynamic) rbc->mass = 0.f;
 	if (oc->uniqueID > 0) {

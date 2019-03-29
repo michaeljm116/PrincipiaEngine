@@ -29,7 +29,7 @@ class PhysicsSystem : public artemis::EntityProcessingSystem
 private:
 	artemis::ComponentMapper<NodeComponent> nodeMapper;
 	artemis::ComponentMapper<RigidBodyComponent> rbMapper;
-	artemis::ComponentMapper<ObjectComponent> objMapper;
+	artemis::ComponentMapper<PrimitiveComponent> objMapper;
 
 
 	btAlignedObjectArray<btCollisionShape*> collisionShapes;

@@ -224,10 +224,10 @@ void RenderSystem::addNodes(std::vector<NodeComponent*> nodes) {
 void RenderSystem::addNode(NodeComponent* node) {
 	if (node->flags & COMPONENT_MODEL)
 		return;
-	if (node->flags & COMPONENT_OBJECT) {
+	if (node->flags & COMPONENT_PRIMITIVE) {
 		//start constructing the object;
-		ssObject object;
-		ObjectComponent* objComp = (ObjectComponent*)node->data->getComponent<ObjectComponent>();
+		ssPrimitive object;
+		PrimitiveComponent* objComp = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
 		//AABBComponent* aabb = (AABBComponent*)node->data->getComponent<AABBComponent>();
 		MaterialComponent* mat = (MaterialComponent*)node->data->getComponent<MaterialComponent>();
 		TransformComponent* trans = (TransformComponent*)node->data->getComponent<TransformComponent>();
@@ -400,8 +400,8 @@ void RenderSystem::deleteNode(NodeComponent * node)
 		updateDescriptors();
 	}*/
 
-	if (node->flags & COMPONENT_OBJECT) {
-		ObjectComponent* o = (ObjectComponent*)node->data->getComponent<ObjectComponent>();
+	if (node->flags & COMPONENT_PRIMITIVE) {
+		PrimitiveComponent* o = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
 		objects.erase(objects.begin() + o->objIndex);
 		objectComps.erase(objectComps.begin() + o->objIndex);
 		for (int i = o->objIndex; i < objects.size(); ++i)

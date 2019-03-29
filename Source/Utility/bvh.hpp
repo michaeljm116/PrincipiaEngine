@@ -114,16 +114,16 @@ struct BVHNode {
 struct BVHTree {
 	BVHNode* root;
 	int totalNodes = 0;
-	std::vector<ssObject> orderedPrims;
+	std::vector<ssPrimitive> orderedPrims;
 	SplitMethod splitMethod;
 
-	void build(SplitMethod sm, TreeType tt, std::vector<ObjectComponent*> &pi, std::vector<ssObject> &prims) {
+	void build(SplitMethod sm, TreeType tt, std::vector<PrimitiveComponent*> &pi, std::vector<ssPrimitive> &prims) {
 		splitMethod = sm;
 		if (tt == TreeType::Recursive) {
 			root = recursiveBuild(pi, 0, pi.size(), &totalNodes, prims, orderedPrims);
 		}
 	}
-	BVHNode* recursiveBuild(std::vector<ObjectComponent*> &primInfo, int start, int end, int* totalNodes, std::vector<ssObject> &prims, std::vector<ssObject> &orderedPrims) {
+	BVHNode* recursiveBuild(std::vector<PrimitiveComponent*> &primInfo, int start, int end, int* totalNodes, std::vector<ssPrimitive> &prims, std::vector<ssPrimitive> &orderedPrims) {
 		*totalNodes++;
 		BVHNode* node = new BVHNode();
 		glm::vec2 bounds = computeBounds(prims, start, end);
@@ -150,7 +150,7 @@ struct BVHTree {
 			//This takes the center of all the centers and partitions based off who is greater/less than
 			case SplitMethod::Middle:{
 				float pmid = center[axis];
-				ObjectComponent** midPtr = std::partition(&primInfo[start], &primInfo[end - 1] + 1, [axis, pmid](const ObjectComponent* pi){
+				PrimitiveComponent** midPtr = std::partition(&primInfo[start], &primInfo[end - 1] + 1, [axis, pmid](const PrimitiveComponent* pi){
 					return pi->center[axis] < pmid;
 				});
 				mid = midPtr - &primInfo[0];
@@ -161,7 +161,7 @@ struct BVHTree {
 			//This evenly partitions it in half
 			case SplitMethod::EqualsCounts:{
 				mid = (start + end) / 2;
-				std::nth_element(&primInfo[start], &primInfo[mid], &primInfo[end - 1] + 1, [axis](const ObjectComponent* a, const ObjectComponent* b) {
+				std::nth_element(&primInfo[start], &primInfo[mid], &primInfo[end - 1] + 1, [axis](const PrimitiveComponent* a, const PrimitiveComponent* b) {
 					return a->center[axis] < b->center[axis];
 				});
 				break;
@@ -175,11 +175,13 @@ struct BVHTree {
 			node->initInterior(axis, recursiveBuild(primInfo, start, mid, totalNodes, prims, orderedPrims),
 				recursiveBuild(primInfo, mid, end, totalNodes, prims, orderedPrims));
 		}
+
+		node->bounds = bounds;
 		return node;
 	}
 
 private:
-	glm::vec2 computeBounds(const std::vector<ssObject> &prims, int s, int e) {
+	glm::vec2 computeBounds(const std::vector<ssPrimitive> &prims, int s, int e) {
 		//make an aabb of the entire scene basically
 		//find the minimum x and maximum x and bounds = max-min/2 = center
 		glm::vec2 min(FLT_MAX);
@@ -191,7 +193,7 @@ private:
 
 		return glm::vec2((max-min) * 0.5f);
 	}
-	glm::vec2 computeCenter(const std::vector<ssObject> &prims, int s, int e) {
+	glm::vec2 computeCenter(const std::vector<ssPrimitive> &prims, int s, int e) {
 		glm::vec2 min(FLT_MAX);
 		glm::vec2 max(-FLT_MAX);
 		for (int i = s; i < e; ++i) {
@@ -212,14 +214,14 @@ public:
 	glm::vec2 extents;					 //8bytes
 
 	bvh*	  quadrants[4];				 //16bytes
-	std::vector<ObjectComponent*> comps; //16bytes
+	std::vector<PrimitiveComponent*> comps; //16bytes
 
 	bool	  isLeaf;					 //4bytes
 	int		  numObjs = 0;				 //4bytes
 	glm::vec2 pad;						 //8bytes
 	//64bytes total :)
 
-	bvh* build(const std::vector<ObjectComponent*> objects) {
+	bvh* build(const std::vector<PrimitiveComponent*> objects) {
 		if (objects.size() <= MAX_BVH_OBJECTS) {
 			isLeaf = true;
 			if (objects.size() > 0) {
@@ -270,22 +272,22 @@ public:
 		extents.y = (eMaxY - eMinY) * 0.5f;
 		
 		//Construct a tree
-		std::vector<ObjectComponent*> left;
-		std::vector<ObjectComponent*> right;
+		std::vector<PrimitiveComponent*> left;
+		std::vector<PrimitiveComponent*> right;
 		for (int i = 0; i < objects.size(); ++i) {
 			objects[i]->center.x <= center.x ? left.push_back(objects[i]) : right.push_back(objects[i]);
 		}
 
 		//construct the quads
-		std::vector<ObjectComponent*> leftUp;
-		std::vector<ObjectComponent*> leftDown;
+		std::vector<PrimitiveComponent*> leftUp;
+		std::vector<PrimitiveComponent*> leftDown;
 		for (int i = 0; i < left.size(); ++i) {
 			left[i]->center.y > center.y ? leftUp.push_back(left[i]) : leftDown.push_back(left[i]);
 		}
 
 		//construct the quads
-		std::vector<ObjectComponent*> rightUp;
-		std::vector<ObjectComponent*> rightDown;
+		std::vector<PrimitiveComponent*> rightUp;
+		std::vector<PrimitiveComponent*> rightDown;
 		for (int i = 0; i < right.size(); ++i) {
 			right[i]->center.y > center.y ? rightUp.push_back(right[i]) : rightDown.push_back(right[i]);
 		}
@@ -298,7 +300,7 @@ public:
 		return this;
 	}
 
-	void insert(ObjectComponent* object) {
+	void insert(PrimitiveComponent* object) {
 		//this is the end case for the leaf
 		if (isLeaf) {
 			if (numObjs >= MAX_BVH_OBJECTS) {
@@ -344,7 +346,7 @@ public:
 	};
 private:
 	//find center and extents/ so you're gven an array of objects and you fin
-	//void findCenterExtents(glm::vec2& center, glm::vec2& extents, const std::vector<ssObject>& objects) {
+	//void findCenterExtents(glm::vec2& center, glm::vec2& extents, const std::vector<ssPrimitive>& objects) {
 	//	glm::vec2 max
 	//}
 	

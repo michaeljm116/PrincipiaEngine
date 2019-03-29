@@ -68,10 +68,10 @@ void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
 	if (nc->flags & COMPONENT_MODEL)
 	{
 	}
-	else if (nc->flags & COMPONENT_OBJECT) {
+	else if (nc->flags & COMPONENT_PRIMITIVE) {
 		
-		ObjectComponent* objComp = (ObjectComponent*)nc->data->getComponent<ObjectComponent>();
-		ssObject& obj = rs->getObject(objComp->objIndex);
+		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
+		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
 		//scale the aabb
 		obj.center = tc->global.position;
@@ -128,10 +128,10 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 	tc->world[3] = glm::vec4(tc->global.position, 1.f);
 	if (nc->flags & COMPONENT_MODEL)
 	{ }
-	else if (nc->flags & COMPONENT_OBJECT) {
+	else if (nc->flags & COMPONENT_PRIMITIVE) {
 		//GET THE OBJ
-		ObjectComponent* objComp = (ObjectComponent*)nc->data->getComponent<ObjectComponent>();
-		ssObject& obj = rs->getObject(objComp->objIndex);
+		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
+		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
 		//scale the aabb
 		obj.center = tc->global.position;
