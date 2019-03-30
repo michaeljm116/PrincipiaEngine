@@ -24,6 +24,10 @@ will have access to a bvh right... but you dont wanna make it necessary
 for them to talk to each other, despite both sharing the same exact bvh
 what if you create singleton entity that how bout you 
 
+
+TODO, right now the center = xy it should be xz. 
+since youre not using center for anything else really you should just make it a vec2
+
 */
 
 #pragma once
@@ -123,7 +127,7 @@ struct BVHTree {
 
 		//Check if leaf
 		int numPrims = end - start;
-		if (numPrims == 1) { //create leaf
+		if (numPrims < 3) { //create leaf
 			int firstPrimOffset = orderedPrims.size();
 			for (int i = start; i < end; ++i) {
 				orderedPrims.push_back(prims[primInfo[i]->objIndex]);
