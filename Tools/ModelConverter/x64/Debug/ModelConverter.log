@@ -1,0 +1,38 @@
+﻿  main.cpp
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(284): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(289): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(306): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(311): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(312): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(313): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(335): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(357): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(362): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(373): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(383): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(389): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(512): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(518): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(529): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(556): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(560): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(574): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(591): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(593): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(597): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(598): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(602): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(610): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(615): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(618): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(621): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(716): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(720): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(762): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(768): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(788): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(790): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(719): warning C4101: 'nodey': unreferenced local variable
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(838): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(853): warning C4018: '<': signed/unsigned mismatch
+LINK : fatal error LNK1104: cannot open file 'assimp.lib'
