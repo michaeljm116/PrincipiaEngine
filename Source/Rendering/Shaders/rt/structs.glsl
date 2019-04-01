@@ -1,6 +1,9 @@
 #ifndef _STRUCTS_GLSL
 #define _STRUCTS_GLSL
 
+#define FLT_MAX 3.402823466e+38
+#define FLT_MIN 1.175494351e-38
+
 struct Primitive
 {
 	mat4 world;
@@ -20,6 +23,16 @@ struct TriangleIndex{
 	int v1;
 	int v2;
 	int id;
+};
+
+struct Vert {
+	vec3 pos;
+	int _pad;
+};
+struct QuadIndex {
+	int v[4];
+	int id;
+	int _pad[3];
 };
 
 struct Mesh{

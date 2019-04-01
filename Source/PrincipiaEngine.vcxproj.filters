@@ -682,6 +682,9 @@
     <None Include="Rendering\Shaders\rt\intersect_plane.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
+    <None Include="Rendering\Shaders\rt\intersect_quad.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering\Texture.h">
