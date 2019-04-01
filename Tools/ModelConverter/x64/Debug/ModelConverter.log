@@ -1,38 +1,6 @@
-﻿  main.cpp
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(284): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(289): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(306): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(311): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(312): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(313): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(335): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(357): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(362): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(373): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(383): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(389): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(512): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(518): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(529): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(556): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(560): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(574): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(591): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(593): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(597): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(598): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(602): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(610): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(615): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(618): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(621): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(716): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(720): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(762): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(768): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(788): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(790): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(719): warning C4101: 'nodey': unreferenced local variable
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(838): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(853): warning C4018: '<': signed/unsigned mismatch
-LINK : fatal error LNK1104: cannot open file 'assimp.lib'
+﻿main.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@@Z)
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@@Z)
+main.obj : error LNK2019: unresolved external symbol "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z) referenced in function "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z)
+main.obj : error LNK2019: unresolved external symbol "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@@Z)
+..\..\Lib\Assimp\lib\x64\assimp.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\Mike\PrincipiaEngine\Tools\ModelConverter\x64\Debug\ModelConverter.exe : fatal error LNK1120: 4 unresolved externals
