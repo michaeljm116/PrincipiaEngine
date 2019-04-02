@@ -242,7 +242,7 @@
     </Node>
     <Node Name="New Model!" hasChildren="true" Flags="42019" Dynamic="true">
         <Transform>
-            <Position x="0.57001114" y="6.8395801" z="17.840023"/>
+            <Position x="0.14004707" y="22.329582" z="11.96002"/>
             <Rotation x="0" y="0.001" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>

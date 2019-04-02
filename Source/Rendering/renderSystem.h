@@ -77,7 +77,7 @@ public:
 	virtual void cleanupSwapChain();
 	virtual void recreateSwapChain();
 
-	//std::vector<ssTriangleVert>& getVertices() { return verts; };
+	//std::vector<ssVert>& getVertices() { return verts; };
 	//std::vector<ssMesh>& getMeshes() { return meshes; };
 	//ssMesh& getMesh(int i) { return meshes[i]; };
 	ssPrimitive& getObject(int i) { return objects[i]; };
@@ -105,7 +105,7 @@ private:
 	// Resources for the compute part of the example
 	struct {
 		struct {
-			VBuffer<ssTriangleVert> verts;			// (Shader) storage buffer object with scene verts
+			VBuffer<ssVert> verts;			// (Shader) storage buffer object with scene verts
 			VBuffer<ssTriangleIndex> indices;		// (Shader) storage buffer object with scene indices
 			VBuffer<ssMesh> meshes;				// (Shader) storage buffer object with scene Meshes;
 			VBuffer<ssPrimitive> objects;

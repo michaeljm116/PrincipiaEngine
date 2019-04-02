@@ -8,8 +8,6 @@ the only time a BLAS would update is IF its an animation
 
 question is where the data comes from, is there gonna be an organized or disorganized list of data
 another question is if you should do a quadBVH or just a regular BVH
-another another question is should you be working on this OR PREPARING FOR INTERVIEWS
-...well technically by doing this you are preparing for interviews so...
 
 
 MAJOR QUESITON: what is gonna be the relationship between a BVH and ECS? 

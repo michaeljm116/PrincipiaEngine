@@ -682,7 +682,7 @@
     <None Include="Rendering\Shaders\rt\intersect_plane.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
-    <None Include="Rendering\Shaders\rt\intersect_quad.glsl">
+    <None Include="Rendering\Shaders\rt\layouts.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
   </ItemGroup>

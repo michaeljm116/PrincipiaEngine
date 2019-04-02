@@ -7,7 +7,6 @@
 #include "intersect_mesh.glsl"
 #include "intersect_cylinder.glsl"
 #include "intersect_disk.glsl"
-#include "intersect_quad.glsl"
 
 
 #endif

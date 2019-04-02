@@ -30,9 +30,7 @@ struct Vert {
 	int _pad;
 };
 struct QuadIndex {
-	int v[4];
-	int id;
-	int _pad[3];
+	ivec4 v;
 };
 
 struct Mesh{

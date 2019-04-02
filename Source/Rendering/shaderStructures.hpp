@@ -71,11 +71,11 @@ struct ssCylinder {
 	float radius;		//4bytes
 }; //Total = 32 bytes
 
-struct ssTriangleVert {
+struct ssVert {
 	glm::vec3 pos;
 	int _pad;
-	ssTriangleVert() {};
-	ssTriangleVert(glm::vec3 p) : pos(p) {};
+	ssVert() {};
+	ssVert(glm::vec3 p) : pos(p) {};
 };
 
 struct ssTriangleIndex {
@@ -86,6 +86,9 @@ struct ssTriangleIndex {
 	ssTriangleIndex(int v0, int v1, int v2, int id) : id(id) { v[0] = v0; v[1] = v1; v[2] = v2; };
 }; //Total = 16 bytes
 
+struct ssQuadIndex {
+	glm::ivec4 v; //16bytes
+};
 
 struct ssMesh {
 	int startIndex; //4
