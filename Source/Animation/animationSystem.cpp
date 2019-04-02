@@ -107,7 +107,7 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 	{
 //		//TransformComponent* nodeTrans = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 //		MeshComponent* sub = (MeshComponent*)nc->children[i]->data->getComponent<MeshComponent>();
-//		std::vector<ssTriangleVert>& verts = rs->getVertices();
+//		std::vector<ssVert>& verts = rs->getVertices();
 //		ssMesh& mesh = rs->getMesh(sub->meshIndex);
 //		rMesh& rSub = RESOURCEMANAGER.getModelU(sub->meshModelID).meshes[sub->meshResourceIndex];
 //

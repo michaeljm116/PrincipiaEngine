@@ -133,7 +133,7 @@ void RenderSystem::processEntity(artemis::Entity & e)
 void RenderSystem::loadResources()
 {
 	//get all the models and load err thang
-	std::vector<ssTriangleVert> verts;
+	std::vector<ssVert> verts;
 	std::vector<ssTriangleIndex> indices;
 	std::vector<ssMesh> meshes;
 
@@ -157,7 +157,7 @@ void RenderSystem::loadResources()
 
 			//load up ze vertices;
 			for (std::vector<glm::vec3>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr)
-				verts.push_back(ssTriangleVert(*itr));
+				verts.push_back(ssVert(*itr));
 			//Load up da indices
 			for (std::vector<glm::ivec3>::const_iterator itr = rmesh.tris.begin(); itr != rmesh.tris.end(); ++itr) {
 				indices.push_back(ssTriangleIndex(*itr + prevVertSize, ++currId));

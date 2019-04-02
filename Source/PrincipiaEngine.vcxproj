@@ -223,8 +223,8 @@
     <None Include="Rendering\Shaders\rt\intersect_main.glsl" />
     <None Include="Rendering\Shaders\rt\intersect_mesh.glsl" />
     <None Include="Rendering\Shaders\rt\intersect_plane.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_quad.glsl" />
     <None Include="Rendering\Shaders\rt\intersect_sphere.glsl" />
+    <None Include="Rendering\Shaders\rt\layouts.glsl" />
     <None Include="Rendering\Shaders\rt\structs.glsl" />
     <None Include="Rendering\Shaders\texture.frag" />
     <None Include="Rendering\Shaders\texture.vert" />
