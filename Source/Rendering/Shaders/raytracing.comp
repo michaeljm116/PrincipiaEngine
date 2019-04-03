@@ -16,17 +16,11 @@ layout (binding = 0, rgba8) uniform writeonly image2D resultImage;
 #define REFLECTIONS true 
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
+#define TRIINTERSECT true	
 
 
 #include "rt/structs.glsl"
 #include "rt/intersect_main.glsl"
-
-const uint TYPE_SPHERE = 0x00000001u;
-const uint TYPE_BOX = 0x00000002u;
-const uint TYPE_PLANE = 0x00000004u;
-const uint TYPE_MESH = 0x00000008u;
-const uint TYPE_CYLINDER = 0x00000010u;
-const uint TYPE_DISK = 0x00000020u;
 
 
 void reflectRay(inout vec3 rayD, in vec3 mormal)
@@ -76,167 +70,7 @@ float lightSpecular(vec3 normal, vec3 lightDir, float specularFactor)
 	return pow(clamp(dot(normal, halfVec), 0.0, 1.0), specularFactor);
 }
 	
-sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
-{
-	sectID id = sectID(0, -1, -1);
 
-	for(int i = 0; i < primitives.length(); ++i){
-		if(primitives[i].id > 0){
-			mat4 invWorld = inverse(primitives[i].world);
-			vec3 rdd = (invWorld*vec4(rayD,0.0)).xyz / primitives[i].extents;
-			vec3 roo = (invWorld*vec4(rayO,1.0)).xyz / primitives[i].extents;
-
-			flool tMesh = boundsIntersect(roo, rdd, primitives[i]);
-			if(tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)){
-				for(int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++){
-					/*flool tTri = triIntersect(roo, rdd, indices[j]);
-					if(tTri.b){
-						if((tTri.t > EPSILON) && (tTri.t < resT)){
-							id = sectID(TYPE_MESH, i, j);
-							resT = tTri.t;
-						}
-					}*/
-					QuadIndex quad; 
-					quad.v[0] = indices[j].v0; quad.v[1] = indices[j].v1; 
-					quad.v[2] = indices[j].v2; quad.v[3] = indices[j].v2;
-					vec4 tQuad = quadIntersect(roo, rdd, quad);
-					if(tQuad.x > 0){
-						if((tQuad.x > EPSILON) && (tQuad.x < resT)){
-							id = sectID(TYPE_MESH, i, j);
-							resT = tQuad.x;
-							norm = tQuad.yzw;
-						}
-					}
-				}
-			}
-		}//id > 0
-
-		else if (primitives[i].id == -1){ //SPHERE INTERSECT
-			float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
-			if ((tSphere > EPSILON) && (tSphere < resT))
-			{
-				id = sectID(TYPE_SPHERE, i, -1);
-				resT = tSphere;
-			}
-		}
-		else if (primitives[i].id == -2){ //BOX INTERSECT
-			vec4 tBox = boxIntersect(rayO, rayD, primitives[i]);
-			if(tBox.x > 0){
-			if((tBox.x > EPSILON) && (tBox.x < resT)){
-					id = sectID(TYPE_BOX, i, -1);
-					resT = tBox.x;
-					norm = tBox.yzw;
-				}
-			}
-		}
-		else if (primitives[i].id == -3){ //CYLINDER INTERSECT
-			vec4 tCylinder = cylinderIntersect(rayO, rayD, primitives[i]);
-			if((tCylinder.x > EPSILON) && (tCylinder.x < resT)){
-				id = sectID(TYPE_CYLINDER, i, -1);
-				resT = tCylinder.x;
-				norm = tCylinder.yzw;
-			}
-		}
-		else if (primitives[i].id == -4){ //PLANE INTERSECT
-			float tplane = planeIntersect(rayO, rayD, primitives[i]);
-			if ((tplane > EPSILON) && (tplane < resT))
-			{
-				id = sectID(TYPE_PLANE, i, -1);
-				resT = tplane;
-			}	
-		}
-		else if (primitives[i].id == -5){ //DISK INTERSECT
-			float tDisk = diskIntersect(rayO,rayD,primitives[i]);
-			if((tDisk > EPSILON) && (tDisk < resT)){
-				id = sectID(TYPE_DISK, i,-1);
-				resT = tDisk;
-			}
-		}
-	}
-
-	return id;
-}
-
-//rayO = pos, rayD = light, primitiveId = duh, t = t = length(lights[0].pos - pos);
-float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float t)
-{
-	for(int i = 0; i < primitives.length(); ++i){ 
-		if(primitives[i].id > 0){/////-----MESH-----|||||
-			mat4 invWorld = inverse(primitives[i].world);
-			vec3 rdd = (invWorld*vec4(rayD,0.0)).xyz / primitives[i].extents;
-			vec3 roo = (invWorld*vec4(rayO,1.0)).xyz / primitives[i].extents;
-
-			flool tMesh = boundsIntersect(roo, rdd, primitives[i]);
-			if(tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)){
-				for(int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++){
-					flool tTri = triIntersect(roo, rdd, indices[j]);
-					if(tTri.b){
-						if((tTri.t > EPSILON) && (tTri.t < t)){
-							t = tTri.t;
-							return SHADOW;
-						}
-					}
-				}
-			}
-
-			/*
-			flool tBounds = boundsIntersect(rayO, rayD, meshes[j]);
-			if(tBounds.b && ((tBounds.t > EPSILON) && (tBounds.t < t))){
-				for (int i = meshes[j].startVert; i < meshes[j].endVert; ++i){
-					//if(indices[i].id == primitiveId.cId)
-					//	continue;
-					flool tTri = triIntersect(rayO, rayD, indices[i]);
-					if(tTri.b){
-						if((tTri.t > EPSILON) && (tTri.t < t)){
-							t = tTri.t;
-							return SHADOW;
-						}//if(tTri.t > EPSILON) && (tTri.t < t))
-					}//if(tTri.b)
-				}//for(int i = meshes[j].startVert; i < meshes[j].endvert; ++i)
-			}//if(tBounds.b && ((tBounds.t > EPSILON) && (tBounds.t < t)))
-			*/
-		}
-		else if(primitives[i].id == -1){ /////-----SPHERE-----|||||
-			float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
-			if((tSphere > EPSILON) && (tSphere < t)){
-				t = tSphere;
-				return SHADOW;
-			}
-		}
-		else if(primitives[i].id == -2){ /////-----BOX-----|||||
-			float tBox = boxIntersect(rayO, rayD, primitives[i]).x;
-			if((tBox > EPSILON) && (tBox < t))
-			{
-				t = tBox;
-				return SHADOW;
-			}
-		}
-		else if(primitives[i].id == -3){ /////-----CYLINDER-----|||||
-			float tcylinder = cylinderIntersect(rayO, rayD, primitives[i]).x;
-			if ((tcylinder > EPSILON) && (tcylinder < t))
-			{
-				t = tcylinder;
-				return SHADOW;
-			}
-		}
-		/*
-		else if(primitives[i].id == -4){ /////-----PLANE-----|||||
-			float tPlane = planeIntersect(rayO, rayD, primitives[i]);
-			if((tPlane > EPSILON) && (tPlane < t)){
-				t = tPlane;
-				return SHADOW;
-			}
-		}
-		else if(primitives[i].id == -5){ /////-----DISK-----|||||
-			float tDisk = diskIntersect(rayO,rayD, primitives[i]);
-			if((tDisk > EPSILON) && (tDisk < t)){
-				t = tDisk;
-				return SHADOW;
-			}
-		}*/
-	}
-	return 1.0;
-}
 
 finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in float ri)
 {
@@ -261,30 +95,26 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	//vec3 lightVec = normalize(lights[0].pos - pos);				
 	vec3 normal;
 
-
-	// Planes
-	if(primitiveID.type == TYPE_PLANE){
-		//normal = planes[primitiveID.id].normal;
-	}
-	// DISKS
-	else if(primitiveID.type == TYPE_DISK){
-		normal = vec3(0,1,0);
-	}
-	// Spheres
-	else if (primitiveID.type == TYPE_SPHERE){
-		normal = sphereNormal(pos, primitives[primitiveID.id]);	
-	}
-	// Cylinders
-	else if (primitiveID.type == TYPE_CYLINDER){
-		normal = norm;
-	}
-	//Boxes
-	else if (primitiveID.type == TYPE_BOX){
-		normal = norm;
-	}
-	//Meshes
-	else if (primitiveID.type == TYPE_MESH){	
-		normal = triNormal(indices[primitiveID.cId]);
+	switch(primitiveID.type){
+		case TYPE_PLANE:{
+			break;
+		}
+		case TYPE_DISK:{
+			normal = vec3(0,1,0);
+			break;
+		}
+		case TYPE_SPHERE:{
+			normal = sphereNormal(pos, primitives[primitiveID.id]);
+			break;
+		}
+		case TYPE_BOX:{
+			normal = norm;
+			break;
+		}
+		case TYPE_MESH:{
+			normal = norm;//triNormal(indices[primitiveID.cId]);
+			break;
+		}
 	}
 
 	float diffuse = 0;

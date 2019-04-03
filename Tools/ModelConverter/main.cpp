@@ -122,6 +122,9 @@ struct VertexBoneData
 struct TriIndex {
 	int v[3];
 };
+struct QuadIndex {
+	int v[4];
+};
 struct Vertex {
 	glm::vec3 position;
 	Vertex() {};
@@ -509,6 +512,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	LoadBones(pScene, tds);
 
 	//get data mesh data
+	int numtris = 0;
+	int numquads = 0;
 	for (int i = 0; i < pScene->mNumMeshes; ++i) {
 		Mesh subset;
 		glm::vec3 maxVert = glm::vec3(FLT_MIN);
@@ -532,6 +537,13 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			for (int t = 0; t < 3; t++)
 				tri.v[t] = paiMesh->mFaces[f].mIndices[t];
 			subset.tris.push_back(tri);
+
+			QuadIndex quad;
+			int numIndices = paiMesh->mFaces[f].mNumIndices;
+			if (numIndices == 3)
+				numtris++;
+			if (numIndices == 4)
+				numquads++;
 		}
 
 		subset.center.x = (maxVert.x + minVert.x) * 0.5f;
@@ -690,6 +702,8 @@ bool LoadDirectory(std::string directory)
 		if (DoTheImportThing(p.path().string(), mod, skeleton)) {
 			//break;
 			ModelScaler(mod);
+			////////////////////////////////////////////////////////////////////////////////////////////////////UNMESHONLYIFYTHIS////////////////////////////////////////////////
+			meshType = MESH_ONLY;
 			WritePEModel(mod, "Output/" + mod.name + ".pm");
 
 			if (meshType == SKIN_AND_ANIM) {
