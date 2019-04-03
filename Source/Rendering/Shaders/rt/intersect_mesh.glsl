@@ -51,13 +51,13 @@ flool triIntersect(vec3 rayO, vec3 rayD, TriangleIndex tri) {
 	return flool(f * dot(edge2, q), true);
 }
 
-vec4 quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q) {
+flool quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q, inout vec3 n) {
 	vec3 q00 = verts[q.v[0]].pos, q10 = verts[q.v[1]].pos, q11 = verts[q.v[2]].pos, q01 = verts[q.v[3]].pos;
 	vec3 e10 = q10 - q00;
 	vec3 e11 = q11 - q10;
 	vec3 e00 = q01 - q00;
 	vec3 qn = cross(e10, (q01 - q11));
-	vec3 n;
+	//vec3 n;
 	q00 -= rO;
 	q10 -= rO;
 	float a = dot(cross(q00, rd), e00);
@@ -65,7 +65,7 @@ vec4 quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q) {
 	float b = dot(cross(q10, rd), e11);
 	b -= a + c;
 	float det = b * b - 4 * a*c;
-	if (det < 0) return vec4(-1.f);
+	if (det < 0) return flool(0, false);
 	det = sqrt(det);
 	float u1, u2;
 	float t = FLT_MAX;// , u, v;
@@ -103,7 +103,7 @@ vec4 quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q) {
 			t = t2; //u = u2; v = v2 / det;	
 		}
 	}
-	if (t == FLT_MAX) return vec4(-1);
-	return vec4(t, n);
+	if (t == FLT_MAX) return flool(0, false);
+	return flool(t, true);
 }
 #endif
