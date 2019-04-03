@@ -21,7 +21,7 @@ void Scene::init(artemis::World& w) {
 	input = (InputSystem*)sm->setSystem(new InputSystem());
 	button = (ButtonSystem*)sm->setSystem(new ButtonSystem());
 
-	LoadScene("Level1/Scene1");
+	LoadScene("Level1/Barrels");
 
 };
 

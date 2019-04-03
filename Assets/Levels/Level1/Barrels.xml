@@ -1,0 +1,532 @@
+<Root>
+    <Scene Num="1"/>
+    <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
+        <Transform>
+            <Position x="-0.90000153" y="6.9299202" z="0.91997147"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="3.0699999"/>
+        </Transform>
+        <LookAt x="0" y="0.5" z="0"/>
+        <FOV fov="10"/>
+    </Node>
+    <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
+        <Transform>
+            <Position x="0.7199955" y="23.349915" z="17.73"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Color r="255" g="255" b="255"/>
+        <Intensity i="1000"/>
+        <ID id="0"/>
+    </Node>
+    <Node Name="Obj01" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="-5" y="0" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj02" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="-2.5" y="0" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj03" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj04" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="2.5" y="0" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj05" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="5" y="0" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj11" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="-5" y="0" z="2.5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj12" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="-2.5" y="0" z="2.5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj13" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="2.5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj14" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="2.5" y="0" z="2.5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj15" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="5" y="0" z="2.5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="85114800"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj21" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="-5" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj22" hasChildren="true" Flags="1059" Dynamic="true">
+        <Transform>
+            <Position x="-2.5" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj23" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj24" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="2.5" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+    <Node Name="Obj25" hasChildren="true" Flags="1059" Dynamic="false">
+        <Transform>
+            <Position x="5" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186593"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186594"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="582416384"/>
+            <Object ID="679186595"/>
+        </Node>
+    </Node>
+</Root>
