@@ -6,8 +6,8 @@
 // cylinder defined by extremes pa and pb, and radious ra
 vec4 cylinderIntersect(in vec3 ro, in vec3 rd, in Primitive cyl) // extreme a, extreme b, radius
 {
-	vec3 pb = cyl.center;//cyl.bottom;
-	vec3 pa = cyl.center;
+	vec3 pb = cyl.world[3].xyz;//cyl.bottom;
+	vec3 pa = cyl.world[3].xyz;
 	pb.y += cyl.extents.y;
 	pa.y -= cyl.extents.y;
 	pb = mat3(cyl.world) * pb;

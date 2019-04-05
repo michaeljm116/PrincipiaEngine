@@ -16,7 +16,7 @@ layout (binding = 0, rgba8) uniform writeonly image2D resultImage;
 #define REFLECTIONS true 
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
-#define TRIINTERSECT true	
+#define TRIINTERSECT false
 
 
 #include "rt/structs.glsl"
@@ -112,8 +112,8 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 			break;
 		}
 		case TYPE_MESH:{
-			normal = norm;//triNormal(indices[primitiveID.cId]);
-			break;
+			normal = triNormal(primitives[primitiveID.id], indices[primitiveID.cId]);
+			break; //(primitives[primitiveID.id].world * vec4(norm, 1.0)).xyz;
 		}
 	}
 

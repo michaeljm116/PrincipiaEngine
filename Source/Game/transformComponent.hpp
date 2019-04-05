@@ -32,6 +32,9 @@ struct TransformComponent : public artemis::Component {
 	glm::vec3 eulerRotation;
 
 	TransformComponent() { local.scale = glm::vec4(1.f); local.rotation = glm::quat(); local.position = glm::vec4(0); world = glm::mat4(0); };
+	TransformComponent(glm::vec3 center, glm::vec3 extents) {
+		*this = TransformComponent(center, glm::vec3(0.f), extents);
+	}
 	TransformComponent(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca) : eulerRotation(rot) {
 
 		

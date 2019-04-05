@@ -4,7 +4,7 @@
 
 float sphereIntersect(in vec3 rayO, in vec3 rayD, in Primitive sphere)
 {
-	vec3 oc = rayO - sphere.center;
+	vec3 oc = rayO - sphere.world[3].xyz;
 	float b = 2.0 * dot(oc, rayD);
 	float c = dot(oc, oc) - sphere.extents.x*sphere.extents.x;
 	float h = b * b - 4.0*c;
