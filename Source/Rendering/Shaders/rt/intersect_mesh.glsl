@@ -23,11 +23,18 @@ flool boundsIntersect(vec3 rayO, vec3 rayD, Primitive box) {
 	return bob;
 }
 
-vec3 triNormal(in TriangleIndex tri) {
+//vec3 triNormal(in TriangleIndex tri) {
+//	vec3 edge1 = verts[tri.v1].pos - verts[tri.v0].pos;
+//	vec3 edge2 = verts[tri.v2].pos - verts[tri.v0].pos;
+//
+//	return normalize(cross(edge1, edge2));
+//}
+
+vec3 triNormal(in Primitive prim, in TriangleIndex tri) {
 	vec3 edge1 = verts[tri.v1].pos - verts[tri.v0].pos;
 	vec3 edge2 = verts[tri.v2].pos - verts[tri.v0].pos;
 
-	return normalize(cross(edge1, edge2));
+	return (prim.world*vec4(normalize(cross(edge1, edge2)), 1.0)).xyz;
 }
 // verts[tri.v0].pos
 flool triIntersect(vec3 rayO, vec3 rayD, TriangleIndex tri) {

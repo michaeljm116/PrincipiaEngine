@@ -72,6 +72,7 @@ void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
 		
 		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 		ssPrimitive& obj = rs->getObject(objComp->objIndex);
+		//so what im looking for is the resource manager's
 
 		//scale the aabb
 		obj.center = tc->global.position;
@@ -134,8 +135,8 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
 		//scale the aabb
-		obj.center = tc->global.position;
-		obj.extents = tc->global.scale;// rotateAABB(tc->global.rotation, tc->global.scale);
+		obj.center = tc->world[3];// tc->global.position;
+		obj.extents = tc->global.scale * 1.f;// rotateAABB(tc->global.rotation, tc->global.scale);
 		obj.world = tc->world;// *glm::vec4(tc->global.scale, 1.f);
 
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);

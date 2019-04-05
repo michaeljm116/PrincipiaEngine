@@ -1,0 +1,109 @@
+<Root>
+    <Scene Num="1"/>
+    <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
+        <Transform>
+            <Position x="0" y="3.51" z="0.01001358"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="3.0699999"/>
+        </Transform>
+        <LookAt x="0" y="0.5" z="0"/>
+        <FOV fov="10"/>
+    </Node>
+    <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
+        <Transform>
+            <Position x="0" y="-3.7199974" z="2.2900009"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Color r="255" g="255" b="255"/>
+        <Intensity i="1000"/>
+        <ID id="0"/>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="0" z="-180"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="644949189"/>
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="588622944"/>
+            <Object ID="644949189"/>
+        </Node>
+        <Node Name="Cube.000" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="588622944"/>
+            <Object ID="644949190"/>
+        </Node>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="false">
+        <Transform>
+            <Position x="-2" y="0" z="-1"/>
+            <Rotation x="0" y="0" z="-180"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="644949189"/>
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="845249024"/>
+            <Object ID="644949189"/>
+        </Node>
+        <Node Name="Cube.000" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="845249024"/>
+            <Object ID="644949190"/>
+        </Node>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="false">
+        <Transform>
+            <Position x="2" y="0" z="1"/>
+            <Rotation x="0" y="0" z="-180"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="644949189"/>
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="150738392"/>
+            <Object ID="644949189"/>
+        </Node>
+        <Node Name="Cube.000" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="150738392"/>
+            <Object ID="644949190"/>
+        </Node>
+    </Node>
+    <Node Name="New Box!" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="-9.9700003" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="15" y="1" z="15"/>
+        </Transform>
+        <Material ID="-348345232"/>
+        <Object ID="-2"/>
+    </Node>
+</Root>

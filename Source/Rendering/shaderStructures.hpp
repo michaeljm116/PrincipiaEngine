@@ -86,7 +86,7 @@ struct ssTriangleIndex {
 	ssTriangleIndex(int v0, int v1, int v2, int id) : id(id) { v[0] = v0; v[1] = v1; v[2] = v2; };
 }; //Total = 16 bytes
 
-struct ssQuadIndex {
+struct ssIndex {
 	glm::ivec4 v; //16bytes
 };
 

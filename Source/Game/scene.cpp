@@ -22,6 +22,7 @@ void Scene::init(artemis::World& w) {
 	button = (ButtonSystem*)sm->setSystem(new ButtonSystem());
 
 	LoadScene("Level1/QuadsTest");
+	//LoadScene("Level1/Scene1");
 
 };
 
@@ -76,6 +77,8 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	//ps->addNode(parent);
 	
 	//set up the subsets
+	//NOTE: CAN SOMEONE PLEASE EXPLAIN TO ME WHY I DID THIS STUPID FLUFFYING THING?!?!? WHY DO I HAVE
+	//AN ITERATOR AND ALREADY HAVE AN I?!?!? WHY NOT JUST CHOOSE 1?!? AM I THAT STUPID OR IS THERE A PURPOSE??!?
 	int i = 0;
 	for (std::vector<rMesh>::const_iterator itr = resource.meshes.begin(); itr != resource.meshes.end(); itr++) {
 
@@ -84,7 +87,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 
 		//Set up subset data
 		NodeComponent* childNode = new NodeComponent(child, parent);
-		TransformComponent* childTransform = new TransformComponent();
+		TransformComponent* childTransform = new TransformComponent();// resource.meshes[i].center, resource.meshes[i].extents);
 
 		child->addComponent(childNode);
 		child->addComponent(childTransform);
