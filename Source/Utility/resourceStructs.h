@@ -52,9 +52,16 @@ struct  rMaterial
 		}
 	}
 };
+struct rVertex{
+	glm::vec3 pos;
+	glm::vec3 norm;
+	rVertex(const glm::vec3& p, const glm::vec3& n) : pos(p), norm(n) {};
+	rVertex() {};
+};
+
 struct rMesh {
-	std::vector<glm::vec3> verts;
-	std::vector<glm::ivec3> tris;
+	std::vector<rVertex> verts;
+	std::vector<glm::ivec4> faces;
 	std::vector<rJointData> bones;
 
 	glm::vec3 center;

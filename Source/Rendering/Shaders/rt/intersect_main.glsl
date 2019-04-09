@@ -21,15 +21,17 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 
 	for (int i = 0; i < primitives.length(); ++i) {
 		if (primitives[i].id > 0) {
-			mat4 invWorld = inverse(primitives[i].world);
+			mat4 world = primitives[i].world;
+			//world[3] = vec4(primitives[i].center, 1);
+			mat4 invWorld = inverse(world);
+			//mat4 invWorld = inverse(primitives[i].world);
 			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / primitives[i].extents;
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / primitives[i].extents;
-
-			flool tMesh = boundsIntersect(roo, rdd, primitives[i]);
+			flool tMesh = boundsIntersect(roo, rdd, primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) {
 				for (int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++) {
 					if (TRIINTERSECT) {
-						flool tTri = triIntersect(roo, rdd, indices[j]);
+						flool tTri = triIntersect(roo, rdd, faces[j]);
 						if (tTri.b) {
 							if ((tTri.t > EPSILON) && (tTri.t < resT)) {
 								id = sectID(TYPE_MESH, i, j);
@@ -38,10 +40,7 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 						}
 					}
 					else {
-						QuadIndex quad;
-						quad.v[0] = indices[j].v0; quad.v[1] = indices[j].v1;
-						quad.v[2] = indices[j].v2; quad.v[3] = indices[j].v2;
-						flool tQuad = quadIntersect(roo, rdd, quad, norm);
+						flool tQuad = quadIntersect(roo, rdd, faces[j], norm);
 						if (tQuad.b) {
 							if ((tQuad.t > EPSILON) && (tQuad.t < resT)) {
 								id = sectID(TYPE_MESH, i, j);
@@ -108,11 +107,11 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / primitives[i].extents;
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / primitives[i].extents;
 
-			flool tMesh = boundsIntersect(roo, rdd, primitives[i]);
+			flool tMesh = boundsIntersect(roo, rdd, primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)) {
 				for (int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++) {
 					if (TRIINTERSECT) {
-						flool tTri = triIntersect(roo, rdd, indices[j]);
+						flool tTri = triIntersect(roo, rdd, faces[j]);
 						if (tTri.b) {
 							if ((tTri.t > EPSILON) && (tTri.t < t)) {
 								t = tTri.t;
@@ -122,11 +121,8 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 					}
 					else
 					{
-						QuadIndex quad;
-						quad.v[0] = indices[j].v0; quad.v[1] = indices[j].v1;
-						quad.v[2] = indices[j].v2; quad.v[3] = indices[j].v2;
 						vec3 normal = vec3(0, 1, 0);
-						flool tQuad = quadIntersect(roo, rdd, quad, normal);
+						flool tQuad = quadIntersect(roo, rdd, faces[j], normal);
 						if (tQuad.b) {
 							if ((tQuad.t > EPSILON) && (tQuad.t < t)) {
 								t = tQuad.t;
@@ -175,7 +171,7 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 				return SHADOW;
 			}
 		}*/
-	}
+	} 
 	return 1.0;
 }
 

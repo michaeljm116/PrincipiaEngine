@@ -79,7 +79,7 @@ bool Resources::LoadPModel(std::string fileName)
 		rMesh m;
 		int meshNameLength;
 		int numVerts;
-		int numTris;
+		int numFaces;
 
 		//name
 		binaryio.read(reinterpret_cast<char*>(&meshNameLength), sizeof(int));
@@ -89,7 +89,7 @@ bool Resources::LoadPModel(std::string fileName)
 		}
 		//nums
 		binaryio.read(reinterpret_cast<char*>(&numVerts), sizeof(int));
-		binaryio.read(reinterpret_cast<char*>(&numTris), sizeof(int));
+		binaryio.read(reinterpret_cast<char*>(&numFaces), sizeof(int));
 
 		//aabbs
 		binaryio.read(reinterpret_cast<char*>(&m.center), sizeof(glm::vec3));
@@ -98,17 +98,17 @@ bool Resources::LoadPModel(std::string fileName)
 		//vertices
 		m.verts.reserve(numVerts);
 		for (int v = 0; v < numVerts; ++v) {
-			glm::vec3 vert;
-			binaryio.read(reinterpret_cast<char*>(&vert), sizeof(glm::vec3));
+			rVertex vert;
+			binaryio.read(reinterpret_cast<char*>(&vert), sizeof(rVertex));
 			//m.verts.push_back(vert);
 			m.verts.emplace_back(vert);
 		}
 		//tris
-		m.tris.reserve(numTris);
-		for (int t = 0; t < numTris; ++t) {
-			glm::ivec3 tri;
-			binaryio.read(reinterpret_cast<char*>(&tri), sizeof(glm::ivec3));
-			m.tris.emplace_back(tri);
+		m.faces.reserve(numFaces);
+		for (int t = 0; t < numFaces; ++t) {
+			glm::ivec4 face;
+			binaryio.read(reinterpret_cast<char*>(&face), sizeof(glm::ivec4));
+			m.faces.emplace_back(face);
 		}
 		//bones
 		if (skinned) {

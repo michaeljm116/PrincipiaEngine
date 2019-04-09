@@ -134,7 +134,7 @@ void RenderSystem::loadResources()
 {
 	//get all the models and load err thang
 	std::vector<ssVert> verts;
-	std::vector<ssTriangleIndex> indices;
+	std::vector<ssIndex> faces;
 	std::vector<ssMesh> meshes;
 
 	std::vector<rModel>& models = RESOURCEMANAGER.getModels();
@@ -148,33 +148,38 @@ void RenderSystem::loadResources()
 
 			//toss in the vertice data
 			int prevVertSize = verts.size();
-			int prevIndSize = indices.size();
+			int prevIndSize = faces.size();
 
 			ssMesh mesh;
 			mesh.startVert = prevVertSize;
 			mesh.endVert = mesh.startVert + rmesh.verts.size() - 1;
 			mesh.startIndex = prevIndSize;
+			//mesh.center = glm::vec4(rmesh.center, 1.f);
+			//mesh.extents = glm::vec4(rmesh.extents, 1.f);
 
+			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
-			for (std::vector<glm::vec3>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr)
-				verts.push_back(ssVert(*itr));
+			for (std::vector<rVertex>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr)
+				verts.push_back(ssVert(itr->pos, itr->norm));
 			//Load up da indices
-			for (std::vector<glm::ivec3>::const_iterator itr = rmesh.tris.begin(); itr != rmesh.tris.end(); ++itr) {
-				indices.push_back(ssTriangleIndex(*itr + prevVertSize, ++currId));
+			for (std::vector<glm::ivec4>::const_iterator itr = rmesh.faces.begin(); itr != rmesh.faces.end(); ++itr) {
+				faces.push_back(ssIndex(*itr + prevVertSize));// , ++currId));
 			}
 
 			//finish loading the data
-			mesh.endIndex = indices.size();
+			mesh.endIndex = faces.size();
 			meshes.push_back(mesh);
 
 			//finish mia
 			mia.index = meshes.size() - 1;
+			mia.center = rmesh.center;
+			mia.extents = rmesh.extents;
 			miaList.push_back(mia);
 		}
 	}
 
 	compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
-	compute.storageBuffers.indices.InitStorageBufferWithStaging(vkDevice, indices, indices.size());
+	compute.storageBuffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
 	compute.storageBuffers.meshes.InitStorageBufferWithStaging(vkDevice, meshes, meshes.size());
 
 	//compute.storageBuffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
@@ -238,11 +243,14 @@ void RenderSystem::addNode(NodeComponent* node) {
 		object.matId = mat->matID;
 
 		//set up the ids
+		//this is O(n) SL0W y not hash?
 		if (objComp->uniqueID > 0) {
 			for (size_t i = 0; i < miaList.size(); ++i) {
 				if (objComp->uniqueID == miaList[i].uniqueID) {
 					object.id = miaList[i].index;
 					objComp->gpuIndex = object.id;
+					objComp->center = miaList[i].center;
+					objComp->extents = miaList[i].extents;
 				}
 			}
 		}
@@ -251,8 +259,6 @@ void RenderSystem::addNode(NodeComponent* node) {
 
 		//put into list
 		objComp->objIndex = objects.size();
-		objComp->center = object.center;
-		objComp->extents = object.extents;
 		objects.push_back(object);
 		objectComps.push_back(objComp);
 
@@ -1142,7 +1148,7 @@ void RenderSystem::prepareCompute()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			3,
-			&compute.storageBuffers.indices.Descriptor()),
+			&compute.storageBuffers.faces.Descriptor()),
 		// Binding 4: Shader storage buffer for the meshes
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
@@ -1209,7 +1215,7 @@ void RenderSystem::destroyCompute()
 {
 	compute.uniformBuffer.Destroy(vkDevice);
 	compute.storageBuffers.verts.Destroy(vkDevice);
-	compute.storageBuffers.indices.Destroy(vkDevice);
+	compute.storageBuffers.faces.Destroy(vkDevice);
 	compute.storageBuffers.meshes.Destroy(vkDevice);
 	compute.storageBuffers.objects.Destroy(vkDevice);
 	compute.storageBuffers.materials.Destroy(vkDevice);

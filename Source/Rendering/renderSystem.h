@@ -17,6 +17,8 @@ much rework but brotha aint got time fo dat
 struct MeshIdAssigner {
 	int index;
 	int uniqueID;
+	glm::vec3 center;
+	glm::vec3 extents;
 };
 
 class RenderSystem : public RenderBase, public artemis::EntityProcessingSystem
@@ -106,7 +108,7 @@ private:
 	struct {
 		struct {
 			VBuffer<ssVert> verts;			// (Shader) storage buffer object with scene verts
-			VBuffer<ssTriangleIndex> indices;		// (Shader) storage buffer object with scene indices
+			VBuffer<ssIndex> faces;		// (Shader) storage buffer object with scene indices
 			VBuffer<ssMesh> meshes;				// (Shader) storage buffer object with scene Meshes;
 			VBuffer<ssPrimitive> objects;
 			VBuffer<ssMaterial> materials;			// (Shader) storage buffer object with scene Materials
