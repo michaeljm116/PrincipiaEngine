@@ -135,10 +135,18 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
 		//scale the aabb
-		obj.center = tc->world[3];// tc->global.position;
-		obj.extents = tc->global.scale * 1.f;// rotateAABB(tc->global.rotation, tc->global.scale);
-		obj.world = tc->world;// *glm::vec4(tc->global.scale, 1.f);
+		if (objComp->uniqueID < 0) {
+			obj.center = tc->world[3];// tc->global.position;
+			obj.extents = tc->global.scale * 1.f;// rotateAABB(tc->global.rotation, tc->global.scale);
+			//obj.world = tc->world;// *glm::vec4(tc->global.scale, 1.f);
 
+		}
+		else {
+			//scale the aabb
+			obj.center = objComp->center  + tc->global.position;
+			obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
+		}
+		obj.world = tc->world;
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 	}
 

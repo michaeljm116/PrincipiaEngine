@@ -122,17 +122,19 @@ struct VertexBoneData
 struct TriIndex {
 	int v[3];
 };
-struct QuadIndex {
-	int v[4];
+struct Face {
+	glm::ivec4 v;
 };
 struct Vertex {
 	glm::vec3 position;
+	glm::vec3 normal;
 	Vertex() {};
 	Vertex(glm::vec3 p) { position = p; };
+	Vertex(aiVector3D p, aiVector3D n) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); }
 };
 struct Mesh {
 	std::string name;
-	std::vector<TriIndex> tris;
+	std::vector<Face> faces;
 	std::vector<Vertex> vertices;
 	std::vector<VertexBoneData> bones;
 	glm::vec3 extent;
@@ -234,7 +236,7 @@ auto cmp = [](std::pair<std::string, int> const & a, std::pair<std::string, int>
 	return a.second != b.second ? a.second < b.second : a.first < b.first;
 };
 
-bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s);
+bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s, bool triangulate);
 
 bool WritePEModel(PrincipiaModel& m, std::string fn);
 bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn);
@@ -313,7 +315,7 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 	for (int i = 0; i < numMeshes; ++i) {
 		int meshNameLength = m.meshes[i].name.length();
 		int numVerts = m.meshes[i].vertices.size();
-		int numTris = m.meshes[i].tris.size();
+		int numTris = m.meshes[i].faces.size();
 
 		//Name
 		binaryio.write(CCAST(&meshNameLength), sizeof(int));
@@ -328,10 +330,10 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 		binaryio.write(CCAST(&m.meshes[i].extent), sizeof(glm::vec3));
 
 		for (int v = 0; v < numVerts; v++) {
-			binaryio.write(CCAST(&m.meshes[i].vertices[v]), sizeof(glm::vec3));
+			binaryio.write(CCAST(&m.meshes[i].vertices[v]), sizeof(Vertex));
 		}
 		for (int t = 0; t < numTris; t++) {
-			binaryio.write(CCAST(&m.meshes[i].tris[t]), sizeof(TriIndex));
+			binaryio.write(CCAST(&m.meshes[i].faces[t].v), sizeof(glm::ivec4));
 		}
 
 		if (skinned) {
@@ -445,7 +447,7 @@ PrincipiaModel ReadPEModel(const char* pFile){
 		Mesh m;
 		int meshNameLength;
 		int numVerts;
-		int numTris;
+		int numFaces;
 
 		//name
 		binaryio.read(CCAST(&meshNameLength), sizeof(int));
@@ -455,7 +457,7 @@ PrincipiaModel ReadPEModel(const char* pFile){
 		}
 		//nums
 		binaryio.read(CCAST(&numVerts), sizeof(int));
-		binaryio.read(CCAST(&numTris), sizeof(int));
+		binaryio.read(CCAST(&numFaces), sizeof(int));
 
 		//aabbs
 		binaryio.read(CCAST(&m.center), sizeof(glm::vec3));
@@ -466,17 +468,17 @@ PrincipiaModel ReadPEModel(const char* pFile){
 			binaryio.read(CCAST(&vert), sizeof(glm::vec3));
 			m.vertices.push_back(vert);
 		}
-		for (int t = 0; t < numTris; ++t) {
-			TriIndex tri;
-			binaryio.read(CCAST(&tri), sizeof(TriIndex));
-			m.tris.push_back(tri);
+		for (int t = 0; t < numFaces; ++t) {
+			Face face;
+			binaryio.read(CCAST(&face), sizeof(TriIndex));
+			m.faces.push_back(face);
 		}
 		mod.meshes.push_back(m);
 	}
 
 	return mod;
 }
-bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s)
+bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s, bool triangulate)
 {
 	tempDataStruct tds;
 	// Create an instance of the Importer class
@@ -484,11 +486,19 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
-	const aiScene* pScene = importer.ReadFile(pFile,
-		aiProcess_CalcTangentSpace |
-		aiProcess_Triangulate |
-		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType);
+	const aiScene* pScene;//
+	if(triangulate)
+	pScene = importer.ReadFile(pFile,
+			aiProcess_CalcTangentSpace |
+			aiProcess_Triangulate |
+			aiProcess_JoinIdenticalVertices |
+			aiProcess_SortByPType);
+	else
+		pScene = importer.ReadFile(pFile,
+			aiProcess_CalcTangentSpace |
+			aiProcess_JoinIdenticalVertices |
+			aiProcess_FindDegenerates | 
+			aiProcess_OptimizeMeshes );
 	// If the import failed, report it
 	if (!pScene)
 	{
@@ -509,7 +519,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	m.name = m.name.substr(0, indexico);
 	
 
-	LoadBones(pScene, tds);
+	//LoadBones(pScene, tds);
 
 	//get data mesh data
 	int numtris = 0;
@@ -521,7 +531,10 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 
 		aiMesh* paiMesh = pScene->mMeshes[i];
 		for (int v = 0; v < paiMesh->mNumVertices; ++v) {
-			subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
+			auto vert = paiMesh->mVertices[v];
+			auto norm = paiMesh->mNormals[v];
+			//subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
+			subset.vertices.push_back(Vertex(vert, norm));
 			maxVert.x = maxVal(maxVert.x, paiMesh->mVertices[v].x);
 			maxVert.y = maxVal(maxVert.y, paiMesh->mVertices[v].y);
 			maxVert.z = maxVal(maxVert.z, paiMesh->mVertices[v].z);
@@ -533,15 +546,18 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		}
 		for (int f = 0; f < paiMesh->mNumFaces; ++f) {
 			//subset.faces.push_back(paiMesh->mFaces[f]);
-			TriIndex tri;
-			for (int t = 0; t < 3; t++)
-				tri.v[t] = paiMesh->mFaces[f].mIndices[t];
-			subset.tris.push_back(tri);
+			//TriIndex tri;
+			Face face;
+			for (int t = 0; t < paiMesh->mFaces[f].mNumIndices; t++) {
+				face.v[t] = paiMesh->mFaces[f].mIndices[t];
+			}
+			subset.faces.push_back(face);
 
-			QuadIndex quad;
 			int numIndices = paiMesh->mFaces[f].mNumIndices;
-			if (numIndices == 3)
+			if (numIndices == 3) {
 				numtris++;
+				face.v[3] = face.v[2];
+			}
 			if (numIndices == 4)
 				numquads++;
 		}
@@ -557,86 +573,87 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		subset.name = paiMesh->mName.C_Str();
 		m.meshes.push_back(subset);
 
-	/////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
-	/////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
-	/////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
-		std::vector<tempRJoint> rayJoints;
-		if (paiMesh->mNumBones > 0) {
-			std::vector<VertexBoneData> bonesy;
-			m.meshes[i].bones.resize(paiMesh->mNumVertices);
+	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
+	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
+	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
+	//	std::vector<tempRJoint> rayJoints;
+	//	if (paiMesh->mNumBones > 0) {
+	//		std::vector<VertexBoneData> bonesy;
+	//		m.meshes[i].bones.resize(paiMesh->mNumVertices);
 
-			for (int b = 0; b < paiMesh->mNumBones; ++b) {
-				aiBone* boney = paiMesh->mBones[b];
-				//std::vector<aiVertexWeight> weights;
-				tempRJoint rj;
-				for (int w = 0; w < boney->mNumWeights; w++) {
-					aiVertexWeight weighty = boney->mWeights[w];
-					//m.meshes[i].bones[weighty.mVertexId].add(tds.jointMap.find(boney->mName.data)->second, weighty.mWeight);
-					//weights.push_back(weighty);
-						if (weighty.mWeight > 0.5f){
-							rj.verts.push_back(weighty.mVertexId);
-					}
-				}
-				rj.name = boney->mName.C_Str();
-				rayJoints.push_back(rj);				
-				//skelly.joints.push_back(jointy);
-			}
-			int total = 0;
-			for (int i = 0; i < rayJoints.size(); ++i)
-				total += rayJoints[i].verts.size();
-			int a = 0;
-			//m.meshes[i].v
+	//		for (int b = 0; b < paiMesh->mNumBones; ++b) {
+	//			aiBone* boney = paiMesh->mBones[b];
+	//			//std::vector<aiVertexWeight> weights;
+	//			tempRJoint rj;
+	//			for (int w = 0; w < boney->mNumWeights; w++) {
+	//				aiVertexWeight weighty = boney->mWeights[w];
+	//				//m.meshes[i].bones[weighty.mVertexId].add(tds.jointMap.find(boney->mName.data)->second, weighty.mWeight);
+	//				//weights.push_back(weighty);
+	//					if (weighty.mWeight > 0.5f){
+	//						rj.verts.push_back(weighty.mVertexId);
+	//				}
+	//			}
+	//			rj.name = boney->mName.C_Str();
+	//			rayJoints.push_back(rj);				
+	//			//skelly.joints.push_back(jointy);
+	//		}
+	//		int total = 0;
+	//		for (int i = 0; i < rayJoints.size(); ++i)
+	//			total += rayJoints[i].verts.size();
+	//		int a = 0;
+	//		//m.meshes[i].v
 
-			//skellys.push_back(skelly);
-			/*for (int f = 0; f < paiMesh->mNumVertices; ++f) {
-				m.meshes[i].vertices[f].boneData = bonesy[f];
-			}*/
-		}
+	//		//skellys.push_back(skelly);
+	//		/*for (int f = 0; f < paiMesh->mNumVertices; ++f) {
+	//			m.meshes[i].vertices[f].boneData = bonesy[f];
+	//		}*/
+	//	}
+	//}
+
+	//if (pScene->HasAnimations() && meshType == SKINNED_MESH) {
+	//	meshType = SKIN_AND_ANIM;
+	//	aiMatrix4x4 glit = pScene->mRootNode->mTransformation;
+	//	glit.Inverse();
+	//	s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
+	//	s.joints = tds.skeletonJoints;
+	//	s.numJoints = tds.skeletonJoints.size();
+	//	int a = 0;
+	//	for (; a < pScene->mNumAnimations; ++a) {
+	//		aiAnimation* anim = pScene->mAnimations[a];
+	//		PrincipiaAnimation animation;
+	//		animation.name = anim->mName.data;
+	//		animation.duration = anim->mDuration;
+	//		animation.fps = anim->mTicksPerSecond;
+	//		animation.skeletonID = s.uniqueID;
+
+	//		for (int j = 0; j < s.joints.size(); ++j) {
+	//			for (int ch = 0; ch < anim->mNumChannels; ch++) {
+	//				aiNodeAnim* ana = anim->mChannels[ch];
+	//				if (!::strcmp(ana->mNodeName.data, s.joints[j].name.c_str())) {
+	//					AnimChannel channel;
+	//					channel.name = ana->mNodeName.data;// anim->mName.data;
+	//					if ((ana->mNumPositionKeys != ana->mNumRotationKeys) || (ana->mNumPositionKeys != ana->mNumScalingKeys) || (ana->mNumRotationKeys != ana->mNumScalingKeys))
+	//						std::cout << "ERROR, UNEVEN KEYS\n";
+
+	//					for (int k = 0; k < ana->mNumRotationKeys; k++) {
+	//						KeySQT key;
+	//						key.pos = ana->mPositionKeys[k];
+	//						key.rot = ana->mRotationKeys[k];
+	//						key.sca = ana->mScalingKeys[k];
+	//						key.time = ana->mRotationKeys[k].mTime;
+	//						channel.keys.push_back(key);
+	//					}
+	//					channel.numKeys = channel.keys.size();
+	//					animation.channels.push_back(channel);
+	//				}
+	//				animation.numChannels = animation.channels.size();
+	//			}
+	//		}
+	//		s.animations.push_back(animation);
+	//	}
 	}
-
-	if (pScene->HasAnimations() && meshType == SKINNED_MESH) {
-		meshType = SKIN_AND_ANIM;
-		aiMatrix4x4 glit = pScene->mRootNode->mTransformation;
-		glit.Inverse();
-		s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
-		s.joints = tds.skeletonJoints;
-		s.numJoints = tds.skeletonJoints.size();
-		int a = 0;
-		for (; a < pScene->mNumAnimations; ++a) {
-			aiAnimation* anim = pScene->mAnimations[a];
-			PrincipiaAnimation animation;
-			animation.name = anim->mName.data;
-			animation.duration = anim->mDuration;
-			animation.fps = anim->mTicksPerSecond;
-			animation.skeletonID = s.uniqueID;
-
-			for (int j = 0; j < s.joints.size(); ++j) {
-				for (int ch = 0; ch < anim->mNumChannels; ch++) {
-					aiNodeAnim* ana = anim->mChannels[ch];
-					if (!::strcmp(ana->mNodeName.data, s.joints[j].name.c_str())) {
-						AnimChannel channel;
-						channel.name = ana->mNodeName.data;// anim->mName.data;
-						if ((ana->mNumPositionKeys != ana->mNumRotationKeys) || (ana->mNumPositionKeys != ana->mNumScalingKeys) || (ana->mNumRotationKeys != ana->mNumScalingKeys))
-							std::cout << "ERROR, UNEVEN KEYS\n";
-
-						for (int k = 0; k < ana->mNumRotationKeys; k++) {
-							KeySQT key;
-							key.pos = ana->mPositionKeys[k];
-							key.rot = ana->mRotationKeys[k];
-							key.sca = ana->mScalingKeys[k];
-							key.time = ana->mRotationKeys[k].mTime;
-							channel.keys.push_back(key);
-						}
-						channel.numKeys = channel.keys.size();
-						animation.channels.push_back(channel);
-					}
-					animation.numChannels = animation.channels.size();
-				}
-			}
-			s.animations.push_back(animation);
-		}
-	}
-	s.name = tds.skelename;
+	//s.name = tds.skelename;
+	
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
@@ -699,7 +716,7 @@ bool LoadDirectory(std::string directory)
 		mod.uniqueID = newUniqueID();
 		skeleton.uniqueID = newUniqueID();
 		mod.skeletonID = skeleton.uniqueID;
-		if (DoTheImportThing(p.path().string(), mod, skeleton)) {
+		if (DoTheImportThing(p.path().string(), mod, skeleton, false)) {
 			//break;
 			ModelScaler(mod);
 			////////////////////////////////////////////////////////////////////////////////////////////////////UNMESHONLYIFYTHIS////////////////////////////////////////////////

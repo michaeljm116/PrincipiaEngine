@@ -10,13 +10,13 @@ layout(binding = 1) uniform UBO
 } ubo;
 
 
-layout(std140, binding = 2) buffer TriangleVerts
+layout(std140, binding = 2) buffer Verts
 {
-	TriangleVert verts[];
+	Vert verts[];
 };
 
-layout(std140, binding = 3) buffer TriangleIndices {
-	TriangleIndex indices[];
+layout(std140, binding = 3) buffer Faces {
+	Face faces[];
 };
 
 layout(std140, binding = 4) buffer Meshs {

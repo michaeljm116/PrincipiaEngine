@@ -3,7 +3,7 @@
 #include "structs.glsl"
 #include "layouts.glsl"
 
-flool boundsIntersect(vec3 rayO, vec3 rayD, Primitive box) {
+/*flool boundsIntersect(vec3 rayO, vec3 rayD, Primitive box) {
 
 	vec3 invDir = 1 / rayD;
 	vec3 invRay = invDir * rayO;
@@ -21,32 +21,60 @@ flool boundsIntersect(vec3 rayO, vec3 rayD, Primitive box) {
 	}
 	flool bob = flool(tMin, (tMax > max(tMin, 0.0)));
 	return bob;
+}*/
+
+flool boundsIntersect(vec3 rayO, vec3 rayD, in vec3 extents) {
+
+	vec3 invDir = 1 / rayD;
+	vec3 invRay = invDir * rayO;
+	vec3 k = abs(invDir) * extents;
+
+	float tMin = FLT_MIN;
+	float tMax = FLT_MAX;
+
+	vec3 t1 = -invRay - k;
+	vec3 t2 = -invRay + k;
+
+	for (int i = 0; i < 3; ++i) {
+		tMin = max(tMin, min(t1[i], t2[i]));
+		tMax = min(tMax, max(t1[i], t2[i]));
+	}
+	flool bob = flool(tMin, (tMax > max(tMin, 0.0)));
+	return bob;
 }
 
 //vec3 triNormal(in TriangleIndex tri) {
-//	vec3 edge1 = verts[tri.v1].pos - verts[tri.v0].pos;
-//	vec3 edge2 = verts[tri.v2].pos - verts[tri.v0].pos;
+//	vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
+//	vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
 //
 //	return normalize(cross(edge1, edge2));
 //}
 
-vec3 triNormal(in Primitive prim, in TriangleIndex tri) {
-	vec3 edge1 = verts[tri.v1].pos - verts[tri.v0].pos;
-	vec3 edge2 = verts[tri.v2].pos - verts[tri.v0].pos;
+vec3 triNormal(Primitive prim, Face tri) {
+	//vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
+	//vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
 
-	return (prim.world*vec4(normalize(cross(edge1, edge2)), 1.0)).xyz;
+	//return (prim.world*vec4(normalize(cross(edge1, edge2)), 1.0)).xyz;
+
+	/*vec3 v0 = (prim.world * vec4(verts[tri.v[0]].pos, 1.f)).xyz;
+	vec3 v1 = (prim.world * vec4(verts[tri.v[1]].pos, 1.f)).xyz;
+	vec3 v2 = (prim.world * vec4(verts[tri.v[2]].pos, 1.f)).xyz;
+	vec3 edge1 = v1 - v0;
+	vec3 edge2 = v2 - v0;
+	return normalize(cross(edge1, edge2));*/
+	return vec3(1);
 }
-// verts[tri.v0].pos
-flool triIntersect(vec3 rayO, vec3 rayD, TriangleIndex tri) {
+// verts[tri.v[0]].pos
+flool triIntersect(vec3 rayO, vec3 rayD, Face tri) {
 
-	vec3 edge1 = verts[tri.v1].pos - verts[tri.v0].pos;
-	vec3 edge2 = verts[tri.v2].pos - verts[tri.v0].pos;
+	vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
+	vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
 	vec3 h = cross(rayD, edge2);
 	float a = dot(edge1, h);
 	if (a > -EPSILON && a < EPSILON)
 		return flool(0, false);
 	float f = 1 / a;
-	vec3 s = rayO - verts[tri.v0].pos;
+	vec3 s = rayO - verts[tri.v[0]].pos;
 	float u = f * dot(s, h);
 	if (u < 0.f || u > 1.f)
 		return flool(0, false);
@@ -58,7 +86,7 @@ flool triIntersect(vec3 rayO, vec3 rayD, TriangleIndex tri) {
 	return flool(f * dot(edge2, q), true);
 }
 
-flool quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q, inout vec3 n) {
+flool quadIntersect(in vec3 rO, in vec3 rd, in Face q, inout vec3 n) {
 	vec3 q00 = verts[q.v[0]].pos, q10 = verts[q.v[1]].pos, q11 = verts[q.v[2]].pos, q01 = verts[q.v[3]].pos;
 	vec3 e10 = q10 - q00;
 	vec3 e11 = q11 - q10;
@@ -75,7 +103,7 @@ flool quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q, inout vec3 n) {
 	if (det < 0) return flool(0, false);
 	det = sqrt(det);
 	float u1, u2;
-	float t = FLT_MAX;// , u, v;
+	float t = FLT_MAX , u, v;
 	if (c == 0) {
 		u1 = -a / b; u2 = -1;
 	}
@@ -93,7 +121,7 @@ flool quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q, inout vec3 n) {
 		float t1 = dot(n, pb);
 		float v1 = dot(n, rd);
 		if (t1 > 0 && 0 <= v1 && v1 <= det) {
-			t = t1 / det;// u = u1; v = v1 / det; 
+			t = t1 / det; u = u1; v = v1 / det; 
 
 		}
 
@@ -107,10 +135,34 @@ flool quadIntersect(in vec3 rO, in vec3 rd, in QuadIndex q, inout vec3 n) {
 		float t2 = dot(n, pb) / det;
 		float v2 = dot(n, rd);
 		if (0 <= v2 && v2 <= det && t > t2 && t2 > 0) {
-			t = t2; //u = u2; v = v2 / det;	
+			t = t2; u = u2; v = v2 / det;	
 		}
 	}
 	if (t == FLT_MAX) return flool(0, false);
+	
+	vec3 norm = mix(mix(verts[q.v[0]].norm, verts[q.v[1]].norm, u), mix(verts[q.v[3]].norm, verts[q.v[2]].norm, u), v);
+	n = norm;
 	return flool(t, true);
+	/*
+	if (rtPotentialIntersection(t)) {
+ // Fill the intersection structure irec.
+ // Normal(s) for the closest hit will be normalized in a shader.
+ float3 du = lerp(e10, q11 - q01, v);
+ float3 dv = lerp(e00, e11, u);
+ irec.geometric_normal = cross(du, dv);
+ #if defined(SHADING_NORMALS)
+ const float3* vn = patch.vertex_normals;
+ irec.shading_normal = lerp(lerp(vn[0],vn[1],u),lerp(vn[3],vn[2],u),v);
+ #else
+ irec.shading_normal = irec.geometric_normal;
+ #endif
+ irec.texcoord = make_float3(u, v, 0);
+ irec.id = prim_idx;
+ rtReportIntersection(0u);
+ }
+ }
+
+	
+	*/
 }
 #endif

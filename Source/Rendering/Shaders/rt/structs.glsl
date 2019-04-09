@@ -28,12 +28,16 @@ struct TriangleIndex{
 struct Vert {
 	vec3 pos;
 	int _pad;
+	vec3 norm;
+	int _padd;
 };
-struct QuadIndex {
+struct Face {
 	ivec4 v;
 };
 
 struct Mesh{
+	//vec4 center;
+	//vec4 extents;
 	int startIndex;
 	int endIndex;
 	int startVert;

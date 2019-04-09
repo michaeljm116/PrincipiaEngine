@@ -74,8 +74,10 @@ struct ssCylinder {
 struct ssVert {
 	glm::vec3 pos;
 	int _pad;
+	glm::vec3 norm;
+	int _pad2;
 	ssVert() {};
-	ssVert(glm::vec3 p) : pos(p) {};
+	ssVert(const glm::vec3 &p, const glm::vec3 &n) : pos(p), norm(n) {};
 };
 
 struct ssTriangleIndex {
@@ -88,9 +90,13 @@ struct ssTriangleIndex {
 
 struct ssIndex {
 	glm::ivec4 v; //16bytes
+	ssIndex() {};
+	ssIndex(const glm::ivec4 &face) : v(face) {};
 };
 
 struct ssMesh {
+	//glm::vec4 center; //16
+	//glm::vec4 extents; //16
 	int startIndex; //4
 	int endIndex; //4
 	int startVert; //4
