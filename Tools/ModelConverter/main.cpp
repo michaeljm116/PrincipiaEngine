@@ -553,15 +553,18 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			for (int t = 0; t < paiMesh->mFaces[f].mNumIndices; t++) {
 				face.v[t] = paiMesh->mFaces[f].mIndices[t];
 			}
-			subset.faces.push_back(face);
-
+			//this is to turn triangles into quads
 			int numIndices = paiMesh->mFaces[f].mNumIndices;
 			if (numIndices == 3) {
 				numtris++;
-				face.v[3] = face.v[0];
+				face.v[3] = face.v[2];
 			}
 			if (numIndices == 4)
 				numquads++;
+
+			subset.faces.push_back(face);
+
+
 		}
 
 		subset.center.x = (maxVert.x + minVert.x) * 0.5f;
@@ -718,16 +721,15 @@ bool LoadDirectory(std::string directory)
 		mod.uniqueID = newUniqueID();
 		skeleton.uniqueID = newUniqueID();
 		mod.skeletonID = skeleton.uniqueID;
-		bool triangulate = true;
+		bool triangulate = false;
 		if (DoTheImportThing(p.path().string(), mod, skeleton, triangulate)) {
 			//break;
 			ModelScaler(mod);
 			////////////////////////////////////////////////////////////////////////////////////////////////////UNMESHONLYIFYTHIS////////////////////////////////////////////////
 			meshType = MESH_ONLY;
-			if(triangulate)
-				WritePEModel(mod, "Output/" + mod.name + "_t.pm");			
-			else
-				WritePEModel(mod, "Output/" + mod.name + ".pm");
+			if (triangulate)
+				mod.name += "_t";
+			WritePEModel(mod, "Output/" + mod.name + ".pm");
 
 			if (meshType == SKIN_AND_ANIM) {
 				skeleton.name = mod.name + "_skel";
