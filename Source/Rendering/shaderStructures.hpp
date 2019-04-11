@@ -73,11 +73,11 @@ struct ssCylinder {
 
 struct ssVert {
 	glm::vec3 pos;
-	int _pad;
+	float u;
 	glm::vec3 norm;
-	int _pad2;
+	float v;
 	ssVert() {};
-	ssVert(const glm::vec3 &p, const glm::vec3 &n) : pos(p), norm(n) {};
+	ssVert(const glm::vec3 &p, const glm::vec3 &n, const float &u, const float &v) : pos(p), norm(n), u(u), v(v) { };
 };
 
 struct ssTriangleIndex {

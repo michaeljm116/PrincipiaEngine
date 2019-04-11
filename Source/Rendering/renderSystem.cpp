@@ -160,7 +160,7 @@ void RenderSystem::loadResources()
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
 			for (std::vector<rVertex>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr)
-				verts.push_back(ssVert(itr->pos, itr->norm));
+				verts.push_back(ssVert(itr->pos, itr->norm, itr->uv.x, itr->uv.y));
 			//Load up da indices
 			for (std::vector<glm::ivec4>::const_iterator itr = rmesh.faces.begin(); itr != rmesh.faces.end(); ++itr) {
 				faces.push_back(ssIndex(*itr + prevVertSize));// , ++currId));
