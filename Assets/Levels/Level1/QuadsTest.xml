@@ -2,8 +2,8 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
         <Transform>
-            <Position x="0" y="3.51" z="0.01001358"/>
-            <Rotation x="0" y="0" z="0"/>
+            <Position x="0.14011383" y="2.6702137" z="-0.31927109"/>
+            <Rotation x="0" y="0.001" z="0"/>
             <Scale x="1" y="1" z="3.0699999"/>
         </Transform>
         <LookAt x="0" y="0.5" z="0"/>
@@ -11,7 +11,7 @@
     </Node>
     <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
         <Transform>
-            <Position x="0" y="5.8200016" z="2.2900009"/>
+            <Position x="0" y="5.8200016" z="-1.0596085"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -19,13 +19,119 @@
         <Intensity i="1000"/>
         <ID id="0"/>
     </Node>
-    <Node Name="New Box!" hasChildren="false" Flags="32775" Dynamic="false">
+    <Node Name="floo" hasChildren="false" Flags="32775" Dynamic="false">
         <Transform>
-            <Position x="0" y="-9.9700003" z="0"/>
-            <Rotation x="0" y="9.9999997e-05" z="0"/>
-            <Scale x="15" y="1" z="15"/>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="0.001" z="0"/>
+            <Scale x="5" y="0.001" z="5"/>
+        </Transform>
+        <Material ID="-951317523"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="to" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="5"/>
+            <Rotation x="0" y="0.001" z="0"/>
+            <Scale x="5" y="5" z="1"/>
         </Transform>
         <Material ID="-348345232"/>
         <Object ID="-2"/>
+    </Node>
+    <Node Name="bo" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="-5"/>
+            <Rotation x="0" y="0.001" z="0"/>
+            <Scale x="5" y="5" z="1"/>
+        </Transform>
+        <Material ID="-348345232"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="le" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="-5" y="1" z="0"/>
+            <Rotation x="0" y="0.001" z="0"/>
+            <Scale x="1" y="5" z="5"/>
+        </Transform>
+        <Material ID="-348345232"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="ri" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="5" y="1" z="0"/>
+            <Rotation x="0" y="0.001" z="0"/>
+            <Scale x="1" y="5" z="5"/>
+        </Transform>
+        <Material ID="-348345232"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="false">
+        <Transform>
+            <Position x="-0.76002121" y="0" z="0.41000366"/>
+            <Rotation x="0" y="9.9999997e-05" z="90"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="1272798204"/>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="1272798204"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="1272798205"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="1272798206"/>
+        </Node>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="true">
+        <Transform>
+            <Position x="1.3500023" y="0" z="0.43998718"/>
+            <Rotation x="0" y="9.9999997e-05" z="90"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="1283212538"/>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="1283212538"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="1283212539"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="1283212540"/>
+        </Node>
     </Node>
 </Root>

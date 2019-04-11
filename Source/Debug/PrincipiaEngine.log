@@ -8,6 +8,7 @@
   physicsSystem.cpp
   engineUISystem.cpp
   renderSystem.cpp
+  resourceManager.cpp
   main.cpp
   Generating Code...
   PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Debug\Principia Engine.exe

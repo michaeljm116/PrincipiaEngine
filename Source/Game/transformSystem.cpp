@@ -143,8 +143,10 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 		}
 		else {
 			//scale the aabb
-			obj.center = objComp->center  + tc->global.position;
-			obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
+			//obj.center = objComp->center  + tc->global.position;
+			//obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
+			obj.center = tc->global.position;
+			obj.extents = tc->global.scale;
 		}
 		obj.world = tc->world;
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);

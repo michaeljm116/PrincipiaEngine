@@ -55,6 +55,7 @@ struct  rMaterial
 struct rVertex{
 	glm::vec3 pos;
 	glm::vec3 norm;
+	glm::vec2 uv;
 	rVertex(const glm::vec3& p, const glm::vec3& n) : pos(p), norm(n) {};
 	rVertex() {};
 };

@@ -128,9 +128,11 @@ struct Face {
 struct Vertex {
 	glm::vec3 position;
 	glm::vec3 normal;
+	glm::vec2 uv;
 	Vertex() {};
 	Vertex(glm::vec3 p) { position = p; };
 	Vertex(aiVector3D p, aiVector3D n) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); }
+	Vertex(const aiVector3D &p, const aiVector3D &n, const ai_real &u, const ai_real &v) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); uv = glm::vec2(u, v); }
 };
 struct Mesh {
 	std::string name;
@@ -487,18 +489,16 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
 	const aiScene* pScene;//
-	if(triangulate)
-	pScene = importer.ReadFile(pFile,
+	if (triangulate)
+		pScene = importer.ReadFile(pFile,
 			aiProcess_CalcTangentSpace |
 			aiProcess_Triangulate |
 			aiProcess_JoinIdenticalVertices |
 			aiProcess_SortByPType);
 	else
 		pScene = importer.ReadFile(pFile,
-			aiProcess_CalcTangentSpace |
-			aiProcess_JoinIdenticalVertices |
-			aiProcess_FindDegenerates | 
-			aiProcess_OptimizeMeshes );
+			aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);// |
+			//aiProcess_FindDegenerates | aiProcess_OptimizeMeshes );
 	// If the import failed, report it
 	if (!pScene)
 	{
@@ -533,8 +533,10 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		for (int v = 0; v < paiMesh->mNumVertices; ++v) {
 			auto vert = paiMesh->mVertices[v];
 			auto norm = paiMesh->mNormals[v];
+			auto txtr = paiMesh->mTextureCoords[v];
+
 			//subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
-			subset.vertices.push_back(Vertex(vert, norm));
+			paiMesh->HasTextureCoords(v) ? subset.vertices.push_back(Vertex(vert, norm, txtr->x, txtr->y)) : subset.vertices.push_back(Vertex(vert, norm));
 			maxVert.x = maxVal(maxVert.x, paiMesh->mVertices[v].x);
 			maxVert.y = maxVal(maxVert.y, paiMesh->mVertices[v].y);
 			maxVert.z = maxVal(maxVert.z, paiMesh->mVertices[v].z);
@@ -556,7 +558,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			int numIndices = paiMesh->mFaces[f].mNumIndices;
 			if (numIndices == 3) {
 				numtris++;
-				face.v[3] = face.v[2];
+				face.v[3] = face.v[0];
 			}
 			if (numIndices == 4)
 				numquads++;
@@ -678,7 +680,7 @@ bool ModelScaler(PrincipiaModel& m) {
 		m.meshes[i].center = glm::vec3(world * glm::vec4(m.meshes[i].center, 1.f));
 		m.meshes[i].extent = glm::vec3(world * glm::vec4(m.meshes[i].extent, 1.f));
 		for (int j = 0; j < m.meshes[i].vertices.size(); j++) {
-			m.meshes[i].vertices[j] = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f));
+			m.meshes[i].vertices[j].position = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f));
 		}
 	}
 
@@ -716,12 +718,16 @@ bool LoadDirectory(std::string directory)
 		mod.uniqueID = newUniqueID();
 		skeleton.uniqueID = newUniqueID();
 		mod.skeletonID = skeleton.uniqueID;
-		if (DoTheImportThing(p.path().string(), mod, skeleton, false)) {
+		bool triangulate = true;
+		if (DoTheImportThing(p.path().string(), mod, skeleton, triangulate)) {
 			//break;
 			ModelScaler(mod);
 			////////////////////////////////////////////////////////////////////////////////////////////////////UNMESHONLYIFYTHIS////////////////////////////////////////////////
 			meshType = MESH_ONLY;
-			WritePEModel(mod, "Output/" + mod.name + ".pm");
+			if(triangulate)
+				WritePEModel(mod, "Output/" + mod.name + "_t.pm");			
+			else
+				WritePEModel(mod, "Output/" + mod.name + ".pm");
 
 			if (meshType == SKIN_AND_ANIM) {
 				skeleton.name = mod.name + "_skel";

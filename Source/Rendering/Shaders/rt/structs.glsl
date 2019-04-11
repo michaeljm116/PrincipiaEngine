@@ -27,17 +27,15 @@ struct TriangleIndex{
 
 struct Vert {
 	vec3 pos;
-	int _pad;
+	float u;
 	vec3 norm;
-	int _padd;
+	float v;
 };
 struct Face {
 	ivec4 v;
 };
 
 struct Mesh{
-	//vec4 center;
-	//vec4 extents;
 	int startIndex;
 	int endIndex;
 	int startVert;

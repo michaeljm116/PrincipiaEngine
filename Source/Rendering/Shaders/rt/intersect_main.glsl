@@ -8,6 +8,9 @@
 #include "intersect_cylinder.glsl"
 #include "intersect_disk.glsl"
 
+#define TRIINTERSECT true
+#define SHADOW 0.2
+
 const uint TYPE_SPHERE = 0x00000001u;
 const uint TYPE_BOX = 0x00000002u;
 const uint TYPE_PLANE = 0x00000004u;
@@ -20,11 +23,9 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 	sectID id = sectID(0, -1, -1);
 
 	for (int i = 0; i < primitives.length(); ++i) {
-		if (primitives[i].id > 0) {
+		if (primitives[i].id > -1) {
 			mat4 world = primitives[i].world;
-			//world[3] = vec4(primitives[i].center, 1);
 			mat4 invWorld = inverse(world);
-			//mat4 invWorld = inverse(primitives[i].world);
 			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / primitives[i].extents;
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / primitives[i].extents;
 			flool tMesh = boundsIntersect(roo, rdd, primitives[i].extents);
@@ -40,11 +41,13 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 						}
 					}
 					else {
-						flool tQuad = quadIntersect(roo, rdd, faces[j], norm);
-						if (tQuad.b) {
-							if ((tQuad.t > EPSILON) && (tQuad.t < resT)) {
+						vec4 tQuad = quadIntersect(roo, rdd, faces[j]);
+						if (tQuad.x > 0) {
+							if ((tQuad.x > EPSILON) && (tQuad.x < resT)) {
 								id = sectID(TYPE_MESH, i, j);
 								resT = tQuad.t;
+								norm.x = tQuad.y;
+								norm.y = tQuad.z;
 							}
 						}
 					}
@@ -102,7 +105,7 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float t)
 {
 	for (int i = 0; i < primitives.length(); ++i) {
-		if (primitives[i].id > 0) {/////-----MESH-----|||||
+		if (primitives[i].id > -1) {/////-----MESH-----|||||
 			mat4 invWorld = inverse(primitives[i].world);
 			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / primitives[i].extents;
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / primitives[i].extents;
@@ -122,10 +125,10 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 					else
 					{
 						vec3 normal = vec3(0, 1, 0);
-						flool tQuad = quadIntersect(roo, rdd, faces[j], normal);
-						if (tQuad.b) {
-							if ((tQuad.t > EPSILON) && (tQuad.t < t)) {
-								t = tQuad.t;
+						vec4 tQuad = quadIntersect(roo, rdd, faces[j]);
+						if (tQuad.x > 0) {
+							if ((tQuad.x > EPSILON) && (tQuad.x < t)) {
+								t = tQuad.x;
 								return SHADOW;
 							}
 						}

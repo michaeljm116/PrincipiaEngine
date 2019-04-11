@@ -3,26 +3,6 @@
 #include "structs.glsl"
 #include "layouts.glsl"
 
-/*flool boundsIntersect(vec3 rayO, vec3 rayD, Primitive box) {
-
-	vec3 invDir = 1 / rayD;
-	vec3 invRay = invDir * rayO;
-	vec3 k = abs(invDir) * box.extents;
-
-	float tMin = FLT_MIN;
-	float tMax = FLT_MAX;
-
-	vec3 t1 = -invRay - k;
-	vec3 t2 = -invRay + k;
-
-	for (int i = 0; i < 3; ++i) {
-		tMin = max(tMin, min(t1[i], t2[i]));
-		tMax = min(tMax, max(t1[i], t2[i]));
-	}
-	flool bob = flool(tMin, (tMax > max(tMin, 0.0)));
-	return bob;
-}*/
-
 flool boundsIntersect(vec3 rayO, vec3 rayD, in vec3 extents) {
 
 	vec3 invDir = 1 / rayD;
@@ -43,28 +23,17 @@ flool boundsIntersect(vec3 rayO, vec3 rayD, in vec3 extents) {
 	return bob;
 }
 
-//vec3 triNormal(in TriangleIndex tri) {
-//	vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
-//	vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
-//
-//	return normalize(cross(edge1, edge2));
-//}
 
 vec3 triNormal(Primitive prim, Face tri) {
-	//vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
-	//vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
 
-	//return (prim.world*vec4(normalize(cross(edge1, edge2)), 1.0)).xyz;
-
-	/*vec3 v0 = (prim.world * vec4(verts[tri.v[0]].pos, 1.f)).xyz;
+	vec3 v0 = (prim.world * vec4(verts[tri.v[0]].pos, 1.f)).xyz;
 	vec3 v1 = (prim.world * vec4(verts[tri.v[1]].pos, 1.f)).xyz;
 	vec3 v2 = (prim.world * vec4(verts[tri.v[2]].pos, 1.f)).xyz;
 	vec3 edge1 = v1 - v0;
 	vec3 edge2 = v2 - v0;
-	return normalize(cross(edge1, edge2));*/
-	return vec3(1);
+	return normalize(cross(edge1, edge2));
 }
-// verts[tri.v[0]].pos
+
 flool triIntersect(vec3 rayO, vec3 rayD, Face tri) {
 
 	vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
@@ -86,7 +55,34 @@ flool triIntersect(vec3 rayO, vec3 rayD, Face tri) {
 	return flool(f * dot(edge2, q), true);
 }
 
-flool quadIntersect(in vec3 rO, in vec3 rd, in Face q, inout vec3 n) {
+vec3 quadNormal(Primitive prim, Face f, float u, float v) {
+	//vec3 n0 = (prim.world * vec4(verts[f.v[0]].norm, 1.f)).xyz;
+	//vec3 n1 = (prim.world * vec4(verts[f.v[1]].norm, 1.f)).xyz;
+	//vec3 n2 = (prim.world * vec4(verts[f.v[2]].norm, 1.f)).xyz;
+	//vec3 n3 = (prim.world * vec4(verts[f.v[3]].norm, 1.f)).xyz;
+	//vec3 edge1 = n1 - n0;
+	//vec3 edge2 = n2 - n0;
+	//return normalize(cross(edge1, edge2));
+
+	
+	vec3 n0 = verts[f.v[0]].norm;
+	vec3 n1 = verts[f.v[1]].norm;
+	vec3 n2 = verts[f.v[2]].norm;
+	vec3 n3 = verts[f.v[3]].norm;
+
+	vec3 lerp1 = mix(n0, n1, u);
+	vec3 lerp2 = mix(n3, n2, u);
+	return (prim.world * vec4(mix(lerp1, lerp2, v), 1.f)).xyz;
+	return mix(lerp1, lerp2, v);
+	//return vec3(0);
+}
+
+float copysign(float x, float y) {
+	if ((x < 0 && y > 0) || (x > 0 && y < 0))
+		return -x;
+	return x;
+}
+vec4 quadIntersect(in vec3 rO, in vec3 rd, in Face q) {
 	vec3 q00 = verts[q.v[0]].pos, q10 = verts[q.v[1]].pos, q11 = verts[q.v[2]].pos, q01 = verts[q.v[3]].pos;
 	vec3 e10 = q10 - q00;
 	vec3 e11 = q11 - q10;
@@ -100,15 +96,16 @@ flool quadIntersect(in vec3 rO, in vec3 rd, in Face q, inout vec3 n) {
 	float b = dot(cross(q10, rd), e11);
 	b -= a + c;
 	float det = b * b - 4 * a*c;
-	if (det < 0) return flool(0, false);
+	if (det < 0) return vec4(-1);
 	det = sqrt(det);
 	float u1, u2;
-	float t = FLT_MAX , u, v;
+	float t = FLT_MAX, u, v;
 	if (c == 0) {
 		u1 = -a / b; u2 = -1;
 	}
 	else {
-		u1 = (-b - (det * sign(b))) / 2;
+		//u1 = (-b - (det * sign(b))) / 2;
+		u1 = (-b - copysign(det, b)) / 2;
 		u2 = a / u1;
 		u1 /= c;
 	}
@@ -121,7 +118,9 @@ flool quadIntersect(in vec3 rO, in vec3 rd, in Face q, inout vec3 n) {
 		float t1 = dot(n, pb);
 		float v1 = dot(n, rd);
 		if (t1 > 0 && 0 <= v1 && v1 <= det) {
-			t = t1 / det; u = u1; v = v1 / det; 
+			t = t1 / det; 
+			u = u1; 
+			v = v1 / det; 
 
 		}
 
@@ -135,14 +134,14 @@ flool quadIntersect(in vec3 rO, in vec3 rd, in Face q, inout vec3 n) {
 		float t2 = dot(n, pb) / det;
 		float v2 = dot(n, rd);
 		if (0 <= v2 && v2 <= det && t > t2 && t2 > 0) {
-			t = t2; u = u2; v = v2 / det;	
+			t = t2; 
+			u = u2; 
+			v = v2 / det;	
 		}
 	}
-	if (t == FLT_MAX) return flool(0, false);
+	//if (t == FLT_MAX) return vec4(-1.0);
 	
-	vec3 norm = mix(mix(verts[q.v[0]].norm, verts[q.v[1]].norm, u), mix(verts[q.v[3]].norm, verts[q.v[2]].norm, u), v);
-	n = norm;
-	return flool(t, true);
+	return vec4(t, u, v, 0);
 	/*
 	if (rtPotentialIntersection(t)) {
  // Fill the intersection structure irec.
