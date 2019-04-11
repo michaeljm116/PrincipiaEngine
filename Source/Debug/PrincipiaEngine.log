@@ -1,14 +1,2 @@
-﻿  animationSystem.cpp
-  buttonSystem.cpp
-  characterController.cpp
-  gameSystem.cpp
-  scene.cpp
-  transformSystem.cpp
-  collisionSystem.cpp
-  physicsSystem.cpp
-  engineUISystem.cpp
-  renderSystem.cpp
-  resourceManager.cpp
-  main.cpp
-  Generating Code...
+﻿  renderSystem.cpp
   PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Debug\Principia Engine.exe

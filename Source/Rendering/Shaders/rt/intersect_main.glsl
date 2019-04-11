@@ -31,7 +31,8 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 			flool tMesh = boundsIntersect(roo, rdd, primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) {
 				for (int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++) {
-					if (TRIINTERSECT) {
+					//if (TRIINTERSECT){
+					if (faces[j].v[3] == faces[j].v[2]){
 						flool tTri = triIntersect(roo, rdd, faces[j]);
 						if (tTri.b) {
 							if ((tTri.t > EPSILON) && (tTri.t < resT)) {
@@ -113,7 +114,8 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 			flool tMesh = boundsIntersect(roo, rdd, primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)) {
 				for (int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++) {
-					if (TRIINTERSECT) {
+					//if (TRIINTERSECT){
+					if (faces[j].v[3] == faces[j].v[2]) {
 						flool tTri = triIntersect(roo, rdd, faces[j]);
 						if (tTri.b) {
 							if ((tTri.t > EPSILON) && (tTri.t < t)) {
