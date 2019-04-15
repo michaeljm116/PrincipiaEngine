@@ -1,242 +1,14 @@
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
-#include <string>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <glm/glm.hpp>
-#include <glm/gtx/transform.hpp>
-#include <filesystem>
-#include <array>
-#include <set>
-#include <map>
-#include <chrono>
-
+#include "structs.h"
+#include "helper.hpp"
 
 namespace fs = std::filesystem;
 
-#ifndef maxVal
-#define maxVal(a,b)            (((a) > (b)) ? (a) : (b))
-#endif
-
-#ifndef minVal
-#define minVal(a,b)            (((a) < (b)) ? (a) : (b))
-#endif
-
-#define CCAST reinterpret_cast<char*>
-
-
-//Found from: https://stackoverflow.com/questions/29184311/how-to-rotate-a-skinned-models-bones-in-c-using-assimp
-//inline glm::mat4 aiMatrix4x4ToGlm(const aiMatrix4x4* from)
-//{
-//	glm::mat4 to;
-//
-//	to[0][0] = (glm::float32)from->a1; to[0][1] = (glm::float32)from->b1;  to[0][2] = (glm::float32)from->c1; to[0][3] = (glm::float32)from->d1;
-//	to[1][0] = (glm::float32)from->a2; to[1][1] = (glm::float32)from->b2;  to[1][2] = (glm::float32)from->c2; to[1][3] = (glm::float32)from->d2;
-//	to[2][0] = (glm::float32)from->a3; to[2][1] = (glm::float32)from->b3;  to[2][2] = (glm::float32)from->c3; to[2][3] = (glm::float32)from->d3;
-//	to[3][0] = (glm::float32)from->a4; to[3][1] = (glm::float32)from->b4;  to[3][2] = (glm::float32)from->c4; to[3][3] = (glm::float32)from->d4;
-//
-//	return to;
-//}
-
-#define X_AXIS 0
-#define Y_AXIS 1
-#define Z_AXIS 2
-#define W_AXIS 3
-
-glm::mat4 axisChange(const glm::mat4& from) {
-	glm::mat4 to;
-
-	to[0][X_AXIS] = from[0][X_AXIS];
-	for (int i = 0; i < 4; ++i) {
-		to[i][X_AXIS] = from[i][X_AXIS];
-		to[i][Y_AXIS] = from[i][Y_AXIS];
-		to[i][Z_AXIS] = from[i][Z_AXIS];
-		to[i][W_AXIS] = from[i][W_AXIS];
-	}
-
-	return to;
-}
-
-glm::mat4 aiMatrix4x4ToGlm(const aiMatrix4x4& from)
-{
-	glm::mat4 to;
-
-	to[0][0] = (glm::float32)from.a1;	to[1][0] = (glm::float32)from.b1;	to[2][0] = (glm::float32)from.c1;	to[3][0] = (glm::float32)from.d1;
-	to[0][1] = (glm::float32)from.a2;	to[1][1] = (glm::float32)from.b2;	to[2][1] = (glm::float32)from.c2;	to[3][1] = (glm::float32)from.d2;
-	to[0][2] = (glm::float32)from.a3;	to[1][2] = (glm::float32)from.b3;	to[2][2] = (glm::float32)from.c3;	to[3][2] = (glm::float32)from.d3;
-	to[0][3] = (glm::float32)from.a4;	to[1][3] = (glm::float32)from.b4;	to[2][3] = (glm::float32)from.c4;	to[3][3] = (glm::float32)from.d4;
-
-	return to;
-	//return axisChange(to);
-}
-
-glm::vec4 aiQuatToGLM(const aiQuaternion& from) {
-	glm::vec4 to;
-	to.x = from.x;
-	to.y = from.y;
-	to.z = from.z;
-	to.w = from.w;
-	return to;
-}
-
-#define MAX_BONES 64
-// Maximum number of bones per vertex
-#define MAX_BONES_PER_VERTEX 4
 
 // Skinned mesh class
 
-// Per-vertex bone IDs and weights
-struct VertexBoneData
-{
-	std::array<uint32_t, MAX_BONES_PER_VERTEX> IDs;
-	std::array<float, MAX_BONES_PER_VERTEX> weights;
-
-	// Ad bone weighting to vertex info
-	void add(uint32_t boneID, float weight)
-	{
-		for (uint32_t i = 0; i < MAX_BONES_PER_VERTEX; i++)
-		{
-			if (weights[i] == 0.0f)
-			{
-				IDs[i] = boneID;
-				weights[i] = weight;
-				return;
-			}
-			
-		}
-	}
-	void average() {
-		float total = 0;
-		for (int i = 0; i < MAX_BONES_PER_VERTEX; ++i) {
-			total += weights[i];
-		}
-		assert(total != 0);
-		for (int i = 0; i < MAX_BONES_PER_VERTEX;) {
-			weights[i] /= total;
-		}
-	}
-};
-
-struct TriIndex {
-	int v[3];
-};
-struct Face {
-	glm::ivec4 v;
-};
-struct Vertex {
-	glm::vec3 position;
-	glm::vec3 normal;
-	glm::vec2 uv;
-	Vertex() {};
-	Vertex(glm::vec3 p) { position = p; };
-	Vertex(aiVector3D p, aiVector3D n) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); }
-	Vertex(const aiVector3D &p, const aiVector3D &n, const ai_real &u, const ai_real &v) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); uv = glm::vec2(u, v); }
-};
-struct Mesh {
-	std::string name;
-	std::vector<Face> faces;
-	std::vector<Vertex> vertices;
-	std::vector<VertexBoneData> bones;
-	glm::vec3 extent;
-	glm::vec3 center;
-};
-
-struct  Joint
-{
-	std::string name;
-	int parentIndex;
-	aiMatrix4x4 invBindPose;
-	aiMatrix4x4 transform;
-	glm::mat4 glInvBindPose;
-	glm::mat4 glTransform;
-};
-
-//how bout 3 vec3's a time and a trigger  or 2?
-struct KeySQT {
-	aiVectorKey pos;
-	aiQuatKey rot;
-	aiVectorKey sca;
-	float time;
-};
-
-struct AnimChannel {
-	std::string name;
-	int numKeys;
-	std::vector<KeySQT> keys;
-};
-
-struct PrincipiaAnimation {
-	int skeletonID;
-	int numChannels;
-	std::string name;
-	std::vector<AnimChannel> channels;
-	float duration;
-	float fps;
-};
-
-struct  PrincipiaSkeleton
-{
-	int uniqueID;
-	int numJoints;
-	std::vector<Joint> joints;
-	std::string name;
-	glm::mat4 globalInverseTransform;
-	std::vector<PrincipiaAnimation> animations;
-
-	glm::vec3 center;
-	glm::vec3 extents;
-	
-};
-
-struct PrincipiaModel {
-	std::string name;
-	std::vector<Mesh> meshes;
-	int uniqueID;
-	int skeletonID;
-	glm::vec3 center;
-	glm::vec3 extents;
-};
-
-struct RJoint{
-	std::vector<TriIndex> tris;
-	std::vector<int> shapes;
-	std::string name;
-	int parentIndex;
 
 
-	aiMatrix4x4 invBindPose;
-	aiMatrix4x4 transform;
-	glm::mat4 glInvBindPose;
-	glm::mat4 glTransform;
 
-	glm::vec3 center;
-	glm::vec3 extents;
-};
-struct PrincipiaSkinnedModel {
-	int uniqueID;
-	int skeletonID;
-	std::vector<Vertex> verts;
-	std::vector<RJoint> joints;
-};
-
-struct tempRJoint {
-	std::string name;
-	std::vector<int> verts;
-};
-
-
-int UID = 0;
-int newUniqueID() {
-	UID++;	
-	int time = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
-	return time + UID;
-};
-auto cmp = [](std::pair<std::string, int> const & a, std::pair<std::string, int> const & b)
-{
-	return a.second != b.second ? a.second < b.second : a.first < b.first;
-};
 
 bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s, bool triangulate);
 
@@ -245,7 +17,6 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn);
 
 
 PrincipiaModel ReadPEModel(const char* pFile);
-bool ModelScaler(PrincipiaModel& m);
 bool SkeletonScaler(PrincipiaSkeleton& s);
 bool LoadDirectory(std::string directory);
 
@@ -338,16 +109,32 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 			binaryio.write(CCAST(&m.meshes[i].faces[t].v), sizeof(glm::ivec4));
 		}
 
-		if (skinned) {
+		/*if (skinned) {
 			int numBones = m.meshes[i].bones.size();
 			binaryio.write(CCAST(&numBones), sizeof(int));
 			for (int b = 0; b < numBones; ++b) {
 				binaryio.write(CCAST(&m.meshes[i].bones[b].IDs), sizeof(int) * 4);
 				binaryio.write(CCAST(&m.meshes[i].bones[b].weights), sizeof(float) * 4);
 			}
-		}
+		}*/
 
 	}
+
+	//find number of shapes
+	int numShapes = m.shapes.size();
+	binaryio.write(CCAST(&numShapes), sizeof(int));
+	for (int i = 0; i < numShapes; ++i) {
+		int shapeNameLength = m.shapes[i].name.length();
+		binaryio.write(CCAST(&shapeNameLength), sizeof(int));
+		binaryio.write(m.shapes[i].name.c_str(), shapeNameLength);
+		binaryio.write(CCAST(&m.shapes[i].type), sizeof(int));
+		binaryio.write(CCAST(&m.shapes[i].center), sizeof(glm::vec3));
+		binaryio.write(CCAST(&m.shapes[i].extents), sizeof(glm::vec3));
+
+	}
+
+	int numTransforms = 0;
+	binaryio.write(CCAST(&numTransforms), sizeof(int));
 
 	binaryio.close();
 
@@ -500,6 +287,13 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			aiProcess_CalcTangentSpace | aiProcess_JoinIdenticalVertices);// |
 			//aiProcess_FindDegenerates | aiProcess_OptimizeMeshes );
 	// If the import failed, report it
+
+
+	//const aiNode* pRoot = pScene->mRootNode;
+	//std::unordered_map<std::string, aiMatrix4x4> name_transformMap;
+	//for (int i = 0; i < pRoot->mNumChildren; ++i)
+	//	name_transformMap[pRoot->mChildren[i]->mName.C_Str()] = pRoot->mChildren[i]->mTransformation;
+
 	if (!pScene)
 	{
 		std::string error = importer.GetErrorString();
@@ -530,20 +324,26 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
 		aiMesh* paiMesh = pScene->mMeshes[i];
+		//aiMatrix4x4 trans = name_transformMap[paiMesh[i].mName.C_Str()];
 		for (int v = 0; v < paiMesh->mNumVertices; ++v) {
-			auto vert = paiMesh->mVertices[v];
-			auto norm = paiMesh->mNormals[v];
-			auto txtr = paiMesh->mTextureCoords[v];
+			aiVector3D vert = paiMesh->mVertices[v];
+			aiVector3D norm = paiMesh->mNormals[v];
+			aiVector3D* txtr = nullptr;
+			if(paiMesh->HasTextureCoords(v))
+				txtr = paiMesh->mTextureCoords[v];
+
+			//Transform the verts;
+			
 
 			//subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
 			paiMesh->HasTextureCoords(v) ? subset.vertices.push_back(Vertex(vert, norm, txtr->x, txtr->y)) : subset.vertices.push_back(Vertex(vert, norm));
-			maxVert.x = maxVal(maxVert.x, paiMesh->mVertices[v].x);
-			maxVert.y = maxVal(maxVert.y, paiMesh->mVertices[v].y);
-			maxVert.z = maxVal(maxVert.z, paiMesh->mVertices[v].z);
+			maxVert.x = maxVal(maxVert.x, vert.x);
+			maxVert.y = maxVal(maxVert.y, vert.y);
+			maxVert.z = maxVal(maxVert.z, vert.z);
 
-			minVert.x = minVal(minVert.x, paiMesh->mVertices[v].x);
-			minVert.y = minVal(minVert.y, paiMesh->mVertices[v].y);
-			minVert.z = minVal(minVert.z, paiMesh->mVertices[v].z);		
+			minVert.x = minVal(minVert.x, vert.x);
+			minVert.y = minVal(minVert.y, vert.y);
+			minVert.z = minVal(minVert.z, vert.z);		
 
 		}
 		for (int f = 0; f < paiMesh->mNumFaces; ++f) {
@@ -551,7 +351,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			//TriIndex tri;
 			Face face;
 			for (int t = 0; t < paiMesh->mFaces[f].mNumIndices; t++) {
-				face.v[t] = paiMesh->mFaces[f].mIndices[t];
+				if (t < 4)
+					face.v[t] = paiMesh->mFaces[f].mIndices[t];
 			}
 			//this is to turn triangles into quads
 			int numIndices = paiMesh->mFaces[f].mNumIndices;
@@ -576,7 +377,10 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		subset.extent.z = (maxVert.z - minVert.z) * 0.5f;
 
 		subset.name = paiMesh->mName.C_Str();
-		m.meshes.push_back(subset);
+
+		ShapeType type = ShapeCheck(subset.name);
+		type == ShapeType::MESH ? m.meshes.push_back(subset) 
+							    : m.shapes.push_back(ShapeCreate(subset, type));
 
 	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
 	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
@@ -660,37 +464,16 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	//s.name = tds.skelename;
 	
 	// We're done. Everything will be cleaned up by the importer destructor
+	auto root = pScene->mRootNode;
+	std::vector<std::string> names;
+	std::vector<aiMatrix4x4> transforms;
+	for (int i = 0; i < root->mNumChildren; ++i) {
+		transforms.push_back(root->mChildren[i]->mTransformation);
+		names.push_back(root->mChildren[i]->mName.C_Str());
+	}
 	return true;
 }
 
-bool ModelScaler(PrincipiaModel& m) {
-	glm::mat4 world = glm::mat4(1);
-	float maxE = FLT_MIN;
-	for (int i = 0; i < m.meshes.size(); ++i) {
-		for (int j = 0; j < 3; ++j) {
-			maxE = maxVal(m.meshes[i].extent[j], maxE);
-		}
-	}
-
-	//compare it to size
-	float ratio = 1 / maxE;
-	
-	//Scale it
-	world = glm::scale(world, glm::vec3(ratio));
-
-	//Scale the bounds
-	for (int i = 0; i < m.meshes.size(); ++i) {
-		m.meshes[i].center = glm::vec3(world * glm::vec4(m.meshes[i].center, 1.f));
-		m.meshes[i].extent = glm::vec3(world * glm::vec4(m.meshes[i].extent, 1.f));
-		for (int j = 0; j < m.meshes[i].vertices.size(); j++) {
-			m.meshes[i].vertices[j].position = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f));
-		}
-	}
-
-	//Transform the verts to fit the size
-
-	return true;
-}
 
 bool SkeletonScaler(PrincipiaSkeleton& s) {
 	//So first you have to find the global transform....
