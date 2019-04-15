@@ -110,6 +110,7 @@ bool Resources::LoadPModel(std::string fileName)
 			binaryio.read(reinterpret_cast<char*>(&face), sizeof(glm::ivec4));
 			m.faces.emplace_back(face);
 		}
+		
 		//bones
 		if (skinned) {
 			int numBones;
@@ -126,6 +127,31 @@ bool Resources::LoadPModel(std::string fileName)
 		//add the model
 		mod.meshes.push_back(m);
 	}
+
+	//Get number of shapes
+	int numShapes;
+	binaryio.read(reinterpret_cast<char*>(&numShapes), sizeof(int));
+	for (int i = 0; i < numShapes; ++i) {
+		int shapeNameLength;
+		rShape shape;
+		binaryio.read(reinterpret_cast<char*>(&shapeNameLength), sizeof(int));
+		for (int n = 0; n < shapeNameLength; ++n) {
+			binaryio.read(&c, sizeof(char));
+			shape.name.push_back(c);
+		}
+		binaryio.read(reinterpret_cast<char*>(&shape.type), sizeof(int));
+		binaryio.read(reinterpret_cast<char*>(&shape.center), sizeof(glm::vec3));
+		binaryio.read(reinterpret_cast<char*>(&shape.extents), sizeof(glm::vec3));
+
+		mod.shapes.push_back(shape);
+	}
+
+	int numTransforms;
+	binaryio.read(reinterpret_cast<char*>(&numTransforms), sizeof(int));
+
+
+
+
 	binaryio.close();
 	mod.uniqueID = uniqueID;
 	mod.skeletonID = skinned ? skeletonID : 0;

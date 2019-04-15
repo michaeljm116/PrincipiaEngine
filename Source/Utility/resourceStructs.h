@@ -71,9 +71,17 @@ struct rMesh {
 	rMaterial mat;
 	int matId = 0;
 };
+
+struct rShape {
+	std::string name;
+	int type;
+	glm::vec3 center;
+	glm::vec3 extents;
+};
 struct rModel {
 	std::string name;
 	std::vector<rMesh> meshes;
+	std::vector<rShape> shapes;
 	glm::vec3 center;
 	glm::vec3 extents;
 	int uniqueID;

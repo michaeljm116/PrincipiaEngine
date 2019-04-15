@@ -77,8 +77,6 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	//ps->addNode(parent);
 	
 	//set up the subsets
-	//NOTE: CAN SOMEONE PLEASE EXPLAIN TO ME WHY I DID THIS STUPID FLUFFYING THING?!?!? WHY DO I HAVE
-	//AN ITERATOR AND ALREADY HAVE AN I?!?!? WHY NOT JUST CHOOSE 1?!? AM I THAT STUPID OR IS THERE A PURPOSE??!?
 	int i = 0;
 	for (std::vector<rMesh>::const_iterator itr = resource.meshes.begin(); itr != resource.meshes.end(); itr++) {
 
@@ -108,6 +106,25 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		rs->addNode(childNode);
 
 		++i;
+	}
+	for (i = 0; i < resource.shapes.size(); ++i) {
+		//Create Entity
+		artemis::Entity* child = &em->create();
+
+		//Set up subset data
+		NodeComponent* childNode = new NodeComponent(child, parent);
+		TransformComponent* childTransform = new TransformComponent(resource.shapes[i].center, resource.shapes[i].extents);
+
+		child->addComponent(childNode);
+		child->addComponent(childTransform);
+		child->addComponent(new PrimitiveComponent(resource.shapes[i].type));
+		child->addComponent(new MaterialComponent(0));
+		child->addComponent(new AABBComponent()); //will this even be used???
+
+		childNode->name = resource.shapes[i].name;
+		childNode->flags |= COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE;
+		parent->children.push_back(childNode);
+		rs->addNode(childNode);
 	}
 
 	//rs->addNode(parent);
@@ -534,7 +551,7 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxml2::XMLElement* finish, NodeComponent* p) {
 	std::vector<NodeComponent*> nodes;
 	bool lastOne = false;
-	//create node
+	// node
 	while (!lastOne) {
 		artemis::Entity* e = &em->create();
 

@@ -114,9 +114,8 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 			if (faces[primitiveID.cId].v[3] == faces[primitiveID.cId].v[2])
 				normal = triNormal(primitives[primitiveID.id], faces[primitiveID.cId]);
 			else
-				normal = quadNormal(primitives[primitiveID.id], faces[primitiveID.cId], norm.x, norm.y);//
-					//triNormal(primitives[primitiveID.id], faces[primitiveID.cId]);
-			break; //(primitives[primitiveID.id].world * vec4(norm, 1.0)).xyz;
+				normal = quadNormal(primitives[primitiveID.id], faces[primitiveID.cId], norm.x, norm.y);
+			break; 
 		}
 	}
 
