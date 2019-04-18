@@ -2,7 +2,7 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
         <Transform>
-            <Position x="1.4605331" y="4.1804762" z="-0.8490181"/>
+            <Position x="0" y="4.5499878" z="-0.87005615"/>
             <Rotation x="0" y="0.001" z="0"/>
             <Scale x="1" y="1" z="3.0699999"/>
         </Transform>
@@ -21,7 +21,7 @@
     </Node>
     <Node Name="floo" hasChildren="false" Flags="32775" Dynamic="false">
         <Transform>
-            <Position x="0" y="0" z="0"/>
+            <Position x="0" y="-1.61" z="0"/>
             <Rotation x="0" y="0.001" z="0"/>
             <Scale x="5" y="0.001" z="5"/>
         </Transform>
@@ -63,5 +63,40 @@
         </Transform>
         <Material ID="-348345232"/>
         <Object ID="-2"/>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="93573086"/>
+        <Node Name="Suzanne" hasChildren="false" Flags="33863" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="-190"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="93573086"/>
+        </Node>
+        <Node Name="ns_earringleft" hasChildren="false" Flags="32775" Dynamic="false">
+            <Transform>
+                <Position x="-8.982439" y="0" z="4.359654e-08"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="3.9924331" y="0.72934145" z="0.73142856"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="-1"/>
+        </Node>
+        <Node Name="ns_earringright" hasChildren="false" Flags="32775" Dynamic="false">
+            <Transform>
+                <Position x="5.3499794" y="0" z="4.359654e-08"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.72934145" y="0.72934145" z="0.73142856"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="-1"/>
+        </Node>
     </Node>
 </Root>

@@ -13,7 +13,7 @@ loading/saving scene, creating/copying/deleting objects
 #include "../Game/script.hpp"
 #include "../Game/transformSystem.h"
 #include "../Game/Systems/characterController.h"
-#include "../Game/inputSystem.h"
+#include "../Game/ControllerSystem.h"
 #include "../Game/Systems/buttonSystem.h"
 
 #define SCENE Scene::get()
@@ -42,7 +42,7 @@ public:
 	AnimationSystem* as;
 
 	CharacterController* cc;
-	InputSystem* input;
+	ControllerSystem* input;
 	ButtonSystem* button;
 
 	std::vector<NodeComponent*> parents;

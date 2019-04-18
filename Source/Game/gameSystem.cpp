@@ -12,19 +12,19 @@ void GameSystem::init(artemis::World & w)
 	as = (AnimationSystem*)sm->getSystem<AnimationSystem>();
 
 	cc = (CharacterController*)sm->getSystem<CharacterController>();// setSystem(new CharacterController());
-	input = (InputSystem*)sm->getSystem<InputSystem>();// setSystem(new InputSystem());
-	button = (ButtonSystem*)sm->getSystem<ButtonSystem>();
+	input = (ControllerSystem*)sm->getSystem<ControllerSystem>();// setSystem(new ControllerSystem());
+	//button = (ButtonSystem*)sm->getSystem<ButtonSystem>();
 
 	cc->initialize();
 	input->initialize();
-	button->initialize();
+	//button->initialize();
 }
 
 void GameSystem::update(float dt)
 {
 	input->process();
 	cc->process();
-	button->process();
+	//button->process();
 	//updateLight(dt);
 }
 

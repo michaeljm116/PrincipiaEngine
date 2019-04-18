@@ -8,21 +8,19 @@ enum MouseStates {
 	MOUSE_RELEASED = 0x08
 };
 
+
 struct Mouse {
 	int x;
 	int y;
 	int prevX;
 	int prevY;
 
-	unsigned char button[4];
+	int buttons[12];
 
 	double scroll;
 	bool   active;
 
 	Mouse() {
-		for (int i = 0; i < 4; ++i)
-		button[i] = MOUSE_NONE;
-
 		x = 0; 
 		y = 0; 
 		prevX = 0; 
@@ -30,9 +28,13 @@ struct Mouse {
 
 		scroll = 0; 
 		active = true;
+
+		for (int i = 0; i < 12; ++i) {
+			buttons[i] = 0;
+		}
 	}
 
-	void updateButton(int btn, bool pressed) {
+	/*void updateButton(int btn, bool pressed) {
 		if (active) {
 			if (pressed) {
 				if (button[btn] & MOUSE_NONE)
@@ -47,7 +49,7 @@ struct Mouse {
 					button[btn] = MOUSE_NONE;
 			}
 		}
-	};
+	};*/
 
 	void updatePosition(int _x, int _y) {
 		if (active) {
@@ -62,4 +64,5 @@ struct Mouse {
 		if(active)
 		scroll = offset;
 	}
+	
 };

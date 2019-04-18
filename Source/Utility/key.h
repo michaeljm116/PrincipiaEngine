@@ -10,6 +10,8 @@ enum KeyStates {
 	KEY_RELEASED = 0x08,
 };
 
+
+
 struct Key {
 	unsigned char state;
 	int key;

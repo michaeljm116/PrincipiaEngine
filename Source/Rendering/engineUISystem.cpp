@@ -35,6 +35,10 @@ void EngineUISystem::init(UIOverlayCreateInfo createInfo)
 
 	//idk
 
+	for (int i = 0; i < NUM_EDITOR_BUTTONS; ++i) {
+		controller.buttons[i].key = RESOURCEMANAGER.getConfig().controllerConfigs[0][i];
+	}
+
 	this->createInfo = createInfo;
 	this->renderPass = createInfo.renderPass;
 	vertexBuffer.device = createInfo.device->logicalDevice;
@@ -707,7 +711,7 @@ void EngineUISystem::topSection(float w, float h, bool* p_open)
 				//for(const auto & p fs::directory_iterator())
 				SCENE.LoadScene("Level1/Scene1");
 			};// *p_open = false;
-			if (ImGui::MenuItem("SaveMaterials")) RESOURCEMANAGER.SaveMaterials("Materials.xml");
+			if (ImGui::MenuItem("SaveMaterials")) RESOURCEMANAGER.SaveMaterials();
 			if (ImGui::MenuItem("Exit")) glfwSetWindowShouldClose(WINDOW.getWindow(), 1);
 			ImGui::EndMenu();
 		}
@@ -845,8 +849,8 @@ void EngineUISystem::updateOverlay()
 	bottomHeight = (int32_t)(io.DisplaySize.y * 0.3333333f) - menuHeight;
 
 	io.MousePos = ImVec2(INPUT.mouse.x, INPUT.mouse.y);
-	io.MouseDown[0] = INPUT.mouse.button[0] & (MOUSE_HELD | MOUSE_PRESSED);
-	io.MouseDown[1] = INPUT.mouse.button[1] & (MOUSE_HELD | MOUSE_PRESSED);
+	io.MouseDown[0] = INPUT.mouse.buttons[0] & (GLFW_REPEAT | GLFW_PRESS);
+	io.MouseDown[1] = INPUT.mouse.buttons[1] & (GLFW_REPEAT | GLFW_PRESS);
 	
 	updateInput();
 
@@ -886,21 +890,42 @@ void EngineUISystem::updateActiveNode(NodeComponent * n)
 
 void EngineUISystem::updateInput()
 {
+	glm::vec3 tempAxis = glm::vec3(0.f);
+	for (int i = 0; i < NUM_EDITOR_BUTTONS; ++i) {
+		int action = INPUT.keys[controller.buttons[i].key];
+		controller.buttons[i].action = action;
+		if (action >= GLFW_PRESS) {
+			controller.buttons[i].time += INPUT.deltaTime;
+			if (i < 3)
+				tempAxis[i] += 1.f;
+			else if (i < 6)
+				tempAxis[i - 3] -= 1.f;
+			else if (i == 6) {
+				INPUT.playToggled = true;
+				INPUT.playMode = !INPUT.playMode;
+			}
+		}
+		else if (action == GLFW_RELEASE)
+			controller.buttons[i].time = 0.f;
+	}
+	controller.axis = tempAxis;
+
+
 	float moveSpeed = 10.f;
-	if (INPUT.pressed && activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Translate) {
+	if (activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Translate) {
 		//Input::Timer timer("Translate");
-		activeTransform->local.position += INPUT.axis * moveSpeed * INPUT.deltaTime;
+		activeTransform->local.position += controller.axis * moveSpeed * INPUT.deltaTime;
 		//SCENE.ts->SQTTransform(activeNode, activeTransform->global);
 		SCENE.ts->recursiveTransform(activeNode);// activeNode, activeTransform, glm::mat4(1.f), glm::mat4(1.f), glm::mat4(1.f),true); //SCENE.ts->updateTransform(activeNode);
 	}
 	else if (INPUT.pressed && activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Scale) {
-		activeTransform->local.scale += INPUT.axis * moveSpeed * INPUT.deltaTime;
+		activeTransform->local.scale += controller.axis * moveSpeed * INPUT.deltaTime;
 		//SCENE.ts->SQTTransform(activeNode, activeTransform->global);
 		SCENE.ts->recursiveTransform(activeNode);// activeNode, activeTransform, glm::mat4(1.f), glm::mat4(1.f), glm::mat4(1.f), true); //SCENE.ts->updateTransform(activeNode);
 	}
 	else if (INPUT.pressed && activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Rotate) {
 		//Input::Timer timer("Rotate");
-		activeTransform->eulerRotation += INPUT.axis * moveSpeed * INPUT.deltaTime;
+		activeTransform->eulerRotation += controller.axis * moveSpeed * INPUT.deltaTime;
 
 		//glm::mat4 rotationM;
 		//rotationM = glm::rotate(rotationM, glm::radians(activeTransform->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -988,7 +1013,7 @@ bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
 					activeNode->flags |= COMPONENT_COLIDER;
 					activeNode->data->refresh();
 				}
-				if (ImGui::Selectable("Make Spring")) {
+				/*if (ImGui::Selectable("Make Spring")) {
 					activeNode->data->addComponent(new SpringComponent(glm::vec3(0.f, 1.f, 0.f), 10.f));
 					activeNode->flags |= COMPONENT_SPRING;
 					activeNode->data->refresh();
@@ -1006,7 +1031,7 @@ bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
 
 					bs->change(*activeNode->data);
 
-				}
+				}*/
 				ImGui::EndPopup();
 			}
 		}

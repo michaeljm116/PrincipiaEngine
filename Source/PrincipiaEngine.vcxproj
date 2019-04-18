@@ -190,7 +190,7 @@
     <ClCompile Include="ArtemisFrameWork\World.cpp" />
     <ClCompile Include="Audio\audioSystem.cpp" />
     <ClCompile Include="Game\gameSystem.cpp" />
-    <ClCompile Include="Game\inputSystem.cpp" />
+    <ClCompile Include="Game\controllerSystem.cpp" />
     <ClCompile Include="Game\movementState.cpp" />
     <ClCompile Include="Game\scene.cpp" />
     <ClCompile Include="Game\Systems\buttonSystem.cpp" />
@@ -488,13 +488,13 @@
     <ClInclude Include="ArtemisFrameWork\Artemis\TypeInfoComparator.h" />
     <ClInclude Include="ArtemisFrameWork\Artemis\World.h" />
     <ClInclude Include="Audio\audioSystem.h" />
-    <ClInclude Include="Game\ButtonComponents.h" />
+    <ClInclude Include="Game\switchComponents.h" />
     <ClInclude Include="Game\camera.hpp" />
     <ClInclude Include="Game\characterComponent.hpp" />
     <ClInclude Include="Game\gameSystem.h" />
     <ClInclude Include="Game\geometryComponents.hpp" />
-    <ClInclude Include="Game\inputComponent.hpp" />
-    <ClInclude Include="Game\inputSystem.h" />
+    <ClInclude Include="Game\controllerComponent.hpp" />
+    <ClInclude Include="Game\controllerSystem.h" />
     <ClInclude Include="Game\movementState.h" />
     <ClInclude Include="Game\primitive.hpp" />
     <ClInclude Include="Game\scene.h" />

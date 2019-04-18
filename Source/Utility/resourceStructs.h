@@ -6,6 +6,12 @@ the resource manager
 #include <array>
 #include <glm/gtx/quaternion.hpp>
 
+//Structure for the config file, will expand moar l8r
+struct rConfig {
+	int numControllersConfigs;
+	std::vector<std::array<int, 24>> controllerConfigs;
+};
+
 const float BONE_EPSILON = 0.05f;
 struct rJointData {
 	std::array<int, 4> id;

@@ -40,8 +40,8 @@ private:
 	AnimationSystem* as;
 
 	CharacterController* cc;
-	InputSystem* input;
-	ButtonSystem* button;
+	ControllerSystem* input;
+	//ButtonSystem* button;
 
 	sqt dummy;
 	

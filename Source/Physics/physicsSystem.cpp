@@ -92,7 +92,7 @@ void PhysicsSystem::processEntity(artemis::Entity & e)
 	RigidBodyComponent* rbc = rbMapper.get(e);
 
 	btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[rbc->coaIndex];
-	btRigidBody* body = btRigidBody::upcast(obj);
+	//btRigidBody* body = btRigidBody::upcast(obj);
 	//btTransform trans; 
 
 	//body->apply
@@ -105,35 +105,36 @@ void PhysicsSystem::processEntity(artemis::Entity & e)
 	//	e.refresh();
 	//}
 
-	if (rbc->impulse) {
-		rbc->impulse = false;
-		body->applyCentralImpulse(btVector3(0, 10, 0));
-	}
+	//if (rbc->impulse) {
+	//	rbc->impulse = false;
+	//	body->applyCentralImpulse(btVector3(0, 10, 0));
+	//}
 	if (rbc->toggled) {
 		rbc->toggled = false;
-		bool active = body->isActive();
-		btTransform bt = body->getWorldTransform();
+		bool active = obj->isActive();
+		btTransform bt = obj->getWorldTransform();
 		btVector3 origin = bt.getOrigin();
 		if (active) {
 			origin.setY(origin.getY() + 1000.f);
 			bt.setOrigin(origin);
-			body->setWorldTransform(bt);
-			body->setActivationState(2);
+			obj->setWorldTransform(bt);
+			obj->setActivationState(2);
 		}
 		else {
 			origin.setY(origin.getY() - 1000.f);
 			bt.setOrigin(origin);
-			body->setWorldTransform(bt);
-			body->setActivationState(1);
+			obj->setWorldTransform(bt);
+			obj->setActivationState(1);
 		}
 	}
 
-	if (body && body->getMotionState())	{
-		body->getMotionState()->getWorldTransform(rbc->trans);
-	}
-	else{
-		rbc->trans = obj->getWorldTransform();
-	}
+	//if (body && body->getMotionState())	{
+	//	body->getMotionState()->getWorldTransform(rbc->trans);
+	//}
+	//else{
+	//	rbc->trans = obj->getWorldTransform();
+	//}
+	rbc->trans = obj->getWorldTransform();
 
 	TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 	rbc->trans.getOpenGLMatrix(glm::value_ptr(tc->world));
@@ -224,7 +225,9 @@ void PhysicsSystem::addNode(NodeComponent * node)
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(rbc->mass, myMotionState, box, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
-
+		//btCollisionObject* body = new btCollisionObject();
+		//body->setCollisionShape(box);
+		//dynamicsWorld->addCollisionObject(body);
 		dynamicsWorld->addRigidBody(body);
 		rbc->coaIndex = dynamicsWorld->getCollisionObjectArray().size() - 1;
 	}
@@ -276,6 +279,28 @@ void PhysicsSystem::addNode(NodeComponent * node)
 	ps_Entities[dynamicsWorld->getCollisionObjectArray()[rbc->coaIndex]] = node->data->getId();
 }
 
+void PhysicsSystem::addCol(NodeComponent * node)
+{
+	TransformComponent* tc = (TransformComponent*)node->data->getComponent<TransformComponent>();
+	RigidBodyComponent* rbc = (RigidBodyComponent*)node->data->getComponent<RigidBodyComponent>();
+	PrimitiveComponent* oc = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
+	btVector3 inertia = btVector3(0.f, 0.f, 0.f);
+	if (!node->isDynamic) rbc->mass = 0.f;
+	if (oc->uniqueID == (int)ObjectType::BOX) {
+		btCollisionShape* box = new btBoxShape(btVector3(tc->local.scale.x, tc->local.scale.y, tc->local.scale.z));
+		collisionShapes.push_back(box);
+		if (node->isDynamic)
+			box->calculateLocalInertia(rbc->mass, inertia);
+
+		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
+		btCollisionObject* body = new btCollisionObject();
+
+		dynamicsWorld->addCollisionObject(body);
+		rbc->coaIndex = dynamicsWorld->getCollisionObjectArray().size() - 1;
+	}
+
+}
+
 void PhysicsSystem::update()
 {
 
@@ -303,7 +328,7 @@ void PhysicsSystem::update()
 					AComp->collisions[bent.getId()] = pt.getPositionWorldOnA();
 					BComp->collisions[aent.getId()] = pt.getPositionWorldOnB();
 
-					if (ANode->flags & COMPONENT_SPRING)
+					/*if (ANode->flags & COMPONENT_SPRING)
 						springUp(aent, bent);
 					if (ANode->flags & COMPONENT_BUTTON) {
 						ButtonComponent* bc = (ButtonComponent*)aent.getComponent<ButtonComponent>();
@@ -312,7 +337,7 @@ void PhysicsSystem::update()
 					if (BNode->flags & COMPONENT_BUTTON) {
 						ButtonComponent* bc = (ButtonComponent*)bent.getComponent<ButtonComponent>();
 						bc->collided = true;
-					}
+					}*/
 				}
 				//std::cout << "SHAPE A IS: " << shapeA << " SHAPE B IS: " << shapeB << std::endl; 
 			}

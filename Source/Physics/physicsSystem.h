@@ -59,12 +59,17 @@ public:
 	void processEntity(artemis::Entity& e);
 	void addGroundForNow();
 	void addNode(NodeComponent* node);
+	void addCol(NodeComponent* node);
 	void update();
 	void onCollision(btCollisionObject* a, btCollisionObject* b, btManifoldPoint p);
 	btRigidBody* getRigidBody(artemis::Entity& e) {
 		RigidBodyComponent* rbc = rbMapper.get(e);
 		btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[rbc->coaIndex];
 		return btRigidBody::upcast(obj);
+	}
+	btCollisionObject* getCollisionObject(artemis::Entity& e) {
+		RigidBodyComponent* rbc = rbMapper.get(e);
+		return dynamicsWorld->getCollisionObjectArray()[rbc->coaIndex];
 	}
 
 	void applyForce(btRigidBody* b, btVector3 f) {
@@ -75,6 +80,10 @@ public:
 	}
 	void applyImpulse(artemis::Entity& ent) {
 		rbMapper.get(ent)->impulse = true;
+	}
+	void applyMovement(btCollisionObject* b, btVector3 f) {
+		//btVector3 m = b->getWorldTransform().getOrigin() + f;
+		b->getWorldTransform().setOrigin(b->getWorldTransform().getOrigin() + f);
 	}
 
 	void springUp(artemis::Entity& a, artemis::Entity& b) {
@@ -88,7 +97,7 @@ public:
 		else if (bv.getY() > (av.getY() + 0.1f))
 			brb->impulse = true;
 	}
-	bool CheckGrounding(btRigidBody* b) {
+	bool CheckGrounding(btCollisionObject* b) {
 		btVector3 pos = b->getWorldTransform().getOrigin();
 		btVector3 to(pos.getX(), -10000.f, pos.getZ());
 		btCollisionWorld::ClosestRayResultCallback res(pos, to);
