@@ -2,8 +2,8 @@
 
 ButtonSystem::ButtonSystem()
 {
-	addComponentType<InputComponent>();
-	addComponentType<ButtonComponent>();
+	addComponentType<SwitchComponent>();
+	addComponentType<SwitchComponent>();
 	addComponentType<NodeComponent>();
 	addComponentType<MaterialComponent>();
 }
@@ -27,12 +27,12 @@ void ButtonSystem::initialize()
 
 void ButtonSystem::processEntity(artemis::Entity & e)
 {
-	ButtonComponent* bc = buttonMapper.get(e);
-	InputComponent* ic = inputMapper.get(e);
+	SwitchComponent* bc = buttonMapper.get(e);
+	ControllerComponent* ic = inputMapper.get(e);
 	NodeComponent* nc = nodeMapper.get(e);
 	MaterialComponent* mc = materialMapper.get(e);
 
-	if (bc->collided) {
+	/*if (bc->collided) {
 		bc->collided = !bc->collided;
 		if (ic->direction.y > 0.99f) { 
 			bc->pressed = !bc->pressed;
@@ -55,5 +55,5 @@ void ButtonSystem::processEntity(artemis::Entity & e)
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 		}
-	}
+	}*/
 }

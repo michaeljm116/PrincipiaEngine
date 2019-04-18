@@ -10,10 +10,8 @@
 #include "../Rendering/cameraComponent.hpp"
 #include "../Rendering/materialComponent.hpp"
 #include "../Animation/animationComponent.hpp"
-#include "../Game/inputComponent.hpp"
+#include "../Game/controllerComponent.hpp"
 #include "../Game/characterComponent.hpp"
-#include "../Game/ButtonComponents.h"
-
-
+#include "../Game/switchComponents.h"
 
 #endif // !COMPONENTINCLUDES_H

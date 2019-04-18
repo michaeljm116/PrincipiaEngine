@@ -599,9 +599,6 @@
     <ClCompile Include="Game\transformSystem.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\inputSystem.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Game\movementState.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -619,6 +616,9 @@
     </ClCompile>
     <ClCompile Include="Utility\Input.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\controllerSystem.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1557,12 +1557,6 @@
     <ClInclude Include="Game\gameSystem.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\inputComponent.hpp">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\inputSystem.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Systems\stateMachine.hpp">
       <Filter>Source Files\Game\Systems</Filter>
     </ClInclude>
@@ -1578,9 +1572,6 @@
     <ClInclude Include="Physics\collisionSystem.h">
       <Filter>Source Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Game\ButtonComponents.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Systems\buttonSystem.h">
       <Filter>Source Files\Game\Systems</Filter>
     </ClInclude>
@@ -1592,6 +1583,15 @@
     </ClInclude>
     <ClInclude Include="Utility\window.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\controllerSystem.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\switchComponents.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\controllerComponent.hpp">
+      <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

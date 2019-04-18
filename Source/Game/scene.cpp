@@ -18,9 +18,10 @@ void Scene::init(artemis::World& w) {
 	as = (AnimationSystem*)sm->getSystem<AnimationSystem>();
 
 	cc = (CharacterController*)sm->setSystem(new CharacterController());
-	input = (InputSystem*)sm->setSystem(new InputSystem());
+	input = (ControllerSystem*)sm->setSystem(new ControllerSystem());
 	button = (ButtonSystem*)sm->setSystem(new ButtonSystem());
 
+	//LoadScene("Pong/Arena");
 	LoadScene("Level1/QuadsTest");
 	//LoadScene("Level1/Scene1");
 
@@ -182,8 +183,14 @@ void Scene::insertController(NodeComponent * nc)
 	if (!(nc->flags & COMPONENT_CCONTROLLER)) {
 		nc->flags |= COMPONENT_CCONTROLLER;
 		nc->data->addComponent(new CharacterComponent());
+		nc->data->addComponent(new ControllerComponent(1));
 	}
-	nc->data->addComponent(new InputComponent());
+
+	ControllerComponent* controller = (ControllerComponent*)nc->data->getComponent<ControllerComponent>();
+	for (int i = 0; i < NUM_BUTTONS; ++i) {
+		controller->buttons[i].key = RESOURCEMANAGER.getConfig().controllerConfigs[controller->index][i];
+	}
+
 	nc->data->refresh();
 	input->change(*nc->data);
 	
@@ -532,7 +539,9 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 	}
 	if (parent->flags & COMPONENT_CCONTROLLER) {
 		CharacterComponent* cont = (CharacterComponent*)parent->data->getComponent<CharacterComponent>();
+		ControllerComponent* roller = (ControllerComponent*)parent->data->getComponent<ControllerComponent>();
 		XMLElement* pController = doc->NewElement("Controller");
+		pController->SetAttribute("ControllerIndex", roller->index),
 		pController->SetAttribute("d0", cont->speed);
 		pController->SetAttribute("d1", cont->maxSpeed);
 		pController->SetAttribute("d2", cont->jumpSpeed);
@@ -667,12 +676,15 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		if(flags & COMPONENT_CCONTROLLER) {
 			XMLElement* cont = start->FirstChildElement("Controller");
 			float data[4];
+			int index;
+			cont->QueryIntAttribute("ControllerIndex", &index), 
 			cont->QueryFloatAttribute("d0", &data[0]);
 			cont->QueryFloatAttribute("d1", &data[1]);
 			cont->QueryFloatAttribute("d2", &data[2]);
 			cont->QueryFloatAttribute("d3", &data[3]);
 
 			e->addComponent(new CharacterComponent(data));
+			e->addComponent(new ControllerComponent(index));
 
 			//insertController(n);
 		}
@@ -682,11 +694,11 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		if (flags & COMPONENT_SPRING) {
 			e->addComponent(new SpringComponent(glm::vec3(0, 1, 0), 5));
 		}
-		if (flags & COMPONENT_BUTTON) {
-			e->addComponent(new ButtonComponent());
-			e->addComponent(new InputComponent());
-			e->addComponent(new CollisionComponent());
-		}
+		//if (flags & COMPONENT_BUTTON) {
+		//	e->addComponent(new ButtonComponent());
+		//	e->addComponent(new ButtonComponent());
+		//	e->addComponent(new CollisionComponent());
+		//}
 		////////////////// HAS CHILDREN ///////////////////
 		if (hasChildren) {
 			n->children = loadNodes(start->FirstChildElement("Node"), start->LastChildElement("Node"), n);

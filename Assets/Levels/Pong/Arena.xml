@@ -1,0 +1,112 @@
+<Root>
+    <Scene Num="1"/>
+    <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
+        <Transform>
+            <Position x="-1.9399927" y="32" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="3.0699999"/>
+        </Transform>
+        <LookAt x="0" y="0.5" z="0"/>
+        <FOV fov="10"/>
+    </Node>
+    <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
+        <Transform>
+            <Position x="0" y="23.349915" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Color r="255" g="255" b="255"/>
+        <Intensity i="427.48099"/>
+        <ID id="0"/>
+    </Node>
+    <Node Name="Floor" hasChildren="false" Flags="40967" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="0.1" z="20"/>
+        </Transform>
+        <Material ID="2054138304"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="GoalLeft" hasChildren="false" Flags="40967" Dynamic="false">
+        <Transform>
+            <Position x="-20" y="0" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="10" z="20"/>
+        </Transform>
+        <Material ID="563290200"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="GoalRight" hasChildren="false" Flags="40967" Dynamic="false">
+        <Transform>
+            <Position x="20" y="0" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="10" z="20"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="FrontWall" hasChildren="false" Flags="40967" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="20"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="10" z="0"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="BottomWall" hasChildren="false" Flags="40967" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="-20"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="10" z="0"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="Player1" hasChildren="false" Flags="57351" Dynamic="true">
+        <Transform>
+            <Position x="-15" y="0.59999996" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="1" z="2"/>
+        </Transform>
+        <Material ID="563290200"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+        <Controller ControllerIndex="1" d0="11.813" d1="1" d2="7.7719998" d3="1"/>
+    </Node>
+    <Node Name="Player2" hasChildren="false" Flags="57351" Dynamic="true">
+        <Transform>
+            <Position x="15" y="1.0999961" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="1" z="2"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+        <Controller ControllerIndex="2" d0="11.813" d1="1" d2="7.7719998" d3="1"/>
+    </Node>
+    <Node Name="Midd" hasChildren="false" Flags="32775" Dynamic="false">
+        <Transform>
+            <Position x="-0.85000002" y="0" z="0"/>
+            <Rotation x="0" y="90" z="90"/>
+            <Scale x="1" y="30" z="1"/>
+        </Transform>
+        <Material ID="950590848"/>
+        <Object ID="-3"/>
+    </Node>
+    <Node Name="New Sphere!" hasChildren="false" Flags="32775" Dynamic="true">
+        <Transform>
+            <Position x="-6.0798168" y="21.640005" z="9.020052"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Material ID="476364240"/>
+        <Object ID="-1"/>
+    </Node>
+</Root>

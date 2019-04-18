@@ -23,8 +23,11 @@ int main() {
 	AnimationSystem* animSys	  = (AnimationSystem*)sm->setSystem(new AnimationSystem());
 
 	artemis::EntityManager * em = world.getEntityManager();
+	Resources::get().LoadConfig("");
+	//Resources::get().LoadMaterials("../Assets/Levels/Pong/Materials.xml");
+	//Resources::get().LoadAnimations("../Assets/Levels/Level1/Animations/");
+	//Resources::get().LoadDirectory("../Assets/Levels/Pong/Models/");
 	Resources::get().LoadMaterials("../Assets/Levels/Level1/Materials.xml");
-	Resources::get().LoadAnimations("../Assets/Levels/Level1/Animations/");
 	Resources::get().LoadDirectory("../Assets/Levels/Level1/Models/");
 
 	try {
@@ -56,7 +59,7 @@ int main() {
 				GAMESYSTEM.update(INPUT.deltaTime);
 				physicsSys->update();
 				physicsSys->process(); 
-				GAMESYSTEM.updateCamera();
+				//GAMESYSTEM.updateCamera();
 			
 			}
 			animSys->update(INPUT.deltaTime);

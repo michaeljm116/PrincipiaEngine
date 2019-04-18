@@ -3,8 +3,8 @@
 
 class ButtonSystem : public artemis::EntityProcessingSystem {
 private:
-	artemis::ComponentMapper<InputComponent> inputMapper;
-	artemis::ComponentMapper<ButtonComponent> buttonMapper;
+	artemis::ComponentMapper<ControllerComponent> inputMapper;
+	artemis::ComponentMapper<SwitchComponent> buttonMapper;
 	artemis::ComponentMapper<NodeComponent> nodeMapper;
 	artemis::ComponentMapper<MaterialComponent> materialMapper;
 

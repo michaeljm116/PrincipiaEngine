@@ -10,7 +10,7 @@ enum class CharacterState {
 class CharacterController : public artemis::EntityProcessingSystem
 {
 private:
-	artemis::ComponentMapper<InputComponent> inputMapper;
+	artemis::ComponentMapper<ControllerComponent> inputMapper;
 	artemis::ComponentMapper<RigidBodyComponent> rbMapper;
 	artemis::ComponentMapper<AnimationComponent> animationMapper;
 	artemis::ComponentMapper<CharacterComponent> characterMapper;

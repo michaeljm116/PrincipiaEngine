@@ -24,8 +24,9 @@ class Resources
 {
 private:
 	Resources();
-
+	std::string materialsFileName;
 	int numMeshFiles;
+	rConfig					 config;
 	std::vector<std::string> fileNames;
 	std::vector<rModel>		 models;
 	std::vector<rMaterial>	 materials;
@@ -37,15 +38,17 @@ public:
 	Resources(Resources const&) = delete;
 	void operator=(Resources const&) = delete;
 
-
+	bool LoadConfig(std::string fileName);
 	bool LoadDirectory(std::string directory);
 	bool LoadAnimations(std::string directory);
 	bool LoadResources(std::string fileName);
 	bool LoadPModel(std::string fileName);
 	bool LoadSkeleton(std::string fileName);
 
-	tinyxml2::XMLError  SaveMaterials(const char* file);
+	tinyxml2::XMLError  SaveMaterials();
 	tinyxml2::XMLError LoadMaterials(const char* file);
+
+	rConfig& getConfig() { return config; };
 
 #pragma region Models
 	rModel&		getModel(int i) { return models[i]; };
