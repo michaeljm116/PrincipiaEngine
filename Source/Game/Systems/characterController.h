@@ -11,8 +11,6 @@ class CharacterController : public artemis::EntityProcessingSystem
 {
 private:
 	artemis::ComponentMapper<ControllerComponent> inputMapper;
-	artemis::ComponentMapper<RigidBodyComponent> rbMapper;
-	artemis::ComponentMapper<AnimationComponent> animationMapper;
 	artemis::ComponentMapper<CharacterComponent> characterMapper;
 
 	artemis::EntityManager* em;
@@ -33,9 +31,6 @@ public:
 	} camera;
 
 	bool reachedMax = false;
-
-	CharacterState state = CharacterState::GROUNDED;
-
-
+	   
 };
 

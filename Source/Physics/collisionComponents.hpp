@@ -12,6 +12,7 @@
 #include <LinearMath/btVector3.h>
 #include <LinearMath/btTransform.h>
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
 #include <unordered_map>
 
 struct BBComponent {
@@ -43,6 +44,7 @@ struct RigidBodyComponent : public artemis::Component {
 	int coaIndex;
 	bool impulse = false;
 	bool toggled = false;
+	btRigidBody* body;
 	
 	RigidBodyComponent() {};
 	RigidBodyComponent(float m, glm::mat4 t) {
@@ -58,8 +60,27 @@ struct RigidBodyComponent : public artemis::Component {
 	}
 };
 
+/*
+sokay so the way it is right now... its already on collisoin repeat
+and even when there's no way of knowing when you start a colliion and when u stop
+so the question is how do you know if you start?? 
+hash of starts is a good way
+col state is another way???
+
+
+*/
+enum class CollisionState {
+	Start, Continue, Exit
+};
+struct CollisionData {
+	btVector3 pos;
+	btVector3 norm;
+	CollisionState state;
+	CollisionData(const btVector3& p, const btVector3& n) : pos(p), norm(n) { state = CollisionState::Start; };
+	CollisionData() {};
+};
 struct CollisionComponent : public artemis::Component {
-	std::unordered_map<int, btVector3> collisions;
+	std::unordered_map<int, CollisionData> collisions; 
 };
 
 struct SpringComponent : public artemis::Component {

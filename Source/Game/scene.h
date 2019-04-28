@@ -13,7 +13,7 @@ loading/saving scene, creating/copying/deleting objects
 #include "../Game/script.hpp"
 #include "../Game/transformSystem.h"
 #include "../Game/Systems/characterController.h"
-#include "../Game/ControllerSystem.h"
+#include "../Game/ControllerSystem.hpp"
 #include "../Game/Systems/buttonSystem.h"
 
 #define SCENE Scene::get()
@@ -54,7 +54,8 @@ public:
 	void doStuff();
 	void createModel(rModel resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic = true);
 
-	void createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic = true);
+	artemis::Entity* createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic = true);
+	artemis::Entity* createGameShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic = true);
 
 	void insertController(NodeComponent* nc);
 	void insertRigidBody(NodeComponent* nc);
@@ -63,6 +64,7 @@ public:
 	artemis::Entity* createCamera();
 
 	void deleteNode(std::vector<NodeComponent*>& nParents, int nIndex);
+	void deleteNode(NodeComponent* parent);
 	void copyNode(NodeComponent* node, NodeComponent* parent, std::vector<NodeComponent*>& list);
 	void makeParent(NodeComponent * child);
 	void makeChild(NodeComponent* node, NodeComponent* parent, std::vector<NodeComponent*>& list);

@@ -13,6 +13,32 @@ void Input::init() {
 	glfwSetMouseButtonCallback(window, Input::mouse_button_callback);
 	glfwSetScrollCallback(window, Input::scroll_callback);
 
+	int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+	int present2 = glfwJoystickPresent(GLFW_JOYSTICK_2);
+	if (present == GLFW_TRUE) {
+		if (glfwJoystickIsGamepad(GLFW_JOYSTICK_1) == GLFW_TRUE) {
+			int axesCount;
+			const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+
+			int buttonCount;
+			const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+
+			const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
+			int a = 4;
+		}
+	}
+	if (present2 == GLFW_TRUE) {
+		int axesCount;
+		const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &axesCount);
+
+		int buttonCount;
+		const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &buttonCount);
+
+		const char *name = glfwGetJoystickName(GLFW_JOYSTICK_2);
+		int a = 4;
+	}
+
+
 	/*
 	Q, E, R, F, V
 	space, tab, shift

@@ -1,7 +1,7 @@
 #include "resourceManager.h"
 #include "../Rendering/model.h"
 #include <fstream>
-#include<GLFW/glfw3.h>
+#include "window.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
@@ -13,21 +13,21 @@ Resources::Resources() {
 bool Resources::LoadConfig(std::string fileName)
 {
 	config.numControllersConfigs = 2;
-	std::array<int, 24> editor;
+	std::array<int, 24> global;
 	std::array<int, 24> controller1;
 	std::array<int, 24> controller2;
 	for (int i = 0; i < 24; ++i) {
-		editor[i] = 0;
+		global[i] = 0;
 		controller1[i] = 0;
 		controller2[i] = 0;
 	}
-	editor[0] = GLFW_KEY_D;
-	editor[1] = GLFW_KEY_SPACE;
-	editor[2] = GLFW_KEY_W;
-	editor[3] = GLFW_KEY_A;
-	editor[4] = GLFW_KEY_LEFT_ALT;
-	editor[5] = GLFW_KEY_S;
-	editor[6] = GLFW_KEY_LEFT_BRACKET;
+	global[0] = GLFW_KEY_D;
+	global[1] = GLFW_KEY_SPACE;
+	global[2] = GLFW_KEY_W;
+	global[3] = GLFW_KEY_A;
+	global[4] = GLFW_KEY_LEFT_ALT;
+	global[5] = GLFW_KEY_S;
+	global[6] = GLFW_KEY_LEFT_BRACKET;
 
 	controller1[0] = GLFW_KEY_D;
 	controller1[1] = GLFW_KEY_W;
@@ -38,6 +38,8 @@ bool Resources::LoadConfig(std::string fileName)
 	controller1[6] = GLFW_KEY_F;
 	controller1[7] = GLFW_KEY_G;
 
+	//controller1[1] = GLFW_JOYSTICK_1;
+
 	controller2[0] = GLFW_KEY_RIGHT;
 	controller2[1] = GLFW_KEY_UP;
 	controller2[2] = GLFW_KEY_LEFT;
@@ -47,7 +49,7 @@ bool Resources::LoadConfig(std::string fileName)
 	controller2[6] = GLFW_KEY_RIGHT_CONTROL;
 	controller2[7] = GLFW_KEY_RIGHT_ALT;
 
-	config.controllerConfigs.push_back(editor);
+	config.controllerConfigs.push_back(global);
 	config.controllerConfigs.push_back(controller1);
 	config.controllerConfigs.push_back(controller2);
 

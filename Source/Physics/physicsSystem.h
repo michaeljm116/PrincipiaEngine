@@ -59,6 +59,7 @@ public:
 	void processEntity(artemis::Entity& e);
 	void addGroundForNow();
 	void addNode(NodeComponent* node);
+	void deleteNode(NodeComponent* node);
 	void addCol(NodeComponent* node);
 	void update();
 	void onCollision(btCollisionObject* a, btCollisionObject* b, btManifoldPoint p);

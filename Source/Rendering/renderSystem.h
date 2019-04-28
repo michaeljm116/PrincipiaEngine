@@ -173,5 +173,5 @@ private:
 	public:
 	void updateMaterials();
 	void updateMaterial(int id);
-	void togglePlayMode();
+	void togglePlayMode(bool pm);
 };

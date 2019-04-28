@@ -1,6 +1,6 @@
 <Root>
     <Scene Num="1"/>
-    <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
+    <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
             <Position x="0" y="4.5499878" z="-0.87005615"/>
             <Rotation x="0" y="0.001" z="0"/>
@@ -9,7 +9,7 @@
         <LookAt x="0" y="0.5" z="0"/>
         <FOV fov="10"/>
     </Node>
-    <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
+    <Node Name="Light" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
         <Transform>
             <Position x="0.97980499" y="7.0600071" z="0.69007874"/>
             <Rotation x="0" y="0" z="0"/>
@@ -19,7 +19,7 @@
         <Intensity i="1000"/>
         <ID id="0"/>
     </Node>
-    <Node Name="floo" hasChildren="false" Flags="32775" Dynamic="false">
+    <Node Name="floo" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="-1.61" z="0"/>
             <Rotation x="0" y="0.001" z="0"/>
@@ -28,7 +28,7 @@
         <Material ID="-951317523"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="to" hasChildren="false" Flags="32775" Dynamic="false">
+    <Node Name="to" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="0" z="5"/>
             <Rotation x="0" y="0.001" z="0"/>
@@ -37,7 +37,7 @@
         <Material ID="-348345232"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="bo" hasChildren="false" Flags="32775" Dynamic="false">
+    <Node Name="bo" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="0" z="-5"/>
             <Rotation x="0" y="0.001" z="0"/>
@@ -46,7 +46,7 @@
         <Material ID="-348345232"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="le" hasChildren="false" Flags="32775" Dynamic="false">
+    <Node Name="le" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-5" y="1" z="0"/>
             <Rotation x="0" y="0.001" z="0"/>
@@ -55,7 +55,7 @@
         <Material ID="-348345232"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="ri" hasChildren="false" Flags="32775" Dynamic="false">
+    <Node Name="ri" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
             <Position x="5" y="1" z="0"/>
             <Rotation x="0" y="0.001" z="0"/>
@@ -64,14 +64,14 @@
         <Material ID="-348345232"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="New Model!" hasChildren="true" Flags="33827" Dynamic="false">
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="0" z="0"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
         <Object ID="93573086"/>
-        <Node Name="Suzanne" hasChildren="false" Flags="33863" Dynamic="false">
+        <Node Name="Suzanne" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="-190"/>
@@ -80,7 +80,7 @@
             <Material ID="-842150451"/>
             <Object ID="93573086"/>
         </Node>
-        <Node Name="ns_earringleft" hasChildren="false" Flags="32775" Dynamic="false">
+        <Node Name="ns_earringleft" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="-8.982439" y="0" z="4.359654e-08"/>
                 <Rotation x="0" y="0" z="0"/>
@@ -89,7 +89,7 @@
             <Material ID="-842150451"/>
             <Object ID="-1"/>
         </Node>
-        <Node Name="ns_earringright" hasChildren="false" Flags="32775" Dynamic="false">
+        <Node Name="ns_earringright" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="5.3499794" y="0" z="4.359654e-08"/>
                 <Rotation x="0" y="0" z="0"/>

@@ -104,6 +104,10 @@ private:
 		INPUT.mouse.updateScroll(yoffset);
 	}
 
+	static void Input::joystick_callback(int jid, int event) {
+
+	}
+
 
 public: 
 	void init();
@@ -114,6 +118,7 @@ public:
 	//bool pressed, held, released;
 	Mouse mouse;
 	int keys[348];
+	int pad[8][14];
 
 	float deltaTime;
 	float time;

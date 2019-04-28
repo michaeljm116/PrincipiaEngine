@@ -14,7 +14,7 @@ struct Button {
 	double time;
 };
 #define NUM_BUTTONS 8
-#define NUM_EDITOR_BUTTONS 7
+#define NUM_GLOBAL_BUTTONS 7
 ///ControllerComponent, NOTE: first 6 buttons are for the axis
 /// goes in order of +x +y +z -x -y -z
 struct ControllerComponent : public artemis::Component {
@@ -25,16 +25,17 @@ struct ControllerComponent : public artemis::Component {
 	Button buttons[NUM_BUTTONS];
 	glm::vec2 axis;
 	int index;
-	int _pad;
-
-	ControllerComponent(int id) : index(id) {};
+	bool gamepad = false;
+	ControllerComponent(int id) : index(id) { if (index == 1)gamepad = false; };
 
 	/*so you toss in a 21 and you turn it into a buttonything
 	also have index so you can save
 	*/
 };
 
-struct EditorController {
-	Button buttons[NUM_EDITOR_BUTTONS];
+struct GlobalController : public artemis::Component {
+	Button buttons[NUM_GLOBAL_BUTTONS];
 	glm::vec3 axis;
+
+	GlobalController() {};
 };

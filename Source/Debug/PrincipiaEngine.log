@@ -1,2 +1,6 @@
-﻿  scene.cpp
+﻿  gameSystem.cpp
+  scene.cpp
+  engineUISystem.cpp
+  main.cpp
+  Generating Code...
   PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Debug\Principia Engine.exe

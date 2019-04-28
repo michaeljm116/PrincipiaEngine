@@ -1293,11 +1293,11 @@ void RenderSystem::updateMaterial(int id)
 	updateMaterials();
 }
 
-void RenderSystem::togglePlayMode()
+void RenderSystem::togglePlayMode(bool playMode)
 {
 	//INPUT.playToggled = !INPUT.playToggled;
 	//playMode = !playMode;
-	if (INPUT.playMode) {
+	if (playMode) {
 		WINDOW.resize();
 		RenderBase::recreateSwapChain();
 		createDescriptorSetLayout();

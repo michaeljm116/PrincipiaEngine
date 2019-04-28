@@ -21,8 +21,8 @@ void Scene::init(artemis::World& w) {
 	input = (ControllerSystem*)sm->setSystem(new ControllerSystem());
 	button = (ButtonSystem*)sm->setSystem(new ButtonSystem());
 
-	//LoadScene("Pong/Arena");
-	LoadScene("Level1/QuadsTest");
+	LoadScene("Pong/Arena");
+	//LoadScene("Level1/QuadsTest");
 	//LoadScene("Level1/Scene1");
 
 };
@@ -158,7 +158,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 }
 
 //Types: SPHERE = -1, BOX = -2, CYLINDER = -3, PLANE = -4
-void Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic)
+artemis::Entity* Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic)
 {
 	artemis::Entity* e = &em->create();
 	NodeComponent*		parent = new NodeComponent(e, name, COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE);
@@ -175,6 +175,27 @@ void Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int ma
 	parents.push_back(parent);
 	ts->recursiveTransform(parent);
 	rs->updateObjectMemory();
+
+	return e;
+}
+artemis::Entity* Scene::createGameShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic)
+{
+	artemis::Entity* e = &em->create();
+	NodeComponent*		parent = new NodeComponent(e, name, COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE);
+	TransformComponent* trans = new TransformComponent(pos, glm::vec3(0.f), scale);
+
+	e->addComponent(new PrimitiveComponent(type));
+	e->addComponent(new MaterialComponent(matID));
+	e->addComponent(trans);
+	e->addComponent(parent);
+
+	parent->isDynamic = dynamic;
+	e->refresh();
+	rs->addNode(parent);
+	ts->recursiveTransform(parent);
+	rs->updateObjectMemory();
+
+	return e;
 }
 
 void Scene::insertController(NodeComponent * nc)
@@ -209,6 +230,12 @@ void Scene::insertRigidBody(NodeComponent* nc) {
 	nc->data->refresh();
 	ps->change(*nc->data);
 	ps->addNode(nc);
+
+	if (nc->flags & COMPONENT_COLIDER) {
+		//nc->data->addComponent(new CollisionComponent());
+		//nc->data->refresh();
+		cc->change(*nc->data);
+	}
 }
 
 artemis::Entity* Scene::createLight() {//glm::vec3 pos, glm::vec3 color, float intensity) {
@@ -259,8 +286,17 @@ void Scene::deleteNode(std::vector<NodeComponent*>& nParents, int nIndex)
 		deleteAllChildren(parent);
 	//delete stuff 
 	rs->deleteNode(parent);
+	ps->deleteNode(parent);
 	em->remove(*parent->data);
 	nParents.erase(nParents.begin() + nIndex);	
+	rs->updateObjectMemory();
+}
+void Scene::deleteNode(NodeComponent* parent) {
+	//delete stuff 
+	rs->deleteNode(parent);
+	ps->deleteNode(parent);
+	em->remove(*parent->data);
+	//nParents.erase(nParents.begin() + nIndex);
 	rs->updateObjectMemory();
 }
 
@@ -450,6 +486,9 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 	//Save node flags
 	pNode->SetAttribute("Flags", (int64_t)parent->flags);
 
+	//Save node tags
+	pNode->SetAttribute("Tags", (int64_t)parent->tags);
+
 	//Save dynamicness
 	pNode->SetAttribute("Dynamic", parent->isDynamic);
 
@@ -567,15 +606,19 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		const char* name;
 		bool hasChildren;
 		int flags;
+		int tags;
 		bool dynamic;
 
 		start->QueryStringAttribute("Name", &name);
 		start->QueryBoolAttribute("hasChildren", &hasChildren);
 		start->QueryIntAttribute("Flags", &flags);
+		start->QueryIntAttribute("Tags", &tags);
 		start->QueryBoolAttribute("Dynamic", &dynamic);
 
 		NodeComponent* n = new NodeComponent(e, name, flags);
 		n->isDynamic = dynamic;
+		n->flags = flags;
+		n->tags = tags;
 		e->addComponent(n); //TODO: aparently this might not be needed???? wat????
 		
 		if (flags & COMPONENT_TRANSFORM) {

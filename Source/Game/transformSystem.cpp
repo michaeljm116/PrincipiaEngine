@@ -42,10 +42,6 @@ void TransformSystem::processEntity(artemis::Entity & e)
 	TransformComponent* tc = transformMapper.get(e);
 	NodeComponent* nc = nodeMapper.get(e);
 
-	//tc->global.rotation = glm::toQuat(tc->world);
-	//tc->global.position = tc->world[3];
-	//tc->global.scale = tc->local.scale;
-	
 	size_t numChildren = nc->children.size();
 	for (int c = 0; c < numChildren; c++) {
 		SQTTransform(nc, tc->local);

@@ -77,6 +77,13 @@ enum ComponentFlag {
 	COMPONENT_BUTTON = 0x80000
 };
 
+enum Tagflags {
+	TAG_NONE = 0x01,
+	TAG_PLAYER = 0x02,
+	TAG_WALL = 0x04,
+	TAG_GOAL = 0x08
+};
+
 enum class ObjectType {
 	SPHERE = -1,
 	BOX = -2,
@@ -93,6 +100,7 @@ struct NodeComponent : artemis::Component{
 	bool clicked = false;
 	bool isDynamic = false;
 	unsigned int flags = COMPONENT_NODE;
+	unsigned int tags = TAG_NONE;
 
 	NodeComponent(artemis::Entity* d) : data(d) { parent = this; };
 	NodeComponent(artemis::Entity* d, NodeComponent* p) : data(d), parent(p) {};

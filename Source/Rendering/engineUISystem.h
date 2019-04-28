@@ -116,8 +116,6 @@ public:
 	
 private:
 
-	EditorController controller;
-
 	int32_t itemIndex;
 	int32_t modelIndex;
 	int32_t matIndex;

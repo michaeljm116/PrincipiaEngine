@@ -599,14 +599,8 @@
     <ClCompile Include="Game\transformSystem.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="Game\movementState.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Audio\audioSystem.cpp">
       <Filter>Source Files\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\collisionSystem.cpp">
-      <Filter>Source Files\Physics</Filter>
     </ClCompile>
     <ClCompile Include="Game\Systems\buttonSystem.cpp">
       <Filter>Source Files\Game\Systems</Filter>
@@ -1557,20 +1551,11 @@
     <ClInclude Include="Game\gameSystem.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Systems\stateMachine.hpp">
-      <Filter>Source Files\Game\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\movementState.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Audio\audioSystem.h">
       <Filter>Source Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="Game\characterComponent.hpp">
       <Filter>Source Files\Game\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\collisionSystem.h">
-      <Filter>Source Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Game\Systems\buttonSystem.h">
       <Filter>Source Files\Game\Systems</Filter>
@@ -1584,13 +1569,34 @@
     <ClInclude Include="Utility\window.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Game\controllerSystem.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\switchComponents.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\controllerComponent.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\gameComponent.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ballSpawnSystem.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ballMovementSystem.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\collisionSystem.hpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ballCollisionSystem.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ballComponents.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\ballScoreSystem.hpp">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\controllerSystem.hpp">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

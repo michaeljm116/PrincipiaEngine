@@ -4,32 +4,22 @@ iirc this is rush-code from GGJ idk if i will
 use or not
 */
 #include "scene.h" 
+#include "gameComponent.hpp"
 
-#define GAMESYSTEM GameSystem::get()
-class GameSystem {
+#include "ballCollisionSystem.hpp"
+#include "ballMovementSystem.hpp"
+#include "ballSpawnSystem.hpp"
+#include "ballScoreSystem.hpp"
+#include "../Physics/collisionSystem.hpp"
+
+class GameSystem : public artemis::EntityProcessingSystem {
 private:
-	GameSystem() {
-		dummy.position = glm::vec3(0.f);
-		dummy.rotation = glm::quat();
-		dummy.scale = glm::vec3(1.f);
-	};
-public:
-	~GameSystem() {};
-	static GameSystem& get() {
-		static GameSystem instance;
-		return instance;
-	}
-	GameSystem(GameSystem const&) = delete;
-	void operator=(GameSystem const&) = delete;
+	artemis::ComponentMapper<GameComponent> gameMapper;
+	artemis::ComponentMapper<GlobalController> controlMapper;
 
-	void init(artemis::World& w);
-	void update(float dt);
-	void updateCamera();
-	void start();
-	//void processEntity(artemis::Entity& e);
+	GameComponent* game;
+	GlobalController* controller;
 
-private:
-	artemis::World* world;
 	artemis::EntityManager* em;
 	artemis::SystemManager* sm;
 
@@ -41,13 +31,20 @@ private:
 
 	CharacterController* cc;
 	ControllerSystem* input;
-	//ButtonSystem* button;
 
-	sqt dummy;
-	
-	struct {
-		TransformComponent* transform;
-		CharacterState* state;
-	} character;
+	CollisionSystem* cs;
+	BallSpawnSystem* spawner;
+	BallScoreSystem* scorer;
+	BallMovementSystem* bms;
+	BallCollisionSystem* bcs;
+
+public: 
+	GameSystem();
+	~GameSystem();
+
+	void initialize();
+	void processEntity(artemis::Entity &e);
+	void updateInput();
+	void togglePlayMode();
 
 };
