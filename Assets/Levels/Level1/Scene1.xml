@@ -1,6 +1,6 @@
 <Root>
     <Scene Num="1"/>
-    <Node Name="Camera" hasChildren="false" Flags="19" Dynamic="true">
+    <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
             <Position x="-0.1099968" y="26.349915" z="10.059996"/>
             <Rotation x="0" y="0" z="0"/>
@@ -9,7 +9,7 @@
         <LookAt x="0" y="0.5" z="0"/>
         <FOV fov="10"/>
     </Node>
-    <Node Name="Light" hasChildren="false" Flags="11" Dynamic="true">
+    <Node Name="Light" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
         <Transform>
             <Position x="0" y="23.349915" z="25"/>
             <Rotation x="0" y="0" z="0"/>
@@ -19,7 +19,7 @@
         <Intensity i="1000"/>
         <ID id="0"/>
     </Node>
-    <Node Name="Light2" hasChildren="false" Flags="11" Dynamic="true">
+    <Node Name="Light2" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
         <Transform>
             <Position x="0" y="23.349915" z="275"/>
             <Rotation x="0" y="0" z="0"/>
@@ -29,7 +29,7 @@
         <Intensity i="458.01501"/>
         <ID id="1"/>
     </Node>
-    <Node Name="WhiteStreet" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WhiteStreet" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="0" z="100"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
@@ -39,7 +39,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="New Box!" hasChildren="false" Flags="368647" Dynamic="false">
+    <Node Name="New Box!" hasChildren="false" Flags="368647" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0.69997787" y="1" z="13.570232"/>
             <Rotation x="0" y="135" z="0"/>
@@ -49,7 +49,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallBottom" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallBottom" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="0" z="0"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
@@ -59,7 +59,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallLeft" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallLeft" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-10" y="0" z="100"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
@@ -69,7 +69,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallRight" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallRight" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="10" y="0" z="100"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
@@ -79,7 +79,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="GoldStreet" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="GoldStreet" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="0" y="0.001" z="100"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
@@ -89,7 +89,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallRightCurve" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallRightCurve" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="44.970711" y="0" z="234.28018"/>
             <Rotation x="0" y="45" z="0"/>
@@ -99,7 +99,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallLeftCurve" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallLeftCurve" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-44.910423" y="0" z="234.92044"/>
             <Rotation x="0" y="-45" z="0"/>
@@ -109,7 +109,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="whitestreettl" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="whitestreettl" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-28.270569" y="0" z="247.3999"/>
             <Rotation x="0" y="-45" z="0"/>
@@ -119,7 +119,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="dimondbr" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="dimondbr" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="14.579544" y="0.001" z="258.80069"/>
             <Rotation x="0" y="45" z="0"/>
@@ -129,7 +129,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="Player" hasChildren="false" Flags="122887" Dynamic="true">
+    <Node Name="Player" hasChildren="false" Flags="122887" Tags="1" Dynamic="true">
         <Transform>
             <Position x="-0.97271585" y="1.01" z="6.8729897"/>
             <Rotation x="0" y="0" z="0"/>
@@ -138,9 +138,9 @@
         <Material ID="845249024"/>
         <Object ID="-1"/>
         <Rigid Rigid="true"/>
-        <Controller d0="7.2540002" d1="1" d2="5.5959001" d3="1"/>
+        <Controller ControllerIndex="1" d0="7.2540002" d1="1" d2="5.5959001" d3="1"/>
     </Node>
-    <Node Name="dimondbl" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="dimondbl" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-15.249863" y="0.001" z="259.6799"/>
             <Rotation x="0" y="-45" z="0"/>
@@ -150,7 +150,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="dimondtl" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="dimondtl" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-8.910141" y="0.001" z="288.54999"/>
             <Rotation x="0" y="45" z="0"/>
@@ -160,7 +160,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="dimondtr" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="dimondtr" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="17.64061" y="0.001" z="283.21979"/>
             <Rotation x="0" y="135" z="0"/>
@@ -170,7 +170,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="whitestreettr" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="whitestreettr" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="29.749756" y="0" z="245.99915"/>
             <Rotation x="0" y="45" z="0"/>
@@ -180,7 +180,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallRightCurve" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallRightCurve" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-43.300545" y="0" z="305.77032"/>
             <Rotation x="0" y="45" z="0"/>
@@ -190,7 +190,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="WallLeftCurve" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="WallLeftCurve" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="37.388161" y="0" z="309.96072"/>
             <Rotation x="0" y="-45" z="0"/>
@@ -200,7 +200,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="whitestreettr" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="whitestreettr" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="21.529541" y="0" z="300.75867"/>
             <Rotation x="0" y="-45" z="0"/>
@@ -210,7 +210,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="whitestreettl" hasChildren="false" Flags="40967" Dynamic="false">
+    <Node Name="whitestreettl" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
             <Position x="-45.410461" y="0" z="274.67041"/>
             <Rotation x="0" y="45" z="0"/>
@@ -219,61 +219,5 @@
         <Material ID="-951317523"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
-    </Node>
-    <Node Name="Button" hasChildren="true" Flags="630791" Dynamic="false">
-        <Transform>
-            <Position x="4.810009" y="1.08" z="21.749954"/>
-            <Rotation x="0" y="9.9999997e-05" z="0"/>
-            <Scale x="1" y="1" z="1"/>
-        </Transform>
-        <Material ID="833631168"/>
-        <Object ID="-2"/>
-        <Rigid Rigid="true"/>
-        <Node Name="Door" hasChildren="false" Flags="40967" Dynamic="false">
-            <Transform>
-                <Position x="-5.6499958" y="1.08" z="21.749954"/>
-                <Rotation x="0" y="9.9999997e-05" z="0"/>
-                <Scale x="1" y="1" z="1"/>
-            </Transform>
-            <Material ID="-348345232"/>
-            <Object ID="-2"/>
-            <Rigid Rigid="true"/>
-        </Node>
-    </Node>
-    <Node Name="New Model!" hasChildren="true" Flags="42019" Dynamic="true">
-        <Transform>
-            <Position x="0.14004707" y="22.329582" z="11.96002"/>
-            <Rotation x="0" y="0.001" z="0"/>
-            <Scale x="1" y="1" z="1"/>
-        </Transform>
-        <Object ID="679186593"/>
-        <Rigid Rigid="true"/>
-        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
-            <Transform>
-                <Position x="0" y="0" z="0"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1" y="1" z="1"/>
-            </Transform>
-            <Material ID="-842150451"/>
-            <Object ID="679186593"/>
-        </Node>
-        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
-            <Transform>
-                <Position x="0" y="0" z="0"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1" y="1" z="1"/>
-            </Transform>
-            <Material ID="-842150451"/>
-            <Object ID="679186594"/>
-        </Node>
-        <Node Name="Mesh" hasChildren="false" Flags="33863" Dynamic="false">
-            <Transform>
-                <Position x="0" y="0" z="0"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1" y="1" z="1"/>
-            </Transform>
-            <Material ID="-842150451"/>
-            <Object ID="679186595"/>
-        </Node>
     </Node>
 </Root>

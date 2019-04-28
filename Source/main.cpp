@@ -16,6 +16,7 @@ int main() {
 	artemis::World world;
 	artemis::SystemManager * sm = world.getSystemManager();
 
+	GameSystem*		 gameSys	  = (GameSystem*)     sm->setSystem(new GameSystem());
 	RenderSystem*	 renderSys	  = (RenderSystem*)	  sm->setSystem(new RenderSystem());
 	EngineUISystem*	 engineUISys  = (EngineUISystem*) sm->setSystem(new EngineUISystem());
 	TransformSystem* transformSys = (TransformSystem*)sm->setSystem(new TransformSystem());
@@ -23,12 +24,26 @@ int main() {
 	AnimationSystem* animSys	  = (AnimationSystem*)sm->setSystem(new AnimationSystem());
 
 	artemis::EntityManager * em = world.getEntityManager();
+	static artemis::Entity* singletonEntity = &em->create();
+	world.setSingleton(singletonEntity);
+
 	Resources::get().LoadConfig("");
-	//Resources::get().LoadMaterials("../Assets/Levels/Pong/Materials.xml");
+	Resources::get().LoadMaterials("../Assets/Levels/Pong/Materials.xml");
+	Resources::get().LoadDirectory("../Assets/Levels/Pong/Models/");
+	//Resources::get().LoadMaterials("../Assets/Levels/Level1/Materials.xml");
+	//Resources::get().LoadDirectory("../Assets/Levels/Level1/Models/");
 	//Resources::get().LoadAnimations("../Assets/Levels/Level1/Animations/");
-	//Resources::get().LoadDirectory("../Assets/Levels/Pong/Models/");
-	Resources::get().LoadMaterials("../Assets/Levels/Level1/Materials.xml");
-	Resources::get().LoadDirectory("../Assets/Levels/Level1/Models/");
+
+
+
+	singletonEntity->addComponent(new GameComponent(GameState::Editor));
+	singletonEntity->refresh();
+	GlobalController* controller = new GlobalController();
+	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i)
+		controller->buttons[i].key = Resources::get().getConfig().controllerConfigs[0][i];
+	singletonEntity->addComponent(controller);
+	gameSys->change(*singletonEntity);
+
 
 	try {
 		Window::get().init();
@@ -41,30 +56,24 @@ int main() {
 		Scene::get().doStuff();
 		renderSys->initialize();
 		animSys->initialize();
+		gameSys->initialize();
 
-		GAMESYSTEM.init(world);
+		static std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
+		static std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
+		static std::chrono::duration<float> duration;
 
-		renderSys->buildBVH();
-
+		
 		while (!glfwWindowShouldClose(WINDOW.getWindow())) {
-
+			duration = end - start;
+			world.loopStart();
+			world.setDelta(duration.count());
 			glfwPollEvents();
+			start = std::chrono::high_resolution_clock::now();
 			INPUT.update();
-			if (INPUT.playToggled) {
-				INPUT.playToggled = !INPUT.playToggled;
-				renderSys->togglePlayMode();
-				physicsSys->togglePlayMode();
-			}
-			if(INPUT.playMode){
-				GAMESYSTEM.update(INPUT.deltaTime);
-				physicsSys->update();
-				physicsSys->process(); 
-				//GAMESYSTEM.updateCamera();
-			
-			}
-			animSys->update(INPUT.deltaTime);
-			animSys->process();
-			renderSys->mainLoop();
+
+			gameSys->process();
+
+			end = std::chrono::high_resolution_clock::now();
 		}
 
 		vkDeviceWaitIdle(renderSys->vkDevice.logicalDevice); //so it can destroy properly

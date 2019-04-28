@@ -191,12 +191,10 @@
     <ClCompile Include="Audio\audioSystem.cpp" />
     <ClCompile Include="Game\gameSystem.cpp" />
     <ClCompile Include="Game\controllerSystem.cpp" />
-    <ClCompile Include="Game\movementState.cpp" />
     <ClCompile Include="Game\scene.cpp" />
     <ClCompile Include="Game\Systems\buttonSystem.cpp" />
     <ClCompile Include="Game\Systems\characterController.cpp" />
     <ClCompile Include="Game\transformSystem.cpp" />
-    <ClCompile Include="Physics\collisionSystem.cpp" />
     <ClCompile Include="Physics\physicsSystem.cpp" />
     <ClCompile Include="Rendering\engineUISystem.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp" />
@@ -488,24 +486,28 @@
     <ClInclude Include="ArtemisFrameWork\Artemis\TypeInfoComparator.h" />
     <ClInclude Include="ArtemisFrameWork\Artemis\World.h" />
     <ClInclude Include="Audio\audioSystem.h" />
+    <ClInclude Include="Game\ballCollisionSystem.hpp" />
+    <ClInclude Include="Game\ballComponents.h" />
+    <ClInclude Include="Game\ballMovementSystem.hpp" />
+    <ClInclude Include="Game\ballScoreSystem.hpp" />
+    <ClInclude Include="Game\ballSpawnSystem.hpp" />
+    <ClInclude Include="Game\gameComponent.hpp" />
     <ClInclude Include="Game\switchComponents.h" />
     <ClInclude Include="Game\camera.hpp" />
     <ClInclude Include="Game\characterComponent.hpp" />
     <ClInclude Include="Game\gameSystem.h" />
     <ClInclude Include="Game\geometryComponents.hpp" />
     <ClInclude Include="Game\controllerComponent.hpp" />
-    <ClInclude Include="Game\controllerSystem.h" />
-    <ClInclude Include="Game\movementState.h" />
+    <ClInclude Include="Game\controllerSystem.hpp" />
     <ClInclude Include="Game\primitive.hpp" />
     <ClInclude Include="Game\scene.h" />
     <ClInclude Include="Game\scriptComponent.h" />
     <ClInclude Include="Game\Systems\buttonSystem.h" />
     <ClInclude Include="Game\Systems\characterController.h" />
-    <ClInclude Include="Game\Systems\stateMachine.hpp" />
     <ClInclude Include="Game\transformComponent.hpp" />
     <ClInclude Include="Game\transformSystem.h" />
     <ClInclude Include="Physics\collisionComponents.hpp" />
-    <ClInclude Include="Physics\collisionSystem.h" />
+    <ClInclude Include="Physics\collisionSystem.hpp" />
     <ClInclude Include="Physics\physicsSystem.h" />
     <ClInclude Include="Rendering\cameraComponent.hpp" />
     <ClInclude Include="Rendering\constantbuffer.hpp" />
@@ -594,33 +596,34 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\Lib\openal\libs\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Lib\openal\libs\Win32;..\Lib\glfw\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\Lib\openal\libs\Win32;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Lib\openal\libs\Win32;..\Lib\glfw\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\VulkanSDK\1.1.73.0\Include;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VulkanSDK\1.1.73.0\Lib;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Lib\openal\libs\Win32;..\Lib\glfw\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\VulkanSDK\1.1.73.0\Include;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\VulkanSDK\1.1.73.0\Lib;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Lib\openal\libs\Win32;..\Lib\glfw\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;..\Lib\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
+      <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>..\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;..\Lib\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -629,11 +632,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Mike\PrincipiaEngine\Lib\stb;C:\Users\Mike\PrincipiaEngine\Source\ArtemisFrameWork;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\include;C:\Users\Mike\PrincipiaEngine\Lib\glm;C:\Users\Mike\PrincipiaEngine\Lib\tinyxml2;C:\Users\Mike\PrincipiaEngine\Lib\gli;C:\VulkanSDK\1.1.73.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\VulkanSDK\1.1.73.0\Lib32;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;..\Lib\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -643,15 +648,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;..\Lib\glfw-3.2.1.bin.WIN32\include;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
+      <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;..\Lib\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -662,13 +668,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Mike\PrincipiaEngine\Lib\stb;C:\Users\Mike\PrincipiaEngine\Source\ArtemisFrameWork;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\include;C:\Users\Mike\PrincipiaEngine\Lib\glm;C:\Users\Mike\PrincipiaEngine\Lib\tinyxml2;C:\Users\Mike\PrincipiaEngine\Lib\gli;C:\VulkanSDK\1.1.73.0\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\VulkanSDK\1.1.73.0\Lib32;C:\Users\Mike\PrincipiaEngine\Lib\glfw-3.2.1.bin.WIN32\lib-vc2015;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\VulkanSDK\1.1.101.0\Lib32;ArtemisFrameWork;..\Lib\glm;..\Lib\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

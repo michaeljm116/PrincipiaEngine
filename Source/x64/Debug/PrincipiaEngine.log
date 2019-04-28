@@ -1,0 +1,219 @@
+﻿audioSystem.obj : error LNK2019: unresolved external symbol __imp_alGetError referenced in function "public: virtual void __cdecl AudioSystem::initialize(void)" (?initialize@AudioSystem@@UEAAXXZ)
+audioSystem.obj : error LNK2019: unresolved external symbol __imp_alcOpenDevice referenced in function "public: virtual void __cdecl AudioSystem::initialize(void)" (?initialize@AudioSystem@@UEAAXXZ)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceMemoryProperties referenced in function "public: unsigned int __cdecl VulkanDevice::findMemoryType(unsigned int,unsigned int)" (?findMemoryType@VulkanDevice@@QEAAIII@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkGetPhysicalDeviceMemoryProperties
+renderbase.obj : error LNK2001: unresolved external symbol vkGetPhysicalDeviceMemoryProperties
+Texture.obj : error LNK2001: unresolved external symbol vkGetPhysicalDeviceMemoryProperties
+engineUISystem.obj : error LNK2019: unresolved external symbol vkQueueSubmit referenced in function "public: void __cdecl VulkanDevice::endSingleTimeCommands(struct VkCommandBuffer_T *)" (?endSingleTimeCommands@VulkanDevice@@QEAAXPEAUVkCommandBuffer_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkQueueSubmit
+renderbase.obj : error LNK2001: unresolved external symbol vkQueueSubmit
+Texture.obj : error LNK2001: unresolved external symbol vkQueueSubmit
+engineUISystem.obj : error LNK2019: unresolved external symbol vkQueueWaitIdle referenced in function "public: void __cdecl VulkanDevice::endSingleTimeCommands(struct VkCommandBuffer_T *)" (?endSingleTimeCommands@VulkanDevice@@QEAAXPEAUVkCommandBuffer_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkQueueWaitIdle
+renderbase.obj : error LNK2001: unresolved external symbol vkQueueWaitIdle
+Texture.obj : error LNK2001: unresolved external symbol vkQueueWaitIdle
+engineUISystem.obj : error LNK2019: unresolved external symbol vkAllocateMemory referenced in function "public: void __cdecl VulkanDevice::createBuffer(unsigned __int64,unsigned int,unsigned int,struct VkBuffer_T * &,struct VkDeviceMemory_T * &)" (?createBuffer@VulkanDevice@@QEAAX_KIIAEAPEAUVkBuffer_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkAllocateMemory
+renderbase.obj : error LNK2001: unresolved external symbol vkAllocateMemory
+Texture.obj : error LNK2001: unresolved external symbol vkAllocateMemory
+engineUISystem.obj : error LNK2019: unresolved external symbol vkFreeMemory referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkFreeMemory
+renderbase.obj : error LNK2001: unresolved external symbol vkFreeMemory
+Texture.obj : error LNK2001: unresolved external symbol vkFreeMemory
+engineUISystem.obj : error LNK2019: unresolved external symbol vkMapMemory referenced in function "public: enum VkResult __cdecl vks::Buffer::map(unsigned __int64,unsigned __int64)" (?map@Buffer@vks@@QEAA?AW4VkResult@@_K0@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkMapMemory
+Texture.obj : error LNK2001: unresolved external symbol vkMapMemory
+engineUISystem.obj : error LNK2019: unresolved external symbol vkUnmapMemory referenced in function "public: void __cdecl vks::Buffer::unmap(void)" (?unmap@Buffer@vks@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkUnmapMemory
+Texture.obj : error LNK2001: unresolved external symbol vkUnmapMemory
+engineUISystem.obj : error LNK2019: unresolved external symbol vkFlushMappedMemoryRanges referenced in function "public: enum VkResult __cdecl vks::Buffer::flush(unsigned __int64,unsigned __int64)" (?flush@Buffer@vks@@QEAA?AW4VkResult@@_K0@Z)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkBindBufferMemory referenced in function "public: void __cdecl VulkanDevice::createBuffer(unsigned __int64,unsigned int,unsigned int,struct VkBuffer_T * &,struct VkDeviceMemory_T * &)" (?createBuffer@VulkanDevice@@QEAAX_KIIAEAPEAUVkBuffer_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkBindBufferMemory
+Texture.obj : error LNK2001: unresolved external symbol vkBindBufferMemory
+engineUISystem.obj : error LNK2019: unresolved external symbol vkBindImageMemory referenced in function "public: void __cdecl VulkanDevice::createImage(unsigned int,unsigned int,enum VkFormat,enum VkImageTiling,unsigned int,unsigned int,struct VkImage_T * &,struct VkDeviceMemory_T * &)" (?createImage@VulkanDevice@@QEAAXIIW4VkFormat@@W4VkImageTiling@@IIAEAPEAUVkImage_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkBindImageMemory
+renderbase.obj : error LNK2001: unresolved external symbol vkBindImageMemory
+Texture.obj : error LNK2001: unresolved external symbol vkBindImageMemory
+engineUISystem.obj : error LNK2019: unresolved external symbol vkGetBufferMemoryRequirements referenced in function "public: void __cdecl VulkanDevice::createBuffer(unsigned __int64,unsigned int,unsigned int,struct VkBuffer_T * &,struct VkDeviceMemory_T * &)" (?createBuffer@VulkanDevice@@QEAAX_KIIAEAPEAUVkBuffer_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkGetBufferMemoryRequirements
+Texture.obj : error LNK2001: unresolved external symbol vkGetBufferMemoryRequirements
+engineUISystem.obj : error LNK2019: unresolved external symbol vkGetImageMemoryRequirements referenced in function "public: void __cdecl VulkanDevice::createImage(unsigned int,unsigned int,enum VkFormat,enum VkImageTiling,unsigned int,unsigned int,struct VkImage_T * &,struct VkDeviceMemory_T * &)" (?createImage@VulkanDevice@@QEAAXIIW4VkFormat@@W4VkImageTiling@@IIAEAPEAUVkImage_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkGetImageMemoryRequirements
+renderbase.obj : error LNK2001: unresolved external symbol vkGetImageMemoryRequirements
+Texture.obj : error LNK2001: unresolved external symbol vkGetImageMemoryRequirements
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateFence referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateFence
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyFence referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyFence
+engineUISystem.obj : error LNK2019: unresolved external symbol vkResetFences referenced in function "public: void __cdecl EngineUISystem::submit(struct VkQueue_T *,unsigned int,struct VkSubmitInfo)" (?submit@EngineUISystem@@QEAAXPEAUVkQueue_T@@IUVkSubmitInfo@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkResetFences
+engineUISystem.obj : error LNK2019: unresolved external symbol vkWaitForFences referenced in function "public: void __cdecl EngineUISystem::submit(struct VkQueue_T *,unsigned int,struct VkSubmitInfo)" (?submit@EngineUISystem@@QEAAXPEAUVkQueue_T@@IUVkSubmitInfo@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkWaitForFences
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateBuffer referenced in function "public: void __cdecl VulkanDevice::createBuffer(unsigned __int64,unsigned int,unsigned int,struct VkBuffer_T * &,struct VkDeviceMemory_T * &)" (?createBuffer@VulkanDevice@@QEAAX_KIIAEAPEAUVkBuffer_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateBuffer
+Texture.obj : error LNK2001: unresolved external symbol vkCreateBuffer
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyBuffer referenced in function "public: void __cdecl vks::Buffer::destroy(void)" (?destroy@Buffer@vks@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyBuffer
+Texture.obj : error LNK2001: unresolved external symbol vkDestroyBuffer
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateImage referenced in function "public: void __cdecl VulkanDevice::createImage(unsigned int,unsigned int,enum VkFormat,enum VkImageTiling,unsigned int,unsigned int,struct VkImage_T * &,struct VkDeviceMemory_T * &)" (?createImage@VulkanDevice@@QEAAXIIW4VkFormat@@W4VkImageTiling@@IIAEAPEAUVkImage_T@@AEAPEAUVkDeviceMemory_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateImage
+renderbase.obj : error LNK2001: unresolved external symbol vkCreateImage
+Texture.obj : error LNK2001: unresolved external symbol vkCreateImage
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyImage referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkDestroyImage
+Texture.obj : error LNK2001: unresolved external symbol vkDestroyImage
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateImageView referenced in function "public: struct VkImageView_T * __cdecl VulkanDevice::createImageView(struct VkImage_T *,enum VkFormat,unsigned int)" (?createImageView@VulkanDevice@@QEAAPEAUVkImageView_T@@PEAUVkImage_T@@W4VkFormat@@I@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateImageView
+renderbase.obj : error LNK2001: unresolved external symbol vkCreateImageView
+Texture.obj : error LNK2001: unresolved external symbol vkCreateImageView
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyImageView referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkDestroyImageView
+Texture.obj : error LNK2001: unresolved external symbol vkDestroyImageView
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreatePipelineCache referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkCreatePipelineCache
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyPipelineCache referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyPipelineCache
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateGraphicsPipelines referenced in function "private: void __cdecl EngineUISystem::preparePipeline(void)" (?preparePipeline@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateGraphicsPipelines
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyPipeline referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyPipeline
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreatePipelineLayout referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreatePipelineLayout
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyPipelineLayout referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyPipelineLayout
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateSampler referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateSampler
+Texture.obj : error LNK2001: unresolved external symbol vkCreateSampler
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroySampler referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+Texture.obj : error LNK2001: unresolved external symbol vkDestroySampler
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateDescriptorSetLayout referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateDescriptorSetLayout
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyDescriptorSetLayout referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyDescriptorSetLayout
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateDescriptorPool referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateDescriptorPool
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyDescriptorPool referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyDescriptorPool
+engineUISystem.obj : error LNK2019: unresolved external symbol vkAllocateDescriptorSets referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkAllocateDescriptorSets
+engineUISystem.obj : error LNK2019: unresolved external symbol vkUpdateDescriptorSets referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkUpdateDescriptorSets
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateRenderPass referenced in function "private: void __cdecl EngineUISystem::prepareRenderPass(void)" (?prepareRenderPass@EngineUISystem@@AEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkCreateRenderPass
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyRenderPass referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkDestroyRenderPass
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCreateCommandPool referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCreateCommandPool
+renderbase.obj : error LNK2001: unresolved external symbol vkCreateCommandPool
+engineUISystem.obj : error LNK2019: unresolved external symbol vkDestroyCommandPool referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkDestroyCommandPool
+engineUISystem.obj : error LNK2019: unresolved external symbol vkAllocateCommandBuffers referenced in function "public: struct VkCommandBuffer_T * __cdecl VulkanDevice::beginSingleTimeCommands(void)" (?beginSingleTimeCommands@VulkanDevice@@QEAAPEAUVkCommandBuffer_T@@XZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkAllocateCommandBuffers
+renderbase.obj : error LNK2001: unresolved external symbol vkAllocateCommandBuffers
+Texture.obj : error LNK2001: unresolved external symbol vkAllocateCommandBuffers
+engineUISystem.obj : error LNK2019: unresolved external symbol vkFreeCommandBuffers referenced in function "public: void __cdecl EngineUISystem::CleanUp(void)" (?CleanUp@EngineUISystem@@QEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkFreeCommandBuffers
+renderbase.obj : error LNK2001: unresolved external symbol vkFreeCommandBuffers
+Texture.obj : error LNK2001: unresolved external symbol vkFreeCommandBuffers
+engineUISystem.obj : error LNK2019: unresolved external symbol vkBeginCommandBuffer referenced in function "public: struct VkCommandBuffer_T * __cdecl VulkanDevice::beginSingleTimeCommands(void)" (?beginSingleTimeCommands@VulkanDevice@@QEAAPEAUVkCommandBuffer_T@@XZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkBeginCommandBuffer
+renderbase.obj : error LNK2001: unresolved external symbol vkBeginCommandBuffer
+Texture.obj : error LNK2001: unresolved external symbol vkBeginCommandBuffer
+engineUISystem.obj : error LNK2019: unresolved external symbol vkEndCommandBuffer referenced in function "public: void __cdecl VulkanDevice::endSingleTimeCommands(struct VkCommandBuffer_T *)" (?endSingleTimeCommands@VulkanDevice@@QEAAXPEAUVkCommandBuffer_T@@@Z)
+renderSystem.obj : error LNK2001: unresolved external symbol vkEndCommandBuffer
+renderbase.obj : error LNK2001: unresolved external symbol vkEndCommandBuffer
+Texture.obj : error LNK2001: unresolved external symbol vkEndCommandBuffer
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdBindPipeline referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdBindPipeline
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdSetViewport referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdSetViewport
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdSetScissor referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdSetScissor
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdBindDescriptorSets referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdBindDescriptorSets
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdBindIndexBuffer referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdBindVertexBuffers referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdDrawIndexed referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdCopyBufferToImage referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+Texture.obj : error LNK2001: unresolved external symbol vkCmdCopyBufferToImage
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdPipelineBarrier referenced in function "private: void __cdecl EngineUISystem::prepareResources(void)" (?prepareResources@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdPipelineBarrier
+renderbase.obj : error LNK2001: unresolved external symbol vkCmdPipelineBarrier
+Texture.obj : error LNK2001: unresolved external symbol vkCmdPipelineBarrier
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdPushConstants referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdBeginRenderPass referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdBeginRenderPass
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdNextSubpass referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+engineUISystem.obj : error LNK2019: unresolved external symbol vkCmdEndRenderPass referenced in function "private: void __cdecl EngineUISystem::updateCommandBuffers(void)" (?updateCommandBuffers@EngineUISystem@@AEAAXXZ)
+renderSystem.obj : error LNK2001: unresolved external symbol vkCmdEndRenderPass
+engineUISystem.obj : error LNK2019: unresolved external symbol glfwSetWindowShouldClose referenced in function "public: void __cdecl EngineUISystem::topSection(float,float,bool *)" (?topSection@EngineUISystem@@QEAAXMMPEA_N@Z)
+renderSystem.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceFormatProperties referenced in function "private: void __cdecl RenderSystem::prepareTextureTarget(struct Texture *,unsigned int,unsigned int,enum VkFormat)" (?prepareTextureTarget@RenderSystem@@AEAAXPEAUTexture@@IIW4VkFormat@@@Z)
+renderbase.obj : error LNK2001: unresolved external symbol vkGetPhysicalDeviceFormatProperties
+renderSystem.obj : error LNK2019: unresolved external symbol vkGetDeviceQueue referenced in function "private: void __cdecl RenderSystem::prepareCompute(void)" (?prepareCompute@RenderSystem@@AEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkGetDeviceQueue
+renderSystem.obj : error LNK2019: unresolved external symbol vkDeviceWaitIdle referenced in function "public: virtual void __cdecl RenderSystem::cleanup(void)" (?cleanup@RenderSystem@@UEAAXXZ)
+renderbase.obj : error LNK2001: unresolved external symbol vkDeviceWaitIdle
+main.obj : error LNK2001: unresolved external symbol vkDeviceWaitIdle
+renderSystem.obj : error LNK2019: unresolved external symbol vkCreateShaderModule referenced in function "public: struct VkShaderModule_T * __cdecl VulkanDevice::createShaderModule(class std::vector<char,class std::allocator<char> > const &)" (?createShaderModule@VulkanDevice@@QEAAPEAUVkShaderModule_T@@AEBV?$vector@DV?$allocator@D@std@@@std@@@Z)
+renderSystem.obj : error LNK2019: unresolved external symbol vkDestroyShaderModule referenced in function "private: void __cdecl RenderSystem::createGraphicsPipeline(void)" (?createGraphicsPipeline@RenderSystem@@AEAAXXZ)
+renderSystem.obj : error LNK2019: unresolved external symbol vkCreateComputePipelines referenced in function "private: void __cdecl RenderSystem::prepareCompute(void)" (?prepareCompute@RenderSystem@@AEAAXXZ)
+renderSystem.obj : error LNK2019: unresolved external symbol vkCmdDraw referenced in function "private: void __cdecl RenderSystem::createCommandBuffers(float,int,int)" (?createCommandBuffers@RenderSystem@@AEAAXMHH@Z)
+renderSystem.obj : error LNK2019: unresolved external symbol vkCmdDispatch referenced in function "private: void __cdecl RenderSystem::createComputeCommandBuffer(void)" (?createComputeCommandBuffer@RenderSystem@@AEAAXXZ)
+renderSystem.obj : error LNK2019: unresolved external symbol vkCmdCopyBuffer referenced in function "public: void __cdecl VulkanDevice::copyBuffer(struct VkBuffer_T * &,struct VkBuffer_T * &,unsigned __int64)" (?copyBuffer@VulkanDevice@@QEAAXAEAPEAUVkBuffer_T@@0_K@Z)
+renderSystem.obj : error LNK2019: unresolved external symbol vkAcquireNextImageKHR referenced in function "public: void __cdecl RenderSystem::drawFrame(void)" (?drawFrame@RenderSystem@@QEAAXXZ)
+renderSystem.obj : error LNK2019: unresolved external symbol vkQueuePresentKHR referenced in function "public: void __cdecl RenderSystem::drawFrame(void)" (?drawFrame@RenderSystem@@QEAAXXZ)
+renderSystem.obj : error LNK2019: unresolved external symbol glfwWindowShouldClose referenced in function "public: void __cdecl RenderSystem::mainLoop(void)" (?mainLoop@RenderSystem@@QEAAXXZ)
+main.obj : error LNK2001: unresolved external symbol glfwWindowShouldClose
+window.obj : error LNK2001: unresolved external symbol glfwWindowShouldClose
+renderbase.obj : error LNK2019: unresolved external symbol vkCreateInstance referenced in function "private: void __cdecl RenderBase::createInstance(void)" (?createInstance@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkDestroyInstance referenced in function "public: void __cdecl VulkanDevice::Destroy(void)" (?Destroy@VulkanDevice@@QEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkEnumeratePhysicalDevices referenced in function "private: void __cdecl RenderBase::pickPhysicalDevice(void)" (?pickPhysicalDevice@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceFeatures referenced in function "protected: bool __cdecl RenderBase::isDeviceSuitable(struct VkPhysicalDevice_T *)" (?isDeviceSuitable@RenderBase@@IEAA_NPEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceQueueFamilyProperties referenced in function "protected: struct QueueFamilyIndices __cdecl RenderBase::findQueueFamilies(struct VkPhysicalDevice_T *)" (?findQueueFamilies@RenderBase@@IEAA?AUQueueFamilyIndices@@PEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetInstanceProcAddr referenced in function "void __cdecl DestroyDebugReportCallbackEXT(struct VkInstance_T *,struct VkDebugReportCallbackEXT_T *,struct VkAllocationCallbacks const *)" (?DestroyDebugReportCallbackEXT@@YAXPEAUVkInstance_T@@PEAUVkDebugReportCallbackEXT_T@@PEBUVkAllocationCallbacks@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkCreateDevice referenced in function "private: void __cdecl RenderBase::createLogicalDevice(void)" (?createLogicalDevice@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkDestroyDevice referenced in function "public: void __cdecl VulkanDevice::Destroy(void)" (?Destroy@VulkanDevice@@QEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkEnumerateDeviceExtensionProperties referenced in function "public: bool __cdecl VulkanDevice::checkDeviceExtensionSupport(struct VkPhysicalDevice_T * &)" (?checkDeviceExtensionSupport@VulkanDevice@@QEAA_NAEAPEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkEnumerateInstanceLayerProperties referenced in function "public: bool __cdecl VulkanDevice::checkValidationLayerSupport(void)" (?checkValidationLayerSupport@VulkanDevice@@QEAA_NXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkCreateSemaphore referenced in function "private: void __cdecl RenderBase::createSemaphores(void)" (?createSemaphores@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkDestroySemaphore referenced in function "public: virtual void __cdecl RenderBase::cleanup(void)" (?cleanup@RenderBase@@UEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkCreateFramebuffer referenced in function "private: void __cdecl RenderBase::createFrameBuffers(void)" (?createFrameBuffers@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkDestroyFramebuffer referenced in function "public: virtual void __cdecl RenderBase::cleanupSwapChain(void)" (?cleanupSwapChain@RenderBase@@UEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkDestroySurfaceKHR referenced in function "public: virtual void __cdecl RenderBase::cleanup(void)" (?cleanup@RenderBase@@UEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceSurfaceSupportKHR referenced in function "protected: struct QueueFamilyIndices __cdecl RenderBase::findQueueFamilies(struct VkPhysicalDevice_T *)" (?findQueueFamilies@RenderBase@@IEAA?AUQueueFamilyIndices@@PEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceSurfaceCapabilitiesKHR referenced in function "protected: struct SwapChainSupportDetails __cdecl RenderBase::querySwapChainSupport(struct VkPhysicalDevice_T *)" (?querySwapChainSupport@RenderBase@@IEAA?AUSwapChainSupportDetails@@PEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceSurfaceFormatsKHR referenced in function "protected: struct SwapChainSupportDetails __cdecl RenderBase::querySwapChainSupport(struct VkPhysicalDevice_T *)" (?querySwapChainSupport@RenderBase@@IEAA?AUSwapChainSupportDetails@@PEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetPhysicalDeviceSurfacePresentModesKHR referenced in function "protected: struct SwapChainSupportDetails __cdecl RenderBase::querySwapChainSupport(struct VkPhysicalDevice_T *)" (?querySwapChainSupport@RenderBase@@IEAA?AUSwapChainSupportDetails@@PEAUVkPhysicalDevice_T@@@Z)
+renderbase.obj : error LNK2019: unresolved external symbol vkCreateSwapchainKHR referenced in function "private: void __cdecl RenderBase::createSwapChain(void)" (?createSwapChain@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkDestroySwapchainKHR referenced in function "public: virtual void __cdecl RenderBase::cleanupSwapChain(void)" (?cleanupSwapChain@RenderBase@@UEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol vkGetSwapchainImagesKHR referenced in function "private: void __cdecl RenderBase::createSwapChain(void)" (?createSwapChain@RenderBase@@AEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol glfwGetWindowSize referenced in function "protected: struct VkExtent2D __cdecl RenderBase::chooseSwapExtent(struct VkSurfaceCapabilitiesKHR const &)" (?chooseSwapExtent@RenderBase@@IEAA?AUVkExtent2D@@AEBUVkSurfaceCapabilitiesKHR@@@Z)
+window.obj : error LNK2001: unresolved external symbol glfwGetWindowSize
+renderbase.obj : error LNK2019: unresolved external symbol glfwSetWindowUserPointer referenced in function "public: void __cdecl RenderBase::initWindow(void)" (?initWindow@RenderBase@@QEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol glfwGetWindowUserPointer referenced in function "public: static void __cdecl RenderBase::onWindowResized(struct GLFWwindow *,int,int)" (?onWindowResized@RenderBase@@SAXPEAUGLFWwindow@@HH@Z)
+renderbase.obj : error LNK2019: unresolved external symbol glfwSetWindowSizeCallback referenced in function "public: void __cdecl RenderBase::initWindow(void)" (?initWindow@RenderBase@@QEAAXXZ)
+renderbase.obj : error LNK2019: unresolved external symbol glfwGetRequiredInstanceExtensions referenced in function "protected: class std::vector<char const *,class std::allocator<char const *> > __cdecl RenderBase::getRequiredExtentions(void)" (?getRequiredExtentions@RenderBase@@IEAA?AV?$vector@PEBDV?$allocator@PEBD@std@@@std@@XZ)
+renderbase.obj : error LNK2019: unresolved external symbol glfwCreateWindowSurface referenced in function "private: void __cdecl RenderBase::createSurface(void)" (?createSurface@RenderBase@@AEAAXXZ)
+main.obj : error LNK2019: unresolved external symbol glfwPollEvents referenced in function main
+window.obj : error LNK2001: unresolved external symbol glfwPollEvents
+Input.obj : error LNK2019: unresolved external symbol glfwGetCursorPos referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwSetKeyCallback referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwSetCharCallback referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwSetMouseButtonCallback referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwSetCursorPosCallback referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwSetScrollCallback referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwJoystickPresent referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwGetJoystickAxes referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwGetJoystickButtons referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+Input.obj : error LNK2019: unresolved external symbol glfwGetJoystickName referenced in function "public: void __cdecl Input::init(void)" (?init@Input@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwInit referenced in function "public: void __cdecl Window::init(void)" (?init@Window@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwTerminate referenced in function "public: __cdecl Window::~Window(void)" (??1Window@@QEAA@XZ)
+window.obj : error LNK2019: unresolved external symbol glfwGetPrimaryMonitor referenced in function "public: void __cdecl Window::init(void)" (?init@Window@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwGetVideoMode referenced in function "public: void __cdecl Window::init(void)" (?init@Window@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwWindowHint referenced in function "public: void __cdecl Window::init(void)" (?init@Window@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwCreateWindow referenced in function "public: void __cdecl Window::init(void)" (?init@Window@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwDestroyWindow referenced in function "public: __cdecl Window::~Window(void)" (??1Window@@QEAA@XZ)
+window.obj : error LNK2019: unresolved external symbol glfwMaximizeWindow referenced in function "public: void __cdecl Window::toggleMaximized(void)" (?toggleMaximized@Window@@QEAAXXZ)
+window.obj : error LNK2019: unresolved external symbol glfwSetWindowMonitor referenced in function "public: void __cdecl Window::toggleMaximized(void)" (?toggleMaximized@Window@@QEAAXXZ)
+C:\VulkanSDK\1.1.101.0\Lib32\vulkan-1.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+C:\Users\Mike\PrincipiaEngine\Source\x64\Debug\Principia Engine.exe : fatal error LNK1120: 120 unresolved externals

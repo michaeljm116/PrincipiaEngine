@@ -92,48 +92,6 @@ void PhysicsSystem::processEntity(artemis::Entity & e)
 	RigidBodyComponent* rbc = rbMapper.get(e);
 
 	btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[rbc->coaIndex];
-	//btRigidBody* body = btRigidBody::upcast(obj);
-	//btTransform trans; 
-
-	//body->apply
-
-	//ImpulseComponent* ic = impulseMapper.get(e);
-	//
-	//if (ic) {
-	//	body->applyCentralImpulse(ic->direction * ic->force);
-	//	e.removeComponent<ImpulseComponent>();
-	//	e.refresh();
-	//}
-
-	//if (rbc->impulse) {
-	//	rbc->impulse = false;
-	//	body->applyCentralImpulse(btVector3(0, 10, 0));
-	//}
-	if (rbc->toggled) {
-		rbc->toggled = false;
-		bool active = obj->isActive();
-		btTransform bt = obj->getWorldTransform();
-		btVector3 origin = bt.getOrigin();
-		if (active) {
-			origin.setY(origin.getY() + 1000.f);
-			bt.setOrigin(origin);
-			obj->setWorldTransform(bt);
-			obj->setActivationState(2);
-		}
-		else {
-			origin.setY(origin.getY() - 1000.f);
-			bt.setOrigin(origin);
-			obj->setWorldTransform(bt);
-			obj->setActivationState(1);
-		}
-	}
-
-	//if (body && body->getMotionState())	{
-	//	body->getMotionState()->getWorldTransform(rbc->trans);
-	//}
-	//else{
-	//	rbc->trans = obj->getWorldTransform();
-	//}
 	rbc->trans = obj->getWorldTransform();
 
 	TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
@@ -183,8 +141,10 @@ void PhysicsSystem::addNode(NodeComponent * node)
 	TransformComponent* tc = (TransformComponent*)node->data->getComponent<TransformComponent>();
 	RigidBodyComponent* rbc = (RigidBodyComponent*)node->data->getComponent<RigidBodyComponent>();
 	PrimitiveComponent* oc = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
+	//CollisionComponent* cc = (CollisionComponent*)node->data->getComponent<CollisionComponent>();
 	btVector3 inertia = btVector3(0.f, 0.f, 0.f);
-	if (!node->isDynamic) rbc->mass = 0.f;
+	btScalar mass = 1.f;
+	if (!node->isDynamic) mass = 0.f;
 	if (oc->uniqueID > 0) {
 		//btCollisionShape* model = new btBoxShape()
 		btCollisionShape* box = new btBoxShape(btVector3(tc->local.scale.x, tc->local.scale.y, tc->local.scale.z));
@@ -192,12 +152,11 @@ void PhysicsSystem::addNode(NodeComponent * node)
 		//btCollisionShape* box = new btCylinderShapeZ(btVector3(radius, tc->local.scale.y, radius));//(radius, tc->local.scale.y,);
 		collisionShapes.push_back(box);
 		if(node->isDynamic)
-			box->calculateLocalInertia(rbc->mass, inertia);
+			box->calculateLocalInertia(mass, inertia);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(rbc->mass, myMotionState, box, inertia);
-		btRigidBody* body = new btRigidBody(rbInfo);
-
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, box, inertia);
+		btRigidBody* body = new btRigidBody(rbInfo);\
 		dynamicsWorld->addRigidBody(body);
 		rbc->coaIndex = dynamicsWorld->getCollisionObjectArray().size() - 1;
 	}
@@ -205,25 +164,26 @@ void PhysicsSystem::addNode(NodeComponent * node)
 		btCollisionShape* sphere = new btSphereShape(btScalar(tc->local.scale.x));
 		collisionShapes.push_back(sphere);
 		if (node->isDynamic)
-			sphere->calculateLocalInertia(rbc->mass, inertia);
+			sphere->calculateLocalInertia(mass, inertia);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(rbc->mass, myMotionState, sphere, inertia);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, sphere, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 		body->setRollingFriction(1.1f);
 		body->setSpinningFriction(1.1f);
 
 		dynamicsWorld->addRigidBody(body);
 		rbc->coaIndex = dynamicsWorld->getCollisionObjectArray().size() - 1;
+		rbc->body = body;
 	}
 	if (oc->uniqueID == (int)ObjectType::BOX) {
 		btCollisionShape* box = new btBoxShape(btVector3(tc->local.scale.x, tc->local.scale.y, tc->local.scale.z));
 		collisionShapes.push_back(box);
 		if (node->isDynamic)
-			box->calculateLocalInertia(rbc->mass, inertia);
+			box->calculateLocalInertia(mass, inertia);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(rbc->mass, myMotionState, box, inertia);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, box, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 		//btCollisionObject* body = new btCollisionObject();
 		//body->setCollisionShape(box);
@@ -243,7 +203,7 @@ void PhysicsSystem::addNode(NodeComponent * node)
 
 		//startTransform.setOrigin(btVector3(tc->local.position.x, tc->local.position.y, tc->local.position.z));
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(rbc->mass, myMotionState, plane, inertia);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, plane, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 
 		dynamicsWorld->addRigidBody(body);
@@ -260,10 +220,10 @@ void PhysicsSystem::addNode(NodeComponent * node)
 		rbc->trans.setOrigin(btVector3(tc->local.position.x, tc->local.position.y, tc->local.position.z));
 
 		if (node->isDynamic)
-			cylinder->calculateLocalInertia(rbc->mass, inertia);
+			cylinder->calculateLocalInertia(mass, inertia);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
-		btRigidBody::btRigidBodyConstructionInfo rbInfo(rbc->mass, myMotionState, cylinder, inertia);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, cylinder, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 
 		dynamicsWorld->addRigidBody(body);
@@ -279,18 +239,27 @@ void PhysicsSystem::addNode(NodeComponent * node)
 	ps_Entities[dynamicsWorld->getCollisionObjectArray()[rbc->coaIndex]] = node->data->getId();
 }
 
+void PhysicsSystem::deleteNode(NodeComponent * node)
+{
+	RigidBodyComponent* rbc = (RigidBodyComponent*)node->data->getComponent<RigidBodyComponent>();
+	//dynamicsWorld->removeCollisionObject(rbc->body);
+	dynamicsWorld->removeRigidBody(rbc->body);
+	
+}
+
 void PhysicsSystem::addCol(NodeComponent * node)
 {
 	TransformComponent* tc = (TransformComponent*)node->data->getComponent<TransformComponent>();
 	RigidBodyComponent* rbc = (RigidBodyComponent*)node->data->getComponent<RigidBodyComponent>();
 	PrimitiveComponent* oc = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
 	btVector3 inertia = btVector3(0.f, 0.f, 0.f);
-	if (!node->isDynamic) rbc->mass = 0.f;
+	btScalar mass = 1.f;
+	if (!node->isDynamic) mass = 0.f;
 	if (oc->uniqueID == (int)ObjectType::BOX) {
 		btCollisionShape* box = new btBoxShape(btVector3(tc->local.scale.x, tc->local.scale.y, tc->local.scale.z));
 		collisionShapes.push_back(box);
 		if (node->isDynamic)
-			box->calculateLocalInertia(rbc->mass, inertia);
+			box->calculateLocalInertia(mass, inertia);
 
 		btDefaultMotionState* myMotionState = new btDefaultMotionState(rbc->trans);
 		btCollisionObject* body = new btCollisionObject();
@@ -303,8 +272,6 @@ void PhysicsSystem::addCol(NodeComponent * node)
 
 void PhysicsSystem::update()
 {
-
-
 	int numManifolds = dispatcher->getNumManifolds();
 	for (int i = 0; i < numManifolds; ++i) {
 		btPersistentManifold* contactManifold = dispatcher->getManifoldByIndexInternal(i);
@@ -323,10 +290,12 @@ void PhysicsSystem::update()
 				if ((ANode->flags & COMPONENT_COLIDER) && (BNode->flags & COMPONENT_COLIDER)) {
 
 					CollisionComponent* AComp = (CollisionComponent*)aent.getComponent<CollisionComponent>();
-					CollisionComponent* BComp = (CollisionComponent*)aent.getComponent<CollisionComponent>();
-
-					AComp->collisions[bent.getId()] = pt.getPositionWorldOnA();
-					BComp->collisions[aent.getId()] = pt.getPositionWorldOnB();
+					CollisionComponent* BComp = (CollisionComponent*)bent.getComponent<CollisionComponent>();
+					CollisionData apn = CollisionData(pt.getPositionWorldOnA(), -pt.m_normalWorldOnB);
+					CollisionData bpn = CollisionData(pt.getPositionWorldOnB(), pt.m_normalWorldOnB);
+					AComp->collisions[bent.getId()] = apn;
+					BComp->collisions[aent.getId()] = bpn;
+					
 
 					/*if (ANode->flags & COMPONENT_SPRING)
 						springUp(aent, bent);
@@ -345,58 +314,11 @@ void PhysicsSystem::update()
 	}
 	dynamicsWorld->stepSimulation(1.f / 60.f, 10);
 
-
-
-	/*
-	So basically what you want is some kind of map that for each object there's a corresponding node
-	so upon initialization, there needs to be some kind of... registering that takes place
-	struct collisiony
-	{
-		NodeComponent* node
-		btCollisionObject* obj
-		int numcollisions
-		collisiony*[8] objcollidedwith
-		contactPoint vec3;
-	}
-	*/
-	//dynamicsWorld->performDiscreteCollisionDetection();
-	////print positions of all objects
-	//for (int j = dynamicsWorld->getNumCollisionObjects() - 1; j >= 0; j--)
-	//{
-	//	btCollisionObject* obj = dynamicsWorld->getCollisionObjectArray()[j];
-	//	btRigidBody* body = btRigidBody::upcast(obj);
-	//	btTransform trans;
-	//	if (body && body->getMotionState())
-	//	{
-	//		body->getMotionState()->getWorldTransform(trans);
-	//	}
-	//	else
-	//	{
-	//		trans = obj->getWorldTransform();
-	//	}
-
-	//	printf("world pos object %d = %f,%f,%f\n", j, float(trans.getOrigin().getX()), float(trans.getOrigin().getY()), float(trans.getOrigin().getZ()));
-	//}
 }
 
-/* HASH TABLE YOU HAVE TO GET THIS STUFF FIGURED OUT NOW BRUH
-or just be slow for now.... 
-
-*/
 void PhysicsSystem::onCollision(btCollisionObject * a, btCollisionObject * b, btManifoldPoint p)
 {
-	//int numEnts = ps_Entities.size();
-	//for (int i = 0; i < numEnts; ++i) {
-	//	if (ps_Entities[i].compare(a)) {
-	//		//collisionmapper.get(ps_Entities[i].entity).oncollision(p
-	//	}
-	//	if (ps_Entities[i].compare(b)) {
 
-	//	}
-
-	//}
-	//question: should you create a collision system??? ANSWER: NO
-	//COLLISIONCOMPONENT???
 	
 }
 

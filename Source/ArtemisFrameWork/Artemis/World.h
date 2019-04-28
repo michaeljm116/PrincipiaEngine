@@ -34,8 +34,8 @@ namespace artemis {
     Entity& createEntity();
     Entity& getEntity(int entityId);
     void loopStart();
-    
-    
+	void setSingleton(Entity* e) { singleton = e; };
+	Entity* getSingleton() { return singleton; };
     
   private:
     SystemManager * systemManager;
@@ -45,6 +45,7 @@ namespace artemis {
     float delta;
     Bag<Entity*> refreshed;
     Bag<Entity*> deleted;
+	Entity* singleton;
 	};
 };
 #endif // $(Guard token)

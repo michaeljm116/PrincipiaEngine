@@ -5,12 +5,12 @@
 */
 #include "EngineUISystem.h"
 #include "VulkanInitializers.hpp"
-#include "../Utility/Input.h"
 #include "../Utility/resourceManager.h"
 #include "renderSystem.h"
 #include <omp.h>
 #include "../Game/scene.h"
 #include "../Game/Systems/buttonSystem.h"
+#include "../Utility/Input.h"
 
 #pragma region setupstuff
 EngineUISystem::EngineUISystem()
@@ -34,11 +34,7 @@ void EngineUISystem::init(UIOverlayCreateInfo createInfo)
 	//}
 
 	//idk
-
-	for (int i = 0; i < NUM_EDITOR_BUTTONS; ++i) {
-		controller.buttons[i].key = RESOURCEMANAGER.getConfig().controllerConfigs[0][i];
-	}
-
+	
 	this->createInfo = createInfo;
 	this->renderPass = createInfo.renderPass;
 	vertexBuffer.device = createInfo.device->logicalDevice;
@@ -740,7 +736,8 @@ void EngineUISystem::topSection(float w, float h, bool* p_open)
 			ImGui::EndMenu();
 		}
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::Text("Render average %.3f ms/frame (%.1f FPS)", INPUT.renderTime, 1000.0f / INPUT.renderTime);
+		ImGui::Text("delta average %.3f ms/frame (%.1f FPS)", world->getDelta(), 1000.0f * world->getDelta());
+		//ImGui::Text("Render average %.3f ms/frame (%.1f FPS)", INPUT.renderTime, 1000.0f / INPUT.renderTime);
 
 		//ImGui::Text("Render average &.3f ms/frame (&.1f FPS)", 1000.f / rend)
 		ImGui::EndMenuBar();
@@ -890,42 +887,24 @@ void EngineUISystem::updateActiveNode(NodeComponent * n)
 
 void EngineUISystem::updateInput()
 {
-	glm::vec3 tempAxis = glm::vec3(0.f);
-	for (int i = 0; i < NUM_EDITOR_BUTTONS; ++i) {
-		int action = INPUT.keys[controller.buttons[i].key];
-		controller.buttons[i].action = action;
-		if (action >= GLFW_PRESS) {
-			controller.buttons[i].time += INPUT.deltaTime;
-			if (i < 3)
-				tempAxis[i] += 1.f;
-			else if (i < 6)
-				tempAxis[i - 3] -= 1.f;
-			else if (i == 6) {
-				INPUT.playToggled = true;
-				INPUT.playMode = !INPUT.playMode;
-			}
-		}
-		else if (action == GLFW_RELEASE)
-			controller.buttons[i].time = 0.f;
-	}
-	controller.axis = tempAxis;
 
+	GlobalController* controller = (GlobalController*)world->getSingleton()->getComponent<GlobalController>();
 
 	float moveSpeed = 10.f;
 	if (activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Translate) {
 		//Input::Timer timer("Translate");
-		activeTransform->local.position += controller.axis * moveSpeed * INPUT.deltaTime;
+		activeTransform->local.position += controller->axis * moveSpeed * INPUT.deltaTime;
 		//SCENE.ts->SQTTransform(activeNode, activeTransform->global);
 		SCENE.ts->recursiveTransform(activeNode);// activeNode, activeTransform, glm::mat4(1.f), glm::mat4(1.f), glm::mat4(1.f),true); //SCENE.ts->updateTransform(activeNode);
 	}
 	else if (INPUT.pressed && activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Scale) {
-		activeTransform->local.scale += controller.axis * moveSpeed * INPUT.deltaTime;
+		activeTransform->local.scale += controller->axis * moveSpeed * INPUT.deltaTime;
 		//SCENE.ts->SQTTransform(activeNode, activeTransform->global);
 		SCENE.ts->recursiveTransform(activeNode);// activeNode, activeTransform, glm::mat4(1.f), glm::mat4(1.f), glm::mat4(1.f), true); //SCENE.ts->updateTransform(activeNode);
 	}
 	else if (INPUT.pressed && activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Rotate) {
 		//Input::Timer timer("Rotate");
-		activeTransform->eulerRotation += controller.axis * moveSpeed * INPUT.deltaTime;
+		activeTransform->eulerRotation += controller->axis * moveSpeed * INPUT.deltaTime;
 
 		//glm::mat4 rotationM;
 		//rotationM = glm::rotate(rotationM, glm::radians(activeTransform->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1143,7 +1122,7 @@ void EngineUISystem::editController() {
 	//static float* characterData[4] = { &activeController->data[0], &activeController->data[1], &activeController->data[2], &activeController->data[3] };
 	static float* characterData[4] = { &activeController->speed, &activeController->maxSpeed, &activeController->jumpSpeed, &activeController->maxJumpHeight };
 
-	ImGui::SliderFloat("Speed", characterData[0], 0.f, 20.f, "%.3f", 1.f);
+	ImGui::SliderFloat("Speed", characterData[0], 0.f, 100.f, "%.3f", 1.f);
 	ImGui::SliderFloat("Jump Speed", characterData[2], 0.f, 20.f, "%.4f", 1.f);
 }
 
