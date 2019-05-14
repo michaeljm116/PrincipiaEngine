@@ -1,6 +1,5 @@
 ﻿#include "renderSystem.h"
 #include <set>
-#include <chrono>
 #include "../Utility/componentIncludes.h"
 #include "../Utility/resourceManager.h"
 #include "../Utility/Input.h"
@@ -327,6 +326,7 @@ void RenderSystem::addGuiNumber(GUINumberComponent * gnc)
 	for (int i = 0; i < nums.size(); ++i) {
 		ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
 		gnc->shaderReferences.push_back(guis.size());
+		gui.visible = gnc->visible;
 		guis.push_back(gui);
 	}
 	gnc->ref = gnc->shaderReferences[0];

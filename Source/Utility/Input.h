@@ -10,9 +10,6 @@ just have an input system, but ill put that on the todolist
 #define INPUT_H
 
 #include "window.h"
-#include <iostream>
-#include <chrono>
-#include <glm\glm.hpp>
 #include "../Utility/key.h"
 #include "../Utility/mouse.h"
 

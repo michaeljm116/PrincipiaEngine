@@ -71,27 +71,27 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	//	e.refresh();
 	//}
 
-		//run the systems
-		game->process();
-		title->process();
-		menu->process();
-		pause->process();
+	//run the systems
+	game->process();
+	title->process();
+	menu->process();
+	pause->process();
 
-		//render
-		rs->mainLoop();
+	//render
+	rs->mainLoop();
 
-		//get the input, if in editor use editor controller, else regular controllers
-		if (ac->state == AppState::Editor)
-			ui->process();
-		else
-			controllers->process();
+	//get the input, if in editor use editor controller, else regular controllers
+	if (ac->state == AppState::Editor)
+		ui->process();
+	else
+		controllers->process();
 
 }
 
 void ApplicationSystem::instantGameStart()
 {
-	//WINDOW.toggleMaximized();
-	//WINDOW.toggleMaximized();
+	WINDOW.toggleMaximized();
+	WINDOW.toggleMaximized();
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 	rs->togglePlayMode(true);
 	game->findGoals();

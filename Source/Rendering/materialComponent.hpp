@@ -2,13 +2,7 @@
 #ifndef MATERIALCOMPONENT_HPP
 #define MATERIALCOMPONENT_HPP
 
-#ifndef GLM_FORCE_RADIANS
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#endif
-
-#include <glm\glm.hpp> 
-#include <Artemis\Artemis.h>
+#include "../pch.h"
 
 struct MaterialComponent : public artemis::Component{
 	//glm::vec3*  diffuse; 

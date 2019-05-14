@@ -2,10 +2,8 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 #endif // !Quadtree_H
-//#include <Artemis\Artemis.h>
-#include <Artemis\Artemis.h>
+#include "../pch.h"
 #include "../Game/primitive.hpp"
-#include <vector>
 
 //using namespace artemis;
 //using namespace glm;

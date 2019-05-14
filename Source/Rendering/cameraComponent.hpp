@@ -1,6 +1,5 @@
 #pragma once
-#include <Artemis/Artemis.h>
-#include <glm/glm.hpp>
+#include "../pch.h"
 
 struct CameraComponent : public artemis::Component {
 	glm::vec3 lookat;

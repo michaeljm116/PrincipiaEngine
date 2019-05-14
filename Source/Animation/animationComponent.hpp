@@ -1,8 +1,6 @@
 #pragma once
 
-#include <Artemis/Artemis.h>
-#include <glm/gtx/quaternion.hpp>
-
+#include "../pch.h"
 struct Joint
 {
 	int parentIndex;

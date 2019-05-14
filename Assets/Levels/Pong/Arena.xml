@@ -39,7 +39,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
 		    <GUI>
-			    <Position x="0.85" y="0.4"/>
+			    <Position x="0.80" y="0.4"/>
 			    <Extent x="0.1" y="0.1"/>
 			    <Alignment x="0.0" y="0.0"/>
 			    <AlignExt x="0.1" y="1.0"/>
@@ -55,7 +55,7 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
 		    <GUI>
-			    <Position x="0.1" y="0.4"/>
+			    <Position x="0.05" y="0.4"/>
 			    <Extent x="0.1" y="0.1"/>
 			    <Alignment x="0.0" y="0.0"/>
 			    <AlignExt x="0.1" y="1.0"/>

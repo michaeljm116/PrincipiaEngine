@@ -12,9 +12,7 @@ im about 89.4% sure this isn't used like at all anymore
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #endif
 
-#include <glm\glm.hpp> 
-#include <vector>
-#include "Artemis\Artemis.h"
+#include "../pch.h"
 
 // SSBO sphere declaration 
 struct Sphere {									// Shader uses std140 layout (so we only use vec4 instead of vec3)

@@ -25,4 +25,5 @@ public:
 	void processEntity(artemis::Entity &e);
 
 	glm::vec3 bul2glmVec3(const btVector3& in);
+	glm::vec3 ballReflection(glm::vec3 balldir, btVector3 colpos, TransformComponent* tc);
 };

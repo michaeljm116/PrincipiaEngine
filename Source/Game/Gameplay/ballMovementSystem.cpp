@@ -17,10 +17,10 @@ void BallMovementSystem::processEntity(artemis::Entity &e) {
 	btTransform& trans = rbc->body->getWorldTransform();
 	btVector3 pos = trans.getOrigin();
 	float delta = world->getDelta();
-	if (delta < 1.f) {
+	//if (delta < 1.f) {
 		pos += glm2bulVec3(ball->direction * ball->speed * world->getDelta());
 		trans.setOrigin(pos);
-	}
+	//}
 }
 
 btVector3 BallMovementSystem::glm2bulVec3(const glm::vec3& in) {

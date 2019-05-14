@@ -1,6 +1,5 @@
 #pragma once
-#include <Artemis/Artemis.h>
-#include <glm/glm.hpp>
+#include "../pch.h"
 
 /*
 NINTENDO SWITCH CONTROLLER :
@@ -11,6 +10,8 @@ y / < = 0
 x / ^ = 2
 
 + / -= 8
+
+13 = HOME BUTTON
 */
 
 /*
@@ -20,6 +21,7 @@ x / ^ = 2
 6 = RIGHT BACK
 7 = LEFT SHOLDER
 8 = LEFT BACK
+9 = home button = exit
 and theres an axis of course
 */
 enum class InputType
@@ -32,8 +34,16 @@ struct Button {
 	int key;
 	int action;
 	double time;
+
+	Button& operator= (Button& b) {
+		key = b.key;
+		action = b.action;
+		time = b.time;
+
+		return *this;
+	}
 };
-#define NUM_BUTTONS 9
+#define NUM_BUTTONS 10
 #define NUM_GLOBAL_BUTTONS 9
 ///ControllerComponent, NOTE: first 6 buttons are for the axis
 /// goes in order of +x +y +z -x -y -z
@@ -45,8 +55,16 @@ struct ControllerComponent : public artemis::Component {
 	Button buttons[NUM_BUTTONS];
 	glm::vec2 axis;
 	int index;
-	bool gamepad = true;
+	bool gamepad = false;
 	ControllerComponent(int id) : index(id) {};
+	ControllerComponent(ControllerComponent* cc) {
+		axis = cc->axis;
+		index = cc->index;
+		gamepad = cc->gamepad;
+		for (int i = 0; i < NUM_BUTTONS; ++i) {
+			buttons[i] = cc->buttons[i];
+		}
+	}
 
 	/*so you toss in a 21 and you turn it into a buttonything
 	also have index so you can save

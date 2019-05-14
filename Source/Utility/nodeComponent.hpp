@@ -1,9 +1,7 @@
 #ifndef NODECOMPONENT_H_
 #define NODECOMPONENT_H_
 
-#include <Artemis\Artemis.h>
-#include <list>
-#include <vector>
+#include "../pch.h"
 //enum class ComponentFlag {
 //	None = 0,
 //	Node = 1 << 0,

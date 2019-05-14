@@ -7,11 +7,7 @@ probably should be a system instead
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#ifndef  GLFW_INCLUDE_VULKAN
-#define GLFW_INCLUE_VULKAN
-#endif
-
-#include <GLFW/glfw3.h>
+#include "../pch.h"
 
 //#define UI_ENABLED
 

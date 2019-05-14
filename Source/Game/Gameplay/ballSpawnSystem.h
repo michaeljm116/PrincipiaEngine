@@ -11,7 +11,7 @@ This system controls how the balls spawn
 */
 
 #pragma once
-#include <Artemis/Artemis.h>
+#include "../pch.h"
 #include "../scene.h"
 #include "ballComponents.hpp"
 #include "ballCollisionSystem.h"
