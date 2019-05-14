@@ -1,6 +1,8 @@
 #pragma once
 /*Texture class Copyright (C) by Mike Murrell 2017
 honestly,,, i dont even know if i still use this class
+nvm turns out i still use it
+nvm turns out i still use it
 */
 //#include "RenderHelplers.h"
 #include "vulkanbase.h"
@@ -20,6 +22,8 @@ public:
 	uint32_t layerCount;	
 	VkDescriptorImageInfo descriptor;
 	std::string path;
+
+	//VulkanDevice* device;
 
 	void destroy(VkDevice& device);
 	VkResult CreateTexture(VulkanDevice& device);

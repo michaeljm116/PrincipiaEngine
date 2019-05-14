@@ -10,11 +10,12 @@ loading/saving scene, creating/copying/deleting objects
 #include "../Utility/resourceManager.h"
 #include "../Physics/physicsSystem.h"
 #include "../Animation/animationSystem.h"
-#include "../Game/script.hpp"
-#include "../Game/transformSystem.h"
-#include "../Game/Systems/characterController.h"
-#include "../Game/ControllerSystem.hpp"
-#include "../Game/Systems/buttonSystem.h"
+#include "script.hpp"
+#include "transformSystem.h"
+#include "Application/controllerSystem.h"
+#include "Gameplay/characterController.h"
+#include "Gameplay/ballScoreSystem.h"
+#include "Gameplay/ballComponents.hpp"
 
 #define SCENE Scene::get()
 
@@ -43,7 +44,6 @@ public:
 
 	CharacterController* cc;
 	ControllerSystem* input;
-	ButtonSystem* button;
 
 	std::vector<NodeComponent*> parents;
 
@@ -59,6 +59,7 @@ public:
 
 	void insertController(NodeComponent* nc);
 	void insertRigidBody(NodeComponent* nc);
+	void insertGoal(artemis::Entity& e);
 	artemis::Entity* createLight();
 
 	artemis::Entity* createCamera();

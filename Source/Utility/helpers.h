@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 namespace tulip {
 	template<typename T>
 	inline T max(const T& a, const T& b) {

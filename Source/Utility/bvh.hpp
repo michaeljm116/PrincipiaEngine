@@ -30,7 +30,7 @@ since youre not using center for anything else really you should just make it a 
 
 #pragma once
 #include "../Rendering/shaderStructures.hpp"
-#include "../Game/geometryComponents.hpp"
+#include "../Rendering/renderComponents.hpp"
 #include "helpers.h"
 
 static const int MAX_BVH_OBJECTS = 4;

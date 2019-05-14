@@ -59,6 +59,17 @@ struct Light{
 	int id;
 };
 
+struct Gui {
+	vec2 min;
+	vec2 extents;
+	vec2 alignMin;
+	vec2 alignExt;
+	int layer;
+	int id;
+	int pad;
+	int visible;
+};
+
 struct flool{
 	float t;
 	bool b;

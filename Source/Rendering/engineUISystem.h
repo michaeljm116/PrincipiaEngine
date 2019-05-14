@@ -10,6 +10,7 @@
 #include "../Utility/componentIncludes.h"
 #include "../Utility/resourceManager.h"
 #include "../Utility/componentIncludes.h"
+#include "../Game/Application/applicationComponents.h"
 
 struct UIOverlayCreateInfo
 {
@@ -74,7 +75,8 @@ private:
 	void prepareRenderPass();
 	void updateCommandBuffers();
 
-	artemis::ComponentMapper<NodeComponent> nodeMapper;
+	artemis::ComponentMapper<EditorComponent> editorMapper;
+	artemis::ComponentMapper<GlobalController> gcMapper;
 
 public:
 	bool visible = false;
@@ -85,7 +87,10 @@ public:
 	EngineUISystem();
 	~EngineUISystem();
 	void init(UIOverlayCreateInfo createInfo);
-	void processEntity(artemis::Entity& e) {};
+	void initialize();
+	void processEntity(artemis::Entity& e);
+	void added(artemis::Entity& e);
+	void removed(artemis::Entity& e);
 	
 	void CleanUp();
 	void update();

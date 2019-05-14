@@ -28,6 +28,8 @@ bool Resources::LoadConfig(std::string fileName)
 	global[4] = GLFW_KEY_LEFT_ALT;
 	global[5] = GLFW_KEY_S;
 	global[6] = GLFW_KEY_LEFT_BRACKET;
+	global[7] = GLFW_KEY_F11;
+	global[8] = GLFW_KEY_ESCAPE;
 
 	controller1[0] = GLFW_KEY_D;
 	controller1[1] = GLFW_KEY_W;

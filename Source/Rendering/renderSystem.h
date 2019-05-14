@@ -14,6 +14,8 @@ much rework but brotha aint got time fo dat
 #include "../Utility/window.h"
 #include "../Utility/bvh.hpp"
 
+static const int MAXTEXTURES = 4;
+
 struct MeshIdAssigner {
 	int index;
 	int uniqueID;
@@ -42,6 +44,9 @@ public:
 
 	void addNodes(std::vector<NodeComponent*> nodes);
 	void addNode(NodeComponent* node);
+	void updateGui(GUIComponent* gc);
+	void addGuiNumber(GUINumberComponent* gnc);
+	void updateGuiNumber(GUINumberComponent* gnc);
 
 	void deleteMesh(NodeComponent* node);
 	void deleteNode(NodeComponent* node);
@@ -49,7 +54,7 @@ public:
 	void updateObjectMemory();
 	void updateMeshMemory();
 	void updateGeometryMemory(ObjectType type);
-	
+
 	float getRenderTime() { return m_RenderTime.ms; }
 
 	enum RenderUpdate {
@@ -62,7 +67,8 @@ public:
 		UPDATE_MATERIAL = 0x40,
 		UPDATE_NONE = 0x80,
 		UPDATE_OBJECT = 0x100,
-		UPDATE_LIGHT = 0x200
+		UPDATE_LIGHT = 0x200,
+		UPDATE_GUI = 0x400
 	};
 
 	int32_t updateflags;
@@ -74,7 +80,7 @@ public:
 	void updateBuffers();
 	void updateCamera(CameraComponent* c);
 	//void updateLight(LightComponent* l);
-	
+
 	virtual void cleanup();
 	virtual void cleanupSwapChain();
 	virtual void recreateSwapChain();
@@ -95,7 +101,7 @@ private:
 	void createCommandBuffers(float swapratio, int32_t offsetWidth, int32_t offsetHeight);
 	void updateDescriptors();
 
-	VkDescriptorPool	  descriptorPool;	
+	VkDescriptorPool	  descriptorPool;
 	struct {
 		VkDescriptorSetLayout	descriptorSetLayout;
 		VkDescriptorSet			descriptorSetPreCompute;
@@ -113,6 +119,7 @@ private:
 			VBuffer<ssPrimitive> objects;
 			VBuffer<ssMaterial> materials;			// (Shader) storage buffer object with scene Materials
 			VBuffer<ssLight> lights;
+			VBuffer<ssGUI> guis;
 
 		} storageBuffers;
 
@@ -133,10 +140,12 @@ private:
 		VBuffer<UBOCompute> uniformBuffer;			// Uniform buffer object containing scene data
 	} compute;
 
-	
+
 	std::vector<ssPrimitive> objects;
 	std::vector<ssMaterial> materials;
 	std::vector<ssLight> lights;
+	std::vector<ssGUI> guis;
+
 
 	std::vector<MeshComponent*> meshComps;
 	std::vector<PrimitiveComponent*> objectComps;
@@ -156,6 +165,7 @@ private:
 	Timer m_RenderTime;
 
 	Texture			computeTexture;
+	Texture			guiTextures[MAXTEXTURES];
 
 	void			createComputeCommandBuffer();
 	void			prepareCompute();
@@ -174,4 +184,23 @@ private:
 	void updateMaterials();
 	void updateMaterial(int id);
 	void togglePlayMode(bool pm);
+
+	std::vector<int> intToArrayOfInts(const int &a) {
+		if (a == 0) {
+			std::vector<int> zro;
+			zro.push_back(0);
+			return zro;
+		}
+		std::vector<int> temp;
+		int c = a;
+		while (c > 0) {
+			temp.push_back(c % 10);
+			c /= 10;
+		}
+		std::vector<int> res;
+		for (int i = temp.size() - 1; i > -1; --i)
+			res.push_back(temp[i]);
+		return res;
+	}
+
 };

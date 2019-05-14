@@ -4,17 +4,19 @@
 * highly modified from sascha williems ui overlay
 */
 #include "EngineUISystem.h"
+#include "../Game/Application/applicationComponents.h"
 #include "VulkanInitializers.hpp"
 #include "../Utility/resourceManager.h"
 #include "renderSystem.h"
 #include <omp.h>
 #include "../Game/scene.h"
-#include "../Game/Systems/buttonSystem.h"
 #include "../Utility/Input.h"
 
 #pragma region setupstuff
 EngineUISystem::EngineUISystem()
 {
+	addComponentType<EditorComponent>();
+	addComponentType<GlobalController>();
 }
 
 /** Free up all Vulkan resources acquired by the UI overlay */
@@ -82,6 +84,56 @@ void EngineUISystem::init(UIOverlayCreateInfo createInfo)
 
 	findActiveCamera();
 }
+void EngineUISystem::initialize()
+{
+	editorMapper.init(*world);
+	gcMapper.init(*world);
+
+}
+void EngineUISystem::processEntity(artemis::Entity & e)
+{
+	GlobalController* gc = gcMapper.get(e);
+	glm::vec3 tempAxis = glm::vec3(0.f);
+	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i) {
+		int action = INPUT.keys[gc->buttons[i].key];
+		gc->buttons[i].action = action;
+		if (action == GLFW_PRESS) {
+			if (i == 6) { e.removeComponent<EditorComponent>(); 
+			e.addComponent(new GameComponent());
+			e.refresh();
+			}
+			if (i == 7) WINDOW.toggleMaximized();
+			if (i == 8) glfwSetWindowShouldClose(WINDOW.getWindow(), 1);
+		}
+		if (action >= GLFW_PRESS) {
+			gc->buttons[i].time += INPUT.deltaTime;
+			if (i < 3)
+				tempAxis[i] += 1.f;
+			else if (i < 6)
+				tempAxis[i - 3] -= 1.f;
+		}
+		else if (action == GLFW_RELEASE) {
+			gc->buttons[i].time = 0.f;
+		}
+	}
+	gc->axis = tempAxis;
+}
+void EngineUISystem::added(artemis::Entity & e)
+{
+	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+	rs->togglePlayMode(false);
+	ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
+	ac->state = AppState::Editor;
+}
+void EngineUISystem::removed(artemis::Entity & e)
+{
+	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+	rs->togglePlayMode(true);
+	ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
+	ac->state = AppState::Play;
+	//ac->transition = true;
+}
+
 void EngineUISystem::CleanUp() {
 	vertexBuffer.destroy();
 	indexBuffer.destroy();
