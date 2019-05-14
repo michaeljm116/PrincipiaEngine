@@ -19,7 +19,6 @@ void Scene::init(artemis::World& w) {
 
 	cc = (CharacterController*)sm->setSystem(new CharacterController());
 	input = (ControllerSystem*)sm->setSystem(new ControllerSystem());
-	button = (ButtonSystem*)sm->setSystem(new ButtonSystem());
 
 	LoadScene("Pong/Arena");
 	//LoadScene("Level1/QuadsTest");
@@ -44,9 +43,13 @@ void Scene::doStuff() {
 			insertController(node);
 		if (node->flags & COMPONENT_BUTTON) {
 			node->data->refresh();
-			button->change(*node->data);
+			//button->change(*node->data);
 			input->change(*node->data);
 			insertRigidBody(node->children[0]);
+		}
+		if (node->flags & COMPONENT_GUI && node->tags == 8) {
+			GUINumberComponent* gnc = (GUINumberComponent*)node->data->getComponent<GUINumberComponent>();
+			rs->addGuiNumber(gnc);
 		}
 	}
 
@@ -219,6 +222,12 @@ void Scene::insertController(NodeComponent * nc)
 	cc->characterTransform = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 	cc->characterNode = nc;
 
+	//sets up the singleton to also use this controller
+	if (controller->index == 0) {
+		world->getSingleton()->addComponent(controller);
+		world->getSingleton()->refresh();
+	}
+
 }
 
 void Scene::insertRigidBody(NodeComponent* nc) {
@@ -236,6 +245,11 @@ void Scene::insertRigidBody(NodeComponent* nc) {
 		//nc->data->refresh();
 		cc->change(*nc->data);
 	}
+}
+
+void Scene::insertGoal(artemis::Entity & e)
+{
+
 }
 
 artemis::Entity* Scene::createLight() {//glm::vec3 pos, glm::vec3 color, float intensity) {
@@ -518,6 +532,32 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 
 		pNode->InsertEndChild(pTransform);
 	}
+	if (parent->flags & COMPONENT_GUI) {
+		GUIComponent* gui = (GUIComponent*)parent->data->getComponent<GUIComponent>();
+		XMLElement* pGUI = doc->NewElement("GUI");
+		XMLElement* pPos = doc->NewElement("Position");
+		pPos->SetAttribute("x", gui->alignMin.x);
+		pPos->SetAttribute("y", gui->alignMin.y);
+
+		XMLElement* pExt = doc->NewElement("Extent");
+		pExt->SetAttribute("x", gui->extents.x);
+		pExt->SetAttribute("y", gui->extents.y);
+
+		XMLElement* pAlign = doc->NewElement("Alignment");
+		pAlign->SetAttribute("x", gui->alignMin.x);
+		pAlign->SetAttribute("y", gui->alignMin.y);
+
+		XMLElement* pAlignExt = doc->NewElement("AlignExt");
+		pAlignExt->SetAttribute("x", gui->alignExt.x);
+		pAlignExt->SetAttribute("y", gui->alignExt.y);
+
+		pGUI->InsertFirstChild(pPos);
+		pGUI->InsertAfterChild(pPos, pExt);
+		pGUI->InsertAfterChild(pExt, pAlign);
+		pGUI->InsertEndChild(pAlignExt);
+
+		pNode->InsertEndChild(pGUI);
+	}
 	//Material Info
 	if (parent->flags & COMPONENT_MATERIAL) {
 		MaterialComponent* m = (MaterialComponent*)parent->data->getComponent<MaterialComponent>();
@@ -620,7 +660,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		n->flags = flags;
 		n->tags = tags;
 		e->addComponent(n); //TODO: aparently this might not be needed???? wat????
-		
+	
 		if (flags & COMPONENT_TRANSFORM) {
 			glm::vec3 pos;
 			glm::vec3 rot;
@@ -650,6 +690,36 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		else {
 			e->addComponent(new TransformComponent());
 			n->flags |= COMPONENT_TRANSFORM;
+		}
+		if (flags & COMPONENT_GUI) {
+			glm::vec2 pos;
+			glm::vec2 ext;
+			glm::vec2 align;
+			glm::vec2 alignExt;
+
+			XMLElement* gui = start->FirstChildElement("GUI");
+
+			XMLElement* position = gui->FirstChildElement("Position");
+			position->QueryFloatAttribute("x", &pos.x);
+			position->QueryFloatAttribute("y", &pos.y);
+
+			XMLElement* extents = gui->FirstChildElement("Extent");
+			extents->QueryFloatAttribute("x", &ext.x);
+			extents->QueryFloatAttribute("y", &ext.y);
+
+			XMLElement* alignment = gui->FirstChildElement("Alignment");
+			alignment->QueryFloatAttribute("x", &align.x);
+			alignment->QueryFloatAttribute("y", &align.y);
+
+			XMLElement* alignmentExtents = gui->FirstChildElement("AlignExt");
+			alignmentExtents->QueryFloatAttribute("x", &alignExt.x);
+			alignmentExtents->QueryFloatAttribute("y", &alignExt.y);
+			if (tags == 8) {
+				int goalNum = n->name.at(n->name.length() - 1) - '0';
+				e->addComponent(new BallScoreComponent(goalNum));
+				GUINumberComponent* guinumber = new GUINumberComponent(pos, ext, 0);
+				e->addComponent(guinumber);
+			}
 		}
 		if (flags & COMPONENT_MATERIAL) {
 			int matID;
@@ -733,9 +803,6 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		}
 		if (flags & COMPONENT_COLIDER) {
 			e->addComponent(new CollisionComponent());
-		}
-		if (flags & COMPONENT_SPRING) {
-			e->addComponent(new SpringComponent(glm::vec3(0, 1, 0), 5));
 		}
 		//if (flags & COMPONENT_BUTTON) {
 		//	e->addComponent(new ButtonComponent());

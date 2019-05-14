@@ -9,19 +9,19 @@
 #include "Utility/resourceManager.h"
 #include "Game/scene.h"
 #include "Game/transformSystem.h"
-#include "Game/gameSystem.h"
+#include "Game/Application/applicationSystem.h"
 
 int main() {
 
 	artemis::World world;
 	artemis::SystemManager * sm = world.getSystemManager();
 
-	GameSystem*		 gameSys	  = (GameSystem*)     sm->setSystem(new GameSystem());
 	RenderSystem*	 renderSys	  = (RenderSystem*)	  sm->setSystem(new RenderSystem());
 	EngineUISystem*	 engineUISys  = (EngineUISystem*) sm->setSystem(new EngineUISystem());
 	TransformSystem* transformSys = (TransformSystem*)sm->setSystem(new TransformSystem());
 	PhysicsSystem*	 physicsSys	  = (PhysicsSystem*)  sm->setSystem(new PhysicsSystem());
 	AnimationSystem* animSys	  = (AnimationSystem*)sm->setSystem(new AnimationSystem());
+	ApplicationSystem* appSys	  = (ApplicationSystem*)sm->setSystem(new ApplicationSystem());
 
 	artemis::EntityManager * em = world.getEntityManager();
 	static artemis::Entity* singletonEntity = &em->create();
@@ -36,13 +36,16 @@ int main() {
 
 
 
-	singletonEntity->addComponent(new GameComponent(GameState::Editor));
-	singletonEntity->refresh();
+	singletonEntity->addComponent(new ApplicationComponent());
+	singletonEntity->addComponent(new GUIComponent(glm::vec2(0.0f, 0.f), glm::vec2(1.f, 1.f), glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f), 0, 1, true));
+	singletonEntity->addComponent(new TitleComponent());
 	GlobalController* controller = new GlobalController();
 	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i)
 		controller->buttons[i].key = Resources::get().getConfig().controllerConfigs[0][i];
 	singletonEntity->addComponent(controller);
-	gameSys->change(*singletonEntity);
+
+	singletonEntity->refresh();
+	appSys->change(*singletonEntity);
 
 
 	try {
@@ -56,7 +59,8 @@ int main() {
 		Scene::get().doStuff();
 		renderSys->initialize();
 		animSys->initialize();
-		gameSys->initialize();
+		appSys->initialize();
+		appSys->instantGameStart();
 
 		static std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
 		static std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
@@ -71,7 +75,7 @@ int main() {
 			start = std::chrono::high_resolution_clock::now();
 			INPUT.update();
 
-			gameSys->process();
+			appSys->process();
 
 			end = std::chrono::high_resolution_clock::now();
 		}

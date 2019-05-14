@@ -13,6 +13,7 @@ Texture::Texture()
 
 Texture::~Texture()
 {
+	//destroy(device->logicalDevice);
 }
 
 void Texture::destroy(VkDevice& device)
@@ -26,6 +27,7 @@ void Texture::destroy(VkDevice& device)
 VkResult Texture::CreateTexture(VulkanDevice & device)
 {
 	//////////////CREATE TEXTURE IMAGE/////////////////
+	//this->device = &device;
 	int texWidth, texHeight, texChannels;
 	stbi_uc* pixels = stbi_load(path.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
 	VkDeviceSize imageSize = texWidth * texHeight * 4;
@@ -79,7 +81,6 @@ VkResult Texture::CreateTexture(VulkanDevice & device)
 	samplerInfo.mipLodBias = 0.0f;
 	samplerInfo.minLod = 0.0f;
 	samplerInfo.maxLod = 0.0f;
-	
 	VK_CHECKRESULT(vkCreateSampler(device.logicalDevice, &samplerInfo, nullptr, &sampler), "create texture sampler!");
 
 

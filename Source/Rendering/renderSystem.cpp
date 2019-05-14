@@ -13,6 +13,7 @@ static const int MAXVERTS		= 256;
 static const int MAXINDS		= 256;
 static const int MAXOBJS		= 256;
 static const int MAXLIGHTS		= 256;
+static const int MAXGUIS		= 256;
 
 // Setup and fill the compute shader storage buffers containing primitives for the raytraced scene
 void RenderSystem::prepareStorageBuffers()
@@ -39,6 +40,16 @@ void RenderSystem::prepareStorageBuffers()
 	compute.storageBuffers.materials.InitStorageBufferCustomSize(vkDevice, materials, materials.size(), MAXMATERIALS);
 	compute.storageBuffers.lights.InitStorageBufferCustomSize(vkDevice, lights, lights.size(), MAXLIGHTS);
 
+
+	//create 1 gui main global kind of gui for like title/menu screen etc...
+	GUIComponent* guiComp = (GUIComponent*)world->getSingleton()->getComponent<GUIComponent>();
+	ssGUI gui = ssGUI(guiComp->min, guiComp->extents, guiComp->alignMin, guiComp->alignExt, guiComp->layer, guiComp->id);
+	gui.visible = guiComp->visible;
+
+	//Give the component a reference to it and initialize
+	guiComp->ref = guis.size();
+	guis.push_back(gui);
+	compute.storageBuffers.guis.InitStorageBufferCustomSize(vkDevice, guis, guis.size(), MAXGUIS);
 }
 
 // Prepare a texture target that is used to store compute shader calculations
@@ -186,6 +197,15 @@ void RenderSystem::loadResources()
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
 	//compute.storageBuffers.meshes.InitStorageBufferCustomSize(vkDevice, meshes, meshes.size(), MAXMESHES);
 
+	guiTextures[0].path = "../Assets/Levels/Pong/Textures/numbers.png";
+	guiTextures[0].CreateTexture(vkDevice);
+	guiTextures[1].path = "../Assets/Levels/Pong/Textures/title.png";
+	guiTextures[1].CreateTexture(vkDevice);
+	guiTextures[2].path = "../Assets/Levels/Pong/Textures/menu.png";
+	guiTextures[2].CreateTexture(vkDevice);
+	guiTextures[3].path = "../Assets/Levels/Pong/Textures/pause.png";
+	guiTextures[3].CreateTexture(vkDevice);
+
 }
 
 void RenderSystem::addLight(artemis::Entity & e)
@@ -286,6 +306,47 @@ void RenderSystem::addNode(NodeComponent* node) {
 		compute.ubo.pos = transComp->global.position;
 		compute.ubo.fov = cam->fov;
 	}
+}
+
+void RenderSystem::updateGui(GUIComponent * gc)
+{
+	ssGUI& g = guis[gc->ref];
+	g.min = gc->min;
+	g.extents = gc->extents;
+	g.alignMin = gc->alignMin;
+	g.alignExt = gc->alignExt;
+	g.layer = gc->layer;
+	g.id = gc->id;
+	g.visible = gc->visible;
+	setRenderUpdate(UPDATE_GUI);
+}
+
+void RenderSystem::addGuiNumber(GUINumberComponent * gnc)
+{
+	std::vector<int> nums = intToArrayOfInts(gnc->number);
+	for (int i = 0; i < nums.size(); ++i) {
+		ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+		gnc->shaderReferences.push_back(guis.size());
+		guis.push_back(gui);
+	}
+	gnc->ref = gnc->shaderReferences[0];
+	setRenderUpdate(UPDATE_GUI);
+}
+
+void RenderSystem::updateGuiNumber(GUINumberComponent * gnc)
+{
+	std::vector<int> nums = intToArrayOfInts(gnc->number);
+	for (int i = 0; i < gnc->shaderReferences.size(); ++i) {
+		guis[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+		guis[gnc->shaderReferences[i]].visible = gnc->visible;
+	}
+	if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
+		ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+		gnc->shaderReferences.push_back(guis.size());
+		guis.push_back(gui);
+		compute.storageBuffers.guis.UpdateAndExpandBuffers(vkDevice, guis, guis.size());
+	}
+	setRenderUpdate(UPDATE_GUI);
 }
 
 void RenderSystem::deleteMesh(NodeComponent * node)
@@ -493,8 +554,13 @@ void RenderSystem::updateBuffers()
 		compute.storageBuffers.lights.UpdateBuffers(vkDevice, lights);
 		updateflags &= ~UPDATE_LIGHT;
 	}
+	if (updateflags & UPDATE_GUI) {
+		compute.storageBuffers.guis.UpdateBuffers(vkDevice, guis);
+		updateflags &= ~UPDATE_GUI;
+	}
 
 	updateflags |= UPDATE_NONE;
+	updateDescriptors();
 }
 
 void RenderSystem::updateCamera(CameraComponent* c) {
@@ -569,6 +635,7 @@ void RenderSystem::initialize() {
 	prepared = true;
 	
 	//glfwMaximizeWindow(WINDOW.getWindow());
+	updateDescriptors();
 }
 void RenderSystem::mainLoop() {
 	//Keeps the app running until an error occurs
@@ -945,9 +1012,13 @@ void RenderSystem::updateDescriptors()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			7,
-			&compute.storageBuffers.lights.Descriptor()
-
-		)
+			&compute.storageBuffers.lights.Descriptor()),
+		//Binding 8 for gui
+		vks::initializers::writeDescriptorSet(
+			compute.descriptorSet,
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			8,
+			&compute.storageBuffers.guis.Descriptor())
 	};
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
 	//vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -957,9 +1028,10 @@ void RenderSystem::createDescriptorPool() {
 	std::vector<VkDescriptorPoolSize> poolSizes =
 	{
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 4),	// Graphics image samplers
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 7),	// Graphics image samplers || +4 FOR TEXTURE
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 6),			// Storage buffer for the scene primitives
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 7),			// Storage buffer for the scene primitives
+		//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
 	};
 
 	VkDescriptorPoolCreateInfo descriptorPoolInfo =
@@ -1098,7 +1170,16 @@ void RenderSystem::prepareCompute()
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			7)
+			7),
+		vks::initializers::descriptorSetLayoutBinding(
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			VK_SHADER_STAGE_COMPUTE_BIT,
+			8),
+		// Binding 8: the textures
+		vks::initializers::descriptorSetLayoutBinding(
+			VK_DESCRIPTOR_TYPE_SAMPLER,
+			VK_SHADER_STAGE_COMPUTE_BIT,
+			9, 4)
 	};
 
 	VkDescriptorSetLayoutCreateInfo descriptorLayout =
@@ -1123,6 +1204,7 @@ void RenderSystem::prepareCompute()
 
 	VK_CHECKRESULT(vkAllocateDescriptorSets(vkDevice.logicalDevice, &allocInfo, &compute.descriptorSet), "ALLOCATE DOMPUTE DSET");
 
+	VkDescriptorImageInfo textureimageinfos[MAXTEXTURES] = { guiTextures[0].descriptor, guiTextures[1].descriptor, guiTextures[2].descriptor, guiTextures[3].descriptor };
 	computeWriteDescriptorSets =
 	{
 		// Binding 0: Output storage image
@@ -1168,11 +1250,24 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			6,
 			&compute.storageBuffers.materials.Descriptor()),
+		//Binding 7 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			7,
-			&compute.storageBuffers.lights.Descriptor())
+			&compute.storageBuffers.lights.Descriptor()),
+		//Binding 8 for guis
+		vks::initializers::writeDescriptorSet(
+			compute.descriptorSet,
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			8,
+			&compute.storageBuffers.lights.Descriptor()),
+		//bINDING 8 FOR TEXTURES
+		vks::initializers::writeDescriptorSet(
+			compute.descriptorSet, 
+			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+			9, 
+			textureimageinfos, MAXTEXTURES)
 	};
 
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -1220,8 +1315,12 @@ void RenderSystem::destroyCompute()
 	compute.storageBuffers.objects.Destroy(vkDevice);
 	compute.storageBuffers.materials.Destroy(vkDevice);
 	compute.storageBuffers.lights.Destroy(vkDevice);
+	compute.storageBuffers.guis.Destroy(vkDevice);
 
 	computeTexture.destroy(vkDevice.logicalDevice); 
+	for(int i = 0; i < MAXTEXTURES; ++i)
+		guiTextures[i].destroy(vkDevice.logicalDevice);
+
 	vkDestroyPipelineCache(vkDevice.logicalDevice, pipelineCache, nullptr);
 	vkDestroyPipeline(vkDevice.logicalDevice, compute.pipeline, nullptr);
 	vkDestroyPipelineLayout(vkDevice.logicalDevice, compute.pipelineLayout, nullptr);

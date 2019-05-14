@@ -23,8 +23,7 @@ layout(std140, binding = 4) buffer Meshs {
 	Mesh meshes[];
 };
 
-layout(std140, binding = 5) buffer Primitives
-{
+layout(std140, binding = 5) buffer Primitives{
 	Primitive primitives[];
 };
 
@@ -36,5 +35,10 @@ layout(std140, binding = 7) buffer Lights {
 	Light lights[];
 };
 
+layout(std140, binding = 8) buffer Guis {
+	Gui guis[];
+};
+
+layout(binding = 9) uniform sampler2D guiTest[4];
 
 #endif

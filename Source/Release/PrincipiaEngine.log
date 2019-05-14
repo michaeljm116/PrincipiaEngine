@@ -1,0 +1,18 @@
+﻿  animationSystem.cpp
+  audioSystem.cpp
+  buttonSystem.cpp
+  characterController.cpp
+  gameSystem.cpp
+  scene.cpp
+  transformSystem.cpp
+  physicsSystem.cpp
+  engineUISystem.cpp
+  renderSystem.cpp
+  resourceManager.cpp
+  main.cpp
+  Generating code
+  12 of 12091 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    30 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Release\Principia Engine.exe

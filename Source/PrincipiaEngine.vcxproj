@@ -189,12 +189,20 @@
     <ClCompile Include="ArtemisFrameWork\TagManager.cpp" />
     <ClCompile Include="ArtemisFrameWork\World.cpp" />
     <ClCompile Include="Audio\audioSystem.cpp" />
-    <ClCompile Include="Game\gameSystem.cpp" />
-    <ClCompile Include="Game\controllerSystem.cpp" />
+    <ClCompile Include="Game\Application\applicationSystem.cpp" />
+    <ClCompile Include="Game\Application\controllerSystem.cpp" />
+    <ClCompile Include="Game\Application\gameSystem.cpp" />
+    <ClCompile Include="Game\Application\menuSystem.cpp" />
+    <ClCompile Include="Game\Application\pauseSystem.cpp" />
+    <ClCompile Include="Game\Application\titleSystem.cpp" />
+    <ClCompile Include="Game\Gameplay\ballCollisionSystem.cpp" />
+    <ClCompile Include="Game\Gameplay\ballMovementSystem.cpp" />
+    <ClCompile Include="Game\Gameplay\ballScoreSystem.cpp" />
+    <ClCompile Include="Game\Gameplay\ballSpawnSystem.cpp" />
+    <ClCompile Include="Game\Gameplay\characterController.cpp" />
     <ClCompile Include="Game\scene.cpp" />
-    <ClCompile Include="Game\Systems\buttonSystem.cpp" />
-    <ClCompile Include="Game\Systems\characterController.cpp" />
     <ClCompile Include="Game\transformSystem.cpp" />
+    <ClCompile Include="Physics\collisionSystem.cpp" />
     <ClCompile Include="Physics\physicsSystem.cpp" />
     <ClCompile Include="Rendering\engineUISystem.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp" />
@@ -486,28 +494,28 @@
     <ClInclude Include="ArtemisFrameWork\Artemis\TypeInfoComparator.h" />
     <ClInclude Include="ArtemisFrameWork\Artemis\World.h" />
     <ClInclude Include="Audio\audioSystem.h" />
-    <ClInclude Include="Game\ballCollisionSystem.hpp" />
-    <ClInclude Include="Game\ballComponents.h" />
-    <ClInclude Include="Game\ballMovementSystem.hpp" />
-    <ClInclude Include="Game\ballScoreSystem.hpp" />
-    <ClInclude Include="Game\ballSpawnSystem.hpp" />
-    <ClInclude Include="Game\gameComponent.hpp" />
-    <ClInclude Include="Game\switchComponents.h" />
+    <ClInclude Include="Game\Application\applicationComponents.h" />
+    <ClInclude Include="Game\Application\applicationSystem.h" />
+    <ClInclude Include="Game\Application\controllerComponent.hpp" />
+    <ClInclude Include="Game\Application\controllerSystem.h" />
+    <ClInclude Include="Game\Application\gameSystem.h" />
+    <ClInclude Include="Game\Application\menuSystem.h" />
+    <ClInclude Include="Game\Application\pauseSystem.h" />
+    <ClInclude Include="Game\Application\titleSystem.h" />
     <ClInclude Include="Game\camera.hpp" />
-    <ClInclude Include="Game\characterComponent.hpp" />
-    <ClInclude Include="Game\gameSystem.h" />
-    <ClInclude Include="Game\geometryComponents.hpp" />
-    <ClInclude Include="Game\controllerComponent.hpp" />
-    <ClInclude Include="Game\controllerSystem.hpp" />
+    <ClInclude Include="Game\Gameplay\ballCollisionSystem.h" />
+    <ClInclude Include="Game\Gameplay\ballComponents.hpp" />
+    <ClInclude Include="Game\Gameplay\ballMovementSystem.h" />
+    <ClInclude Include="Game\Gameplay\ballScoreSystem.h" />
+    <ClInclude Include="Game\Gameplay\ballSpawnSystem.h" />
+    <ClInclude Include="Game\Gameplay\characterComponent.hpp" />
+    <ClInclude Include="Game\Gameplay\characterController.h" />
     <ClInclude Include="Game\primitive.hpp" />
     <ClInclude Include="Game\scene.h" />
-    <ClInclude Include="Game\scriptComponent.h" />
-    <ClInclude Include="Game\Systems\buttonSystem.h" />
-    <ClInclude Include="Game\Systems\characterController.h" />
     <ClInclude Include="Game\transformComponent.hpp" />
     <ClInclude Include="Game\transformSystem.h" />
     <ClInclude Include="Physics\collisionComponents.hpp" />
-    <ClInclude Include="Physics\collisionSystem.hpp" />
+    <ClInclude Include="Physics\collisionSystem.h" />
     <ClInclude Include="Physics\physicsSystem.h" />
     <ClInclude Include="Rendering\cameraComponent.hpp" />
     <ClInclude Include="Rendering\constantbuffer.hpp" />
@@ -516,6 +524,7 @@
     <ClInclude Include="Rendering\lightComponent.hpp" />
     <ClInclude Include="Rendering\materialComponent.hpp" />
     <ClInclude Include="Rendering\model.h" />
+    <ClInclude Include="Rendering\renderComponents.hpp" />
     <ClInclude Include="Rendering\renderSystem.h" />
     <ClInclude Include="Rendering\renderbase.h" />
     <ClInclude Include="Rendering\rendermanagers.h" />
@@ -531,6 +540,7 @@
     <ClInclude Include="Utility\mouse.h" />
     <ClInclude Include="Utility\nodeComponent.hpp" />
     <ClInclude Include="Utility\octree.hpp" />
+    <ClInclude Include="Utility\pch.h" />
     <ClInclude Include="Utility\quadtree.hpp" />
     <ClInclude Include="Utility\resourceManager.h" />
     <ClInclude Include="Utility\resourceStructs.h" />
@@ -542,6 +552,9 @@
     <Text Include="..\Lib\imgui\LICENSE.txt" />
     <Text Include="..\Lib\imgui\TODO.txt" />
     <Text Include="TODO.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Assets\Levels\Pong\Arena.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

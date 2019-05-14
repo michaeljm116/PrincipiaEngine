@@ -18,6 +18,20 @@ shader, everything must be 16byte aligned
 #include <iostream>
 #include "Artemis\Artemis.h"
 
+struct ssGUI {
+	glm::vec2 min;
+	glm::vec2 extents;
+	glm::vec2 alignMin;
+	glm::vec2 alignExt;
+	int layer;
+	int id;
+	int pad = 0;
+	int visible = 1;
+
+	ssGUI() {};
+	ssGUI(glm::vec2 min, glm::vec2 max, glm::vec2 aMin, glm::vec2 aExt, int l, int i) : min(min), extents(max), alignMin(aMin), alignExt(aExt), layer(l), id(i) {};
+};
+
 struct ssPrimitive {
 	glm::mat4 world; //64bytes
 	glm::vec3 center; //12 bytes
@@ -129,7 +143,6 @@ struct ssLight {
 	glm::vec3 color;
 	int id;
 };
-
 
 struct Timer {
 	std::chrono::time_point<std::chrono::steady_clock> start;

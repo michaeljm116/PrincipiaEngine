@@ -43,7 +43,4 @@ struct AnimationComponent : public artemis::Component {
 		animIndex = 0;
 		skeleton.id = id;
 	}
-	void refresh() {
-
-	}
 };
