@@ -34,10 +34,13 @@ void GameSystem::initialize()
 	scorer = (BallScoreSystem*)sm->setSystem(new BallScoreSystem());
 	bcs = (BallCollisionSystem*)sm->setSystem(new BallCollisionSystem());
 	bms = (BallMovementSystem*)sm->setSystem(new BallMovementSystem());
+	audio = (AudioSystem*)sm->setSystem(new AudioSystem());
+
 	cs->initialize();
 	bcs->initialize();
 	bms->initialize();
-	
+	audio->initialize();
+
 	//set up singleton
 	artemis::Entity* singleton = world->getSingleton();
 	singleton->addComponent(new BallSpawnComponent());
@@ -85,9 +88,12 @@ void GameSystem::processEntity(artemis::Entity & e)
 	cs->process();
 	bcs->process();
 	bms->process();
+	audio->process();
 
 	ControllerComponent* c = controllerMapper.get(e);
 	if (c->buttons[4].action == 1) {
+		//c->buttons[4].action = 0;
+		//c->buttons[4].time = 0.f;
 		e.removeComponent<GameComponent>();
 		e.refresh();
 	}

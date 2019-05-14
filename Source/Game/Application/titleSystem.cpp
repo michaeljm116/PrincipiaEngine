@@ -17,16 +17,16 @@ void TitleSystem::processEntity(artemis::Entity &e) {
 	TitleComponent* t = titleMapper.get(e);
 	ControllerComponent* c = controllerMapper.get(e);
 	for (int i = 0; i < 4; ++i) {
-		if (c->buttons[i].time > 0) {
+		if (c->buttons[i].action == 1) {
 			e.removeComponent<TitleComponent>();
 			e.refresh();
 		}
 	}
 	t->timer -= world->getDelta();
-	if (t->timer < 0) {
-		e.removeComponent<TitleComponent>();
-		e.refresh();
-	}
+	//if (t->timer < 0) {
+	//	e.removeComponent<TitleComponent>();
+	//	e.refresh();
+	//}
 	
 }
 

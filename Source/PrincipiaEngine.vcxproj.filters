@@ -650,6 +650,9 @@
     <ClCompile Include="Physics\collisionSystem.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -1584,9 +1587,6 @@
     <ClInclude Include="Game\transformSystem.h">
       <Filter>Source Files\Game\Other</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\pch.h">
-      <Filter>Source Files\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Game\transformComponent.hpp">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
@@ -1600,9 +1600,6 @@
       <Filter>Source Files\Game\Application</Filter>
     </ClInclude>
     <ClInclude Include="Game\Application\applicationSystem.h">
-      <Filter>Source Files\Game\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Application\controllerSystem.h">
       <Filter>Source Files\Game\Application</Filter>
     </ClInclude>
     <ClInclude Include="Game\Application\applicationComponents.h">
@@ -1640,6 +1637,15 @@
     </ClInclude>
     <ClInclude Include="Physics\collisionSystem.h">
       <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Application\controllerSystem.h">
+      <Filter>Source Files\Game\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\audioComponents.h">
+      <Filter>Source Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

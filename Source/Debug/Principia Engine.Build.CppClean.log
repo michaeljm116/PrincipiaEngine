@@ -145,6 +145,7 @@ c:\users\mike\principiaengine\source\debug\delayedentityprocessingsystem.obj
 c:\users\mike\principiaengine\source\debug\componenttypemanager.obj
 c:\users\mike\principiaengine\source\debug\componenttype.obj
 c:\users\mike\principiaengine\source\debug\component.obj
+c:\users\mike\principiaengine\source\debug\animationsystem.obj
 c:\users\mike\principiaengine\source\debug\tinyxml2.obj
 c:\users\mike\principiaengine\source\debug\imgui_draw.obj
 c:\users\mike\principiaengine\source\debug\imgui_demo.obj
@@ -159,8 +160,16 @@ c:\users\mike\principiaengine\source\debug\btserializer.obj
 c:\users\mike\principiaengine\source\debug\btquickprof.obj
 c:\users\mike\principiaengine\source\debug\btpolardecomposition.obj
 c:\users\mike\principiaengine\source\debug\btgeometryutil.obj
-c:\users\mike\principiaengine\source\debug\renderbase.obj
+c:\users\mike\principiaengine\source\debug\ballspawnsystem.obj
+c:\users\mike\principiaengine\source\debug\ballscoresystem.obj
+c:\users\mike\principiaengine\source\debug\ballmovementsystem.obj
+c:\users\mike\principiaengine\source\debug\ballcollisionsystem.obj
+c:\users\mike\principiaengine\source\debug\titlesystem.obj
+c:\users\mike\principiaengine\source\debug\pausesystem.obj
+c:\users\mike\principiaengine\source\debug\menusystem.obj
+c:\users\mike\principiaengine\source\debug\gamesystem.obj
 c:\users\mike\principiaengine\source\debug\controllersystem.obj
+c:\users\mike\principiaengine\source\debug\applicationsystem.obj
 c:\users\mike\principiaengine\source\debug\audiosystem.obj
 c:\users\mike\principiaengine\source\debug\world.obj
 c:\users\mike\principiaengine\source\debug\tagmanager.obj
@@ -173,19 +182,19 @@ c:\users\mike\principiaengine\source\debug\entitymanager.obj
 c:\users\mike\principiaengine\source\debug\entity.obj
 c:\users\mike\principiaengine\source\debug\window.obj
 c:\users\mike\principiaengine\source\debug\input.obj
-c:\users\mike\principiaengine\source\debug\resourcemanager.obj
 c:\users\mike\principiaengine\source\debug\main.obj
+c:\users\mike\principiaengine\source\debug\resourcemanager.obj
 c:\users\mike\principiaengine\source\debug\texture.obj
 c:\users\mike\principiaengine\source\debug\rendermanagers.obj
+c:\users\mike\principiaengine\source\debug\renderbase.obj
 c:\users\mike\principiaengine\source\debug\rendersystem.obj
 c:\users\mike\principiaengine\source\debug\engineuisystem.obj
 c:\users\mike\principiaengine\source\debug\physicssystem.obj
+c:\users\mike\principiaengine\source\debug\collisionsystem.obj
 c:\users\mike\principiaengine\source\debug\transformsystem.obj
-c:\users\mike\principiaengine\source\debug\charactercontroller.obj
-c:\users\mike\principiaengine\source\debug\buttonsystem.obj
 c:\users\mike\principiaengine\source\debug\scene.obj
-c:\users\mike\principiaengine\source\debug\gamesystem.obj
-c:\users\mike\principiaengine\source\debug\animationsystem.obj
+c:\users\mike\principiaengine\source\debug\charactercontroller.obj
+c:\users\mike\principiaengine\source\debug\pch.obj
 c:\users\mike\principiaengine\source\debug\principia engine.exe
 c:\users\mike\principiaengine\source\debug\principia engine.ilk
 c:\users\mike\principiaengine\source\debug\principia engine.pdb

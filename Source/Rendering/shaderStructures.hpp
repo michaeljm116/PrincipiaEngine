@@ -12,11 +12,7 @@ shader, everything must be 16byte aligned
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #endif
 
-#include <glm\glm.hpp> 
-#include <vector>
-#include <chrono>
-#include <iostream>
-#include "Artemis\Artemis.h"
+#include "../pch.h"
 
 struct ssGUI {
 	glm::vec2 min;

@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "Utility/window.h"
 #include "Utility/Input.h"
 #include "Rendering/rendermanagers.h"
@@ -70,7 +70,11 @@ int main() {
 		while (!glfwWindowShouldClose(WINDOW.getWindow())) {
 			duration = end - start;
 			world.loopStart();
-			world.setDelta(duration.count());
+			float delta = duration.count();
+			if (delta > 0 && delta < 1.f)
+				world.setDelta(delta);
+			else
+				world.setDelta(0.001f);
 			glfwPollEvents();
 			start = std::chrono::high_resolution_clock::now();
 			INPUT.update();

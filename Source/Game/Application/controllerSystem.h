@@ -3,8 +3,9 @@
 
 */
 #include "../Utility/Input.h"
+#include "../Gameplay/characterComponent.hpp"
 #include "ControllerComponent.hpp"
-#include <Artemis/Artemis.h>
+#include "../pch.h"
 
 class ApplicationSystem;
 

@@ -2,14 +2,7 @@
 #ifndef RENDERCOMPONENTS_HPP
 #define RENDERCOMPONENTS_HPP
 
-#ifndef GLM_FORCE_RADIANS
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#endif
-
-#include <glm\glm.hpp> 
-#include <vector>
-#include "Artemis\Artemis.h"
+#include "../pch.h"
 
 //enum class ObjectType {
 //	Sphere,

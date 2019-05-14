@@ -1,5 +1,5 @@
 #pragma once
-#include <Artemis/Artemis.h>
+#include "../pch.h"
 
 struct CharacterComponent : public artemis::Component {
 	float speed = 1.f;
@@ -8,6 +8,7 @@ struct CharacterComponent : public artemis::Component {
 	float maxJumpHeight = 1.f;
 
 	float hitPower = 40.f;
+	bool wasHit = false;
 
 	CharacterComponent() {};
 	CharacterComponent(float data[4]) : speed(data[0]), maxSpeed(data[1]), jumpSpeed(data[2]), maxJumpHeight(data[3]) {};

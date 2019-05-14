@@ -11,6 +11,7 @@ use or not
 #include "../Gameplay/ballScoreSystem.h"
 #include "../Gameplay/characterController.h"
 #include "../Physics/collisionSystem.h"
+#include "../Audio/audioSystem.h"
 
 class GameSystem : public artemis::EntityProcessingSystem {
 private:
@@ -33,6 +34,7 @@ private:
 	BallScoreSystem* scorer;
 	BallMovementSystem* bms;
 	BallCollisionSystem* bcs;
+	AudioSystem* audio;
 
 
 	std::vector<GUINumberComponent*> goals;

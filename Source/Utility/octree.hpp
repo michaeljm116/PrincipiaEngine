@@ -4,9 +4,8 @@
 #define OCTREE_H
 #endif // !OCTREE_H
 
-#include <Artemis\Artemis.h>
+#include "../pch.h"
 #include "../Game/primitive.hpp"
-#include <vector>
 
 //static bool g_treeReady = false;		//the tree has a few objects which need to be inserted before
 //static bool g_treeBuilt = false;		//there is no pre-existing tree yet.

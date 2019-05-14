@@ -2,7 +2,7 @@
 /* Physics System Copyright (C) by Mike Murrell 
 */
 
-#include <Artemis\Artemis.h>
+#include "../pch.h"
 #include "../Utility/componentIncludes.h"
 
 #define BT_USE_SSE_IN_API

@@ -1,7 +1,7 @@
 #pragma once
 /*Copyright (C) by Mike Murrell 
 legacy*/
-#include <glm\glm.hpp>
+#include "../pch.h"
 struct DirectionalLight
 {
 	//DirectionalLight() { ZeroMemory(this, sizeof(this)); }

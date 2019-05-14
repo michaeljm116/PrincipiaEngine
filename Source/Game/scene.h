@@ -6,7 +6,7 @@ loading/saving scene, creating/copying/deleting objects
 */
 
 
-#include <Artemis\Artemis.h>
+#include "../pch.h"
 #include "../Utility/resourceManager.h"
 #include "../Physics/physicsSystem.h"
 #include "../Animation/animationSystem.h"
@@ -16,6 +16,7 @@ loading/saving scene, creating/copying/deleting objects
 #include "Gameplay/characterController.h"
 #include "Gameplay/ballScoreSystem.h"
 #include "Gameplay/ballComponents.hpp"
+#include "../Audio/audioComponents.h"
 
 #define SCENE Scene::get()
 

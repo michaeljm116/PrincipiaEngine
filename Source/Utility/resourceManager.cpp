@@ -1,6 +1,5 @@
 #include "resourceManager.h"
 #include "../Rendering/model.h"
-#include <fstream>
 #include "window.h"
 
 #ifndef XMLCheckResult
@@ -29,16 +28,18 @@ bool Resources::LoadConfig(std::string fileName)
 	global[5] = GLFW_KEY_S;
 	global[6] = GLFW_KEY_LEFT_BRACKET;
 	global[7] = GLFW_KEY_F11;
-	global[8] = GLFW_KEY_ESCAPE;
+	global[8] = GLFW_KEY_HOME;
 
 	controller1[0] = GLFW_KEY_D;
 	controller1[1] = GLFW_KEY_W;
 	controller1[2] = GLFW_KEY_A;
 	controller1[3] = GLFW_KEY_S;
-	controller1[4] = GLFW_KEY_E;
+	controller1[4] = GLFW_KEY_SPACE;
 	controller1[5] = GLFW_KEY_Q;
 	controller1[6] = GLFW_KEY_F;
 	controller1[7] = GLFW_KEY_G;
+	controller1[8] = GLFW_KEY_E;
+	controller1[9] = GLFW_KEY_HOME;
 
 	//controller1[1] = GLFW_JOYSTICK_1;
 
@@ -46,10 +47,12 @@ bool Resources::LoadConfig(std::string fileName)
 	controller2[1] = GLFW_KEY_UP;
 	controller2[2] = GLFW_KEY_LEFT;
 	controller2[3] = GLFW_KEY_DOWN;
-	controller2[4] = GLFW_KEY_SLASH;
+	controller2[4] = GLFW_KEY_SPACE;
 	controller2[5] = GLFW_KEY_RIGHT_SHIFT;
 	controller2[6] = GLFW_KEY_RIGHT_CONTROL;
 	controller2[7] = GLFW_KEY_RIGHT_ALT;
+	controller2[8] = GLFW_KEY_SLASH;
+	controller2[9] = GLFW_KEY_HOME;
 
 	config.controllerConfigs.push_back(global);
 	config.controllerConfigs.push_back(controller1);

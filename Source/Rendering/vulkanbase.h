@@ -4,9 +4,8 @@
 
 //#include "RenderHelplers.h"
 #include "VulkanInitializers.hpp"
-#include <iostream>
 #include <set>
-#include <fstream>
+#include "../pch.h"
 
 template<typename T>
 inline void VK_CHECKRESULT(const T& res, std::string msg){

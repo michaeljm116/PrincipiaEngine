@@ -223,9 +223,11 @@ void Scene::insertController(NodeComponent * nc)
 	cc->characterNode = nc;
 
 	//sets up the singleton to also use this controller
-	if (controller->index == 0) {
-		world->getSingleton()->addComponent(controller);
+	if (controller->index == 1) {
+		ControllerComponent* scomp = new ControllerComponent(controller);
+		world->getSingleton()->addComponent(scomp);
 		world->getSingleton()->refresh();
+		input->change(*world->getSingleton());
 	}
 
 }
@@ -660,6 +662,11 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		n->flags = flags;
 		n->tags = tags;
 		e->addComponent(n); //TODO: aparently this might not be needed???? wat????
+
+
+		if (tags == 4) {
+			e->addComponent(new AudioComponent(dir + "Pong/Audio/wallcol.wav"));
+		}
 	
 		if (flags & COMPONENT_TRANSFORM) {
 			glm::vec3 pos;
@@ -718,7 +725,9 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 				int goalNum = n->name.at(n->name.length() - 1) - '0';
 				e->addComponent(new BallScoreComponent(goalNum));
 				GUINumberComponent* guinumber = new GUINumberComponent(pos, ext, 0);
+				guinumber->visible = false;
 				e->addComponent(guinumber);
+				e->addComponent(new AudioComponent(dir + "Pong/Audio/goal.wav"));
 			}
 		}
 		if (flags & COMPONENT_MATERIAL) {
@@ -797,7 +806,14 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			cont->QueryFloatAttribute("d3", &data[3]);
 
 			e->addComponent(new CharacterComponent(data));
-			e->addComponent(new ControllerComponent(index));
+			e->addComponent(new ControllerComponent(index + 1));
+
+			//audio string stuff
+			std::string audioFile;
+			index == 0 ?
+				audioFile = dir + "Pong/Audio/player1.wav" :
+				audioFile = dir + "Pong/Audio/player2.wav";
+			e->addComponent(new AudioComponent(audioFile));
 
 			//insertController(n);
 		}

@@ -4,7 +4,7 @@ the resource manager
 */
 #pragma once
 #include <array>
-#include <glm/gtx/quaternion.hpp>
+#include "../pch.h"
 
 //Structure for the config file, will expand moar l8r
 struct rConfig {

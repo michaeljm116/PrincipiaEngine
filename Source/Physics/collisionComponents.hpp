@@ -2,18 +2,12 @@
 #ifndef COLLISIONCOMPONENTS_HPP
 #define COLLISIONCOMPONENTS_HPP
 
-#ifndef GLM_FORCE_RADIANS
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#endif
 
-#include <glm\glm.hpp> 
-#include <Artemis\Artemis.h>
+#include "../pch.h"
 #include <LinearMath/btVector3.h>
 #include <LinearMath/btTransform.h>
 #include <BulletCollision/CollisionDispatch/btCollisionObject.h>
 #include <BulletDynamics/Dynamics/btRigidBody.h>
-#include <unordered_map>
 
 struct BBComponent {
 	glm::vec3 center;

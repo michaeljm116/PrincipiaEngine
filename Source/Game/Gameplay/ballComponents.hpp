@@ -1,6 +1,5 @@
 #pragma once
-#include "Artemis/Artemis.h"
-#include <glm/glm.hpp>
+#include "../pch.h"
 
 enum class HitType {
 	None, Wall, Player, Goal
@@ -14,18 +13,18 @@ struct BallComponent : artemis::Component {
 	int goalHit = 0;
 	BallComponent() { hitType = HitType::None; 
 	int rando = rand() % 4;
-	float x = 0.5f;  float y = 0.5f;
+	float x = 00.5f;  float y = 00.5f;
 
 	switch (rando) {
 	case 0:
-		x = -.5f;
+		x = -0.5f;
 		break;
 	case 1:
-		y = -.5f;
+		y = -0.5f;
 		break;
 	case 2: 
-		x = -.5f;
-		y = -.5f;
+		x = -0.5f;
+		y = -0.5f;
 		break;
 	}
 
