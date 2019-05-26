@@ -30,10 +30,11 @@ struct ssGUI {
 
 struct ssPrimitive {
 	glm::mat4 world; //64bytes
-	glm::vec3 center; //12 bytes
-	int id; //4bytes
 	glm::vec3 extents; //12bytes
+	int numChildren = 0; //4bytes;
+	int id; //4bytes
 	int matId; //4bytes
+	int _pad[2]; //8bytes
 
 
 	//mat3 = 48
@@ -105,8 +106,8 @@ struct ssIndex {
 };
 
 struct ssMesh {
-	//glm::vec4 center; //16
-	//glm::vec4 extents; //16
+	glm::vec4 center; //16
+	glm::vec4 extents; //16
 	int startIndex; //4
 	int endIndex; //4
 	int startVert; //4

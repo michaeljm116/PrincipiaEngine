@@ -17,7 +17,9 @@ struct SwapChainSupportDetails {
 class RenderBase{
 public:
 	RenderBase() {};
-	~RenderBase() {};
+	~RenderBase() {
+
+	};
 
 	void initWindow();
 	void initVulkan();

@@ -1,6 +1,7 @@
 #include "resourceManager.h"
 #include "../Rendering/model.h"
 #include "window.h"
+#include "../pch.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
@@ -29,6 +30,7 @@ bool Resources::LoadConfig(std::string fileName)
 	global[6] = GLFW_KEY_LEFT_BRACKET;
 	global[7] = GLFW_KEY_F11;
 	global[8] = GLFW_KEY_HOME;
+	global[9] = GLFW_KEY_ESCAPE;
 
 	controller1[0] = GLFW_KEY_D;
 	controller1[1] = GLFW_KEY_W;

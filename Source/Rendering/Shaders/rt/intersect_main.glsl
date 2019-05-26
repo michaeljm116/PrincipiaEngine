@@ -25,18 +25,37 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 	for (int i = 0; i < primitives.length(); ++i) {
 		if (primitives[i].id > -1) {
 			mat4 world = primitives[i].world;
+			//world[3] += meshes[primitives[i].id].center * world[3];
 			mat4 invWorld = inverse(world);
-			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / primitives[i].extents;
-			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / primitives[i].extents;
-			flool tMesh = boundsIntersect(roo, rdd, primitives[i].extents);
+			vec3 extents = primitives[i].extents; //vec3(meshes[primitives[i].id].extents).xyz / 
+			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / extents;
+			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / extents;
+			flool tMesh = boundsIntersect(roo, rdd, extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) {
-				for (int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++) {
+				int iI = i; 
+				if (primitives[i].numChildren > 0) {//If it has multiple children, check which children it hits
+					int j = i+1; //j will eventually be used to skip the index per-num children
+					iI = j; //iI = inner index = index of the inner bounds it hits
+					float iT = tMesh.t; //iT = inner T = T of the inner bounds it hits
+
+					for (j; j < i + primitives[i].numChildren; ++j) {
+						flool tInner = innerBoundsIntersect(roo, rdd, vec3(meshes[primitives[j].id].center).xyz, vec3(meshes[primitives[j].id].extents).xyz);
+						if ((tInner.b) && (tInner.t < iT)) {
+							iT = tInner.t;
+							iI = j;
+						}
+					}
+					//All bounds have been checked, so now go to the closest bounds and check the quad test
+					//if there was a bvh' it would start here
+					i = j;
+				}
+				for (int j = meshes[primitives[iI].id].startIndex; j < meshes[primitives[iI].id].endIndex; j++) {
 					//if (TRIINTERSECT){
 					if (faces[j].v[3] == faces[j].v[2]){
 						flool tTri = triIntersect(roo, rdd, faces[j]);
 						if (tTri.b) {
 							if ((tTri.t > EPSILON) && (tTri.t < resT)) {
-								id = sectID(TYPE_MESH, i, j);
+								id = sectID(TYPE_MESH, iI, j);
 								resT = tTri.t;
 							}
 						}

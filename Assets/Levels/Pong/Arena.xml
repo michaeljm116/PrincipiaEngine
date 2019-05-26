@@ -2,7 +2,7 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-1.9399927" y="32" z="0"/>
+            <Position x="-1.379945" y="3.739953" z="-0.19944429"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="3.0699999"/>
         </Transform>
@@ -35,15 +35,15 @@
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="1" y="10" z="20"/>
         </Transform>
+        <GUI>
+            <Position x="0" y="0"/>
+            <Extent x="0.1" y="0.1"/>
+            <Alignment x="0" y="0"/>
+            <AlignExt x="0.1" y="1"/>
+        </GUI>
         <Material ID="563290200"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
-		    <GUI>
-			    <Position x="0.80" y="0.4"/>
-			    <Extent x="0.1" y="0.1"/>
-			    <Alignment x="0.0" y="0.0"/>
-			    <AlignExt x="0.1" y="1.0"/>
-		    </GUI>
     </Node>
     <Node Name="Goal1" hasChildren="false" Flags="368647" Tags="8" Dynamic="false">
         <Transform>
@@ -51,15 +51,15 @@
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="1" y="10" z="20"/>
         </Transform>
+        <GUI>
+            <Position x="0" y="0"/>
+            <Extent x="0.1" y="0.1"/>
+            <Alignment x="0" y="0"/>
+            <AlignExt x="0.1" y="1"/>
+        </GUI>
         <Material ID="150738392"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
-		    <GUI>
-			    <Position x="0.05" y="0.4"/>
-			    <Extent x="0.1" y="0.1"/>
-			    <Alignment x="0.0" y="0.0"/>
-			    <AlignExt x="0.1" y="1.0"/>
-		    </GUI>
     </Node>
     <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="4" Dynamic="false">
         <Transform>
@@ -90,7 +90,7 @@
         <Material ID="563290200"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
-        <Controller ControllerIndex="0" d0="40" d1="1" d2="7.7719998" d3="1"/>
+        <Controller ControllerIndex="1" d0="40" d1="1" d2="7.7719998" d3="1"/>
     </Node>
     <Node Name="Player2" hasChildren="false" Flags="122887" Tags="2" Dynamic="true">
         <Transform>
@@ -101,15 +101,51 @@
         <Material ID="150738392"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
-        <Controller ControllerIndex="1" d0="40" d1="1" d2="7.7719998" d3="1"/>
+        <Controller ControllerIndex="2" d0="40" d1="1" d2="7.7719998" d3="1"/>
     </Node>
     <Node Name="Midd" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="-0.85000002" y="0" z="0"/>
+            <Position x="-1" y="0" z="0"/>
             <Rotation x="0" y="90" z="90"/>
             <Scale x="1" y="30" z="1"/>
         </Transform>
         <Material ID="950590848"/>
         <Object ID="-3"/>
     </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="33827" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="-1.3099575" y="0" z="0"/>
+            <Rotation x="29" y="-5" z="217"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Object ID="507361325"/>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="2"/>
+            <Object ID="507361325"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="14020"/>
+            <Object ID="507361326"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="221153248"/>
+            <Object ID="507361327"/>
+        </Node>
+    </Node>
+
 </Root>

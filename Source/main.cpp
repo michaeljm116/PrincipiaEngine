@@ -15,6 +15,8 @@ int main() {
 
 	artemis::World world;
 	artemis::SystemManager * sm = world.getSystemManager();
+	artemis::TagManager * tm = world.getTagManager();
+	
 
 	RenderSystem*	 renderSys	  = (RenderSystem*)	  sm->setSystem(new RenderSystem());
 	EngineUISystem*	 engineUISys  = (EngineUISystem*) sm->setSystem(new EngineUISystem());
@@ -24,6 +26,7 @@ int main() {
 	ApplicationSystem* appSys	  = (ApplicationSystem*)sm->setSystem(new ApplicationSystem());
 
 	artemis::EntityManager * em = world.getEntityManager();
+
 	static artemis::Entity* singletonEntity = &em->create();
 	world.setSingleton(singletonEntity);
 
@@ -37,8 +40,9 @@ int main() {
 
 
 	singletonEntity->addComponent(new ApplicationComponent());
-	singletonEntity->addComponent(new GUIComponent(glm::vec2(0.0f, 0.f), glm::vec2(1.f, 1.f), glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f), 0, 1, true));
-	singletonEntity->addComponent(new TitleComponent());
+	singletonEntity->addComponent(new GUIComponent(glm::vec2(0.0f, 0.f), glm::vec2(1.f, 1.f), glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f), 0, 1, false));
+	singletonEntity->addComponent(new EditorComponent);
+	//singletonEntity->addComponent(new TitleComponent());
 	GlobalController* controller = new GlobalController();
 	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i)
 		controller->buttons[i].key = Resources::get().getConfig().controllerConfigs[0][i];
@@ -47,6 +51,17 @@ int main() {
 	singletonEntity->refresh();
 	appSys->change(*singletonEntity);
 
+	////////////////////COMPONENTTYPETEST///////////////////////////////
+	//auto bob = em->getComponents(*singletonEntity);
+	//int count = bob.getCount();
+	//for (int i = 0; i < count; ++i) {
+	//	std::cout << typeid(bob.get(i)).name() << std::endl;
+	//	artemis::ComponentType t;
+	//	t = artemis::ComponentTypeManager::getTypeFor(typeid(bob.get(i)));
+	//	t.getId();
+	//}
+	//auto ac = (ApplicationComponent*)singletonEntity->getComponent<ApplicationComponent>();
+	
 
 	try {
 		Window::get().init();
@@ -60,7 +75,7 @@ int main() {
 		renderSys->initialize();
 		animSys->initialize();
 		appSys->initialize();
-		appSys->instantGameStart();
+		//appSys->instantGameStart();
 
 		static std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
 		static std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
@@ -85,6 +100,7 @@ int main() {
 		}
 
 		vkDeviceWaitIdle(renderSys->vkDevice.logicalDevice); //so it can destroy properly
+	//	world.~World();
 		renderSys->cleanup();
 	}
 	catch (const std::runtime_error& e) {

@@ -16,7 +16,21 @@
 //	None
 //};
 
+enum RenderType {
+	RENDER_NONE = 0x00,
+	RENDER_MATERIAL = 0x01,
+	RENDER_PRIMITIVE = 0x02,
+	RENDER_LIGHT = 0x04,
+	RENDER_GUI = 0x08,
+	RENDER_GUINUM = 0x10,
+	RENDER_CAMERA = 0x20
+};
 
+struct RenderComponent : artemis::Component {
+	RenderType type;
+	RenderComponent() {};
+	RenderComponent(RenderType t) : type(t) {};
+};
 
 struct SphereComponent : artemis::Component{
 	float radius;

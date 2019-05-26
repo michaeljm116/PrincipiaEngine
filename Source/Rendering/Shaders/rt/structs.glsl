@@ -7,10 +7,11 @@
 struct Primitive
 {
 	mat4 world;
-	vec3 center;
-	int id;
 	vec3 extents;
+	int numChildren;
+	int id;
 	int matID;
+	ivec2 _pad;
 };
 
 struct TriangleVert{
@@ -36,6 +37,8 @@ struct Face {
 };
 
 struct Mesh{
+	vec4 center;
+	vec4 extents;
 	int startIndex;
 	int endIndex;
 	int startVert;
