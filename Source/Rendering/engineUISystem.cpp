@@ -99,6 +99,10 @@ void EngineUISystem::processEntity(artemis::Entity & e)
 		gc->buttons[i].action = action;
 		if (action == GLFW_PRESS) {
 			if (i == 6) { e.removeComponent<EditorComponent>(); 
+			RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+			rs->togglePlayMode(true);
+			ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
+			ac->state = AppState::Play;
 			e.addComponent(new GameComponent());
 			e.refresh();
 			}
@@ -127,10 +131,10 @@ void EngineUISystem::added(artemis::Entity & e)
 }
 void EngineUISystem::removed(artemis::Entity & e)
 {
-	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	rs->togglePlayMode(true);
-	ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
-	ac->state = AppState::Play;
+	//RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+	//rs->togglePlayMode(true);
+	//ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
+	//ac->state = AppState::Play;
 	//ac->transition = true;
 }
 
@@ -943,7 +947,7 @@ void EngineUISystem::updateInput()
 	GlobalController* controller = (GlobalController*)world->getSingleton()->getComponent<GlobalController>();
 
 	float moveSpeed = 10.f;
-	if (activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Translate) {
+	if (INPUT.pressed && activeNode->flags & COMPONENT_TRANSFORM && eState == EditState::Translate) {
 		//Input::Timer timer("Translate");
 		activeTransform->local.position += controller->axis * moveSpeed * INPUT.deltaTime;
 		//SCENE.ts->SQTTransform(activeNode, activeTransform->global);

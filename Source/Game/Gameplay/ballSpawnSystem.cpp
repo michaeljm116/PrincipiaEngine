@@ -1,4 +1,5 @@
 #include "ballSpawnSystem.h"
+#include "../pch.h"
 
 BallSpawnSystem::BallSpawnSystem() {
 	addComponentType<BallSpawnComponent>();

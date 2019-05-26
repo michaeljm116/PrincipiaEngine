@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../pch.h"
 struct Joint
 {
 	int parentIndex;

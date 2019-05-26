@@ -64,14 +64,14 @@ void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
 	if (nc->flags & COMPONENT_MODEL)
 	{
 	}
-	else if (nc->flags & COMPONENT_PRIMITIVE) {
+	if (nc->flags & COMPONENT_PRIMITIVE) {
 		
 		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 		//so what im looking for is the resource manager's
 
 		//scale the aabb
-		obj.center = tc->global.position;
+		//obj.center = tc->global.position;
 		obj.extents = tc->global.scale;// rotateAABB(tc->global.rotation, obj.extents * tc->global.scale);
 		obj.world = tc->world;
 
@@ -125,15 +125,15 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 	tc->world[3] = glm::vec4(tc->global.position, 1.f);
 	if (nc->flags & COMPONENT_MODEL)
 	{ }
-	else if (nc->flags & COMPONENT_PRIMITIVE) {
+	if (nc->flags & COMPONENT_PRIMITIVE) {
 		//GET THE OBJ
 		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
 		//scale the aabb
 		if (objComp->uniqueID < 0) {
-			obj.center = tc->world[3];// tc->global.position;
-			obj.extents = tc->global.scale * 1.f;// rotateAABB(tc->global.rotation, tc->global.scale);
+			//obj.center = tc->world[3];// tc->global.position;
+			obj.extents = rotateAABB(tc->global.rotation, tc->global.scale);
 			//obj.world = tc->world;// *glm::vec4(tc->global.scale, 1.f);
 
 		}
@@ -141,7 +141,7 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 			//scale the aabb
 			//obj.center = objComp->center  + tc->global.position;
 			//obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
-			obj.center = tc->global.position;
+			//obj.center = tc->global.position;
 			obj.extents = tc->global.scale;
 		}
 		obj.world = tc->world;

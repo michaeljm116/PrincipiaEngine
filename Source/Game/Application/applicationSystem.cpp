@@ -78,7 +78,7 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	pause->process();
 
 	//render
-	rs->mainLoop();
+	rs->process();// mainLoop();
 
 	//get the input, if in editor use editor controller, else regular controllers
 	if (ac->state == AppState::Editor)
@@ -90,7 +90,7 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 
 void ApplicationSystem::instantGameStart()
 {
-	WINDOW.toggleMaximized();
+	//WINDOW.toggleMaximized();
 	WINDOW.toggleMaximized();
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 	rs->togglePlayMode(true);

@@ -65,15 +65,6 @@ void GameSystem::added(artemis::Entity & e)
 
 void GameSystem::removed(artemis::Entity & e)
 {
-	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-
-	for (int i = 0; i < goals.size(); ++i) {
-		goals[i]->visible = false;
-		rs->updateGuiNumber(goals[i]);
-	}
-
-	e.addComponent(new PauseComponent());
-	e.refresh();
 }
 
 void GameSystem::processEntity(artemis::Entity & e)
@@ -91,10 +82,20 @@ void GameSystem::processEntity(artemis::Entity & e)
 	audio->process();
 
 	ControllerComponent* c = controllerMapper.get(e);
+
+	//pause button
 	if (c->buttons[4].action == 1) {
 		//c->buttons[4].action = 0;
 		//c->buttons[4].time = 0.f;
+		RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+
+		for (int i = 0; i < goals.size(); ++i) {
+			goals[i]->visible = false;
+			rs->updateGuiNumber(goals[i]);
+		}
+
 		e.removeComponent<GameComponent>();
+		e.addComponent(new PauseComponent());
 		e.refresh();
 	}
 }

@@ -1,5 +1,5 @@
+#include "pch.h"
 #include "window.h"
-
 /*
 Window::Window()
 {
@@ -57,5 +57,3 @@ void Window::resize() {
 	height = _height;
 	
 }
-
-

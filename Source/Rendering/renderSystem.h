@@ -5,6 +5,7 @@ much rework but brotha aint got time fo dat
 */
 
 
+#include "../pch.h"
 #include "rendermanagers.h"
 #include "renderbase.h"
 #include "shaderStructures.hpp"
@@ -35,6 +36,7 @@ public:
 	void drawFrame();
 	void updateUniformBuffer();
 	void processEntity(artemis::Entity &e);
+	void end();
 
 	void loadResources();
 
@@ -93,6 +95,9 @@ public:
 	void buildBVH();
 
 private:
+
+	artemis::ComponentMapper<RenderComponent> renderMapper;
+
 	void SetStuffUp();
 	void createGraphicsPipeline();
 	void createDescriptorPool();

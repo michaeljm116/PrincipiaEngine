@@ -1,4 +1,5 @@
-﻿#include "renderSystem.h"
+﻿#include "../pch.h"
+#include "renderSystem.h"
 #include <set>
 #include "../Utility/componentIncludes.h"
 #include "../Utility/resourceManager.h"
@@ -138,6 +139,38 @@ void RenderSystem::updateUniformBuffer() {
 
 void RenderSystem::processEntity(artemis::Entity & e)
 {
+	RenderType type = renderMapper.get(e)->type;
+	if (type == RENDER_NONE) return;
+	switch (type)
+	{
+	case RENDER_MATERIAL:
+		setRenderUpdate(RenderUpdate::UPDATE_MATERIAL);
+		break;
+	case RENDER_PRIMITIVE:
+		setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
+		break;
+	case RENDER_LIGHT:
+		setRenderUpdate(RenderUpdate::UPDATE_LIGHT);
+		break;
+	case RENDER_GUI: {
+		GUIComponent* gui = (GUIComponent*)e.getComponent<GUIComponent>();
+		updateGui(gui);
+		break; }
+	case RENDER_GUINUM:{
+		GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
+		updateGuiNumber(gnc);
+		break;}
+	default:
+		break;
+	}
+	type = RENDER_NONE;
+}
+
+void RenderSystem::end()
+{
+	updateBuffers();
+	mainLoop();
+	//updateBuffers();
 }
 
 void RenderSystem::loadResources()
@@ -164,8 +197,8 @@ void RenderSystem::loadResources()
 			mesh.startVert = prevVertSize;
 			mesh.endVert = mesh.startVert + rmesh.verts.size() - 1;
 			mesh.startIndex = prevIndSize;
-			//mesh.center = glm::vec4(rmesh.center, 1.f);
-			//mesh.extents = glm::vec4(rmesh.extents, 1.f);
+			mesh.center = glm::vec4(rmesh.center, 1.f);
+			mesh.extents = glm::vec4(rmesh.extents, 1.f);
 
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
@@ -246,8 +279,22 @@ void RenderSystem::addNodes(std::vector<NodeComponent*> nodes) {
 }
 
 void RenderSystem::addNode(NodeComponent* node) {
-	if (node->flags & COMPONENT_MODEL)
+	if (node->flags & COMPONENT_MODEL) {
+		ssPrimitive prim;
+		PrimitiveComponent* primComp = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
+		TransformComponent* trans = (TransformComponent*)node->data->getComponent<TransformComponent>();
+		prim.world = trans->world;
+		prim.extents = trans->local.scale;
+		rModel& mod = RESOURCEMANAGER.getModelU(primComp->uniqueID);
+		prim.numChildren = mod.meshes.size();
+
+		prim.id = 0;
+		primComp->objIndex = objects.size(); 
+		objects.push_back(prim);
+		objectComps.push_back(primComp);
+
 		return;
+	}
 	if (node->flags & COMPONENT_PRIMITIVE) {
 		//start constructing the object;
 		ssPrimitive object;
@@ -256,8 +303,8 @@ void RenderSystem::addNode(NodeComponent* node) {
 		MaterialComponent* mat = (MaterialComponent*)node->data->getComponent<MaterialComponent>();
 		TransformComponent* trans = (TransformComponent*)node->data->getComponent<TransformComponent>();
 
-		object.world= trans->world;
-		object.center = trans->world[3];// aabb->center;
+		object.world = trans->world;
+		//object.center = trans->world[3];// aabb->center;
 		object.extents = trans->local.scale;// aabb->extents;
 		object.matId = mat->matID;
 
@@ -521,28 +568,6 @@ void RenderSystem::updateBuffers()
 {
 	if (updateflags & UPDATE_NONE)
 		return;
-	//if (updateflags & UPDATE_SPHERE) {
-	//	updateflags &= ~UPDATE_SPHERE;
-	//	compute.storageBuffers.spheres.UpdateBuffers(vkDevice, spheres);
-	//}
-	//if (updateflags & UPDATE_BOX) {
-	//	updateflags &= ~UPDATE_BOX;
-	//	compute.storageBuffers.boxes.UpdateBuffers(vkDevice, boxes);
-	//}
-	//if (updateflags & UPDATE_CYLINDER) {
-	//	compute.storageBuffers.cylinders.UpdateBuffers(vkDevice, cylinders);
-	//	updateflags &= ~UPDATE_CYLINDER;
-	//}
-	//if (updateflags & UPDATE_PLANE) {
-	//	compute.storageBuffers.planes.UpdateBuffers(vkDevice, planes);
-	//	updateflags &= ~UPDATE_PLANE;
-	//}
-	//if (updateflags & UPDATE_MESH) {
-	//	compute.storageBuffers.meshes.UpdateBuffers(vkDevice, meshes);
-	//	compute.storageBuffers.verts.UpdateBuffers(vkDevice, verts);
-	//	compute.storageBuffers.indices.UpdateBuffers(vkDevice, indices);
-	//	updateflags &= ~UPDATE_MESH;
-	//}
 	if (updateflags & UPDATE_OBJECT) {
 		compute.storageBuffers.objects.UpdateBuffers(vkDevice, objects);
 		updateflags &= ~UPDATE_OBJECT;
@@ -597,6 +622,7 @@ void RenderSystem::SetStuffUp()
 #pragma region Startup
 RenderSystem::RenderSystem()
 {
+	addComponentType<RenderComponent>();
 	updateflags = UPDATE_NONE;
 	//m_RenderTime = LocalTimer("Render Time: ");
 }
@@ -622,6 +648,7 @@ void RenderSystem::preInit()
 
 void RenderSystem::initialize() {
 
+	renderMapper.init(*world);
 	prepareStorageBuffers();
 	createUniformBuffers();
 	prepareTextureTarget(&computeTexture, 1920, 1080, VK_FORMAT_R8G8B8A8_UNORM);
@@ -654,7 +681,7 @@ void RenderSystem::mainLoop() {
 			ui->updateOverlay();
 	//}
 	if(glfwWindowShouldClose(WINDOW.getWindow()))
-	vkDeviceWaitIdle(vkDevice.logicalDevice); //so it can destroy properly
+		vkDeviceWaitIdle(vkDevice.logicalDevice); //so it can destroy properly
 }
 void RenderSystem::drawFrame() {//1.get img frm swapc 2.do da cmdbuf wit da image 3.put it back in da swapc
 	//Timer timer("Rendering: ");

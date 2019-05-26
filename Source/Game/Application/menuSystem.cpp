@@ -39,8 +39,8 @@ void MenuSystem::added(artemis::Entity &e) {
 }
 
 void MenuSystem::removed(artemis::Entity &e) {
-	GUIComponent* gui = guiMapper.get(e);
-	gui->visible = false;
-	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	rs->updateGui(gui);
+	//GUIComponent* gui = guiMapper.get(e);
+	//gui->visible = false;
+	//RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+	//rs->updateGui(gui);
 }

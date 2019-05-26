@@ -23,6 +23,25 @@ flool boundsIntersect(vec3 rayO, vec3 rayD, in vec3 extents) {
 	return bob;
 }
 
+flool innerBoundsIntersect(vec3 rayO, vec3 rayD, in vec3 center, in vec3 extents) {
+
+	vec3 upperBounds = center + extents;
+	vec3 lowerBounds = center - extents;
+
+	vec3 invDir = 1 / rayD;
+	float tMin = FLT_MIN;
+	float tMax = FLT_MAX;
+
+	for (int i = 0; i < 3; ++i) {
+		float t1 = (upperBounds[i] - rayO[i]) * invDir[i];
+		float t2 = (lowerBounds[i] - rayO[i]) * invDir[i];
+
+		tMin = max(tMin, min(t1, t2));
+		tMax = min(tMax, max(t1, t2));
+	}
+	flool bob = flool(tMin, (tMax > max(tMin, 0.0)));
+	return bob;
+}
 
 vec3 triNormal(Primitive prim, Face tri) {
 

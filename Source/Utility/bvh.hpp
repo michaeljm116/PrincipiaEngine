@@ -185,8 +185,8 @@ private:
 		glm::vec2 min(FLT_MAX);
 		glm::vec2 max(-FLT_MAX);
 		for (int i = s; i < e; ++i) {
-			min = tulip::minV(min, glm::vec2(prims[i].center) + glm::vec2(prims[i].extents));
-			max = tulip::maxV(max, glm::vec2(prims[i].center) + glm::vec2(prims[i].extents));
+			min = tulip::minV(min, glm::vec2(prims[i].world[3]) + glm::vec2(prims[i].extents));
+			max = tulip::maxV(max, glm::vec2(prims[i].world[3]) + glm::vec2(prims[i].extents));
 		}
 		glm::vec2 c = (max + min) * 0.5f;
 		glm::vec2 ex = max - c;
@@ -198,8 +198,8 @@ private:
 		glm::vec2 max(-FLT_MAX);
 		for (int i = s; i < e; ++i) {
 			min.length();
-			min = tulip::minV(min, glm::vec2(prims[i].center));
-			max = tulip::maxV(max, glm::vec2(prims[i].center));
+			min = tulip::minV(min, glm::vec2(prims[i].world[3]));
+			max = tulip::maxV(max, glm::vec2(prims[i].world[3]));
 		}
 
 		return glm::vec2((max - min) * 0.5f);

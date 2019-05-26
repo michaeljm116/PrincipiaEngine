@@ -60,7 +60,20 @@ private:
 			WINDOW.toggleMaximized();
 		}*/
 		INPUT.keys[key] = action;
-
+		switch (action)
+		{
+		case GLFW_PRESS:
+			INPUT.pressed = true;
+			break;
+		case GLFW_REPEAT:
+			INPUT.pressed = true;
+			break;
+		case GLFW_RELEASE:
+			INPUT.pressed = false;
+			break;
+		default:
+			break;
+		}
 
 #ifdef UIIZON
 		ImGuiIO& io = ImGui::GetIO();

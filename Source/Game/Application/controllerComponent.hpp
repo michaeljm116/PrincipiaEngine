@@ -44,7 +44,7 @@ struct Button {
 	}
 };
 #define NUM_BUTTONS 10
-#define NUM_GLOBAL_BUTTONS 9
+#define NUM_GLOBAL_BUTTONS 10
 ///ControllerComponent, NOTE: first 6 buttons are for the axis
 /// goes in order of +x +y +z -x -y -z
 struct ControllerComponent : public artemis::Component {

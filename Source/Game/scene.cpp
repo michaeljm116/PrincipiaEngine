@@ -1,4 +1,5 @@
 #pragma once
+#include "../pch.h"
 #include "scene.h"
 #include "../tinyxml2/tinyxml2.h"
 
@@ -535,7 +536,10 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 		pNode->InsertEndChild(pTransform);
 	}
 	if (parent->flags & COMPONENT_GUI) {
-		GUIComponent* gui = (GUIComponent*)parent->data->getComponent<GUIComponent>();
+		GUIComponent* gui;
+		parent->tags == 8 ? 
+			gui = (GUINumberComponent*)parent->data->getComponent<GUINumberComponent>() :
+			gui = (GUIComponent*)parent->data->getComponent<GUIComponent>();
 		XMLElement* pGUI = doc->NewElement("GUI");
 		XMLElement* pPos = doc->NewElement("Position");
 		pPos->SetAttribute("x", gui->alignMin.x);
@@ -770,6 +774,9 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 
 			e->addComponent(new CameraComponent(l,f));
 		}
+		if (flags & COMPONENT_MODEL) {
+			int a = 4;
+		}
 		//if (flags & COMPONENT_MODEL) {
 		//	XMLElement* Model = start->FirstChildElement("Model");
 		//	int id;
@@ -806,7 +813,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			cont->QueryFloatAttribute("d3", &data[3]);
 
 			e->addComponent(new CharacterComponent(data));
-			e->addComponent(new ControllerComponent(index + 1));
+			e->addComponent(new ControllerComponent(index));
 
 			//audio string stuff
 			std::string audioFile;

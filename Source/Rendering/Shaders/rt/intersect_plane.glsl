@@ -11,7 +11,7 @@ float planeIntersect(in vec3 rayO, in vec3 rayD, in Primitive plane)
 		return 0.0;
 
 	//float t = -(plane.distance + dot(rayO, normal)) / d;
-	float t = dot(plane.center - rayO, normal) / d;
+	float t = dot(vec3(plane.world[3].xyz) - rayO, normal) / d;
 
 	if (t < 0.0)
 		return 0.0;
