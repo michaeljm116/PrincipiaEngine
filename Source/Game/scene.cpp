@@ -63,11 +63,11 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	//Add Mesh Component and make it a parent node
 	artemis::Entity* entity = &em->create();
 	TransformComponent* parentTransform = new TransformComponent(pos, rot, sca);
-	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_MODEL | COMPONENT_TRANSFORM | COMPONENT_AABB | COMPONENT_PRIMITIVE);
+	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_MODEL | COMPONENT_TRANSFORM | COMPONENT_AABB);// | COMPONENT_PRIMITIVE);
 
 	//rMesh* mesh = &RESOURCEMANAGER.getModelU(resource);
 	entity->addComponent(new ModelComponent(RESOURCEMANAGER.getModelIndex(resource.uniqueID), resource.uniqueID));
-	entity->addComponent(new PrimitiveComponent(resource.uniqueID));
+	//entity->addComponent(new PrimitiveComponent(resource.uniqueID));
 	entity->addComponent(new AABBComponent(pos, sca));	//MeshAABB's point to the physics system
 	entity->addComponent(parent);
 	entity->addComponent(parentTransform);
@@ -78,6 +78,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	glm::mat4 parentRotation = glm::mat4(1.f);
 
 	entity->refresh();
+	//rs->addNode(parent);
 	//ps->change(*entity);
 	//ps->addNode(parent);
 	

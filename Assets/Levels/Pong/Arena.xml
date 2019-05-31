@@ -2,7 +2,7 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-1.379945" y="3.739953" z="-0.19944429"/>
+            <Position x="0" y="2.9199743" z="0.28055906"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="3.0699999"/>
         </Transform>
@@ -21,7 +21,7 @@
     </Node>
     <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="0" z="0"/>
+            <Position x="0" y="-0.2" z="0"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="20" y="0.1" z="20"/>
         </Transform>
@@ -105,47 +105,120 @@
     </Node>
     <Node Name="Midd" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="-1" y="0" z="0"/>
+            <Position x="-1.0700001" y="0" z="0"/>
             <Rotation x="0" y="90" z="90"/>
             <Scale x="1" y="30" z="1"/>
         </Transform>
         <Material ID="950590848"/>
         <Object ID="-3"/>
     </Node>
-    <Node Name="New Model!" hasChildren="true" Flags="33827" Tags="1" Dynamic="false">
+    <Node Name="centermodel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-1.3099575" y="0" z="0"/>
-            <Rotation x="29" y="-5" z="217"/>
+            <Position x="0" y="-0.0099999998" z="0"/>
+            <Rotation x="0" y="0" z="180"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
-        <Object ID="507361325"/>
-        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+        <Node Name="Cube.000" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>
                 <Scale x="1" y="1" z="1"/>
             </Transform>
-            <Material ID="2"/>
-            <Object ID="507361325"/>
+            <Material ID="-842150451"/>
+            <Object ID="737692407"/>
         </Node>
-        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>
                 <Scale x="1" y="1" z="1"/>
             </Transform>
-            <Material ID="14020"/>
-            <Object ID="507361326"/>
-        </Node>
-        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
-            <Transform>
-                <Position x="0" y="0" z="0"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1" y="1" z="1"/>
-            </Transform>
-            <Material ID="221153248"/>
-            <Object ID="507361327"/>
+            <Material ID="-842150451"/>
+            <Object ID="737692408"/>
         </Node>
     </Node>
-
+    <Node Name="rightmodel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="2.1399922" y="1.1099415" z="0.52001953"/>
+            <Rotation x="0" y="0" z="180"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Cube.000" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692407"/>
+        </Node>
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692408"/>
+        </Node>
+    </Node>
+    <Node Name="leftmodel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="-1.5500326" y="0.5300312" z="0.25999069"/>
+            <Rotation x="0" y="0" z="180"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Cube.000" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692407"/>
+        </Node>
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692408"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="1.5299606" y="0.15991211" z="0.18998146"/>
+            <Rotation x="0" y="9.9999997e-05" z="119"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692365"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692366"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1" y="1" z="1"/>
+            </Transform>
+            <Material ID="-842150451"/>
+            <Object ID="737692367"/>
+        </Node>
+    </Node>
 </Root>

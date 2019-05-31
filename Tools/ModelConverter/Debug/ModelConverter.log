@@ -1,8 +1,8 @@
 ﻿  main.cpp
-c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(135): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(148): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(151): warning C4018: '<': signed/unsigned mismatch
-c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(157): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(140): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(153): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(156): warning C4018: '<': signed/unsigned mismatch
+c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(163): warning C4018: '<': signed/unsigned mismatch
 c:\users\mike\principiaengine\tools\modelconverter\main.cpp(307): warning C4018: '<': signed/unsigned mismatch
 c:\users\mike\principiaengine\tools\modelconverter\main.cpp(321): warning C4018: '<': signed/unsigned mismatch
 c:\users\mike\principiaengine\tools\modelconverter\main.cpp(328): warning C4018: '<': signed/unsigned mismatch
