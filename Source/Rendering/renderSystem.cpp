@@ -203,7 +203,7 @@ void RenderSystem::loadResources()
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
 			for (std::vector<rVertex>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr)
-				verts.push_back(ssVert(itr->pos, itr->norm, itr->uv.x, itr->uv.y));
+				verts.push_back(ssVert(itr->pos - rmesh.center, itr->norm, itr->uv.x, itr->uv.y));
 			//Load up da indices
 			for (std::vector<glm::ivec4>::const_iterator itr = rmesh.faces.begin(); itr != rmesh.faces.end(); ++itr) {
 				faces.push_back(ssIndex(*itr + prevVertSize));// , ++currId));
@@ -280,19 +280,6 @@ void RenderSystem::addNodes(std::vector<NodeComponent*> nodes) {
 
 void RenderSystem::addNode(NodeComponent* node) {
 	if (node->flags & COMPONENT_MODEL) {
-		ssPrimitive prim;
-		PrimitiveComponent* primComp = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
-		TransformComponent* trans = (TransformComponent*)node->data->getComponent<TransformComponent>();
-		prim.world = trans->world;
-		prim.extents = trans->local.scale;
-		rModel& mod = RESOURCEMANAGER.getModelU(primComp->uniqueID);
-		prim.numChildren = mod.meshes.size();
-
-		prim.id = 0;
-		primComp->objIndex = objects.size(); 
-		objects.push_back(prim);
-		objectComps.push_back(primComp);
-
 		return;
 	}
 	if (node->flags & COMPONENT_PRIMITIVE) {

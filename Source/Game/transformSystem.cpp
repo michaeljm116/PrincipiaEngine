@@ -99,13 +99,12 @@ void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
 	}
 }
 
-void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformComponent global) {
+void TransformSystem::recursiveTransform(NodeComponent* nc){
 	bool hasParent = nc->parent == nullptr ? false : true;
-	//geometryTransformConverter(nc);
+
 	TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 
-	//set up all the matrices
-	//if (!hasParent) {		glm::mat4 rotationM;
+
 	glm::mat4 rotationM;
 	rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 	rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -121,28 +120,27 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){//, TransformCompone
 		tc->global.scale = ptc->global.scale * tc->local.scale;
 	}
 
+
 	tc->world = glm::toMat4(tc->global.rotation);
 	tc->world[3] = glm::vec4(tc->global.position, 1.f);
-	if (nc->flags & COMPONENT_MODEL)
-	{ }
+
 	if (nc->flags & COMPONENT_PRIMITIVE) {
 		//GET THE OBJ
 		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 		ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
-		//scale the aabb
+		//these are primitive shapes, the extents are basically used as the bounds of the shapes
 		if (objComp->uniqueID < 0) {
-			//obj.center = tc->world[3];// tc->global.position;
-			obj.extents = rotateAABB(tc->global.rotation, tc->global.scale);
-			//obj.world = tc->world;// *glm::vec4(tc->global.scale, 1.f);
-
+				obj.extents = tc->global.scale; 
 		}
 		else {
-			//scale the aabb
-			//obj.center = objComp->center  + tc->global.position;
-			//obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
-			//obj.center = tc->global.position;
-			obj.extents = tc->global.scale;
+			//scale the aabb so that if you rotate it, the extents changes accordingly
+			obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
+			//put the scale into the matrix for models, but not for shapes
+			tc->world *= glm::vec4(tc->global.scale, 1.f);
+			//position the object to be relative to its initial center
+			glm::vec3 center = objComp->center * tc->global.rotation + tc->global.position;
+			tc->world[3] = glm::vec4(center, 1.f);
 		}
 		obj.world = tc->world;
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);

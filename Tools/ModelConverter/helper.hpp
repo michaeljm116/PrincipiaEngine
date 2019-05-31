@@ -129,12 +129,17 @@ Shape ShapeCreate (const Mesh &m, const ShapeType &type){
 	return ret;
 }
 
+//so what you actually want to do is...
+//find the..... average center and the max total extents 
+//so you need 3 things. 1. totalMax (center + max) 2. avgCenter (centers avg'd together) 3. modelExtents = (totalMax - avgCenter)
+//model center = avg center, model extents = extents;
 bool ModelScaler(PrincipiaModel& m) {
 	glm::mat4 world = glm::mat4(1);
 	float maxE = FLT_MIN;
+	glm::vec3 avgCenter;
 	for (int i = 0; i < m.meshes.size(); ++i) {
 		for (int j = 0; j < 3; ++j) {
-			maxE = maxVal(m.meshes[i].extent[j], maxE);
+			maxE = maxVal(m.meshes[i].extent[j] + m.meshes[i].center[j], maxE);
 		}
 	}
 
@@ -151,16 +156,24 @@ bool ModelScaler(PrincipiaModel& m) {
 		for (int j = 0; j < m.meshes[i].vertices.size(); j++) {
 			m.meshes[i].vertices[j].position = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f));
 		}
+		avgCenter += m.meshes[i].center;
 	}
 
 	//Scale the shapes
 	for (int i = 0; i < m.shapes.size(); ++i) {
 		m.shapes[i].center  = glm::vec3(world * glm::vec4(m.shapes[i].center, 1.f));
 		m.shapes[i].extents = glm::vec3(world * glm::vec4(m.shapes[i].extents, 1.f));
+		avgCenter += m.meshes[i].center;
 	}
 
 	//Transform the verts to fit the size
 
+	//find the biggest of extents for the entire model as a whole.... should be 1? actually it shouldn't be that because the if you scaled two things...
+	//find the avg center as well
+	m.extents = glm::vec3(1.f);
+	int totalSize = m.meshes.size() + m.shapes.size();
+	m.center = avgCenter / float(totalSize);
+	
 	return true;
 }
 
