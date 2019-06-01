@@ -237,6 +237,8 @@ void RenderSystem::loadResources()
 	guiTextures[2].CreateTexture(vkDevice);
 	guiTextures[3].path = "../Assets/Levels/Pong/Textures/pause.png";
 	guiTextures[3].CreateTexture(vkDevice);
+	guiTextures[4].path = "../Assets/Levels/Pong/Textures/debugr.png";
+	guiTextures[4].CreateTexture(vkDevice);
 
 }
 
@@ -1042,7 +1044,7 @@ void RenderSystem::createDescriptorPool() {
 	std::vector<VkDescriptorPoolSize> poolSizes =
 	{
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 7),	// Graphics image samplers || +4 FOR TEXTURE
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 3 + MAXTEXTURES),	// Graphics image samplers || +4 FOR TEXTURE
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 7),			// Storage buffer for the scene primitives
 		//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
@@ -1193,7 +1195,7 @@ void RenderSystem::prepareCompute()
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_SAMPLER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			9, 4)
+			9, MAXTEXTURES)
 	};
 
 	VkDescriptorSetLayoutCreateInfo descriptorLayout =
@@ -1218,7 +1220,13 @@ void RenderSystem::prepareCompute()
 
 	VK_CHECKRESULT(vkAllocateDescriptorSets(vkDevice.logicalDevice, &allocInfo, &compute.descriptorSet), "ALLOCATE DOMPUTE DSET");
 
-	VkDescriptorImageInfo textureimageinfos[MAXTEXTURES] = { guiTextures[0].descriptor, guiTextures[1].descriptor, guiTextures[2].descriptor, guiTextures[3].descriptor };
+	VkDescriptorImageInfo textureimageinfos[MAXTEXTURES] = { 
+		guiTextures[0].descriptor, 
+		guiTextures[1].descriptor, 
+		guiTextures[2].descriptor, 
+		guiTextures[3].descriptor,
+		guiTextures[4].descriptor
+	};
 	computeWriteDescriptorSets =
 	{
 		// Binding 0: Output storage image
@@ -1402,6 +1410,7 @@ void RenderSystem::updateMaterial(int id)
 	materials[id].roughness = m->roughness;
 	materials[id].transparency = m->transparency;
 	materials[id].refractiveIndex = m->refractiveIndex;
+	materials[id].textureID = m->textureID;
 
 	updateMaterials();
 }

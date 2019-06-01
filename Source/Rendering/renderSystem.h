@@ -15,7 +15,7 @@ much rework but brotha aint got time fo dat
 #include "../Utility/window.h"
 #include "../Utility/bvh.hpp"
 
-static const int MAXTEXTURES = 4;
+static const int MAXTEXTURES = 5;
 
 struct MeshIdAssigner {
 	int index;

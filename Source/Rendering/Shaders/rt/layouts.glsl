@@ -39,6 +39,6 @@ layout(std140, binding = 8) buffer Guis {
 	Gui guis[];
 };
 
-layout(binding = 9) uniform sampler2D guiTest[4];
+layout(binding = 9) uniform sampler2D guiTest[5];
 
 #endif

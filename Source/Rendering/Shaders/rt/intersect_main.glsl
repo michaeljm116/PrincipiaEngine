@@ -31,21 +31,12 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) { //hits the boundingbox, doesnt necessarily mean tri hit
 				Mesh m = meshes[primitives[i].id];
 				for (int f = m.startIndex; f < m.endIndex; f++) {
-					if (faces[f].v[3] == faces[f].v[2]) {
-						flool tTri = triIntersect(roo, rdd, faces[f]);
-						if (tTri.b && (tTri.t > EPSILON) && (tTri.t < resT)) {
-							id = sectID(TYPE_MESH, i, f);
-							resT = tTri.t;
-						}
-					}
-					else {
-						vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
-						if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
-							id = sectID(TYPE_MESH, i, f);
-							resT = tQuad.t;
-							norm.x = tQuad.y;
-							norm.y = tQuad.z;
-						}
+					vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
+					if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
+						id = sectID(TYPE_MESH, i, f);
+						resT = tQuad.x;
+						norm.x = tQuad.y;
+						norm.y = tQuad.z;
 					}
 				}
 			}

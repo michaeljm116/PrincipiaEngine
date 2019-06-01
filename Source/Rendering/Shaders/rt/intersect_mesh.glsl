@@ -83,16 +83,18 @@ vec3 quadNormal(Primitive prim, Face f, float u, float v) {
 	//vec3 edge2 = n2 - n0;
 	//return normalize(cross(edge1, edge2));
 
-	
 	vec3 n0 = verts[f.v[0]].norm;
 	vec3 n1 = verts[f.v[1]].norm;
 	vec3 n2 = verts[f.v[2]].norm;
 	vec3 n3 = verts[f.v[3]].norm;
 
+	//return (n0 + n1 + n2 + n3) / 4;
+
 	vec3 lerp1 = mix(n0, n1, u);
 	vec3 lerp2 = mix(n3, n2, u);
-	return (prim.world * vec4(mix(lerp1, lerp2, v), 1.f)).xyz;
-	return mix(lerp1, lerp2, v);
+	return (prim.world * vec4(mix(lerp1, lerp2, v), 0.f)).xyz;
+	//return (vec4(mix(lerp1, lerp2, v), 1.f) * prim.world).xyz;
+	//return mix(lerp1, lerp2, v);
 	//return vec3(0);
 }
 

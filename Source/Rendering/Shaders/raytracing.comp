@@ -139,7 +139,10 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	if (shadow > 1) shadow = 1;
 
 	Material mat = materials[primitives[primitiveID.id].matID];
-	fMat.color = diffuse * mat.diffuse + specular;
+	if(mat.textureID > 0)
+		fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz + diffuse + specular;
+	else
+		fMat.color = diffuse * mat.diffuse + specular;
 	fMat.color *= power * shadow;
 	fMat.reflection = mat.reflective;
 	fMat.refraction = mat.refractiveIndex;

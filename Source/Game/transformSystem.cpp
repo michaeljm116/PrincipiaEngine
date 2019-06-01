@@ -98,7 +98,12 @@ void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
 		}
 	}
 }
+void TransformSystem::regularTransform(NodeComponent* nc, TransformComponent* parent) {
+	bool hasParent = nc->parent == nullptr ? false : true;
 
+	//if you're a parent, transform based on world coords, else 
+	
+}
 void TransformSystem::recursiveTransform(NodeComponent* nc){
 	bool hasParent = nc->parent == nullptr ? false : true;
 
@@ -116,6 +121,8 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){
 	if (hasParent) {
 		TransformComponent* ptc = (TransformComponent*)nc->parent->data->getComponent<TransformComponent>();
 		tc->global.position = ptc->global.position + tc->local.position;
+		//tc->global.position = glm::rotate(ptc->global.rotation, ptc->global.position - tc->local.position);
+		//tc->global.position += tc->local.position;
 		tc->global.rotation =  tc->local.rotation * ptc->global.rotation;
 		tc->global.scale = ptc->global.scale * tc->local.scale;
 	}

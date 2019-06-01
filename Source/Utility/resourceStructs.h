@@ -39,7 +39,7 @@ struct  rMaterial
 	float roughness;
 	float transparency;
 	float refractiveIndex;
-	bool hasTexture;
+	int textureID = -1;
 	int uniqueID = 0;
 	std::string Texture;
 	std::string name;

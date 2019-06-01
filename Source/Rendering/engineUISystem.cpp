@@ -1150,11 +1150,13 @@ void EngineUISystem::editMaterial()
 	//}
 	rMaterial& mat = RESOURCEMANAGER.getMaterial(activeMaterial->matID);
 	//float* diff[3] = { &mat.diffuse.r, &mat.diffuse.g, &mat.diffuse.b };
+	//static int textureID = 0;
 	if (ImGui::ColorEdit3("Diffuse", (float*)&mat.diffuse)		 ||
 		sliderFloat("Reflective", &mat.reflective, 0.f, 1.f)	 ||
 		sliderFloat("Roughness", &mat.roughness, 0.f, 1.f)		 ||
 		sliderFloat("Transparency", &mat.transparency, 0.f, 1.f) ||
-		sliderFloat("RefractiveIndex", &mat.refractiveIndex, 1.f, 2.f)) {
+		sliderFloat("RefractiveIndex", &mat.refractiveIndex, 1.f, 2.f) ||
+		sliderInt("TextureID", &mat.textureID, 0, MAXTEXTURES - 1)) {
 
 		updateMaterials();
 	}
