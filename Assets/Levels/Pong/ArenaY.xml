@@ -1,0 +1,124 @@
+<Root>
+    <Scene Num="1"/>
+    <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="2.0699999" y="11.039364" z="-3.4601088"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="3.0699999"/>
+        </Transform>
+        <LookAt x="0" y="0.5" z="0"/>
+        <FOV fov="10"/>
+    </Node>
+    <Node Name="Light" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="6.2605286" y="33.479942" z="2.5798035"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Color r="255" g="255" b="255"/>
+        <Intensity i="1000"/>
+        <ID id="0"/>
+    </Node>
+    <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="0" y="-3.24" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="0.74000001" z="20"/>
+        </Transform>
+        <Material ID="2054138304"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="Goal2" hasChildren="false" Flags="368647" Tags="8" Dynamic="false">
+        <Transform>
+            <Position x="-4.2500305" y="0" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="10" z="20"/>
+        </Transform>
+        <GUI>
+            <Position x="0" y="0"/>
+            <Extent x="0.1" y="0.1"/>
+            <Alignment x="0" y="0"/>
+            <AlignExt x="0.1" y="1"/>
+        </GUI>
+        <Material ID="563290200"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="Goal1" hasChildren="false" Flags="368647" Tags="8" Dynamic="false">
+        <Transform>
+            <Position x="8.2498169" y="0" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="10" z="20"/>
+        </Transform>
+        <GUI>
+            <Position x="0" y="0"/>
+            <Extent x="0.1" y="0.1"/>
+            <Alignment x="0" y="0"/>
+            <AlignExt x="0.1" y="1"/>
+        </GUI>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="4" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="12.69989"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="10" z="10"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="BottomWall" hasChildren="false" Flags="106503" Tags="4" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="-14.809952"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="10" z="10"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="Player1" hasChildren="false" Flags="122887" Tags="2" Dynamic="true">
+        <Transform>
+            <Position x="-1.7100525" y="0.59999996" z="-2.0700073"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="1" z="2"/>
+        </Transform>
+        <Material ID="563290200"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+        <Controller ControllerIndex="1" d0="40" d1="1" d2="7.7719998" d3="1"/>
+    </Node>
+    <Node Name="Player2" hasChildren="false" Flags="122887" Tags="2" Dynamic="true">
+        <Transform>
+            <Position x="5.6800842" y="1.0999961" z="-2.0500183"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="0.5" y="1" z="2"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+        <Controller ControllerIndex="2" d0="40" d1="1" d2="7.7719998" d3="1"/>
+    </Node>
+    <Node Name="Midd" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="-5.4199758" y="-4.2796326" z="0"/>
+            <Rotation x="0" y="90" z="90"/>
+            <Scale x="1" y="30" z="1"/>
+        </Transform>
+        <Material ID="950590848"/>
+        <Object ID="-3"/>
+    </Node>
+    <Node Name="New Box!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="-1.9900131" y="-3.6800385" z="0.96000671"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Material ID="-842150451"/>
+        <Object ID="-2"/>
+    </Node>
+</Root>

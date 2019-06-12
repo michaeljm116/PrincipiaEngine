@@ -115,6 +115,8 @@ Shape ShapeCreate (const Mesh &m, const ShapeType &type){
 	switch (type) {
 		case ShapeType::SPHERE: {
 			ret.type = -1;
+			//if (m.extent.x != m.extent.y)
+			//	ret.extents.x = m.extent.y;
 			break;
 		}
 		case ShapeType::BOX: {
@@ -136,15 +138,27 @@ Shape ShapeCreate (const Mesh &m, const ShapeType &type){
 bool ModelScaler(PrincipiaModel& m) {
 	glm::mat4 world = glm::mat4(1);
 	float maxE = FLT_MIN;
-	glm::vec3 avgCenter;
+	float minE = FLT_MAX;
+	int jind;
+	//glm::vec3 avgCenter;
+	//so what you need is so that if the max is X then you get hte min of that, if Y then etc....
 	for (int i = 0; i < m.meshes.size(); ++i) {
 		for (int j = 0; j < 3; ++j) {
-			maxE = maxVal(m.meshes[i].extent[j] + m.meshes[i].center[j], maxE);
+			float curr = m.meshes[i].extent[j] + m.meshes[i].center[j];
+			if (curr > maxE) {
+				jind = j;
+				maxE = curr;
+			}
 		}
 	}
+	//now find the min
+	for (int i = 0; i < m.meshes.size(); ++i) {
+		minE = minVal(m.meshes[i].center[jind] - m.meshes[i].extent[jind], minE);
+	}
 
+	float ratE = (maxE - minE) * 0.5f;
 	//compare it to size
-	float ratio = 1 / maxE;
+	float ratio = 1 / ratE;
 
 	//Scale it
 	world = glm::scale(world, glm::vec3(ratio));
@@ -154,16 +168,16 @@ bool ModelScaler(PrincipiaModel& m) {
 		m.meshes[i].center = glm::vec3(world * glm::vec4(m.meshes[i].center, 1.f));
 		m.meshes[i].extent = glm::vec3(world * glm::vec4(m.meshes[i].extent, 1.f));
 		for (int j = 0; j < m.meshes[i].vertices.size(); j++) {
-			m.meshes[i].vertices[j].position = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f));
+			m.meshes[i].vertices[j].position = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f)) - m.meshes[i].center;
 		}
-		avgCenter += m.meshes[i].center;
+		//avgCenter += m.meshes[i].center;
 	}
 
 	//Scale the shapes
 	for (int i = 0; i < m.shapes.size(); ++i) {
 		m.shapes[i].center  = glm::vec3(world * glm::vec4(m.shapes[i].center, 1.f));
 		m.shapes[i].extents = glm::vec3(world * glm::vec4(m.shapes[i].extents, 1.f));
-		avgCenter += m.meshes[i].center;
+		//avgCenter += m.meshes[i].center;
 	}
 
 	//Transform the verts to fit the size
@@ -172,7 +186,7 @@ bool ModelScaler(PrincipiaModel& m) {
 	//find the avg center as well
 	m.extents = glm::vec3(1.f);
 	int totalSize = m.meshes.size() + m.shapes.size();
-	m.center = avgCenter / float(totalSize);
+	//m.center = avgCenter / float(totalSize);
 	
 	return true;
 }

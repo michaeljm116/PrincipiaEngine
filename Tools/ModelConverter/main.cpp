@@ -318,6 +318,13 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	//get data mesh data
 	int numtris = 0;
 	int numquads = 0;
+
+	auto root = pScene->mRootNode;
+	std::map<std::string, aiNode*> sceneChildren;
+	for (int i = 0; i < root->mNumChildren; ++i) {
+		sceneChildren[root->mChildren[i]->mName.data] = root->mChildren[i];
+	}
+
 	for (int i = 0; i < pScene->mNumMeshes; ++i) {
 		Mesh subset;
 		glm::vec3 maxVert = glm::vec3(FLT_MIN);
@@ -377,7 +384,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		subset.extent.z = (maxVert.z - minVert.z) * 0.5f;
 
 		subset.name = paiMesh->mName.C_Str();
-
+		//aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
 		ShapeType type = ShapeCheck(subset.name);
 		type == ShapeType::MESH ? m.meshes.push_back(subset) 
 							    : m.shapes.push_back(ShapeCreate(subset, type));
@@ -464,12 +471,12 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	//s.name = tds.skelename;
 	
 	// We're done. Everything will be cleaned up by the importer destructor
-	auto root = pScene->mRootNode;
+	aiNode* rooot = pScene->mRootNode;
 	std::vector<std::string> names;
 	std::vector<aiMatrix4x4> transforms;
-	for (int i = 0; i < root->mNumChildren; ++i) {
-		transforms.push_back(root->mChildren[i]->mTransformation);
-		names.push_back(root->mChildren[i]->mName.C_Str());
+	for (int i = 0; i < rooot->mNumChildren; ++i) {
+		transforms.push_back(rooot->mChildren[i]->mTransformation);
+		names.push_back(rooot->mChildren[i]->mName.C_Str());
 	}
 	return true;
 }

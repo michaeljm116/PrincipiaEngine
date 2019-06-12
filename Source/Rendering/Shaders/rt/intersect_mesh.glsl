@@ -92,7 +92,18 @@ vec3 quadNormal(Primitive prim, Face f, float u, float v) {
 
 	vec3 lerp1 = mix(n0, n1, u);
 	vec3 lerp2 = mix(n3, n2, u);
-	return (prim.world * vec4(mix(lerp1, lerp2, v), 0.f)).xyz;
+	//return (vec4(mix(lerp1, lerp2, v), 0.f) * prim.world).xyz;
+	vec4 temp = vec4(mix(lerp1, lerp2, v) , 0.f);
+	//vec4 temp2 = vec4(prim.extents, 1.f);
+	mat4 temp2 = 
+	mat4(prim.extents.x, 0, 0, 0,
+		 0, prim.extents.y, 0, 0,
+		 0, 0, prim.extents.z, 0,
+		0, 0, 0, 0);
+	mat4 world = prim.world * temp2;
+	//return (temp2 * temp).xyz;
+	//return (transpose(inverse(prim.world * temp2)) *  temp).xyz;
+	return (world * vec4(mix(lerp1, lerp2, v), 0.f)).xyz;
 	//return (vec4(mix(lerp1, lerp2, v), 1.f) * prim.world).xyz;
 	//return mix(lerp1, lerp2, v);
 	//return vec3(0);

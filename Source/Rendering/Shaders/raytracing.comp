@@ -91,6 +91,11 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	vec3 pos = rayO + t * rayD;
 	//vec3 lightVec = normalize(lights[0].pos - pos);				
 	vec3 normal;
+	
+	/////////////////SWAP HERE FOR DEBUG///////////////////////
+	Material mat = materials[primitives[primitiveID.id].matID];
+	//Material mat = materials[primitives[primitiveID.pId].matID];
+
 
 	switch(primitiveID.type){
 		case TYPE_PLANE:{
@@ -113,10 +118,8 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 			break;
 		}
 		case TYPE_MESH:{
-			if (faces[primitiveID.cId].v[3] == faces[primitiveID.cId].v[2])
-				normal = triNormal(primitives[primitiveID.id], faces[primitiveID.cId]);
-			else
-				normal = quadNormal(primitives[primitiveID.id], faces[primitiveID.cId], norm.x, norm.y);
+			normal = quadNormal(primitives[primitiveID.pId], faces[primitiveID.id], norm.x, norm.y);
+			mat = materials[primitives[primitiveID.pId].matID];
 			break; 
 		}
 	}
@@ -138,7 +141,6 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	if (power > 1) power = 1;
 	if (shadow > 1) shadow = 1;
 
-	Material mat = materials[primitives[primitiveID.id].matID];
 	if(mat.textureID > 0)
 		fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz + diffuse + specular;
 	else
@@ -187,15 +189,12 @@ void main()
 			}
 		}
 	}
-	if(txt.a > .9f)
+	if(txt.a > .99f)
 		imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);		
-	///////////////////////////////GUI CHECK///////////////////////////////
-
 	else{
 
 		vec2 ps = (-1.0 + 2.0 * uv) * vec2(ubo.aspectRatio, 1.0);
-		vec3 rayD = normalize(vec3(ps.x, -1.0, ps.y));
-		//vec3 rayD = normalize(vec3(ps.x, ps.y, -1));
+		vec3 rayD = normalize(vec3(ps.x, -1.0, ps.y)); 		
 		vec3 rayO = ubo.pos;
 		vec3 normal = vec3(0.f, 0.f, 0.f);
 

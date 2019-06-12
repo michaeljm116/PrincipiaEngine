@@ -91,7 +91,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 
 		//Set up subset data
 		NodeComponent* childNode = new NodeComponent(child, parent);
-		TransformComponent* childTransform = new TransformComponent();// resource.meshes[i].center, resource.meshes[i].extents);
+		TransformComponent* childTransform = new TransformComponent(resource.meshes[i].center, resource.meshes[i].extents);
 
 		child->addComponent(childNode);
 		child->addComponent(childTransform);

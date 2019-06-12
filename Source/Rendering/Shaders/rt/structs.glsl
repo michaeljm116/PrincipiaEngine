@@ -7,6 +7,7 @@
 struct Primitive
 {
 	mat4 world;
+	mat4 invWorld;
 	vec3 extents;
 	int numChildren;
 	int id;
@@ -98,7 +99,7 @@ struct finalmaterial{
 struct sectID{
 	uint type;
 	int id;
-	int cId;
+	int pId;
 };
 
 
