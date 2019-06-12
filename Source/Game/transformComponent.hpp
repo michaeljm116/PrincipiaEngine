@@ -13,7 +13,8 @@ private:
 }; //48bytes //can be 40 if necessary
 
 struct TransformComponent : public artemis::Component {
-	glm::mat4 world; //	note: this is a Position+Rotation Matrix, scale is left separate
+	glm::mat4 world; //	translation rotation scale matrix
+	glm::mat4 TRM;  // note: this is a Translation+Rotation Matrix, scale is left separate
 	sqt local;
 	sqt global;
 

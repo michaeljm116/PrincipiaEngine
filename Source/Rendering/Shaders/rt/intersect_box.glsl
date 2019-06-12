@@ -5,7 +5,7 @@ vec4 boxIntersect(in vec3 ro, in vec3 rd, in Primitive box)
 {
 	// convert from ray to box space
 	// currently 147/148
-	mat4 invWorld = inverse(box.world);
+	mat4 invWorld = box.invWorld;// inverse(box.world);
 	vec3 rdd = (invWorld*vec4(rd, 0.0)).xyz;
 	vec3 roo = (invWorld*vec4(ro, 1.0)).xyz;
 
