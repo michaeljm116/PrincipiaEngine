@@ -2,8 +2,8 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="10.989685" y="5" z="2.5096893"/>
-            <Rotation x="0" y="0" z="0"/>
+            <Position x="2.460556" y="11.909859" z="-7.7401733"/>
+            <Rotation x="0" y="12" z="0"/>
             <Scale x="1" y="1" z="3.0699999"/>
         </Transform>
         <LookAt x="0" y="0.5" z="0"/>
@@ -11,7 +11,7 @@
     </Node>
     <Node Name="Light" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="6.2605286" y="33.479942" z="2.5798035"/>
+            <Position x="6.2605286" y="3.1999435" z="2.5798035"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -361,8 +361,8 @@
     </Node>
     <Node Name="House" hasChildren="true" Flags="1059" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="6.849966" y="0.11008739" z="10.52002"/>
-            <Rotation x="265" y="622" z="-166"/>
+            <Position x="6.2000179" y="-4.2401161" z="11.28006"/>
+            <Rotation x="265" y="976" z="-150"/>
             <Scale x="4" y="4" z="4"/>
         </Transform>
         <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
@@ -641,5 +641,166 @@
             <Material ID="-842150451"/>
             <Object ID="1603949167"/>
         </Node>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="1059" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="2.6400757" y="7.0199013" z="-6.4803505"/>
+            <Rotation x="-40" y="9.9999997e-05" z="178"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Cube.010" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.21508627" y="-0.088653401" z="-0.27490276"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.21508627" y="0.16933964" z="0.27490276"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479460"/>
+        </Node>
+        <Node Name="Sphere.006" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.33807519" y="0.016857475" z="0.04006806"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.33807519" y="0.082482807" z="0.082482815"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1972479461"/>
+        </Node>
+        <Node Name="Sphere.005" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.24900323" y="-0.039104424" z="0.63932812"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.24900323" y="0.076957166" z="0.076957181"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1972479462"/>
+        </Node>
+        <Node Name="Sphere.004" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.12343283" y="-0.22436379" z="0.60849494"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.12343283" y="0.22436379" z="0.076957166"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479463"/>
+        </Node>
+        <Node Name="Cube.009" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.15158927" y="-0.21372682" z="0.75622755"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.15158927" y="0.21372682" z="0.046633616"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479464"/>
+        </Node>
+        <Node Name="Cube.004" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-7.0145143e-05" y="-0.0348229" z="-0.27227953"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.22799975" y="0.18244089" z="0.27227953"/>
+            </Transform>
+            <Material ID="563290200"/>
+            <Object ID="1972479465"/>
+        </Node>
+        <Node Name="Cube.011" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.0035681878" y="0.013183263" z="-0.0098710842"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.15227424" y="0.16396506" z="0.20408829"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479466"/>
+        </Node>
+        <Node Name="Cube.012" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.0023117824" y="-0.21308993" z="0.3929134"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.10308005" y="0.21308993" z="0.083220586"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479467"/>
+        </Node>
+        <Node Name="Cube.005" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.17307433" y="-0.21372682" z="0.75622755"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.13010423" y="0.21372682" z="0.046633616"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479468"/>
+        </Node>
+        <Node Name="Sphere.002" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.4210493" y="-0.039104424" z="0.63932812"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.076957181" y="0.076957166" z="0.076957181"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1972479469"/>
+        </Node>
+        <Node Name="Sphere.001" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.16990848" y="-0.22436379" z="0.60849494"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.076957181" y="0.22436379" z="0.076957166"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479470"/>
+        </Node>
+        <Node Name="Sphere" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.59366751" y="0.016857475" z="0.04006806"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.082482859" y="0.082482807" z="0.082482815"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1972479471"/>
+        </Node>
+        <Node Name="afro" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.0023149268" y="0.069410227" z="0.95811969"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.6603902" y="0.57718635" z="0.49207482"/>
+            </Transform>
+            <Material ID="-573082831"/>
+            <Object ID="1972479472"/>
+        </Node>
+        <Node Name="Cube.002" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="-0.032654915" z="0.65955061"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.39567968" y="0.42833456" z="0.39567968"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1972479473"/>
+        </Node>
+        <Node Name="Cube.001" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.27993077" y="-0.088653401" z="-0.27490276"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.15024176" y="0.16933964" z="0.27490276"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1972479474"/>
+        </Node>
+        <Node Name="Cube.014" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.0094754966" y="0.01350064" z="0.01406676"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.330053" y="0.16427895" z="0.27733022"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1972479475"/>
+        </Node>
+    </Node>
+    <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="-1.1500549" y="11.390053" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="20" y="0.74000001" z="20"/>
+        </Transform>
+        <Material ID="2054138304"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
     </Node>
 </Root>

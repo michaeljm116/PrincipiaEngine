@@ -7,7 +7,7 @@
 struct Primitive
 {
 	mat4 world;
-	mat4 invWorld;
+	//mat4 invWorld;
 	vec3 extents;
 	int numChildren;
 	int id;

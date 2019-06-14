@@ -11,4 +11,5 @@
     <Material Name="White" DiffuseR="1" DiffuseG="1" DiffuseB="1" Reflective="0" Roughness="1" Transparency="0" Refractive="1"/>
     <Material Name="Jasper" DiffuseR="0.84313726" DiffuseG="0.23137255" DiffuseB="0.24313726" Reflective="0.48899999" Roughness="1" Transparency="0" Refractive="1"/>
     <Material Name="Ball" DiffuseR="0.32352948" DiffuseG="1" DiffuseB="0" Reflective="0.59500003" Roughness="1" Transparency="0" Refractive="0"/>
+    <Material Name="shiny" DiffuseR="1" DiffuseG="1" DiffuseB="1" Reflective="1" Roughness="1" Transparency="0" Refractive="0"/>
 </Root>
