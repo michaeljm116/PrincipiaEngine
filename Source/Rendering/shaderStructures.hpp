@@ -107,8 +107,8 @@ struct ssIndex {
 };
 
 struct ssMesh {
-	glm::vec4 center; //16
-	glm::vec4 extents; //16
+	//glm::vec4 center; //16
+	//glm::vec4 extents; //16
 	int startIndex; //4
 	int endIndex; //4
 	int startVert; //4

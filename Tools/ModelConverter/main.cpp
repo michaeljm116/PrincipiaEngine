@@ -1,6 +1,6 @@
 #include "structs.h"
 #include "helper.hpp"
-
+#include <queue>
 namespace fs = std::filesystem;
 
 
@@ -12,8 +12,8 @@ namespace fs = std::filesystem;
 
 bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s, bool triangulate);
 
-bool WritePEModel(PrincipiaModel& m, std::string fn);
-bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn);
+bool WritePEModel(PrincipiaModel& m, PrincipiaSkeleton& s, std::string fn);
+bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio);
 
 
 PrincipiaModel ReadPEModel(const char* pFile);
@@ -23,18 +23,15 @@ bool LoadDirectory(std::string directory);
 
 ///////////////ANIMATION STUFF///////////////////////
 struct tempDataStruct {
-	std::map<std::string, bool> necessityMap;
-	std::map<std::string, int> jointMap;
 	std::vector<Joint> skeletonJoints;
+
+	std::vector<int> parentIndexes;
+	std::vector<aiNode*> confirmedNodes;
+	std::unordered_map<std::string, int> nodeIndexes;
 	std::string skelename;
 };
 
 bool LoadBones(const aiScene* scene, tempDataStruct& tds);
-aiNode* FindNodey(aiNode* node, const char* name);
-
-
-void FindChildy(aiNode* node, int& i, tempDataStruct& tds);
-void FindJointy(aiNode*, tempDataStruct& tds);
 ///////////////ANIMATION STUFF///////////////////////
 
 
@@ -52,7 +49,7 @@ int main() {
 	system("Pause");
 }
 
-bool WritePEModel(PrincipiaModel& m, std::string fn) {
+bool WritePEModel(PrincipiaModel& m, PrincipiaSkeleton& s, std::string fn) {
 	std::fstream binaryio;
 	//std::string fileName = fn;
 	binaryio.open(fn, std::ios::out | std::ios::binary);
@@ -67,18 +64,10 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 	int modelNameLength = m.name.length();
 	binaryio.write(CCAST(&modelNameLength), sizeof(int));
 	binaryio.write(m.name.c_str(), modelNameLength);
-
-	//Find out of skinned or not
-	bool skinned = meshType != MESH_ONLY ? true : false;
-	binaryio.write(CCAST(&skinned), sizeof(bool));
-
+	
 	//Insert UniqueID;
 	binaryio.write(CCAST(&m.uniqueID), sizeof(int));
-
-	//Insert SkeletonID;
-	if (skinned)
-		binaryio.write(CCAST(&m.skeletonID), sizeof(int));
-	
+		
 
 	//Find numder of meshes
 	int numMeshes = m.meshes.size();
@@ -89,10 +78,14 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 		int meshNameLength = m.meshes[i].name.length();
 		int numVerts = m.meshes[i].vertices.size();
 		int numTris = m.meshes[i].faces.size();
-
+		//int meshIndex = m.meshes
+		//asdfadsf
 		//Name
 		binaryio.write(CCAST(&meshNameLength), sizeof(int));
 		binaryio.write(m.meshes[i].name.c_str(), meshNameLength);
+
+		//ID
+		binaryio.write(CCAST(&m.meshes[i].id), sizeof(int));
 
 		//Nums
 		binaryio.write(CCAST(&numVerts), sizeof(int));
@@ -108,16 +101,6 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 		for (int t = 0; t < numTris; t++) {
 			binaryio.write(CCAST(&m.meshes[i].faces[t].v), sizeof(glm::ivec4));
 		}
-
-		/*if (skinned) {
-			int numBones = m.meshes[i].bones.size();
-			binaryio.write(CCAST(&numBones), sizeof(int));
-			for (int b = 0; b < numBones; ++b) {
-				binaryio.write(CCAST(&m.meshes[i].bones[b].IDs), sizeof(int) * 4);
-				binaryio.write(CCAST(&m.meshes[i].bones[b].weights), sizeof(float) * 4);
-			}
-		}*/
-
 	}
 
 	//find number of shapes
@@ -136,26 +119,24 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 	int numTransforms = 0;
 	binaryio.write(CCAST(&numTransforms), sizeof(int));
 
+	//Find out of skinned or not
+	bool skinned = meshType != MESH_ONLY ? true : false;
+	binaryio.write(CCAST(&skinned), sizeof(bool));
+	if (skinned) {
+		WriteSkeleton(s, binaryio);
+	}
+	
 	binaryio.close();
 
 	return true;
 }
 
-bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
-	std::fstream binaryio;
-	//std::string fileName = fn;
-	binaryio.open(fn, std::ios::out | std::ios::binary);
+bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio) {
 
-	//Intro
-	std::string intro = "Principia Model File v1.0 created by Mike Murrell\n© 2018 Mike Murrell\nAll rights Reserved\n\n";
-	int introLength = intro.length();
-	binaryio.write(CCAST(&introLength), sizeof(int));
-	binaryio.write(intro.c_str(), introLength);
-
-	//Write Name of Skeleton
-	int modelNameLength = s.name.length();
-	binaryio.write(CCAST(&modelNameLength), sizeof(int));
-	binaryio.write(s.name.c_str(), modelNameLength);
+	////Write Name of Skeleton
+	//int modelNameLength = s.name.length();
+	//binaryio.write(CCAST(&modelNameLength), sizeof(int));
+	//binaryio.write(s.name.c_str(), modelNameLength);
 
 	//Insert UniqueID;
 	binaryio.write(CCAST(&s.uniqueID), sizeof(int));
@@ -164,12 +145,19 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 	binaryio.write(CCAST(&s.numJoints), sizeof(int));
 
 	for (int j = 0; j < s.numJoints; ++j) {
-		int jointNameLength = s.joints[j].name.length();
+		Joint& sj = s.joints[j];
+		int jointNameLength = sj.name.length();
 		binaryio.write(CCAST(&jointNameLength), sizeof(int));
-		binaryio.write(s.joints[j].name.c_str(), jointNameLength);
-		binaryio.write(CCAST(&s.joints[j].parentIndex), sizeof(int));
-		binaryio.write(CCAST(&s.joints[j].glInvBindPose), sizeof(glm::mat4)); //MEOW: THIS MAY NEED TO BE CONVERTED
-		binaryio.write(CCAST(&s.joints[j].glTransform), sizeof(glm::mat4));
+		binaryio.write(sj.name.c_str(), jointNameLength);
+		binaryio.write(CCAST(&sj.parentIndex), sizeof(int));
+		binaryio.write(CCAST(&sj.glInvBindPose), sizeof(glm::mat4)); //MEOW: THIS MAY NEED TO BE CONVERTED
+		binaryio.write(CCAST(&sj.glTransform), sizeof(glm::mat4));
+		
+		int jointOBJNum = sj.jointObjs.size();
+		binaryio.write(CCAST(&jointOBJNum), sizeof(int));
+		for (int i = 0; i < jointOBJNum; ++i) {
+			binaryio.write(CCAST(&sj.jointObjs[i]), sizeof(JointObject));
+		}
 	}
 
 	binaryio.write(CCAST(&s.globalInverseTransform), sizeof(glm::mat4));
@@ -202,7 +190,6 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 		}
 	}
 
-	binaryio.close();
 	return true;
 }
 
@@ -289,10 +276,6 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	// If the import failed, report it
 
 
-	//const aiNode* pRoot = pScene->mRootNode;
-	//std::unordered_map<std::string, aiMatrix4x4> name_transformMap;
-	//for (int i = 0; i < pRoot->mNumChildren; ++i)
-	//	name_transformMap[pRoot->mChildren[i]->mName.C_Str()] = pRoot->mChildren[i]->mTransformation;
 
 	if (!pScene)
 	{
@@ -313,7 +296,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	m.name = m.name.substr(0, indexico);
 	
 
-	//LoadBones(pScene, tds);
+	LoadBones(pScene, tds);
 
 	//get data mesh data
 	int numtris = 0;
@@ -325,9 +308,14 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		sceneChildren[root->mChildren[i]->mName.data] = root->mChildren[i];
 	}
 
+	std::unordered_map<std::string, int> sceneMeshes;
+	size_t numMeshes = pScene->mNumMeshes;
+	for (size_t i = 0; i < numMeshes; ++i) {
+		sceneMeshes[pScene->mMeshes[i]->mName.data] = i;
+	}
 	for (int i = 0; i < pScene->mNumMeshes; ++i) {
 		Mesh subset;
-		glm::vec3 maxVert = glm::vec3(FLT_MIN);
+		glm::vec3 maxVert = -glm::vec3(FLT_MAX);
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
 		aiMesh* paiMesh = pScene->mMeshes[i];
@@ -336,11 +324,11 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			aiVector3D vert = paiMesh->mVertices[v];
 			aiVector3D norm = paiMesh->mNormals[v];
 			aiVector3D* txtr = nullptr;
-			if(paiMesh->HasTextureCoords(v))
+			if (paiMesh->HasTextureCoords(v))
 				txtr = paiMesh->mTextureCoords[v];
 
 			//Transform the verts;
-			
+
 
 			//subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
 			paiMesh->HasTextureCoords(v) ? subset.vertices.push_back(Vertex(vert, norm, txtr->x, txtr->y)) : subset.vertices.push_back(Vertex(vert, norm));
@@ -350,7 +338,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 
 			minVert.x = minVal(minVert.x, vert.x);
 			minVert.y = minVal(minVert.y, vert.y);
-			minVert.z = minVal(minVert.z, vert.z);		
+			minVert.z = minVal(minVert.z, vert.z);
 
 		}
 		for (int f = 0; f < paiMesh->mNumFaces; ++f) {
@@ -384,91 +372,136 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		subset.extent.z = (maxVert.z - minVert.z) * 0.5f;
 
 		subset.name = paiMesh->mName.C_Str();
-		//aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
+		subset.originalName = paiMesh->mName.C_Str();
+		subset.id = i;
+
+		//blender does this stupid thing where it chagnes the name from EX: Pants to Pants.001
+		//so you have to deprecate the .001 cause they just HAVE to be annoying
+		for (size_t i = 0; i < subset.name.length(); ++i) {
+			if (subset.name[i] == '.')
+				subset.name = subset.name.substr(0, i);
+		}
+
+
+		aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
+		//m.meshes.push_back(subset);
 		ShapeType type = ShapeCheck(subset.name);
-		type == ShapeType::MESH ? m.meshes.push_back(subset) 
-							    : m.shapes.push_back(ShapeCreate(subset, type));
+		type == ShapeType::MESH ? m.meshes.push_back(subset)
+			: m.shapes.push_back(ShapeCreate(subset, type));
+		///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
 
-	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
-	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
-	///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
-	//	std::vector<tempRJoint> rayJoints;
-	//	if (paiMesh->mNumBones > 0) {
-	//		std::vector<VertexBoneData> bonesy;
-	//		m.meshes[i].bones.resize(paiMesh->mNumVertices);
+			//First check to see if it has bones
+		if (paiMesh->mNumBones > 0) {
 
-	//		for (int b = 0; b < paiMesh->mNumBones; ++b) {
-	//			aiBone* boney = paiMesh->mBones[b];
-	//			//std::vector<aiVertexWeight> weights;
-	//			tempRJoint rj;
-	//			for (int w = 0; w < boney->mNumWeights; w++) {
-	//				aiVertexWeight weighty = boney->mWeights[w];
-	//				//m.meshes[i].bones[weighty.mVertexId].add(tds.jointMap.find(boney->mName.data)->second, weighty.mWeight);
-	//				//weights.push_back(weighty);
-	//					if (weighty.mWeight > 0.5f){
-	//						rj.verts.push_back(weighty.mVertexId);
-	//				}
-	//			}
-	//			rj.name = boney->mName.C_Str();
-	//			rayJoints.push_back(rj);				
-	//			//skelly.joints.push_back(jointy);
-	//		}
-	//		int total = 0;
-	//		for (int i = 0; i < rayJoints.size(); ++i)
-	//			total += rayJoints[i].verts.size();
-	//		int a = 0;
-	//		//m.meshes[i].v
+			//set up a list of bones and the vertexs for each bone
+			//std::vector<aiBone*> bones;
+			std::vector<std::vector<aiVertexWeight>> weights;
+			std::vector<std::vector<int>> boneFaces;
 
-	//		//skellys.push_back(skelly);
-	//		/*for (int f = 0; f < paiMesh->mNumVertices; ++f) {
-	//			m.meshes[i].vertices[f].boneData = bonesy[f];
-	//		}*/
-	//	}
-	//}
+			//load up the data
+			for (int i = 0; i < paiMesh->mNumBones; ++i) {
+				//bones.push_back(paiMesh->mBones[i]);
+				;				int boneIndex = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
 
-	//if (pScene->HasAnimations() && meshType == SKINNED_MESH) {
-	//	meshType = SKIN_AND_ANIM;
-	//	aiMatrix4x4 glit = pScene->mRootNode->mTransformation;
-	//	glit.Inverse();
-	//	s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
-	//	s.joints = tds.skeletonJoints;
-	//	s.numJoints = tds.skeletonJoints.size();
-	//	int a = 0;
-	//	for (; a < pScene->mNumAnimations; ++a) {
-	//		aiAnimation* anim = pScene->mAnimations[a];
-	//		PrincipiaAnimation animation;
-	//		animation.name = anim->mName.data;
-	//		animation.duration = anim->mDuration;
-	//		animation.fps = anim->mTicksPerSecond;
-	//		animation.skeletonID = s.uniqueID;
+				//First check if its a shape if o then just 
+				if (type == ShapeType::SPHERE) {
+					int index = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
+					tds.skeletonJoints[index].jointObjs.push_back(JointObject(m.shapes.size() - 1, -1));
+				}
+				else {
+					//This is gonna be a sorted list of vertex weights so
+					//use map which is a red-black tree, then do in-order traversal pushback into the vw list
+					std::vector<aiVertexWeight> vw;
+					std::map<int, aiVertexWeight> vwmap;
+					for (int b = 0; b < paiMesh->mBones[i]->mNumWeights; b++) {
+						auto weight = paiMesh->mBones[i]->mWeights[b];
+						vwmap.insert(std::pair<int, aiVertexWeight>(weight.mVertexId, weight));
+					}
+					for (auto itr = vwmap.begin(); itr != vwmap.end(); ++itr)
+						vw.push_back(itr->second);
+					weights.push_back(vw);
 
-	//		for (int j = 0; j < s.joints.size(); ++j) {
-	//			for (int ch = 0; ch < anim->mNumChannels; ch++) {
-	//				aiNodeAnim* ana = anim->mChannels[ch];
-	//				if (!::strcmp(ana->mNodeName.data, s.joints[j].name.c_str())) {
-	//					AnimChannel channel;
-	//					channel.name = ana->mNodeName.data;// anim->mName.data;
-	//					if ((ana->mNumPositionKeys != ana->mNumRotationKeys) || (ana->mNumPositionKeys != ana->mNumScalingKeys) || (ana->mNumRotationKeys != ana->mNumScalingKeys))
-	//						std::cout << "ERROR, UNEVEN KEYS\n";
+					//Now that you have a list of in-order vertex id's you can compare with the faces in an efficient manner
+					//for each face, check if the bone has f[0] f[1] f[2] and f[3]. it's already sorted so you can iterate through and look for a > value to cancel out
+					std::vector<int> bfs;
+					for (auto fid = 0; fid < subset.faces.size(); ++fid) {
+						Face* itrFace = &subset.faces[fid];
+						bool allfour = true;
+						for (size_t i = 0; i < 4; ++i) {
+							bool vertFound = true;
 
-	//					for (int k = 0; k < ana->mNumRotationKeys; k++) {
-	//						KeySQT key;
-	//						key.pos = ana->mPositionKeys[k];
-	//						key.rot = ana->mRotationKeys[k];
-	//						key.sca = ana->mScalingKeys[k];
-	//						key.time = ana->mRotationKeys[k].mTime;
-	//						channel.keys.push_back(key);
-	//					}
-	//					channel.numKeys = channel.keys.size();
-	//					animation.channels.push_back(channel);
-	//				}
-	//				animation.numChannels = animation.channels.size();
-	//			}
-	//		}
-	//		s.animations.push_back(animation);
-	//	}
+							for (auto itrVert = vw.begin(); itrVert != vw.end(); ++itrVert) {
+								if (itrFace->v[i] == itrVert->mVertexId)
+									break;
+								if (itrFace->v[i] < itrVert->mVertexId) {
+									vertFound = false;
+									break;
+								}
+							}
+
+
+							if (!vertFound) {
+								allfour = false;
+								break;
+							}
+						}
+						if (allfour) {
+							tds.skeletonJoints[boneIndex].jointObjs.push_back(JointObject(fid, i));
+						}
+						//bfs.push_back(fid);
+					}// auto itrface subset faces begin etc...
+				}// if shape or nah
+			}//for each bone
+			//So here should be where all the bones should be collected, you can compare the bone naems with the tds list and add stuff
+		}
 	}
-	//s.name = tds.skelename;
+
+	if (pScene->HasAnimations()){// && meshType == SKINNED_MESH) {
+		meshType = SKIN_AND_ANIM;
+		aiMatrix4x4 glit = pScene->mRootNode->mTransformation;
+		glit.Inverse();
+		s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
+		s.joints = tds.skeletonJoints;
+		s.numJoints = tds.skeletonJoints.size();
+		int a = 0;
+		for (; a < pScene->mNumAnimations; ++a) {
+			aiAnimation* anim = pScene->mAnimations[a];
+			PrincipiaAnimation animation;
+			animation.name = anim->mName.data;
+			animation.duration = anim->mDuration;
+			animation.fps = anim->mTicksPerSecond;
+			animation.skeletonID = s.uniqueID;
+
+			for (int j = 0; j < s.joints.size(); ++j) {
+				for (int ch = 0; ch < anim->mNumChannels; ch++) {
+					aiNodeAnim* ana = anim->mChannels[ch];
+					if (!::strcmp(ana->mNodeName.data, s.joints[j].name.c_str())) {
+						AnimChannel channel;
+						channel.name = ana->mNodeName.data;// anim->mName.data;
+						if ((ana->mNumPositionKeys != ana->mNumRotationKeys) || (ana->mNumPositionKeys != ana->mNumScalingKeys) || (ana->mNumRotationKeys != ana->mNumScalingKeys))
+							std::cout << "ERROR, UNEVEN KEYS\n";
+
+						for (int k = 0; k < ana->mNumRotationKeys; k++) {
+							KeySQT key;
+							key.pos = ana->mPositionKeys[k];
+							key.rot = ana->mRotationKeys[k];
+							key.sca = ana->mScalingKeys[k];
+							key.time = ana->mRotationKeys[k].mTime;
+							channel.keys.push_back(key);
+						}
+						channel.numKeys = channel.keys.size();
+						animation.channels.push_back(channel);
+					}
+					animation.numChannels = animation.channels.size();
+				}
+			}
+			s.animations.push_back(animation);
+		}
+	}
+	s.name = m.name + "_skel";// tds.skelename;
+
+	for (int i = 0; i < m.meshes.size(); ++i)
+		m.meshes[i].id = sceneMeshes[m.meshes[i].originalName];
 	
 	// We're done. Everything will be cleaned up by the importer destructor
 	aiNode* rooot = pScene->mRootNode;
@@ -519,13 +552,8 @@ bool LoadDirectory(std::string directory)
 			meshType = MESH_ONLY;
 			if (triangulate)
 				mod.name += "_t";
-			WritePEModel(mod, "Output/" + mod.name + ".pm");
-
-			if (meshType == SKIN_AND_ANIM) {
-				skeleton.name = mod.name + "_skel";
-				//SkeletonScaler(skeleton);
-				WriteSkeleton(skeleton, "Output/" + skeleton.name + ".pm");
-			}
+			
+			WritePEModel(mod, skeleton, "../../Assets/Levels/Pong/Models/" + mod.name + ".pm");
 		}
 		meshType = MESH_ONLY;
 	}
@@ -534,152 +562,91 @@ bool LoadDirectory(std::string directory)
 
 
 #pragma region skeletonbiulding
+
 bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
-	std::map<std::string, uint32_t> boneMapping;
-	std::vector<aiNode*> boneNodes;
-	std::vector<aiNode*> parentNodes;
+	std::vector<aiNode*> nodes;
 
-	
-	//build skeleton map here
-	//preinitialize a necessity map with a "No"
-	for (int i = 0; i < scene->mNumMeshes; ++i) {
-		uint32_t bmi = 0;
-		aiMesh* meshy = scene->mMeshes[i];
-		aiNode* nodey;
-		for (int b = 0; b < meshy->mNumBones; ++b) {
+	auto armature = scene->mRootNode->mChildren[0];
+	auto numSceneChildren = armature->mNumChildren;
 
-			meshType = SKINNED_MESH;
-			aiBone* boney = meshy->mBones[b];
-			std::string name = boney->mName.data;
-			tds.necessityMap[name] = false;
-
-
-			//Find the "yeses by comparing map naems with scene names
-			aiNode* nodey = FindNodey(scene->mRootNode, boney->mName.data);
-			
-			if (nodey != NULL) {
-				tds.necessityMap[boney->mName.data] = true;
-				boneNodes.push_back(nodey);
-			}
+	/*Takes the Root animation node and Bredth-First-Searches the tree to have a flat,level-order array of the animation*/
+	std::queue<aiNode*> nodeQueue;
+	nodeQueue.push(armature);
+	while (!nodeQueue.empty()) {
+		size_t qsize = nodeQueue.size();
+		for (int i = 0; i < qsize; ++i) {
+			aiNode* n = nodeQueue.front();
+			nodeQueue.pop();
+			nodes.push_back(n);
+			for (int c = 0; c < n->mNumChildren; c++)
+				nodeQueue.push(n->mChildren[c]);
 		}
-		if (meshType != SKINNED_MESH)
-			return false;
 	}
-	//get the parent node, yes this is vry slow ONSquared
-	for (int i = 0; i < boneNodes.size(); ++i) {
-		bool copy = false;
-		for (int j = 0; j < boneNodes.size(); ++j) {
-			if (!::strcmp(boneNodes[i]->mParent->mName.data,boneNodes[j]->mName.data)) {
-				copy = true;
-			}
-		}
-		if (!copy)
-			parentNodes.push_back(boneNodes[i]);
-	}
-	tds.skelename = parentNodes[0]->mParent->mName.data;
 
-	//So basically make it so that for each parent it goes like parent indexs are 123456 etc... 
-	//then list all the children from the start of the parent so you're flattening the list and remember the parent index
-	for (int i = 0; i < parentNodes.size(); ++i) {
-		tds.jointMap[parentNodes[i]->mName.data] = i;
+	//This gets a hashmap of the names of everybone the animations use
+	std::unordered_map<std::string, bool> animNameMap;
+	auto numAnims = scene->mNumAnimations;
+	for (auto i = 0; i < numAnims; ++i) {
+		auto numChannels = scene->mAnimations[i]->mNumChannels;
+		for (auto c = 0; c < numChannels; c++) {
+			animNameMap[scene->mAnimations[i]->mChannels[c]->mNodeName.data] = true;
+		}
+	}
+
+	//So we have a flat list of the rootnames, and a hash of the anim names
+	//we now go through the list of rootnames and if its in the anim names, push it in a new array
+	std::vector<aiNode*> confirmedNodes;
+	confirmedNodes.reserve(animNameMap.size());
+	for (auto i : nodes) {
+		if (animNameMap[i->mName.data] == true)
+			confirmedNodes.emplace_back(i);
+	}
+
+	//So now we need the indexes of the parents that each confirmed node has
+	//create a hashmap of the node with their indexes and then a list that compares parentnames with indexes
+	std::unordered_map<std::string, int> confirmedNodeIndexes;
+	auto numConfirmedNodes = confirmedNodes.size();
+	for (auto i = 0; i < numConfirmedNodes; ++i) {
+		confirmedNodeIndexes[confirmedNodes[i]->mName.data] = i;
+	}
+
+	//list starts at one because rootnode wont be there
+	std::vector<int> parentIndexes;
+	parentIndexes.reserve(numConfirmedNodes);
+	parentIndexes.emplace_back(-1);
+	for (auto i = 1; i < numConfirmedNodes; ++i) {
+		parentIndexes.emplace_back(confirmedNodeIndexes[confirmedNodes[i]->mParent->mName.data]);
+	}
+
+	//Now we load up the joints
+	tds.skeletonJoints.reserve(numConfirmedNodes);
+	for (int i = 0; i < numConfirmedNodes; ++i) {
 		Joint j;
-		j.name = parentNodes[i]->mName.data;
-		j.parentIndex = -1;
-		j.transform = parentNodes[i]->mTransformation;
-		tds.skeletonJoints.push_back(j);
-	}
-	int index = tds.jointMap.size() - 1;
-	//Find the children indexes
-	for (int i = 0; i < parentNodes.size(); ++i) {
-		FindChildy(parentNodes[i], index, tds);
-	}
-	//Sort them
-	for (int i = parentNodes.size(); i < tds.jointMap.size(); ++i) {
-		for (auto m = tds.jointMap.begin(); m != tds.jointMap.end(); m++) {
-			if (i == m->second) {
-				Joint j;
-				j.name = m->first.c_str();
-				for (int b = 0; b < boneNodes.size(); b++) {
-					if (!::strcmp(boneNodes[b]->mName.C_Str(), j.name.c_str()))
-						j.transform = boneNodes[b]->mTransformation;
-				}
-				tds.skeletonJoints.push_back(j);
-			}
-		}
-	}
-	//find the parent indexes
-	for (int i = 0; i < parentNodes.size(); ++i)
-		FindJointy(parentNodes[i], tds);
+		j.name = confirmedNodes[i]->mName.data;
+		j.parentIndex = parentIndexes[i];
+		j.transform = confirmedNodes[i]->mTransformation;
+		j.invBindPose = confirmedNodes[i]->mTransformation.Transpose();
+		j.glTransform = aiMatrix4x4ToGlm(j.transform);
+		j.glInvBindPose = aiMatrix4x4ToGlm(j.invBindPose);
 
-	//So now you have an organized list started with teh parent and havig all the parent indexes,
-	//as well as a map of all the joints thats unorganized but who currs bout unorgmap
-	//NOW for each bone you want to compare name with skeleton joint name and if == then put in the matrix
-	for (int i = 0; i < scene->mNumMeshes; ++i) {
-		aiMesh* meshy = scene->mMeshes[i];
-		for (int b = 0; b < meshy->mNumBones; ++b) {
-			aiBone* boney = meshy->mBones[b];
-			for (int j = 0; j < tds.skeletonJoints.size(); ++j) {
-				if (!::strcmp(boney->mName.data, tds.skeletonJoints[j].name.c_str())){
-					tds.skeletonJoints[j].invBindPose = boney->mOffsetMatrix;
-				}
-			}
-		}
+		tds.skeletonJoints.emplace_back(j);
 	}
+	//Everything should technically be set up by now 
+	//EXCEPT for the fact that the invBindPose is probably wrong and needs to be based off the bone itself and nto just the node
+	//So we now need to get the bone from the mesh since for some ridiculous reason they didn't leave this info in the node
+	//actually one thing we can do is just manually make these all by combinding the transforms
+	//or maybe just output all the relevant data uch as...
+	/*
+	1. confirmedNodeIndexes
+	2. parentindexes
+	3. confirmedNodeIndexes;
+	*/
+	//Then construct the data on the meshes/bones import
+	tds.confirmedNodes = std::move(confirmedNodes);
+	tds.parentIndexes = std::move(parentIndexes);
+	tds.nodeIndexes = std::move(confirmedNodeIndexes);
 
-	for (int i = 0; i < tds.skeletonJoints.size(); ++i) {
-		tds.skeletonJoints[i].invBindPose.Transpose();// = aiMatrix4x4::Transpose(skeletonJoints[i].invBindPose);
-		tds.skeletonJoints[i].transform.Transpose();
-		tds.skeletonJoints[i].glInvBindPose = aiMatrix4x4ToGlm(tds.skeletonJoints[i].invBindPose);
-		tds.skeletonJoints[i].glTransform = aiMatrix4x4ToGlm(tds.skeletonJoints[i].transform);
-	}
-
-	//system("Pause");
 	return true;
-
-}
-aiNode* FindNodey(aiNode* node, const char* name) {
-	if (!::strcmp(node->mName.data, name))return node;
-	for (unsigned int i = 0; i < node->mNumChildren; ++i)
-	{
-		aiNode* const p = FindNodey(node->mChildren[i], name);// node->mChildren[i]->FindNodey(name);
-		if (p) {
-			return p;
-		}
-	}
-	// there is definitely no sub-node with this name
-	return nullptr;
 }
 
-//SO you have the parents...
-/*
-but what you wnat to do is... for ever child... tell it the index of the parent
-and then give itself a new index
-then call its child
-tell its child its' index
-give its child a new index
-*/
-void FindChildy(aiNode* node, int& i, tempDataStruct& tds) {
-	if (tds.necessityMap.find(node->mName.data) != tds.necessityMap.end()) {
-		std::pair<std::string, int> j = { node->mName.data, i };
-		tds.jointMap.insert(j);
-		i++;
-	}
-	for(int c = 0; c < node->mNumChildren; c++)
-	FindChildy(node->mChildren[c], i, tds);
-}
-
-void FindJointy(aiNode* node, tempDataStruct& tds) {
-
-	if (tds.necessityMap.find(node->mName.data) != tds.necessityMap.end()) {
-		if (tds.jointMap.find(node->mParent->mName.data) != tds.jointMap.end()) {
-			auto j = tds.jointMap.find(node->mParent->mName.data);
-			Joint jointy;
-			jointy.parentIndex = j->second;
-			tds.skeletonJoints[tds.jointMap.find(node->mName.data)->second].parentIndex = j->second;
-		}
-	}
-
-	for (int c = 0; c < node->mNumChildren; c++)
-		FindJointy(node->mChildren[c], tds);
-}
 #pragma endregion

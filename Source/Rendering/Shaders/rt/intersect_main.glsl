@@ -97,8 +97,8 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 	for (int i = 0; i < primitives.length(); ++i) {
 		if (primitives[i].id > -1) {/////-----MESH-----|||||
 			mat4 invWorld = inverse(primitives[i].world);
-			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz / primitives[i].extents;
-			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz / primitives[i].extents;
+			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
+			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
 
 			flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));// primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)) {

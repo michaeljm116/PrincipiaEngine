@@ -74,10 +74,10 @@ bool Resources::LoadDirectory(std::string directory)
 }
 bool Resources::LoadAnimations(std::string directory)
 {
-	for (const auto & p : fs::directory_iterator(directory)) {
-		if (!LoadSkeleton(p.path().string()))
-			break;
-	}
+	//for (const auto & p : fs::directory_iterator(directory)) {
+	//	if (!LoadSkeleton(p.path().string()))
+	//		break;
+	//}
 	return false;
 }
 
@@ -118,13 +118,9 @@ bool Resources::LoadPModel(std::string fileName)
 		binaryio.read(&c, sizeof(c));
 		mod.name.push_back(c);
 	}
-
-	//Find out of skinned or not
-	binaryio.read(reinterpret_cast<char*>(&skinned), sizeof(bool));
-
+	
 	//Read unique ID's
 	binaryio.read(reinterpret_cast<char*>(&uniqueID), sizeof(int));
-	if (skinned) binaryio.read(reinterpret_cast<char*>(&skeletonID), sizeof(int));
 
 	//Get num meshes;
 	binaryio.read(reinterpret_cast<char*>(&numMesh), sizeof(int));
@@ -134,6 +130,7 @@ bool Resources::LoadPModel(std::string fileName)
 		int meshNameLength;
 		int numVerts;
 		int numFaces;
+		int meshID;
 
 		//name
 		binaryio.read(reinterpret_cast<char*>(&meshNameLength), sizeof(int));
@@ -141,6 +138,9 @@ bool Resources::LoadPModel(std::string fileName)
 			binaryio.read(&c, sizeof(char));
 			m.name.push_back(c);
 		}
+		//id
+		binaryio.read(reinterpret_cast<char*>(meshID), sizeof(int));
+
 		//nums
 		binaryio.read(reinterpret_cast<char*>(&numVerts), sizeof(int));
 		binaryio.read(reinterpret_cast<char*>(&numFaces), sizeof(int));
@@ -203,7 +203,15 @@ bool Resources::LoadPModel(std::string fileName)
 	int numTransforms;
 	binaryio.read(reinterpret_cast<char*>(&numTransforms), sizeof(int));
 
+	//Find out of skinned or not
+	binaryio.read(reinterpret_cast<char*>(&skinned), sizeof(bool));
+	//if (skinned) binaryio.read(reinterpret_cast<char*>(&skeletonID), sizeof(int));
 
+	//get skeleton info if skinned
+	if (skinned) {
+
+
+	}
 
 
 	binaryio.close();
@@ -213,31 +221,33 @@ bool Resources::LoadPModel(std::string fileName)
 	return true;
 }
 
-bool Resources::LoadSkeleton(std::string fileName)
+bool Resources::LoadSkeleton(std::fstream& binaryio)
 {
 	rSkeleton skelly;
 
-	std::fstream binaryio;
-	binaryio.open(fileName.c_str(), std::ios::in | std::ios::binary);
+	////std::fstream binaryio;
+	////binaryio.open(fileName.c_str(), std::ios::in | std::ios::binary);
 
-	//dont rly need the intro but do it anyways
-	int introLength;
-	binaryio.read(reinterpret_cast<char*>(&introLength), sizeof(int));
-	char c;
-	for (int i = 0; i < introLength; ++i)
-		binaryio.read(&c, sizeof(c));
+	////dont rly need the intro but do it anyways
+	//int introLength;
+	//binaryio.read(reinterpret_cast<char*>(&introLength), sizeof(int));
+	//char c;
+	//for (int i = 0; i < introLength; ++i)
+	//	binaryio.read(&c, sizeof(c));
 
-	//Read the name;
-	int nameLength;
-	binaryio.read(reinterpret_cast<char*>(&nameLength), sizeof(int));
-	for (int i = 0; i < nameLength; ++i) {
-		binaryio.read(&c, sizeof(c));
-		skelly.name.push_back(c);
-	}
+	////Read the name;
+	//int nameLength;
+	//binaryio.read(reinterpret_cast<char*>(&nameLength), sizeof(int));
+	//for (int i = 0; i < nameLength; ++i) {
+	//	binaryio.read(&c, sizeof(c));
+	//	skelly.name.push_back(c);
+	//}
 
 	//Read the UniqueID
 	binaryio.read(reinterpret_cast<char*>(&skelly.id), sizeof(int));
 	
+
+	char c;
 	//Get numberofJoints
 	int numJoints;
 	binaryio.read(reinterpret_cast<char*>(&numJoints), sizeof(int));
@@ -256,6 +266,14 @@ bool Resources::LoadSkeleton(std::string fileName)
 		binaryio.read(reinterpret_cast<char*>(&joint.parentIndex), sizeof(int));
 		binaryio.read(reinterpret_cast<char*>(&joint.invBindPose), sizeof(glm::mat4));
 		binaryio.read(reinterpret_cast<char*>(&joint.transform), sizeof(glm::mat4));
+		
+		int jointObjNum;
+		binaryio.read(reinterpret_cast<char*>(&jointObjNum), sizeof(int));
+		for (size_t i = 0; i < jointObjNum; ++i) {
+			JointObject jo;
+			binaryio.read(reinterpret_cast<char*>(&jo), sizeof(JointObject));
+			joint.jointObjects.push_back(jo);
+		}
 		skelly.joints.push_back(joint);
 	}
 

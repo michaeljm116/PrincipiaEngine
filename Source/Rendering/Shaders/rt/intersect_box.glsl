@@ -33,4 +33,21 @@ vec4 boxIntersect(in vec3 ro, in vec3 rd, in Primitive box)
 
 	return vec4(tN, nor);
 }
+
+vec3 boxTexture(in vec3 pos, in vec3 norm, in Primitive box, sampler2D t) {
+	mat4 invWorld = inverse(box.world);
+	vec3 div = 1 / box.extents * 0.5f;
+	vec3 iPos = (vec4(pos, 1) * invWorld).xyz;
+	vec3 iNorm = (vec4(norm, 0) * invWorld).xyz;
+
+	vec4 xTxtr = texture(t, div.x * iPos.yz);
+	vec4 yTxtr = texture(t, div.y * iPos.zx);
+	vec4 zTxtr = texture(t, div.z * iPos.xy);
+
+	vec3 ret = 
+		abs(iNorm.x) * xTxtr.rgb * xTxtr.a +
+		abs(iNorm.y) * yTxtr.rgb * yTxtr.a +
+		abs(iNorm.z) * zTxtr.rgb * zTxtr.a;
+	return ret;
+}
 #endif

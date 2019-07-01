@@ -38,8 +38,8 @@ struct Face {
 };
 
 struct Mesh{
-	vec4 center;
-	vec4 extents;
+	//vec4 center;
+	//vec4 extents;
 	int startIndex;
 	int endIndex;
 	int startVert;

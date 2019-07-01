@@ -42,6 +42,13 @@ struct TriIndex {
 struct Face {
 	glm::ivec4 v;
 };
+
+struct JointObject {
+	int objID;
+	int faceID;
+	JointObject(const int& face, const int& obj) : faceID(face), objID(obj) {};
+};
+
 struct Vertex {
 	glm::vec3 position;
 	glm::vec3 normal;
@@ -53,15 +60,18 @@ struct Vertex {
 };
 struct Mesh {
 	std::string name;
+	std::string originalName;
 	std::vector<Face> faces;
 	std::vector<Vertex> vertices;
 	glm::vec3 extent;
 	glm::vec3 center;
+	int id;
 };
 
 struct Shape {
 	int type;
 	std::string name;
+	std::string originalName;
 	glm::vec3 center;
 	glm::vec3 extents;
 };
@@ -74,6 +84,9 @@ struct  Joint
 	aiMatrix4x4 transform;
 	glm::mat4 glInvBindPose;
 	glm::mat4 glTransform;
+	std::vector<JointObject> jointObjs;
+	glm::vec3 center;
+	glm::vec3 extents;
 };
 
 //how bout 3 vec3's a time and a trigger  or 2?
@@ -124,7 +137,7 @@ struct PrincipiaModel {
 };
 
 struct RJoint {
-	std::vector<TriIndex> tris;
+	std::vector<Face> faces;
 	std::vector<int> shapes;
 	std::string name;
 	int parentIndex;

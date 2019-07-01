@@ -197,8 +197,8 @@ void RenderSystem::loadResources()
 			mesh.startVert = prevVertSize;
 			mesh.endVert = mesh.startVert + rmesh.verts.size() - 1;
 			mesh.startIndex = prevIndSize;
-			mesh.center = glm::vec4(rmesh.center, 1.f);
-			mesh.extents = glm::vec4(rmesh.extents, 1.f);
+			//mesh.center = glm::vec4(rmesh.center, 1.f);
+			//mesh.extents = glm::vec4(rmesh.extents, 1.f);
 
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
@@ -237,9 +237,9 @@ void RenderSystem::loadResources()
 	guiTextures[1].CreateTexture(vkDevice);
 	guiTextures[2].path = "../Assets/Levels/Pong/Textures/menu.png";
 	guiTextures[2].CreateTexture(vkDevice);
-	guiTextures[3].path = "../Assets/Levels/Pong/Textures/pause.png";
+	guiTextures[3].path = "../Assets/Levels/Pong/Textures/ARROW.png";
 	guiTextures[3].CreateTexture(vkDevice);
-	guiTextures[4].path = "../Assets/Levels/Pong/Textures/debugr.png";
+	guiTextures[4].path = "../Assets/Levels/Pong/Textures/circuit.jpg";
 	guiTextures[4].CreateTexture(vkDevice);
 
 }

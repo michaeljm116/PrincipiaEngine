@@ -91,6 +91,7 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	vec3 pos = rayO + t * rayD;
 	//vec3 lightVec = normalize(lights[0].pos - pos);				
 	vec3 normal;
+	vec3 txtr;
 	
 	/////////////////SWAP HERE FOR DEBUG///////////////////////
 	Material mat = materials[primitives[primitiveID.id].matID];
@@ -111,6 +112,8 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 		}
 		case TYPE_BOX:{
 			normal = norm;
+			if(mat.textureID > 0)
+			txtr = boxTexture(pos, normal, primitives[primitiveID.id], guiTest[mat.textureID]);
 			break;
 		}
 		case TYPE_CYLINDER:{
@@ -120,6 +123,9 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 		case TYPE_MESH:{
 			normal = quadNormal(primitives[primitiveID.pId], faces[primitiveID.id], norm.x, norm.y);
 			mat = materials[primitives[primitiveID.pId].matID];
+			txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
+			//if(mat.textureID > 0)
+			//	fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz;
 			break; 
 		}
 	}
@@ -142,7 +148,7 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	if (shadow > 1) shadow = 1;
 
 	if(mat.textureID > 0)
-		fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz + diffuse + specular;
+		fMat.color = txtr + mat.diffuse * diffuse + specular;
 	else
 		fMat.color = diffuse * mat.diffuse + specular;
 	fMat.color *= power * shadow;
