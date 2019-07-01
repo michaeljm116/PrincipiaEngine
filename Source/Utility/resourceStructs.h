@@ -100,7 +100,15 @@ struct rJoint {
 	//glm::mat4 local_invBindPose;
 	glm::mat4 invBindPose;
 	glm::mat4 transform;
+	std::vector<JointObject> jointObjects;
 	rJoint() {};
+};
+
+struct JointObject {
+	int objID;
+	int faceID;
+	JointObject(const int& o, const int& f) : objID(o), faceID(f) {};
+	JointObject() {};
 };
 
 struct rAnimKey {

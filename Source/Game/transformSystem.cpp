@@ -165,7 +165,7 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){
 		//	glm::vec3 center = objComp->center * tc->global.rotation + tc->global.position;
 		//	tc->world[3] = glm::vec4(center, 1.f);
 		//}
-		obj.extents = tc->local.scale;
+		obj.extents = tc->global.scale;
 		//obj.invWorld = glm::inverse(tc->TRM);
 		//obj.world = tc->world;
 		objComp->uniqueID < 0 ? obj.world = tc->TRM : obj.world = tc->world;

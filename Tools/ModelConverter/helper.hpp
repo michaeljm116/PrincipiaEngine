@@ -93,12 +93,12 @@ ShapeType ShapeCheck(const std::string &name) {
 		case 's':
 			return ShapeType::SPHERE;
 			break;
-		case 'b':
-			return ShapeType::BOX;
-			break;
-		case 'c':
-			return ShapeType::CYLINDER;
-			break;
+		//case 'b':
+		//	return ShapeType::BOX;
+		//	break;
+		//case 'c':
+		//	return ShapeType::CYLINDER;
+		//	break;
 		default:
 			return ShapeType::MESH;
 			break;
@@ -112,6 +112,7 @@ Shape ShapeCreate (const Mesh &m, const ShapeType &type){
 	ret.center = m.center;
 	ret.extents = m.extent;
 	ret.name = m.name;
+	ret.originalName = m.originalName;
 	switch (type) {
 		case ShapeType::SPHERE: {
 			ret.type = -1;
@@ -191,3 +192,7 @@ bool ModelScaler(PrincipiaModel& m) {
 	return true;
 }
 
+/*
+Sort as you place something in
+one way is to just use a map then flatten it out using an in order traversal
+*/
