@@ -34,15 +34,7 @@ struct tempDataStruct {
 bool LoadBones(const aiScene* scene, tempDataStruct& tds);
 ///////////////ANIMATION STUFF///////////////////////
 
-
-
-enum MeshType {
-	MESH_ONLY,
-	SKINNED_MESH,
-	SKIN_AND_ANIM
-};
-
-MeshType meshType = MESH_ONLY;
+bool hasAnim = false;
 
 int main() {
 	LoadDirectory("Input");
@@ -120,7 +112,7 @@ bool WritePEModel(PrincipiaModel& m, PrincipiaSkeleton& s, std::string fn) {
 	binaryio.write(CCAST(&numTransforms), sizeof(int));
 
 	//Find out of skinned or not
-	bool skinned = meshType != MESH_ONLY ? true : false;
+	bool skinned = hasAnim;
 	binaryio.write(CCAST(&skinned), sizeof(bool));
 	if (skinned) {
 		WriteSkeleton(s, binaryio);
@@ -152,6 +144,8 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio) {
 		binaryio.write(CCAST(&sj.parentIndex), sizeof(int));
 		binaryio.write(CCAST(&sj.glInvBindPose), sizeof(glm::mat4)); //MEOW: THIS MAY NEED TO BE CONVERTED
 		binaryio.write(CCAST(&sj.glTransform), sizeof(glm::mat4));
+		binaryio.write(CCAST(&sj.center), sizeof(glm::vec3));
+		binaryio.write(CCAST(&sj.extents), sizeof(glm::vec3));
 		
 		int jointOBJNum = sj.jointObjs.size();
 		binaryio.write(CCAST(&jointOBJNum), sizeof(int));
@@ -283,7 +277,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		std::cout << "ERROR: " << error << std::endl;
 		return false;
 	}
-	
+	hasAnim = pScene->HasAnimations() && boneVerify(pScene);
 	m.name = pScene->GetShortFilename(pFile.c_str());
 	//shorten name
 	int indexico;
@@ -296,6 +290,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	m.name = m.name.substr(0, indexico);
 	
 
+	if(hasAnim)
 	LoadBones(pScene, tds);
 
 	//get data mesh data
@@ -373,7 +368,6 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 
 		subset.name = paiMesh->mName.C_Str();
 		subset.originalName = paiMesh->mName.C_Str();
-		subset.id = i;
 
 		//blender does this stupid thing where it chagnes the name from EX: Pants to Pants.001
 		//so you have to deprecate the .001 cause they just HAVE to be annoying
@@ -386,12 +380,16 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
 		//m.meshes.push_back(subset);
 		ShapeType type = ShapeCheck(subset.name);
-		type == ShapeType::MESH ? m.meshes.push_back(subset)
-			: m.shapes.push_back(ShapeCreate(subset, type));
+		if (type == ShapeType::MESH) { 
+			m.meshes.push_back(subset); subset.id = m.meshes.size() - 1; 
+		}
+		else {
+			m.shapes.push_back(ShapeCreate(subset, type));
+		}
 		///////////////////////////////////////////////////TEST SKELETON TEST SKELETON//////////////////////////////////////////////
 
 			//First check to see if it has bones
-		if (paiMesh->mNumBones > 0) {
+		if (paiMesh->mNumBones > 0 && hasAnim) {
 
 			//set up a list of bones and the vertexs for each bone
 			//std::vector<aiBone*> bones;
@@ -401,12 +399,16 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			//load up the data
 			for (int i = 0; i < paiMesh->mNumBones; ++i) {
 				//bones.push_back(paiMesh->mBones[i]);
-				;				int boneIndex = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
+
+
+				int boneIndex = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
+				tds.skeletonJoints[boneIndex].invBindPose = paiMesh->mBones[i]->mOffsetMatrix;
+				tds.skeletonJoints[boneIndex].glInvBindPose = aiMatrix4x4ToGlm(tds.skeletonJoints[boneIndex].invBindPose);
 
 				//First check if its a shape if o then just 
 				if (type == ShapeType::SPHERE) {
-					int index = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
-					tds.skeletonJoints[index].jointObjs.push_back(JointObject(m.shapes.size() - 1, -1));
+					//int index = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
+					tds.skeletonJoints[boneIndex].jointObjs.push_back(JointObject(m.shapes.size() - 1, -1));
 				}
 				else {
 					//This is gonna be a sorted list of vertex weights so
@@ -446,7 +448,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 							}
 						}
 						if (allfour) {
-							tds.skeletonJoints[boneIndex].jointObjs.push_back(JointObject(fid, i));
+							tds.skeletonJoints[boneIndex].jointObjs.push_back(JointObject(fid, subset.id));
 						}
 						//bfs.push_back(fid);
 					}// auto itrface subset faces begin etc...
@@ -455,9 +457,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			//So here should be where all the bones should be collected, you can compare the bone naems with the tds list and add stuff
 		}
 	}
-
-	if (pScene->HasAnimations()){// && meshType == SKINNED_MESH) {
-		meshType = SKIN_AND_ANIM;
+	if (hasAnim){// && meshType == SKINNED_MESH) {
 		aiMatrix4x4 glit = pScene->mRootNode->mTransformation;
 		glit.Inverse();
 		s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
@@ -548,14 +548,16 @@ bool LoadDirectory(std::string directory)
 		if (DoTheImportThing(p.path().string(), mod, skeleton, triangulate)) {
 			//break;
 			ModelScaler(mod);
+			if (hasAnim) {
+				GetJointExtents(mod, skeleton);
+				ConvertJointVerts(mod, skeleton);
+			}
 			////////////////////////////////////////////////////////////////////////////////////////////////////UNMESHONLYIFYTHIS////////////////////////////////////////////////
-			meshType = MESH_ONLY;
 			if (triangulate)
 				mod.name += "_t";
 			
 			WritePEModel(mod, skeleton, "../../Assets/Levels/Pong/Models/" + mod.name + ".pm");
 		}
-		meshType = MESH_ONLY;
 	}
 	return false;
 }

@@ -42,7 +42,7 @@ public:
 	bool LoadAnimations(std::string directory);
 	bool LoadResources(std::string fileName);
 	bool LoadPModel(std::string fileName);
-	bool LoadSkeleton(std::fstream & binaryio);
+	bool LoadSkeleton(std::fstream & binaryio, std::string name);
 
 	tinyxml2::XMLError  SaveMaterials();
 	tinyxml2::XMLError LoadMaterials(const char* file);

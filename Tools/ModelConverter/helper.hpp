@@ -192,6 +192,78 @@ bool ModelScaler(PrincipiaModel& m) {
 	return true;
 }
 
+//Jointify does a few things
+/*
+1. it converts all vertexes into bone space
+2. it create a bone bounding box
+*/
+bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
+	for (auto joint : s.joints) {
+		glm::vec3 maxVert = glm::vec3(-FLT_MAX);
+		glm::vec3 minVert = glm::vec3(FLT_MAX);
+
+		for (auto jo : joint.jointObjs) {
+			if (jo.objID > -1) {// aka if its not a shape
+				//Get the mesh's center
+				const glm::vec3& mCenter = m.meshes[jo.objID].center;
+				
+				//Get the face;
+				const Face& mFace = m.meshes[jo.objID].faces[jo.faceID];
+
+				//Get the Vertices
+				for (int i = 0; i < 4; ++i) {
+					const Vertex& v = m.meshes[jo.objID].vertices[mFace.v[i]];
+					for (int c = 0; c < 3; c++) {
+						maxVert[c] = maxVal(maxVert[c], v.position[c] + mCenter[c]);
+						minVert[c] = minVal(minVert[c], v.position[c] - mCenter[c]);
+					}
+				}
+			}
+			else { //aka its a sphere or some other shape
+				//Get the shape
+				const Shape& mShape = m.shapes[jo.faceID];
+				for (int c = 0; c < 3; c++) {
+					maxVert[c] = maxVal(maxVert[c], mShape.center[c] + mShape.extents[c]);
+					minVert[c] = minVal(minVert[c], mShape.center[c] - mShape.extents[c]);
+				}
+			}
+		}
+
+		joint.center = (minVert + maxVert) * 0.5f;
+		joint.extents = (minVert - maxVert) * 0.5f;
+	}
+
+	return true;
+}
+
+bool ConvertJointVerts(PrincipiaModel& m, const PrincipiaSkeleton& s) {
+	for (auto joint : s.joints) {
+		for (auto jo : joint.jointObjs) {
+			if (jo.objID > -1) {// aka if its not a shape
+				//Get the Face and convert the vertices to joint space
+				const Face& mFace = m.meshes[jo.objID].faces[jo.faceID];
+				for (int i = 0; i < 4; ++i) {
+					Vertex& v = m.meshes[jo.objID].vertices[mFace.v[i]];
+					v.position -= joint.center;
+				}
+			}
+			else { //aka its a sphere or some other shape
+				//Get the shape and convert to joint space
+				Shape& mShape = m.shapes[jo.faceID];
+				mShape.center -= joint.center;
+			}
+		}
+	}
+	return true;
+}
+
+bool boneVerify(const aiScene* scene) {
+	for (size_t c = 0; c < scene->mNumMeshes; c++) {
+		if (scene->mMeshes[c]->HasBones())
+			return true;
+	}
+	return false;
+}
 /*
 Sort as you place something in
 one way is to just use a map then flatten it out using an in order traversal

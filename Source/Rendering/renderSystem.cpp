@@ -194,11 +194,9 @@ void RenderSystem::loadResources()
 			int prevIndSize = faces.size();
 
 			ssMesh mesh;
-			mesh.startVert = prevVertSize;
-			mesh.endVert = mesh.startVert + rmesh.verts.size() - 1;
+			//mesh.startVert = prevVertSize;
+			//mesh.endVert = mesh.startVert + rmesh.verts.size() - 1;
 			mesh.startIndex = prevIndSize;
-			//mesh.center = glm::vec4(rmesh.center, 1.f);
-			//mesh.extents = glm::vec4(rmesh.extents, 1.f);
 
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
@@ -220,6 +218,9 @@ void RenderSystem::loadResources()
 			mia.center = rmesh.center;
 			mia.extents = rmesh.extents;
 			miaList.push_back(mia);
+
+
+			meshAssigner[mod.uniqueID + i] = std::pair<int, int>(prevIndSize, faces.size());
 		}
 	}
 
@@ -305,6 +306,11 @@ void RenderSystem::addNode(NodeComponent* node) {
 			for (size_t i = 0; i < miaList.size(); ++i) {
 				if (objComp->uniqueID == miaList[i].uniqueID) {
 					object.id = miaList[i].index;
+					
+					std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
+					object.startIndex = temp.first;
+					object.endIndex = temp.second;
+
 					objComp->gpuIndex = object.id;
 					objComp->center = miaList[i].center;
 					objComp->extents = miaList[i].extents;

@@ -94,6 +94,13 @@ struct rModel {
 	int skeletonID;
 };
 
+struct JointObject {
+	int objID;
+	int faceID;
+	JointObject(int o, int f) : objID(o), faceID(f) {};
+	JointObject() {};
+};
+
 struct rJoint {
 	std::string name;
 	int parentIndex;
@@ -101,15 +108,11 @@ struct rJoint {
 	glm::mat4 invBindPose;
 	glm::mat4 transform;
 	std::vector<JointObject> jointObjects;
+	glm::vec3 center;
+	glm::vec3 extents;
 	rJoint() {};
 };
 
-struct JointObject {
-	int objID;
-	int faceID;
-	JointObject(const int& o, const int& f) : objID(o), faceID(f) {};
-	JointObject() {};
-};
 
 struct rAnimKey {
 	float time;
