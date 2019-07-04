@@ -29,11 +29,13 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
 			flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));// primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) { //hits the boundingbox, doesnt necessarily mean tri hit
-				Mesh m = meshes[primitives[i].id];
+				//Mesh m = meshes[primitives[i].id];
 				//id.pId = i;
 				//rdd /= primitives[i].extents;
 				//roo /= primitives[i].extents;
-				for (int f = m.startIndex; f < m.endIndex; f++) {
+				int startIndex = primitives[i].startIndex;
+				int endIndex = primitives[i].endIndex;
+				for (int f = startIndex; f < endIndex; f++) {
 					vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
 					if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
 						id = sectID(TYPE_MESH, f, i);
@@ -102,7 +104,9 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 
 			flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));// primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)) {
-				for (int j = meshes[primitives[i].id].startIndex; j < meshes[primitives[i].id].endIndex; j++) {
+				int startIndex = primitives[i].startIndex;
+				int endIndex = primitives[i].endIndex;
+				for (int j = startIndex; j < endIndex; j++) {
 					vec3 normal = vec3(0, 1, 0);
 					vec4 tQuad = quadIntersect(roo, rdd, faces[j]);
 					if (tQuad.x > 0) {

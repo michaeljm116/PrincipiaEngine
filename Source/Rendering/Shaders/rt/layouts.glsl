@@ -19,26 +19,22 @@ layout(std140, binding = 3) buffer Faces {
 	Face faces[];
 };
 
-layout(std140, binding = 4) buffer Meshs {
-	Mesh meshes[];
-};
-
-layout(std140, binding = 5) buffer Primitives{
+layout(std140, binding = 4) buffer Primitives{
 	Primitive primitives[];
 };
 
-layout(std140, binding = 6) buffer Materials {
+layout(std140, binding = 5) buffer Materials {
 	Material materials[];
 };
 
-layout(std140, binding = 7) buffer Lights {
+layout(std140, binding = 6) buffer Lights {
 	Light lights[];
 };
 
-layout(std140, binding = 8) buffer Guis {
+layout(std140, binding = 7) buffer Guis {
 	Gui guis[];
 };
 
-layout(binding = 9) uniform sampler2D guiTest[5];
+layout(binding = 8) uniform sampler2D guiTest[5];
 
 #endif

@@ -157,6 +157,7 @@ private:
 	std::vector<LightComponent*> lightComps;
 
 	std::vector<MeshIdAssigner> miaList;
+	std::unordered_map<int32_t, std::pair<int,int>> meshAssigner;
 	BVHTree topLevelBVH;
 	Scripto testScript;
 

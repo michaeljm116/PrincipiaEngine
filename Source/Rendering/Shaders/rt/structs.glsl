@@ -12,7 +12,8 @@ struct Primitive
 	int numChildren;
 	int id;
 	int matID;
-	ivec2 _pad;
+	int startIndex;
+	int endIndex;
 };
 
 struct TriangleVert{
@@ -35,15 +36,6 @@ struct Vert {
 };
 struct Face {
 	ivec4 v;
-};
-
-struct Mesh{
-	//vec4 center;
-	//vec4 extents;
-	int startIndex;
-	int endIndex;
-	int startVert;
-	int endVert;
 };
 
 struct Material{
