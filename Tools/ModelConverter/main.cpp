@@ -12,8 +12,8 @@ namespace fs = std::filesystem;
 
 bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkeleton& s, bool triangulate);
 
-bool WritePEModel(PrincipiaModel& m, PrincipiaSkeleton& s, std::string fn);
-bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio);
+bool WritePEModel(PrincipiaModel& m, std::string fn);
+bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn);
 
 
 PrincipiaModel ReadPEModel(const char* pFile);
@@ -41,7 +41,7 @@ int main() {
 	system("Pause");
 }
 
-bool WritePEModel(PrincipiaModel& m, PrincipiaSkeleton& s, std::string fn) {
+bool WritePEModel(PrincipiaModel& m, std::string fn) {
 	std::fstream binaryio;
 	//std::string fileName = fn;
 	binaryio.open(fn, std::ios::out | std::ios::binary);
@@ -110,25 +110,22 @@ bool WritePEModel(PrincipiaModel& m, PrincipiaSkeleton& s, std::string fn) {
 
 	int numTransforms = 0;
 	binaryio.write(CCAST(&numTransforms), sizeof(int));
-
-	//Find out of skinned or not
-	bool skinned = hasAnim;
-	binaryio.write(CCAST(&skinned), sizeof(bool));
-	if (skinned) {
-		WriteSkeleton(s, binaryio);
-	}
-	
+		
 	binaryio.close();
 
 	return true;
 }
 
-bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio) {
+bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 
-	////Write Name of Skeleton
-	//int modelNameLength = s.name.length();
-	//binaryio.write(CCAST(&modelNameLength), sizeof(int));
-	//binaryio.write(s.name.c_str(), modelNameLength);
+	std::fstream binaryio;
+	//std::string fileName = fn;
+	binaryio.open(fn, std::ios::out | std::ios::binary);
+
+	//Write Name of Skeleton
+	int modelNameLength = s.name.length();
+	binaryio.write(CCAST(&modelNameLength), sizeof(int));
+	binaryio.write(s.name.c_str(), modelNameLength);
 
 	//Insert UniqueID;
 	binaryio.write(CCAST(&s.uniqueID), sizeof(int));
@@ -147,11 +144,35 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio) {
 		binaryio.write(CCAST(&sj.center), sizeof(glm::vec3));
 		binaryio.write(CCAST(&sj.extents), sizeof(glm::vec3));
 		
-		int jointOBJNum = sj.jointObjs.size();
-		binaryio.write(CCAST(&jointOBJNum), sizeof(int));
-		for (int i = 0; i < jointOBJNum; ++i) {
-			binaryio.write(CCAST(&sj.jointObjs[i]), sizeof(JointObject));
+		int numVerts, numFaces, numShapes;
+		numVerts = sj.verts.size();
+		numFaces = sj.faces.size();
+		numShapes = sj.shapes.size();
+		
+		binaryio.write(CCAST(&numVerts), sizeof(int));
+		binaryio.write(CCAST(&numFaces), sizeof(int));
+		binaryio.write(CCAST(&numShapes), sizeof(int));
+
+		for (auto v : sj.verts)
+			binaryio.write(CCAST(&v), sizeof(Vertex));
+		for (auto f : sj.faces)
+			binaryio.write(CCAST(&f), sizeof(Face));
+		for (auto m : sj.meshIds)
+			binaryio.write(CCAST(&m), sizeof(int));
+		for (auto s : sj.shapes) {
+			int shapeNameLength = s.name.length();
+			binaryio.write(CCAST(&shapeNameLength), sizeof(int));
+			binaryio.write(s.name.c_str(), shapeNameLength);
+			binaryio.write(CCAST(&s.type), sizeof(int));
+			binaryio.write(CCAST(&s.center), sizeof(glm::vec3));
+			binaryio.write(CCAST(&s.extents), sizeof(glm::vec3));
 		}
+
+		//int jointOBJNum = sj.jointObjs.size();
+		//binaryio.write(CCAST(&jointOBJNum), sizeof(int));
+		//for (int i = 0; i < jointOBJNum; ++i) {
+		//	binaryio.write(CCAST(&sj.jointObjs[i]), sizeof(JointObject));
+		//}
 	}
 
 	binaryio.write(CCAST(&s.globalInverseTransform), sizeof(glm::mat4));
@@ -184,6 +205,7 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::fstream& binaryio) {
 		}
 	}
 
+	binaryio.close();
 	return true;
 }
 
@@ -556,7 +578,8 @@ bool LoadDirectory(std::string directory)
 			if (triangulate)
 				mod.name += "_t";
 			
-			WritePEModel(mod, skeleton, "../../Assets/Levels/Pong/Models/" + mod.name + ".pm");
+						WritePEModel(mod,		"../../Assets/Levels/Pong/Models/" + mod.name + ".pm");
+			if(hasAnim) WriteSkeleton(skeleton, "../../Assets/Levels/Pong/Animations/" + mod.name + ".pa");
 		}
 	}
 	return false;

@@ -33,6 +33,7 @@ int main() {
 	Resources::get().LoadConfig("");
 	Resources::get().LoadMaterials("../Assets/Levels/Pong/Materials.xml");
 	Resources::get().LoadDirectory("../Assets/Levels/Pong/Models/");
+	Resources::get().LoadAnimations("../Assets/Levels/Pong/Animations/");
 	//Resources::get().LoadMaterials("../Assets/Levels/Level1/Materials.xml");
 	//Resources::get().LoadDirectory("../Assets/Levels/Level1/Models/");
 	//Resources::get().LoadAnimations("../Assets/Levels/Level1/Animations/");

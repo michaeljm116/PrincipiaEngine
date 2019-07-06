@@ -42,7 +42,7 @@ public:
 	bool LoadAnimations(std::string directory);
 	bool LoadResources(std::string fileName);
 	bool LoadPModel(std::string fileName);
-	bool LoadSkeleton(std::fstream & binaryio, std::string name);
+	bool LoadSkeleton(std::string fileName);
 
 	tinyxml2::XMLError  SaveMaterials();
 	tinyxml2::XMLError LoadMaterials(const char* file);
@@ -83,7 +83,7 @@ public:
 	std::vector<rModel> getModels() { return models; };
 
 #pragma endregion
-
+	std::vector<rSkeleton> getSkeletons() { return skeletons; };
 	rSkeleton& getSkeleton(int i) {
 		return skeletons[i];
 	}

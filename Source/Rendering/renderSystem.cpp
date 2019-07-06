@@ -21,7 +21,6 @@ void RenderSystem::prepareStorageBuffers()
 	objects.reserve(MAXOBJS);
 	//verts.reserve(MAXVERTS);
 	//indices.reserve(MAXINDS);
-	//meshes.reserve(MAXMESHES);
 	materials.reserve(MAXMATERIALS);
 	lights.reserve(MAXLIGHTS);
 
@@ -29,11 +28,9 @@ void RenderSystem::prepareStorageBuffers()
 	//THESE SHOULD BE STAGED MEOW
 	//compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
 	//compute.storageBuffers.indices.InitStorageBufferWithStaging(vkDevice, indices, indices.size());
-	//compute.storageBuffers.meshes.InitStorageBufferWithStaging(vkDevice, meshes, meshes.size());
 
 	//compute.storageBuffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
-	//compute.storageBuffers.meshes.InitStorageBufferCustomSize(vkDevice, meshes, meshes.size(), MAXMESHES);
 
 	//these are changable 
 	compute.storageBuffers.objects.InitStorageBufferCustomSize(vkDevice, objects, objects.size(), MAXOBJS);
@@ -178,55 +175,60 @@ void RenderSystem::loadResources()
 	//get all the models and load err thang
 	std::vector<ssVert> verts;
 	std::vector<ssIndex> faces;
-	std::vector<ssMesh> meshes;
 
 	std::vector<rModel>& models = RESOURCEMANAGER.getModels();
+	std::vector<rSkeleton>& skeletons = RESOURCEMANAGER.getSkeletons();
 	for each (rModel mod in models)
 	{
 		for (size_t i = 0; i < mod.meshes.size(); ++i) {
 			//map that connects the model with its index;
 			rMesh rmesh = mod.meshes[i];
-			MeshIdAssigner mia;
-			mia.uniqueID = mod.uniqueID + i;
 
 			//toss in the vertice data
 			int prevVertSize = verts.size();
 			int prevIndSize = faces.size();
 
-			ssMesh mesh;
-			//mesh.startVert = prevVertSize;
-			//mesh.endVert = mesh.startVert + rmesh.verts.size() - 1;
-			mesh.startIndex = prevIndSize;
 
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 			//load up ze vertices;
+			verts.reserve(prevVertSize + rmesh.verts.size());
 			for (std::vector<rVertex>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr) {
-				verts.push_back(ssVert(itr->pos / rmesh.extents, itr->norm, itr->uv.x, itr->uv.y));
-			}
-		
-			//Load up da indices
-			for (std::vector<glm::ivec4>::const_iterator itr = rmesh.faces.begin(); itr != rmesh.faces.end(); ++itr) {
-				faces.push_back(ssIndex(*itr + prevVertSize));// , ++currId));
+				verts.emplace_back(ssVert(itr->pos / rmesh.extents, itr->norm, itr->uv.x, itr->uv.y));
 			}
 
-			//finish loading the data
-			mesh.endIndex = faces.size();
-			meshes.push_back(mesh);
+			//Load up da indices
+			faces.reserve(prevIndSize + rmesh.faces.size());
+			for (std::vector<glm::ivec4>::const_iterator itr = rmesh.faces.begin(); itr != rmesh.faces.end(); ++itr) {
+				faces.emplace_back(ssIndex(*itr + prevVertSize));// , ++currId));
+			}
+
 
 			//finish mia
-			mia.index = meshes.size() - 1;
-			mia.center = rmesh.center;
-			mia.extents = rmesh.extents;
-			miaList.push_back(mia);
+			meshAssigner[mod.uniqueID + i ] = std::pair<int, int>(prevIndSize, faces.size());
+		}
+		
+	}
+	for (auto skel : skeletons) {
+		int index = 0;
+		for (auto joint : skel.joints) {
+			int prevVertSize = verts.size();
+			int prevFaceSize = faces.size();
 
-
-			meshAssigner[mod.uniqueID + i] = std::pair<int, int>(prevIndSize, faces.size());
+			verts.reserve(prevVertSize + joint.verts.size());
+			for (auto vert : joint.verts) {
+				verts.emplace_back(ssVert(vert.pos / joint.extents, vert.norm, vert.uv.x, vert.uv.y));
+			}
+			faces.reserve(prevFaceSize + joint.faces.size());
+			for (auto face : joint.faces) {
+				faces.emplace_back(ssIndex(face + prevVertSize));
+			}
+			jointAssigner[skel.id + index] = std::pair<int, int>(prevFaceSize, faces.size());
+			index++;
 		}
 	}
 
 	compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
 	compute.storageBuffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
-	compute.storageBuffers.meshes.InitStorageBufferWithStaging(vkDevice, meshes, meshes.size());
 
 	//compute.storageBuffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
@@ -301,21 +303,11 @@ void RenderSystem::addNode(NodeComponent* node) {
 		object.matId = mat->matID;
 
 		//set up the ids
-		//this is O(n) SL0W y not hash?
 		if (objComp->uniqueID > 0) {
-			for (size_t i = 0; i < miaList.size(); ++i) {
-				if (objComp->uniqueID == miaList[i].uniqueID) {
-					object.id = miaList[i].index;
-					
-					std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
-					object.startIndex = temp.first;
-					object.endIndex = temp.second;
-
-					objComp->gpuIndex = object.id;
-					objComp->center = miaList[i].center;
-					objComp->extents = miaList[i].extents;
-				}
-			}
+			std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
+			object.id = objComp->uniqueID;
+			object.startIndex = temp.first;
+			object.endIndex = temp.second;
 		}
 		else
 			object.id = objComp->uniqueID;
@@ -1022,26 +1014,26 @@ void RenderSystem::updateDescriptors()
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			5,
+			4,
 			&compute.storageBuffers.objects.Descriptor()),
 
 		//Binding 6 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			6,
+			5,
 			&compute.storageBuffers.materials.Descriptor()),
 		//Binding 7 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			7,
+			6,
 			&compute.storageBuffers.lights.Descriptor()),
 		//Binding 8 for gui
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			8,
+			7,
 			&compute.storageBuffers.guis.Descriptor())
 	};
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -1054,7 +1046,7 @@ void RenderSystem::createDescriptorPool() {
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 3 + MAXTEXTURES),	// Graphics image samplers || +4 FOR TEXTURE
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 7),			// Storage buffer for the scene primitives
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 6),			// Storage buffer for the scene primitives
 		//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
 	};
 
@@ -1175,35 +1167,30 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			3),
-		// Binding 4: Shader storage buffer for the meshes
-		vks::initializers::descriptorSetLayoutBinding(
-			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			VK_SHADER_STAGE_COMPUTE_BIT,
-			4),
 		// Binding 5: Shader storage buffer for the materials
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			5),
+			4),
 		// Binding 6: Shader storage buffer for the objects
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			6),
+			5),
 		// Binding 6: Shader storage buffer for the lights
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			7),
+			6),
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			8),
+			7),
 		// Binding 8: the textures
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_SAMPLER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			9, MAXTEXTURES)
+			8, MAXTEXTURES)
 	};
 
 	VkDescriptorSetLayoutCreateInfo descriptorLayout =
@@ -1261,42 +1248,36 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			3,
 			&compute.storageBuffers.faces.Descriptor()),
-		// Binding 4: Shader storage buffer for the meshes
-		vks::initializers::writeDescriptorSet(
-			compute.descriptorSet,
-			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			4,
-			&compute.storageBuffers.meshes.Descriptor()),
 		// Binding 5: for objectss
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			5,
+			4,
 			&compute.storageBuffers.objects.Descriptor()),
 
 		//Binding 6 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			6,
+			5,
 			&compute.storageBuffers.materials.Descriptor()),
 		//Binding 7 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			7,
+			6,
 			&compute.storageBuffers.lights.Descriptor()),
 		//Binding 8 for guis
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			8,
+			7,
 			&compute.storageBuffers.lights.Descriptor()),
 		//bINDING 8 FOR TEXTURES
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet, 
 			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-			9, 
+			8, 
 			textureimageinfos, MAXTEXTURES)
 	};
 
@@ -1341,7 +1322,6 @@ void RenderSystem::destroyCompute()
 	compute.uniformBuffer.Destroy(vkDevice);
 	compute.storageBuffers.verts.Destroy(vkDevice);
 	compute.storageBuffers.faces.Destroy(vkDevice);
-	compute.storageBuffers.meshes.Destroy(vkDevice);
 	compute.storageBuffers.objects.Destroy(vkDevice);
 	compute.storageBuffers.materials.Destroy(vkDevice);
 	compute.storageBuffers.lights.Destroy(vkDevice);

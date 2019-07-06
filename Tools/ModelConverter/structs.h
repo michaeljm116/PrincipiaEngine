@@ -87,6 +87,11 @@ struct  Joint
 	std::vector<JointObject> jointObjs;
 	glm::vec3 center;
 	glm::vec3 extents;
+
+	std::vector<Vertex> verts;
+	std::vector<Face> faces;
+	std::vector<int> meshIds;
+	std::vector<Shape> shapes;
 };
 
 //how bout 3 vec3's a time and a trigger  or 2?

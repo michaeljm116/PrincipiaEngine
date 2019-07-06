@@ -143,7 +143,7 @@ bool ModelScaler(PrincipiaModel& m) {
 	int jind;
 	//glm::vec3 avgCenter;
 	//so what you need is so that if the max is X then you get hte min of that, if Y then etc....
-	for (int i = 0; i < m.meshes.size(); ++i) {
+	for (size_t i = 0; i < m.meshes.size(); ++i) {
 		for (int j = 0; j < 3; ++j) {
 			float curr = m.meshes[i].extent[j] + m.meshes[i].center[j];
 			if (curr > maxE) {
@@ -153,7 +153,7 @@ bool ModelScaler(PrincipiaModel& m) {
 		}
 	}
 	//now find the min
-	for (int i = 0; i < m.meshes.size(); ++i) {
+	for (size_t i = 0; i < m.meshes.size(); ++i) {
 		minE = minVal(m.meshes[i].center[jind] - m.meshes[i].extent[jind], minE);
 	}
 
@@ -236,23 +236,57 @@ bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
 	return true;
 }
 
-bool ConvertJointVerts(PrincipiaModel& m, const PrincipiaSkeleton& s) {
-	for (auto joint : s.joints) {
+bool ConvertJointVerts(PrincipiaModel& m,  PrincipiaSkeleton& s) {
+	for (auto &joint : s.joints) {
+	//for(std::vector<Joint>::iterator joint = s.joints.begin(); joint != s.joints.end(); ++joint){
+		//create a map that keeps track of the times an vert has been visited
+		//first = mesh id, second = face.index, result = if true index
+		std::map<std::pair<int, int>, int> cjvMap;
+		std::vector<Vertex> newVerts;	//the new vertex list
+		std::vector<Face> newFaces;		//The new face list
+		std::vector<int> meshIds;
+		std::vector<Shape> newShapes;
+		int newIndex = 0;				//This is iterated when a new vertex is found
+
 		for (auto jo : joint.jointObjs) {
 			if (jo.objID > -1) {// aka if its not a shape
 				//Get the Face and convert the vertices to joint space
 				const Face& mFace = m.meshes[jo.objID].faces[jo.faceID];
+				Face newFace;
 				for (int i = 0; i < 4; ++i) {
-					Vertex& v = m.meshes[jo.objID].vertices[mFace.v[i]];
-					v.position -= joint.center;
+					//Make a key of hte mesh id and the face index
+					std::pair<int, int> key = std::make_pair(jo.objID, mFace.v[i]);
+					//check if its in the map, if not then insert it
+					if (cjvMap.find(key) == cjvMap.end()) {
+						cjvMap.insert({ key, newIndex });
+
+						//convert the vertex so that it's relative to the joint
+						Vertex v = m.meshes[jo.objID].vertices[mFace.v[i]];
+						v.position -= joint.center;
+
+						//push it to the new vertex list and let the joint object know its index
+						newVerts.push_back(v);
+						newFace.v[i] = newIndex;
+						newIndex++;
+					}
+					else { //It's already in the map so just push that index in
+						newFace.v[i] = cjvMap.find(key)->second;
+					}
 				}
+				newFaces.push_back(newFace);
+				meshIds.push_back(jo.objID);
 			}
 			else { //aka its a sphere or some other shape
 				//Get the shape and convert to joint space
-				Shape& mShape = m.shapes[jo.faceID];
+				Shape mShape = m.shapes[jo.faceID];
 				mShape.center -= joint.center;
+				newShapes.push_back(mShape);
 			}
 		}
+		joint.verts = newVerts;
+		joint.faces = newFaces;
+		joint.meshIds = meshIds;
+		joint.shapes = newShapes;
 	}
 	return true;
 }

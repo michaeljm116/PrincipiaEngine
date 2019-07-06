@@ -17,13 +17,6 @@ much rework but brotha aint got time fo dat
 
 static const int MAXTEXTURES = 5;
 
-struct MeshIdAssigner {
-	int index;
-	int uniqueID;
-	glm::vec3 center;
-	glm::vec3 extents;
-};
-
 class RenderSystem : public RenderBase, public artemis::EntityProcessingSystem
 {
 public:
@@ -120,7 +113,6 @@ private:
 		struct {
 			VBuffer<ssVert> verts;			// (Shader) storage buffer object with scene verts
 			VBuffer<ssIndex> faces;		// (Shader) storage buffer object with scene indices
-			VBuffer<ssMesh> meshes;				// (Shader) storage buffer object with scene Meshes;
 			VBuffer<ssPrimitive> objects;
 			VBuffer<ssMaterial> materials;			// (Shader) storage buffer object with scene Materials
 			VBuffer<ssLight> lights;
@@ -156,8 +148,9 @@ private:
 	std::vector<PrimitiveComponent*> objectComps;
 	std::vector<LightComponent*> lightComps;
 
-	std::vector<MeshIdAssigner> miaList;
 	std::unordered_map<int32_t, std::pair<int,int>> meshAssigner;
+	std::unordered_map<int32_t, std::pair<int, int>> jointAssigner;
+
 	BVHTree topLevelBVH;
 	Scripto testScript;
 

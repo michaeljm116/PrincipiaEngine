@@ -74,10 +74,10 @@ bool Resources::LoadDirectory(std::string directory)
 }
 bool Resources::LoadAnimations(std::string directory)
 {
-	//for (const auto & p : fs::directory_iterator(directory)) {
-	//	if (!LoadSkeleton(p.path().string()))
-	//		break;
-	//}
+	for (const auto & p : fs::directory_iterator(directory)) {
+		if (!LoadSkeleton(p.path().string()))
+			break;
+	}
 	return false;
 }
 
@@ -164,7 +164,7 @@ bool Resources::LoadPModel(std::string fileName)
 			binaryio.read(reinterpret_cast<char*>(&face), sizeof(glm::ivec4));
 			m.faces.emplace_back(face);
 		}
-		
+		m.meshID = meshID;
 		//add the model
 		mod.meshes.push_back(m);
 	}
@@ -190,36 +190,49 @@ bool Resources::LoadPModel(std::string fileName)
 	int numTransforms;
 	binaryio.read(reinterpret_cast<char*>(&numTransforms), sizeof(int));
 
-	//Find out of skinned or not
-	binaryio.read(reinterpret_cast<char*>(&skinned), sizeof(bool));
-	//if (skinned) binaryio.read(reinterpret_cast<char*>(&skeletonID), sizeof(int));
+	////Find out of skinned or not
+	//binaryio.read(reinterpret_cast<char*>(&skinned), sizeof(bool));
+	////if (skinned) binaryio.read(reinterpret_cast<char*>(&skeletonID), sizeof(int));
 
-	//get skeleton info if skinned
-	if (skinned) {
-		//binaryio.read(reinterpret_cast<char*>(&skeletonID), sizeof(int));
-		LoadSkeleton(binaryio, mod.name );
-	}
+	////get skeleton info if skinned
+	//if (skinned) {
+	//	//binaryio.read(reinterpret_cast<char*>(&skeletonID), sizeof(int));
+	//	LoadSkeleton(binaryio, mod.name );
+	//	mod.skinned = true;
+	//}
 
 	binaryio.close();
 	mod.uniqueID = uniqueID;
-	mod.skeletonID = skinned ? (skeletons.end() - 1)->id : 0;
+	//mod.skeletonID = skinned ? (skeletons.end() - 1)->id : 0;
 	models.push_back(mod);
 	return true;
 }
 
-bool Resources::LoadSkeleton(std::fstream& binaryio, std::string name)
+bool Resources::LoadSkeleton(std::string fileName)
 {
 	rSkeleton skelly;
-	skelly.name = name + "_skel";
+
+	std::fstream binaryio;
+	binaryio.open(fileName.c_str(), std::ios::in | std::ios::binary);
+
+	//get the skeleton name
+	int nameLength;
+	char c;
+
+	binaryio.read(reinterpret_cast<char*>(&nameLength), sizeof(int));
+	skelly.name.reserve(nameLength);
+	for (int i = 0; i < nameLength; ++i) {
+		binaryio.read(&c, sizeof(c));
+		skelly.name.push_back(c);
+	}
 	
 	//Read the UniqueID
 	binaryio.read(reinterpret_cast<char*>(&skelly.id), sizeof(int));
 	
-
-	char c;
 	//Get numberofJoints
 	int numJoints;
 	binaryio.read(reinterpret_cast<char*>(&numJoints), sizeof(int));
+	skelly.joints.reserve(numJoints);
 	
 	//Read the joints
 	for (int j = 0; j < numJoints; ++j) {
@@ -240,14 +253,54 @@ bool Resources::LoadSkeleton(std::fstream& binaryio, std::string name)
 		binaryio.read(reinterpret_cast<char*>(&joint.center), sizeof(glm::vec3));
 		binaryio.read(reinterpret_cast<char*>(&joint.extents), sizeof(glm::vec3));
 
-		int jointObjNum;
-		binaryio.read(reinterpret_cast<char*>(&jointObjNum), sizeof(int));
-		for (size_t i = 0; i < jointObjNum; ++i) {
-			JointObject jo;
-			binaryio.read(reinterpret_cast<char*>(&jo), sizeof(JointObject));
-			joint.jointObjects.push_back(jo);
+		//Get the numbers;
+		int numVerts, numFaces, numShapes;
+		binaryio.read(reinterpret_cast<char*>(&numVerts), sizeof(int));
+		binaryio.read(reinterpret_cast<char*>(&numFaces), sizeof(int));
+		binaryio.read(reinterpret_cast<char*>(&numShapes), sizeof(int));
+
+		//get the verts
+		joint.verts.reserve(numVerts);
+		for (int v = 0; v < numVerts; ++v) {
+			rVertex vert;
+			binaryio.read(reinterpret_cast<char*>(&vert), sizeof(rVertex));
+			joint.verts.emplace_back(vert);
 		}
-		skelly.joints.push_back(joint);
+
+		//get the faces
+		joint.faces.reserve(numFaces);
+		for (int f = 0; f < numFaces; ++f) {
+			glm::ivec4 face;
+			binaryio.read(reinterpret_cast<char*>(&face), sizeof(glm::ivec4));
+			joint.faces.emplace_back(face);
+		}
+
+		//get the meshids
+		joint.meshIDs.reserve(numFaces);
+		for (int m = 0; m < numFaces; ++m) {
+			int meshID;
+			binaryio.read(reinterpret_cast<char*>(&meshID), sizeof(int));
+			joint.meshIDs.emplace_back(meshID);
+		}
+
+		//get shapes
+		joint.shapes.reserve(numShapes);
+		for (int i = 0; i < numShapes; ++i) {
+			int shapeNameLength;
+			rShape shape;
+			binaryio.read(reinterpret_cast<char*>(&shapeNameLength), sizeof(int));
+			for (int n = 0; n < shapeNameLength; ++n) {
+				binaryio.read(&c, sizeof(char));
+				shape.name.push_back(c);
+			}
+			binaryio.read(reinterpret_cast<char*>(&shape.type), sizeof(int));
+			binaryio.read(reinterpret_cast<char*>(&shape.center), sizeof(glm::vec3));
+			binaryio.read(reinterpret_cast<char*>(&shape.extents), sizeof(glm::vec3));
+
+			joint.shapes.push_back(shape);
+		}
+
+		skelly.joints.emplace_back(joint);
 	}
 
 	binaryio.read(reinterpret_cast<char*>(&skelly.globalInverseTransform), sizeof(glm::mat4));

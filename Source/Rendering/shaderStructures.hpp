@@ -42,15 +42,25 @@ struct ssPrimitive {
 struct ssJoint {
 	glm::mat4 world;
 	glm::vec3 extents;
-	int skeletonID; //index of skeleton
-	int jointID;	//joint of... wait...
+	int id;
 
+	int startIndex;
+	int endIndex;
 };
-
 
 struct ssJointObject {
 	int primID;
 	int faceID;
+	int matID;
+	int _pad;
+};
+
+
+struct ssAnimShape {
+	glm::vec3 center;
+	int type;
+	glm::vec3 extents;
+	int _pad2;
 };
 
 struct ssVert {
@@ -74,18 +84,6 @@ struct ssIndex {
 	glm::ivec4 v; //16bytes
 	ssIndex() {};
 	ssIndex(const glm::ivec4 &face) : v(face) {};
-};
-
-struct ssMesh {
-	int startIndex; //4
-	int endIndex; //4
-	int startVert;
-	int endVert;
-};
-
-struct ssSkeleton {
-	int startJoint;
-	int endJoint;
 };
 
 //struct ssJointObject {
