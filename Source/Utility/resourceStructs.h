@@ -76,6 +76,7 @@ struct rMesh {
 	std::string name;
 	rMaterial mat;
 	int matId = 0;
+	int meshID;
 };
 
 struct rShape {
@@ -92,6 +93,7 @@ struct rModel {
 	glm::vec3 extents;
 	int uniqueID;
 	int skeletonID;
+	bool skinned = false;
 };
 
 struct JointObject {
@@ -107,9 +109,14 @@ struct rJoint {
 	//glm::mat4 local_invBindPose;
 	glm::mat4 invBindPose;
 	glm::mat4 transform;
-	std::vector<JointObject> jointObjects;
 	glm::vec3 center;
 	glm::vec3 extents;
+
+	std::vector<rVertex> verts;
+	std::vector<glm::ivec4> faces;
+	std::vector<int> meshIDs;
+	std::vector<rShape> shapes;
+
 	rJoint() {};
 };
 
