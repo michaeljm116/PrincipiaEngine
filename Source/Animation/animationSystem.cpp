@@ -41,7 +41,7 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 	//find a way to increment time;
 	//So there's glike a global time thing already but each animation should track its own time but should it be an ever looping time or just like time based off start of new animation?!?
 	//right now just do time based on new animation
-	ac->time += deltaTime;
+	ac->time += world->getDelta();
 	if (ac->time > anim->duration / anim->sps) {
 		ac->time = 0;// -= anim->duration / anim->sps;
 		for (int i = 0; i < anim->numChannels; ++i) {
@@ -61,7 +61,7 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 	
 	//u iz finna interpolizzate up in dis hurr systym
 	for (int i = 0; i < anim->numChannels; ++i) {
-		int pi = ac->skeleton.joints[i].parentIndex;
+		int pi = ac->skeleton.joints[i]->parentIndex;
 
 		//get the next key
 		if (ac->time > anim->channels[i].keys[ac->channels[i].key_next].time / anim->sps) {
@@ -83,49 +83,56 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 		
 		//ac->channels[i].combined = glm::translate(pos) * glm::toMat4(rot) * glm::scale(sca);
 		//glm::mat3 bob = glm::toMat3(currentKey->rot);
-
 		if (animon) {
 			ac->channels[i].combined = glm::translate(currentKey->pos) * glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
 
 			if (pi > -1)
-				ac->skeleton.joints[i].global_Transform = ac->skeleton.joints[pi].global_Transform * ac->channels[i].combined;
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined;
 			else
-				ac->skeleton.joints[i].global_Transform = ac->channels[i].combined;
+				ac->skeleton.joints[i]->global_Transform = tc->world;//ac->channels[i].combined;
 
-			ac->skeleton.joints[i].final_Transform = ac->skeleton.joints[i].global_Transform * ac->skeleton.joints[i].invBindPose;// *tc->worldM;
+			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform * ac->skeleton.joints[i]->invBindPose;// *tc->worldM;
 		}
 		else {
 			if (pi > -1)
-				ac->skeleton.joints[i].global_Transform = ac->skeleton.joints[pi].global_Transform * ac->skeleton.joints[i].transform;
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->skeleton.joints[i]->transform;
 			else
-				ac->skeleton.joints[i].global_Transform = skele->globalInverseTransform * ac->skeleton.joints[i].transform;
-			ac->skeleton.joints[i].final_Transform = ac->skeleton.joints[i].global_Transform * ac->skeleton.joints[i].invBindPose;
+				ac->skeleton.joints[i]->global_Transform = skele->globalInverseTransform * ac->skeleton.joints[i]->transform;
+			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform * ac->skeleton.joints[i]->invBindPose;
 		}
 	}
 
-	//aiight now get all dem uhhhh wwwwwwwwwwwwwwow this is gonna suck
-	for (int i = 0; i < nc->children.size(); ++i)
-	{
-//		//TransformComponent* nodeTrans = (TransformComponent*)nc->data->getComponent<TransformComponent>();
-//		MeshComponent* sub = (MeshComponent*)nc->children[i]->data->getComponent<MeshComponent>();
-//		std::vector<ssVert>& verts = rs->getVertices();
-//		ssMesh& mesh = rs->getMesh(sub->meshIndex);
-//		rMesh& rSub = RESOURCEMANAGER.getModelU(sub->meshModelID).meshes[sub->meshResourceIndex];
-//
-//		//mesh.center = glm::vec3(tc->world * glm::vec4(rSub.center, 1.f));
-//		//mesh.extents = rotateAABB(tc->global.rotation, rSub.extents * tc->global.scale);//rotateAABB(glm::mat3(tc->scaleM * tc->rotationM), rSub.extents);
-//
-//		int start = mesh.startVert;
-//		int end = mesh.endVert + 1;
-//
-//#pragma omp parallel for
-//		for (int i = start; i < end; ++i) {
-//			glm::mat4 boneTrans = tc->world * BoneTransform(ac->skeleton, rSub.bones[i - start]);
-//			//glm::mat4 boneTrans = BoneTransform(ac->skeleton, rSub.bones[i - start]);
-//			verts[i].pos = glm::vec3(boneTrans * glm::vec4(rSub.verts[i - start], 1.f));
-//		}
-		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
+	for (auto joint : ac->skeleton.joints) {
+		ssJoint* j = &rs->getJoint(joint->renderIndex);
+		j->world = joint->final_Transform;
+		j->extents = joint->extents;
 	}
+	rs->setRenderUpdate(RenderSystem::UPDATE_JOINT);
+
+	//aiight now get all dem uhhhh wwwwwwwwwwwwwwow this is gonna suck
+//	for (int i = 0; i < nc->children.size(); ++i)
+//	{
+////		//TransformComponent* nodeTrans = (TransformComponent*)nc->data->getComponent<TransformComponent>();
+////		MeshComponent* sub = (MeshComponent*)nc->children[i]->data->getComponent<MeshComponent>();
+////		std::vector<ssVert>& verts = rs->getVertices();
+////		ssMesh& mesh = rs->getMesh(sub->meshIndex);
+////		rMesh& rSub = RESOURCEMANAGER.getModelU(sub->meshModelID).meshes[sub->meshResourceIndex];
+////
+////		//mesh.center = glm::vec3(tc->world * glm::vec4(rSub.center, 1.f));
+////		//mesh.extents = rotateAABB(tc->global.rotation, rSub.extents * tc->global.scale);//rotateAABB(glm::mat3(tc->scaleM * tc->rotationM), rSub.extents);
+////
+////		int start = mesh.startVert;
+////		int end = mesh.endVert + 1;
+////
+////#pragma omp parallel for
+////		for (int i = start; i < end; ++i) {
+////			glm::mat4 boneTrans = tc->world * BoneTransform(ac->skeleton, rSub.bones[i - start]);
+////			//glm::mat4 boneTrans = BoneTransform(ac->skeleton, rSub.bones[i - start]);
+////			verts[i].pos = glm::vec3(boneTrans * glm::vec4(rSub.verts[i - start], 1.f));
+////		}
+//		
+//		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
+//	}
 }
 
 void AnimationSystem::addNode(NodeComponent * node)
@@ -156,15 +163,16 @@ glm::quat AnimationSystem::Interpolate(glm::quat start, glm::quat end, float del
 
 glm::mat4 AnimationSystem::BoneTransform(const Skeleton & skeleton, const rJointData & joints)
 {
-	glm::mat4 boneTrans = glm::mat4(0);
-	for (int i = 0; i < 4; ++i) {
-		float weight = joints.weights[i];
-		if (weight > BONE_EPSILON) {
-			boneTrans += skeleton.joints[joints.id[i]].final_Transform * weight;
-		}
-	}
-	//boneTrans = skeleton.joints[joints.id[0]].final_Transform;
-	return boneTrans;
+	//glm::mat4 boneTrans = glm::mat4(0);
+	//for (int i = 0; i < 4; ++i) {
+	//	float weight = joints.weights[i];
+	//	if (weight > BONE_EPSILON) {
+	//		boneTrans += skeleton.joints[joints.id[i]].final_Transform * weight;
+	//	}
+	//}
+	////boneTrans = skeleton.joints[joints.id[0]].final_Transform;
+	//return boneTrans;
+	return glm::mat4();
 }
 
 glm::vec3 AnimationSystem::rotateAABB(const glm::quat & m, const glm::vec3 & extents)
@@ -213,11 +221,11 @@ glm::vec3 AnimationSystem::rotateAABB(const glm::quat & m, const glm::vec3 & ext
 		ac->channels[i].combined = glm::translate(ac->channels[i].combinedPos) * glm::toMat4(ac->channels[i].combinedRot) * glm::scale(ac->channels[i].combinedSca);
 
 		if (pi > -1)
-			ac->skeleton.joints[i].global_Transform = ac->skeleton.joints[pi].global_Transform * ac->channels[i].combined;
+			ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined;
 		else
-		ac->skeleton.joints[i].global_Transform = ac->channels[i].combined;
+		ac->skeleton.joints[i]->global_Transform = ac->channels[i].combined;
 
-		ac->skeleton.joints[i].final_Transform = ac->skeleton.joints[i].global_Transform * ac->skeleton.joints[i].invBindPose;// *tc->worldM;
+		ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform * ac->skeleton.joints[i]->invBindPose;// *tc->worldM;
 
 #pragma region ENDTESTY
 

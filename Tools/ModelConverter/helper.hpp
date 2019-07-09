@@ -138,7 +138,7 @@ Shape ShapeCreate (const Mesh &m, const ShapeType &type){
 //model center = avg center, model extents = extents;
 bool ModelScaler(PrincipiaModel& m) {
 	glm::mat4 world = glm::mat4(1);
-	float maxE = FLT_MIN;
+	float maxE = -FLT_MAX;
 	float minE = FLT_MAX;
 	int jind;
 	//glm::vec3 avgCenter;
@@ -198,8 +198,8 @@ bool ModelScaler(PrincipiaModel& m) {
 2. it create a bone bounding box
 */
 bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
-	for (auto joint : s.joints) {
-		glm::vec3 maxVert = glm::vec3(-FLT_MAX);
+	for (auto &joint : s.joints) {
+		glm::vec3 maxVert = -glm::vec3(FLT_MAX);
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
 		for (auto jo : joint.jointObjs) {

@@ -21,6 +21,7 @@ private:
 	PauseSystem* pause;
 
 	RenderSystem* rs;
+	AnimationSystem* as;
 	EngineUISystem* ui;
 	ControllerSystem* controllers;
 

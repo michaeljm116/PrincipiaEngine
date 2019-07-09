@@ -47,6 +47,7 @@ public:
 	void deleteNode(NodeComponent* node);
 
 	void updateObjectMemory();
+	void updateJointMemory();
 	void updateMeshMemory();
 	void updateGeometryMemory(ObjectType type);
 
@@ -63,7 +64,8 @@ public:
 		UPDATE_NONE = 0x80,
 		UPDATE_OBJECT = 0x100,
 		UPDATE_LIGHT = 0x200,
-		UPDATE_GUI = 0x400
+		UPDATE_GUI = 0x400,
+		UPDATE_JOINT = 0x800
 	};
 
 	int32_t updateflags;
@@ -83,6 +85,7 @@ public:
 	//std::vector<ssVert>& getVertices() { return verts; };
 	//std::vector<ssMesh>& getMeshes() { return meshes; };
 	//ssMesh& getMesh(int i) { return meshes[i]; };
+	ssJoint& getJoint(int i) { return joints[i]; };
 	ssPrimitive& getObject(int i) { return objects[i]; };
 	ssLight& getLight(int i) { return lights[i]; };
 	void buildBVH();
@@ -112,9 +115,11 @@ private:
 	struct {
 		struct {
 			VBuffer<ssVert> verts;			// (Shader) storage buffer object with scene verts
-			VBuffer<ssIndex> faces;		// (Shader) storage buffer object with scene indices
-			VBuffer<ssPrimitive> objects;
-			VBuffer<ssMaterial> materials;			// (Shader) storage buffer object with scene Materials
+			VBuffer<ssIndex> faces;			// (Shader) storage buffer object with scene indices
+			VBuffer<ssShape> shapes;		// for animatied shapes 
+			VBuffer<ssPrimitive> objects;	// for the primitives
+			VBuffer<ssJoint> joints;		// for the animated joints
+			VBuffer<ssMaterial> materials;	// (Shader) storage buffer object with scene Materials
 			VBuffer<ssLight> lights;
 			VBuffer<ssGUI> guis;
 
@@ -139,6 +144,7 @@ private:
 
 
 	std::vector<ssPrimitive> objects;
+	std::vector<ssJoint> joints;
 	std::vector<ssMaterial> materials;
 	std::vector<ssLight> lights;
 	std::vector<ssGUI> guis;
@@ -146,10 +152,12 @@ private:
 
 	std::vector<MeshComponent*> meshComps;
 	std::vector<PrimitiveComponent*> objectComps;
+	std::vector<JointComponent*> jointComps;
 	std::vector<LightComponent*> lightComps;
 
 	std::unordered_map<int32_t, std::pair<int,int>> meshAssigner;
 	std::unordered_map<int32_t, std::pair<int, int>> jointAssigner;
+	std::unordered_map<int32_t, std::pair<int, int>> shapeAssigner;
 
 	BVHTree topLevelBVH;
 	Scripto testScript;

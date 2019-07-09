@@ -112,6 +112,7 @@ public:
 	bool listBox(const char* caption, int32_t* itemindex, std::vector<std::string> items);
 	bool modelBox(const char* caption, int32_t* itemindex, std::vector<rModel> items);
 	bool matBox(const char* caption, int32_t* itemindex, std::vector<rMaterial> items);
+	bool animBox(const char* caption, int32_t* itemindex, std::vector<rSkeleton> items);
 	bool button(const char* caption);
 	void text(const char* formatstr, ...);
 
@@ -124,6 +125,7 @@ private:
 	int32_t itemIndex;
 	int32_t modelIndex;
 	int32_t matIndex;
+	int32_t skinnedIndex = 0;
 	int32_t animIndex = 0;
 	int32_t numAnims = 0;
 	//std::vector<std::string> matNames;
@@ -192,6 +194,7 @@ public:
 	void editController();
 
 	void createModel(bool& p_create);
+	void createSkinnedModel(bool& create);
 	void createSphere(bool& p_create);
 	void createBox(bool& p_create);
 	void createPlane(bool& p_create);

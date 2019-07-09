@@ -34,34 +34,22 @@ struct ssPrimitive {
 	int numChildren = 0; //4bytes;
 	int id; //4bytes
 	int matId; //4bytes
-	int startIndex;
-	int endIndex;
+	int startIndex = 0;
+	int endIndex = 0;
 
 };//Total = 96bytes
 
 struct ssJoint {
-	glm::mat4 world;
-	glm::vec3 extents;
-	int id;
+	glm::mat4 world;		//64bytes
+	glm::vec3 extents;		//12bytes
+	int id;					//4bytes
 
-	int startIndex;
-	int endIndex;
-};
+	int startIndex = 0;		//4bytes
+	int endIndex = 0;		//4bytes
+	int startShape = 0; 	//4bytes
+	int endShape = 0;		//4bytes
+}; //Total = 96bytes
 
-struct ssJointObject {
-	int primID;
-	int faceID;
-	int matID;
-	int _pad;
-};
-
-
-struct ssAnimShape {
-	glm::vec3 center;
-	int type;
-	glm::vec3 extents;
-	int _pad2;
-};
 
 struct ssVert {
 	glm::vec3 pos;
@@ -86,10 +74,14 @@ struct ssIndex {
 	ssIndex(const glm::ivec4 &face) : v(face) {};
 };
 
-//struct ssJointObject {
-//	int objID;
-//	int primitivesIndex; //nvm?!??! how to not render twice?!?!?!?
-//};
+struct ssShape {
+	glm::vec3 center;
+	int matID = 0;
+	glm::vec3 extents;
+	int type;
+	ssShape() {};
+	ssShape(const glm::vec3& c, const glm::vec3 e, int t) : center(c), extents(e), type(t) {};
+}; //Total = 16bytes
 
 struct ssMaterial {
 	glm::vec3 diffuse;

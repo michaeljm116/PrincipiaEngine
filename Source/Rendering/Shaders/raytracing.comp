@@ -128,6 +128,12 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 			//	fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz;
 			break; 
 		}
+		case TYPE_JOINT:{
+			normal = skinnedQuadNormal(joints[primitiveID.pId], faces[primitiveID.id], norm.x, norm.y);
+			mat = materials[0];
+			txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
+			break;
+		}
 	}
 
 	float diffuse = 0;
