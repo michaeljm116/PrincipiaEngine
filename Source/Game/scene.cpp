@@ -65,24 +65,12 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	TransformComponent* parentTransform = new TransformComponent(pos, rot, sca);
 	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_MODEL | COMPONENT_TRANSFORM | COMPONENT_AABB);// | COMPONENT_PRIMITIVE);
 
-	//rMesh* mesh = &RESOURCEMANAGER.getModelU(resource);
-	entity->addComponent(new ModelComponent(RESOURCEMANAGER.getModelIndex(resource.uniqueID), resource.uniqueID));
-	//entity->addComponent(new PrimitiveComponent(resource.uniqueID));
-	entity->addComponent(new AABBComponent(pos, sca));	//MeshAABB's point to the physics system
+	parent->isDynamic = dynamic; 
 	entity->addComponent(parent);
 	entity->addComponent(parentTransform);
-
-	parent->isDynamic = dynamic;
-	glm::mat4 parentPosition = glm::mat4(1.f);
-	glm::mat4 parentScale = glm::mat4(1.f);
-	glm::mat4 parentRotation = glm::mat4(1.f);
-
 	entity->refresh();
-	//rs->addNode(parent);
-	//ps->change(*entity);
-	//ps->addNode(parent);
 	
-	//set up the subsets
+	//set up the subsetsx
 	int i = 0;
 	for (std::vector<rMesh>::const_iterator itr = resource.meshes.begin(); itr != resource.meshes.end(); itr++) {
 
@@ -99,7 +87,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		child->addComponent(new MeshComponent(resource.uniqueID, i));
 		child->addComponent(new PrimitiveComponent(resource.uniqueID + i));
 		child->addComponent(new MaterialComponent(0));
-		child->addComponent(new AABBComponent());	//SubsetAABB's point to the rendering system
+		//child->addComponent(new AABBComponent());	//SubsetAABB's point to the rendering system
 
 
 		//childTransform->parentSM = &parentTransform->scaleM;
@@ -139,28 +127,73 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	ts->recursiveTransform(parent);
 
 	//if its animatable....
-	if (resource.skeletonID > 0) {
-		parent->flags |= COMPONENT_SKINNED;
-		rSkeleton* skelly = nullptr;
-		skelly = &RESOURCEMANAGER.getSkeletonID(resource.skeletonID);
-		if (skelly != nullptr) {
-			AnimationComponent* anim = new AnimationComponent(resource.skeletonID);
-			anim->skeleton.index = RESOURCEMANAGER.getSkeletonIndex(skelly->id);
-			for (int i = 0; i < skelly->joints.size(); ++i) {
-				Joint j;
-				j.parentIndex = skelly->joints[i].parentIndex;
-				j.invBindPose = skelly->joints[i].invBindPose;
-				j.transform = skelly->joints[i].transform;
-				anim->skeleton.joints.push_back(j);
-			}
-			anim->channels.resize(anim->skeleton.joints.size());
-
-			entity->addComponent(anim);
-			entity->refresh();
-			as->change(*entity);
-		}
-	}
+	//if (resource.skeletonID > 0) {
+	//	parent->flags |= COMPONENT_SKINNED;
+	//	rSkeleton* skelly = nullptr;
+	//	skelly = &RESOURCEMANAGER.getSkeletonID(resource.skeletonID);
+	//	if (skelly != nullptr) {
+	//		AnimationComponent* anim = new AnimationComponent(resource.skeletonID);
+	//		anim->skeleton.index = RESOURCEMANAGER.getSkeletonIndex(skelly->id);
+	//		for (int i = 0; i < skelly->joints.size(); ++i) {
+	//			Joint j;
+	//			j.parentIndex = skelly->joints[i].parentIndex;
+	//			j.invBindPose = skelly->joints[i].invBindPose;
+	//			j.transform = skelly->joints[i].transform;
+	//			anim->skeleton.joints.push_back(j);
+	//		}
+	//		anim->channels.resize(anim->skeleton.joints.size());
+	//		entity->addComponent(anim);
+	//		entity->refresh();
+	//		as->change(*entity);
+	//	}
+	//}
 }
+
+void Scene::createSkinnedModel(rSkeleton resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic)
+{	
+	//Set up entity with node and transform
+	artemis::Entity* entity = &em->create();
+	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_SKINNED | COMPONENT_TRANSFORM | COMPONENT_AABB);
+	TransformComponent* parentTransform = new TransformComponent(pos, rot, sca);
+
+	parent->isDynamic = dynamic;
+	entity->addComponent(parent);
+	entity->addComponent(parentTransform);
+	entity->refresh();
+
+
+	AnimationComponent* animComp = new AnimationComponent(resource.id);
+	animComp->skeleton.index = RESOURCEMANAGER.getSkeletonIndex(resource.id);
+
+	int i = 0; 
+	for (auto joint : resource.joints) {
+		//Create Entity
+		artemis::Entity* child = &em->create();
+
+		//set up joint data
+		NodeComponent* childNode = new NodeComponent(child, parent);
+		JointComponent* jointComp = new JointComponent(joint.transform, joint.extents, joint.parentIndex, resource.id + i, joint.shapes.size());
+		childNode->name = joint.name;
+		childNode->flags |= COMPONENT_JOINT;
+
+		child->addComponent(childNode);
+		child->addComponent(jointComp);
+
+		parent->children.push_back(childNode);
+		++i;
+		rs->addNode(childNode);
+
+		animComp->skeleton.joints.emplace_back(jointComp);
+	}
+
+	animComp->channels.resize(i);
+	entity->addComponent(animComp);
+	entity->refresh();
+	rs->updateJointMemory();
+	as->change(*entity);
+	parents.push_back(parent);
+}
+
 
 //Types: SPHERE = -1, BOX = -2, CYLINDER = -3, PLANE = -4
 artemis::Entity* Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic)

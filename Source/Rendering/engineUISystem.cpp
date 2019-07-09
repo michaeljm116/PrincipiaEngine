@@ -727,6 +727,21 @@ bool EngineUISystem::matBox(const char * caption, int32_t * itemindex, std::vect
 	return ImGui::ListBox(caption, itemindex, &charitems[0], itemCount, itemCount);
 }
 
+bool EngineUISystem::animBox(const char * caption, int32_t * itemindex, std::vector<rSkeleton> items)
+{
+	if (items.empty()) {
+		return false;
+	}
+	std::vector<const char*> charitems;
+	charitems.reserve(items.size());
+	for (size_t i = 0; i < items.size(); i++) {
+		charitems.push_back(items[i].name.c_str());
+	}
+	uint32_t itemCount = static_cast<uint32_t>(charitems.size());
+	return ImGui::ListBox(caption, itemindex, &charitems[0], itemCount, itemCount);
+
+}
+
 bool EngineUISystem::button(const char *caption)
 {
 	return ImGui::Button(caption);
@@ -882,6 +897,14 @@ void EngineUISystem::rightSection(float w, float h)
 	if (ImGui::Button("Create Material"))
 		b_Material = true;
 	if (b_Material)createMaterial(b_Material);
+
+	//animations
+	animBox("Skinned Model", &skinnedIndex, RESOURCEMANAGER.getSkeletons());
+	static bool b_Skinned = false;
+	if (ImGui::Button("Create Skeleton"))
+		b_Skinned = true;
+	if (b_Skinned)
+		createSkinnedModel(b_Skinned);
 
 	ImGui::End();
 }
@@ -1212,6 +1235,45 @@ void EngineUISystem::createModel(bool & p_create)
 
 		if (ImGui::Button("Create Model")) {
 			SCENE.createModel(RESOURCEMANAGER.getModel(modelIndex), str, pos, rot, sca, isDynamic);
+			p_create = false;
+			ImGui::CloseCurrentPopup();
+		}
+		if (ImGui::Button("Close")) {
+			p_create = false;
+			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+}
+
+void EngineUISystem::createSkinnedModel(bool & p_create)
+{
+	ImGui::OpenPopup("Create Skinned Model");
+	if (ImGui::BeginPopupModal("Create Skinned Model"))
+	{
+		static char str[128] = "New Model!";
+		static float* position[3] = { &pos.x, &pos.y, &pos.z };
+		static float* rotation[3] = { &rot.x, &rot.y, &rot.z };
+		static float* scale[3] = { &sca.x, &sca.y, &sca.z };
+
+		ImGui::Text("Edit the Transform of yo Model y0");
+		ImGui::InputText("Enter Name", str, IM_ARRAYSIZE(str));
+
+		ImGui::Text("Position");
+		ImGui::DragFloat3("Position", *position, 0.01f);
+
+		ImGui::Text("Rotation");
+		ImGui::DragFloat3("Rotation", *rotation, 0.01f);
+
+		ImGui::Text("Scale");
+		ImGui::DragFloat3("Scale", *scale, 0.001f);
+
+
+
+		ImGui::Checkbox("Is Dynamic? ", &isDynamic);
+
+		if (ImGui::Button("Create Model")) {
+			SCENE.createSkinnedModel(RESOURCEMANAGER.getSkeleton(modelIndex), str, pos, rot, sca, isDynamic);
 			p_create = false;
 			ImGui::CloseCurrentPopup();
 		}

@@ -20,6 +20,7 @@ void ApplicationSystem::initialize()
 
 	//First get references to the already started systems
 	rs = (RenderSystem*)sm->getSystem<RenderSystem>();
+	as = (AnimationSystem*)sm->getSystem<AnimationSystem>();
 	ui = (EngineUISystem*)sm->getSystem<EngineUISystem>();
 	controllers = (ControllerSystem*)sm->getSystem<ControllerSystem>();// setSystem(new ControllerSystem());
 
@@ -78,6 +79,7 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	pause->process();
 
 	//render
+	as->process();
 	rs->process();// mainLoop();
 
 	//get the input, if in editor use editor controller, else regular controllers

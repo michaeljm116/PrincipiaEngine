@@ -17,6 +17,7 @@ const uint TYPE_PLANE = 0x00000004u;
 const uint TYPE_MESH = 0x00000008u;
 const uint TYPE_CYLINDER = 0x00000010u;
 const uint TYPE_DISK = 0x00000020u;
+const uint TYPE_JOINT = 0x00000040u;
 
 sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 {
@@ -90,6 +91,34 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 		}
 	}
 
+	for (int i = 0; i < joints.length(); ++i) {
+		Joint j = joints[i];
+		mat4 invWorld = inverse(j.world);
+		vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;
+		vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;
+		flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));
+		if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) {
+
+			for (int f = j.startIndex; f < j.endIndex; ++f) {
+				vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
+				if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
+					id = sectID(TYPE_JOINT, f, i);
+					resT = tQuad.x;
+					norm.x = tQuad.y;
+					norm.y = tQuad.z;
+				}
+			}
+			for (int s = j.startShape; s < j.endShape; ++s) {
+				float tSphere = skinnedSphereIntersect(roo, rdd, shapes[s]);
+				if ((tSphere > EPSILON) && (tSphere < resT)) {
+					id = sectID(TYPE_SPHERE, s, -1);
+					resT = tSphere;
+				}
+			}
+
+		}
+
+	}
 	return id;
 }
 

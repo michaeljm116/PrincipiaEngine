@@ -123,6 +123,8 @@ void TransformSystem::regularTransform(NodeComponent* nc, TransformComponent* pa
 	
 }
 void TransformSystem::recursiveTransform(NodeComponent* nc){
+	if (nc->flags & COMPONENT_JOINT)
+		return;
 	bool hasParent = nc->parent == nullptr ? false : true;
 	TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 

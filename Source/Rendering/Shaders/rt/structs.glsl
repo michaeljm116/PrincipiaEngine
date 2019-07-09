@@ -16,6 +16,17 @@ struct Primitive
 	int endIndex;
 };
 
+struct Joint {
+	mat4 world;
+	vec3 extents;
+	int id;	
+
+	int startIndex;
+	int endIndex;
+	int startShape;
+	int endShape;
+}; 
+
 struct TriangleVert{
 	vec3 pos;
 	int _pad;
@@ -36,6 +47,13 @@ struct Vert {
 };
 struct Face {
 	ivec4 v;
+};
+
+struct Shape{
+	vec3 center;
+	int matID;
+	vec3 extents;
+	int type;
 };
 
 struct Material{
