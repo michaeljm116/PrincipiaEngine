@@ -29,6 +29,7 @@ struct tempDataStruct {
 	std::vector<aiNode*> confirmedNodes;
 	std::unordered_map<std::string, int> nodeIndexes;
 	std::string skelename;
+	std::vector<aiBone*> bones;
 };
 
 bool LoadBones(const aiScene* scene, tempDataStruct& tds);
@@ -399,7 +400,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		}
 
 
-		aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
+		//aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
 		//m.meshes.push_back(subset);
 		ShapeType type = ShapeCheck(subset.name);
 		if (type == ShapeType::MESH) { 
@@ -414,18 +415,19 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		if (paiMesh->mNumBones > 0 && hasAnim) {
 
 			//set up a list of bones and the vertexs for each bone
-			//std::vector<aiBone*> bones;
+			std::vector<aiBone*> bones;
 			std::vector<std::vector<aiVertexWeight>> weights;
 			std::vector<std::vector<int>> boneFaces;
 
 			//load up the data
 			for (int i = 0; i < paiMesh->mNumBones; ++i) {
-				//bones.push_back(paiMesh->mBones[i]);
+				bones.push_back(paiMesh->mBones[i]);
 
 
 				int boneIndex = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
 				tds.skeletonJoints[boneIndex].invBindPose = paiMesh->mBones[i]->mOffsetMatrix;
 				tds.skeletonJoints[boneIndex].glInvBindPose = aiMatrix4x4ToGlm(tds.skeletonJoints[boneIndex].invBindPose);
+				tds.bones.push_back(paiMesh->mBones[i]);
 
 				//First check if its a shape if o then just 
 				if (type == ShapeType::SPHERE) {
@@ -441,8 +443,10 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 						auto weight = paiMesh->mBones[i]->mWeights[b];
 						vwmap.insert(std::pair<int, aiVertexWeight>(weight.mVertexId, weight));
 					}
-					for (auto itr = vwmap.begin(); itr != vwmap.end(); ++itr)
-						vw.push_back(itr->second);
+					for (auto itr : vwmap){// .begin(); itr != vwmap.end(); ++itr) {
+						//if(itr.second.mWeight > 0.9f)
+						vw.push_back(itr.second);
+					}
 					weights.push_back(vw);
 
 					//Now that you have a list of in-order vertex id's you can compare with the faces in an efficient manner
@@ -453,18 +457,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 						bool allfour = true;
 						for (size_t i = 0; i < 4; ++i) {
 							bool vertFound = true;
-
-							for (auto itrVert = vw.begin(); itrVert != vw.end(); ++itrVert) {
-								if (itrFace->v[i] == itrVert->mVertexId)
-									break;
-								if (itrFace->v[i] < itrVert->mVertexId) {
-									vertFound = false;
-									break;
-								}
-							}
-
-
-							if (!vertFound) {
+							if (vwmap.find(itrFace->v[i]) == vwmap.end()) {
+								vertFound = false;
 								allfour = false;
 								break;
 							}
