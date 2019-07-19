@@ -65,6 +65,7 @@ struct Mesh {
 	std::vector<Vertex> vertices;
 	glm::vec3 extent;
 	glm::vec3 center;
+	glm::mat4 transform;
 	int id;
 };
 
@@ -82,8 +83,10 @@ struct  Joint
 	int parentIndex;
 	aiMatrix4x4 invBindPose;
 	aiMatrix4x4 transform;
+	aiMatrix4x4 offset;
 	glm::mat4 glInvBindPose;
 	glm::mat4 glTransform;
+	glm::mat4 glOffset;
 	std::vector<JointObject> jointObjs;
 	glm::vec3 center;
 	glm::vec3 extents;

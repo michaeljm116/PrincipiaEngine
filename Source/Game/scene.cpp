@@ -183,6 +183,10 @@ void Scene::createSkinnedModel(rSkeleton resource, std::string name, glm::vec3 p
 		++i;
 		rs->addNode(childNode);
 
+		jointComp->invBindPose = joint.invBindPose;
+		jointComp->transform = joint.transform;
+		//jointComp->
+
 		animComp->skeleton.joints.emplace_back(jointComp);
 	}
 

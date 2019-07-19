@@ -78,6 +78,14 @@ glm::vec4 aiQuatToGLM(const aiQuaternion& from) {
 	return to;
 }
 
+glm::vec3 aiVec3ToGLM(const aiVector3D& from) {
+	glm::vec3 to;
+	to.x = from.x;
+	to.y = from.y;
+	to.z = from.z;
+	return to;
+}
+
 
 enum class ShapeType {
 	MESH,
@@ -164,6 +172,8 @@ bool ModelScaler(PrincipiaModel& m) {
 	//Scale it
 	world = glm::scale(world, glm::vec3(ratio));
 
+	//so if the world = glm::translate(center) * inversetransform of the mesh
+
 	//Scale the bounds
 	for (int i = 0; i < m.meshes.size(); ++i) {
 		m.meshes[i].center = glm::vec3(world * glm::vec4(m.meshes[i].center, 1.f));
@@ -197,40 +207,39 @@ bool ModelScaler(PrincipiaModel& m) {
 1. it converts all vertexes into bone space
 2. it create a bone bounding box
 */
+
+bool SetOffsets(PrincipiaSkeleton& s) {
+	for (auto& joint : s.joints) {
+		joint.parentIndex > -1 ?
+			joint.glOffset = s.joints[joint.parentIndex].glOffset * joint.glInvBindPose :
+			joint.glOffset = joint.glInvBindPose;
+	}
+	return true;
+}
 bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
+	SetOffsets(s);
 	for (auto &joint : s.joints) {
+
+
 		glm::vec3 maxVert = -glm::vec3(FLT_MAX);
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
-		for (auto jo : joint.jointObjs) {
-			if (jo.objID > -1) {// aka if its not a shape
-				//Get the mesh's center
-				const glm::vec3& mCenter = m.meshes[jo.objID].center;
-				
-				//Get the face;
-				const Face& mFace = m.meshes[jo.objID].faces[jo.faceID];
-
-				//Get the Vertices
-				for (int i = 0; i < 4; ++i) {
-					const Vertex& v = m.meshes[jo.objID].vertices[mFace.v[i]];
-					for (int c = 0; c < 3; c++) {
-						maxVert[c] = maxVal(maxVert[c], v.position[c] + mCenter[c]);
-						minVert[c] = minVal(minVert[c], v.position[c] - mCenter[c]);
-					}
-				}
-			}
-			else { //aka its a sphere or some other shape
-				//Get the shape
-				const Shape& mShape = m.shapes[jo.faceID];
-				for (int c = 0; c < 3; c++) {
-					maxVert[c] = maxVal(maxVert[c], mShape.center[c] + mShape.extents[c]);
-					minVert[c] = minVal(minVert[c], mShape.center[c] - mShape.extents[c]);
-				}
+		for (auto& vert : joint.verts) {
+			for (int c = 0; c < 3; c++) {
+				vert.position = glm::vec3(glm::vec4(vert.position, 1.f) * joint.glOffset);
+				maxVert[c] = maxVal(maxVert[c], vert.position[c]);
+				minVert[c] = minVal(minVert[c], vert.position[c]);
 			}
 		}
+		
+		joint.center = glm::vec4((maxVert + minVert) * 0.5f, 1.f);// *joint.glOffset;
+		joint.extents = glm::vec4((maxVert - minVert) * 0.5f, 1.f);//  *joint.glOffset;
+		//joint.glTransform[3] = glm::vec4(joint.center, 1.f);
+		//joint.glInvBindPose = glm::transpose(joint.glTransform);
+		for (auto& vert : joint.verts) {
+			vert.position -= joint.center;// glm::vec3(glm::vec4(vert.position, 1.f) * joint.glOffset);
+		}
 
-		joint.center = (minVert + maxVert) * 0.5f;
-		joint.extents = (minVert - maxVert) * 0.5f;
 	}
 
 	return true;
@@ -259,12 +268,8 @@ bool ConvertJointVerts(PrincipiaModel& m,  PrincipiaSkeleton& s) {
 					//check if its in the map, if not then insert it
 					if (cjvMap.find(key) == cjvMap.end()) {
 						cjvMap.insert({ key, newIndex });
-
-						//convert the vertex so that it's relative to the joint
 						Vertex v = m.meshes[jo.objID].vertices[mFace.v[i]];
-						v.position -= joint.center;
-
-						//push it to the new vertex list and let the joint object know its index
+						//v.position -= joint.center;
 						newVerts.push_back(v);
 						newFace.v[i] = newIndex;
 						newIndex++;

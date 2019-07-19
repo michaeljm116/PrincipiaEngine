@@ -91,6 +91,7 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 		}
 	}
 
+	//FOR SKELETAL ANIMATION
 	for (int i = 0; i < joints.length(); ++i) {
 		Joint j = joints[i];
 		mat4 invWorld = inverse(j.world);
