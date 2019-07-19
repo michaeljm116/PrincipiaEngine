@@ -1481,6 +1481,7 @@ void EngineUISystem::animationSelect()
 			activeAnimation->channels[i].key_next = 1;
 		}
 	}
+	ImGui::Checkbox("Anim On", &activeAnimation->on);
 }
 
 void EngineUISystem::findActiveCamera()

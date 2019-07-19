@@ -73,39 +73,43 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 		float delta = (ac->time - currentKey->time) / (nextKey->time / currentKey->time);
 
 		//Transforms stuff
-		glm::vec3 pos = currentKey->pos + ((nextKey->pos - currentKey->pos) * delta);
+		//glm::vec3 pos = currentKey->pos + ((nextKey->pos - currentKey->pos) * delta);
 		//currentKey->rot = glm::normalize(currentKey->rot);
-		glm::quat rot = Interpolate(currentKey->rot, nextKey->rot, delta);
-		glm::vec3 sca = currentKey->sca + ((nextKey->sca - currentKey->sca) * delta);
+		//glm::quat rot = Interpolate(currentKey->rot, nextKey->rot, delta);
+		//glm::vec3 sca = currentKey->sca + ((nextKey->sca - currentKey->sca) * delta);
 		
-		bool animon = false;
-		animon = true;
+		glm::mat4 world = glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
+		world[3] = glm::vec4(currentKey->pos, 1.f);
+
+
+		bool animon = ac->on;
+		//animon = true;
 		
 		//ac->channels[i].combined = glm::translate(pos) * glm::toMat4(rot) * glm::scale(sca);
 		//glm::mat3 bob = glm::toMat3(currentKey->rot);
 		if (animon) {
-			ac->channels[i].combined = glm::translate(currentKey->pos) * glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
-
+			ac->channels[i].combined = world;// glm::translate(currentKey->pos) * glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
+			//ac->channels[i].combined = glm::translate(pos) * glm::toMat4(rot) * glm::scale(sca);
 			if (pi > -1)
-				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined;
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined ;
 			else
 				ac->skeleton.joints[i]->global_Transform = tc->world;//ac->channels[i].combined;
 
-			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform * ac->skeleton.joints[i]->invBindPose;// *tc->worldM;
+			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform;// *ac->skeleton.joints[i]->invBindPose;// *tc->worldM;
 		}
 		else {
 			if (pi > -1)
-				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->skeleton.joints[i]->transform;
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->skeleton.joints[i]->invBindPose; 
 			else
-				ac->skeleton.joints[i]->global_Transform = skele->globalInverseTransform * ac->skeleton.joints[i]->transform;
-			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform * ac->skeleton.joints[i]->invBindPose;
+				ac->skeleton.joints[i]->global_Transform = tc->world;// *ac->skeleton.joints[i]->transform;//skele->globalInverseTransform * ac->skeleton.joints[i]->transform;
+			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform;// *ac->skeleton.joints[i]->invBindPose;
 		}
 	}
 
 	for (auto joint : ac->skeleton.joints) {
 		ssJoint* j = &rs->getJoint(joint->renderIndex);
 		j->world = joint->final_Transform;
-		j->extents = joint->extents;
+		j->extents = tc->global.scale * joint->extents;
 	}
 	rs->setRenderUpdate(RenderSystem::UPDATE_JOINT);
 

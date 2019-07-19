@@ -199,9 +199,9 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 			binaryio.write(CCAST(&s.animations[a].channels[c].numKeys), sizeof(int));
 			for (int k = 0; k < s.animations[a].channels[c].numKeys; ++k) {
 				binaryio.write(CCAST(&s.animations[a].channels[c].keys[k].time), sizeof(float));
-				binaryio.write(CCAST(&s.animations[a].channels[c].keys[k].pos.mValue), sizeof(aiVector3D));
+				binaryio.write(CCAST(&aiVec3ToGLM(s.animations[a].channels[c].keys[k].pos.mValue)), sizeof(glm::vec3));
 				binaryio.write(CCAST(&aiQuatToGLM(s.animations[a].channels[c].keys[k].rot.mValue)), sizeof(glm::vec4));
-				binaryio.write(CCAST(&s.animations[a].channels[c].keys[k].sca.mValue), sizeof(aiVector3D));
+				binaryio.write(CCAST(&aiVec3ToGLM(s.animations[a].channels[c].keys[k].sca.mValue)), sizeof(glm::vec3));
 			}
 		}
 	}
@@ -333,10 +333,22 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	}
 	for (int i = 0; i < pScene->mNumMeshes; ++i) {
 		Mesh subset;
+		aiMesh* paiMesh = pScene->mMeshes[i];
+
+
+		//blender does this stupid thing where it chagnes the name from EX: Pants to Pants.001
+		//so you have to deprecate the .001 cause they just HAVE to be annoying
+		subset.name = paiMesh->mName.C_Str();
+		subset.originalName = paiMesh->mName.C_Str();
+		for (size_t i = 0; i < subset.name.length(); ++i) {
+			if (subset.name[i] == '.')
+				subset.name = subset.name.substr(0, i);
+		}
+		////////////////////Stupid name thing////////////////////
+
 		glm::vec3 maxVert = -glm::vec3(FLT_MAX);
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
-		aiMesh* paiMesh = pScene->mMeshes[i];
 		//aiMatrix4x4 trans = name_transformMap[paiMesh[i].mName.C_Str()];
 		for (int v = 0; v < paiMesh->mNumVertices; ++v) {
 			aiVector3D vert = paiMesh->mVertices[v];
@@ -346,7 +358,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 				txtr = paiMesh->mTextureCoords[v];
 
 			//Transform the verts;
-
+			//auto node = sceneChildren[subset.name];
+			//vert *= node->mTransformation.Transpose();
 
 			//subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
 			paiMesh->HasTextureCoords(v) ? subset.vertices.push_back(Vertex(vert, norm, txtr->x, txtr->y)) : subset.vertices.push_back(Vertex(vert, norm));
@@ -389,18 +402,11 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		subset.extent.y = (maxVert.y - minVert.y) * 0.5f;
 		subset.extent.z = (maxVert.z - minVert.z) * 0.5f;
 
-		subset.name = paiMesh->mName.C_Str();
-		subset.originalName = paiMesh->mName.C_Str();
 
-		//blender does this stupid thing where it chagnes the name from EX: Pants to Pants.001
-		//so you have to deprecate the .001 cause they just HAVE to be annoying
-		for (size_t i = 0; i < subset.name.length(); ++i) {
-			if (subset.name[i] == '.')
-				subset.name = subset.name.substr(0, i);
-		}
+		/////////////////DO THE STUPID NAME THING HERE IF DOESN'T WORK PRIOR/////////////
 
-
-		//aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
+		aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
+		subset.transform = aiMatrix4x4ToGlm(subchild);
 		//m.meshes.push_back(subset);
 		ShapeType type = ShapeCheck(subset.name);
 		if (type == ShapeType::MESH) { 
@@ -425,8 +431,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 
 
 				int boneIndex = tds.nodeIndexes[paiMesh->mBones[i]->mName.data];
-				tds.skeletonJoints[boneIndex].invBindPose = paiMesh->mBones[i]->mOffsetMatrix;
-				tds.skeletonJoints[boneIndex].glInvBindPose = aiMatrix4x4ToGlm(tds.skeletonJoints[boneIndex].invBindPose);
+				//tds.skeletonJoints[boneIndex].offset = paiMesh->mBones[i]->mOffsetMatrix;
+				//tds.skeletonJoints[boneIndex].glOffset = aiMatrix4x4ToGlm(tds.skeletonJoints[boneIndex].invBindPose);
 				tds.bones.push_back(paiMesh->mBones[i]);
 
 				//First check if its a shape if o then just 
@@ -474,7 +480,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		}
 	}
 	if (hasAnim){// && meshType == SKINNED_MESH) {
-		aiMatrix4x4 glit = pScene->mRootNode->mTransformation;
+		aiMatrix4x4 glit = tds.skeletonJoints[0].transform;
 		glit.Inverse();
 		s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
 		s.joints = tds.skeletonJoints;
@@ -563,16 +569,19 @@ bool LoadDirectory(std::string directory)
 		bool triangulate = false;
 		if (DoTheImportThing(p.path().string(), mod, skeleton, triangulate)) {
 			//break;
-			ModelScaler(mod);
+
+
 			if (hasAnim) {
-				GetJointExtents(mod, skeleton);
 				ConvertJointVerts(mod, skeleton);
+				GetJointExtents(mod, skeleton);
+				ModelScaler(mod);
 			}
-			////////////////////////////////////////////////////////////////////////////////////////////////////UNMESHONLYIFYTHIS////////////////////////////////////////////////
+			else
+			ModelScaler(mod);
 			if (triangulate)
 				mod.name += "_t";
 			
-						WritePEModel(mod,		"../../Assets/Levels/Pong/Models/" + mod.name + ".pm");
+						WritePEModel(mod,		"../../Assets/Levels/Pong/Models/"	   + mod.name + ".pm");
 			if(hasAnim) WriteSkeleton(skeleton, "../../Assets/Levels/Pong/Animations/" + mod.name + ".pa");
 		}
 	}
