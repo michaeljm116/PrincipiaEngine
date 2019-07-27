@@ -58,7 +58,7 @@ struct AnimationComponent : public artemis::Component {
 	std::vector<Channel> channels;
 	float time;
 	bool loop;
-	bool on = true;
+	bool on = false;
 
 	AnimationComponent(int id) {
 		time = 0.f;

@@ -91,24 +91,25 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 			ac->channels[i].combined = world;// glm::translate(currentKey->pos) * glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
 			//ac->channels[i].combined = glm::translate(pos) * glm::toMat4(rot) * glm::scale(sca);
 			if (pi > -1)
-				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined ;
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined;
 			else
-				ac->skeleton.joints[i]->global_Transform = tc->world;//ac->channels[i].combined;
+				ac->skeleton.joints[i]->global_Transform = ac->channels[i].combined;
 
-			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform;// *ac->skeleton.joints[i]->invBindPose;// *tc->worldM;
+			ac->skeleton.joints[i]->final_Transform = tc->world * ac->skeleton.joints[i]->global_Transform;// *skele->globalInverseTransform;// *tc->worldM;
 		}
 		else {
 			if (pi > -1)
-				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->skeleton.joints[i]->invBindPose; 
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->skeleton.joints[i]->transform;
 			else
-				ac->skeleton.joints[i]->global_Transform = tc->world;// *ac->skeleton.joints[i]->transform;//skele->globalInverseTransform * ac->skeleton.joints[i]->transform;
-			ac->skeleton.joints[i]->final_Transform = ac->skeleton.joints[i]->global_Transform;// *ac->skeleton.joints[i]->invBindPose;
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[i]->transform;// *skele->globalInverseTransform;//skele->globalInverseTransform * ac->skeleton.joints[i]->transform;
+			//ac->skeleton.joints[i]->final_Transform = tc->world * ac->skeleton.joints[i]->global_Transform;
+			ac->skeleton.joints[i]->final_Transform = tc->world * ac->skeleton.joints[i]->transform;//ac->skeleton.joints[i]->global_Transform;// *skele->globalInverseTransform;
 		}
 	}
 
 	for (auto joint : ac->skeleton.joints) {
 		ssJoint* j = &rs->getJoint(joint->renderIndex);
-		j->world = joint->final_Transform;
+		j->world = joint->final_Transform * glm::scale(joint->extents);
 		j->extents = tc->global.scale * joint->extents;
 	}
 	rs->setRenderUpdate(RenderSystem::UPDATE_JOINT);

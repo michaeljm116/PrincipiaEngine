@@ -60,10 +60,10 @@ glm::mat4 aiMatrix4x4ToGlm(const aiMatrix4x4& from)
 {
 	glm::mat4 to;
 
-	to[0][0] = (glm::float32)from.a1;	to[1][0] = (glm::float32)from.b1;	to[2][0] = (glm::float32)from.c1;	to[3][0] = (glm::float32)from.d1;
-	to[0][1] = (glm::float32)from.a2;	to[1][1] = (glm::float32)from.b2;	to[2][1] = (glm::float32)from.c2;	to[3][1] = (glm::float32)from.d2;
-	to[0][2] = (glm::float32)from.a3;	to[1][2] = (glm::float32)from.b3;	to[2][2] = (glm::float32)from.c3;	to[3][2] = (glm::float32)from.d3;
-	to[0][3] = (glm::float32)from.a4;	to[1][3] = (glm::float32)from.b4;	to[2][3] = (glm::float32)from.c4;	to[3][3] = (glm::float32)from.d4;
+	to[0][0] = (glm::float32)from.a1;	to[1][0] = (glm::float32)from.a2;	to[2][0] = (glm::float32)from.a3;	to[3][0] = (glm::float32)from.a4;
+	to[0][1] = (glm::float32)from.b1;	to[1][1] = (glm::float32)from.b2;	to[2][1] = (glm::float32)from.b3;	to[3][1] = (glm::float32)from.b4;
+	to[0][2] = (glm::float32)from.c1;	to[1][2] = (glm::float32)from.c2;	to[2][2] = (glm::float32)from.c3;	to[3][2] = (glm::float32)from.c4;
+	to[0][3] = (glm::float32)from.d1;	to[1][3] = (glm::float32)from.d2;	to[2][3] = (glm::float32)from.d3;	to[3][3] = (glm::float32)from.d4;
 
 	return to;
 	//return axisChange(to);
@@ -202,6 +202,42 @@ bool ModelScaler(PrincipiaModel& m) {
 	return true;
 }
 
+bool SkeletonScaler(PrincipiaSkeleton& s) {
+	float maxE = -FLT_MAX;
+	float minE = FLT_MAX;
+	int cind;
+
+	//Find the max value of the max extent and store the axis of it
+	for (auto joint : s.joints) {
+		for (int c = 0; c < 3; c++) {
+			float curr = joint.extents[c] + joint.center[c];
+			if (curr > maxE) {
+				cind = c;
+				maxE = curr;
+			}
+		}
+	}
+
+	//Take the axis of the max value and find the min value of it
+	for (auto joint : s.joints) {
+		minE = minVal(joint.center[cind] - joint.extents[cind], minE);
+	}
+
+	//get the ratio of it all
+	float ratio = 1 / ((maxE - minE) * 0.5f);
+	glm::mat4 world = glm::scale(glm::vec3(ratio));
+
+	//Scale the bounds and verts
+	for (auto& joint : s.joints) {
+		joint.center = glm::vec3(world * glm::vec4(joint.center, 1.f));
+		joint.extents = glm::vec3(world * glm::vec4(joint.extents, 1.f));
+		for (auto& vert : joint.verts)
+			vert.position = glm::vec3(world * glm::vec4(vert.position, 1.f));
+	}
+
+	return true;
+}
+
 //Jointify does a few things
 /*
 1. it converts all vertexes into bone space
@@ -217,31 +253,42 @@ bool SetOffsets(PrincipiaSkeleton& s) {
 	return true;
 }
 bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
-	SetOffsets(s);
+	//SetOffsets(s);
 	for (auto &joint : s.joints) {
 
+		//joint.parentIndex > -1 ?
+		//	joint.glOffset = s.joints[joint.parentIndex].glOffset * joint.glInvBindPose :
+		//	joint.glOffset = joint.glInvBindPose * s.globalInverseTransform;
+		joint.parentIndex > -1 ?
+			joint.glGlobalTransform = s.joints[joint.parentIndex].glGlobalTransform * joint.glTransform :
+			joint.glGlobalTransform = joint.glTransform;// *s.globalInverseTransform;
 
 		glm::vec3 maxVert = -glm::vec3(FLT_MAX);
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
 		for (auto& vert : joint.verts) {
+			//vert.position = glm::vec3(glm::vec4(vert.position, 1.f) * joint.glOffset);
+			//vert.position = glm::vec3(joint.glOffset * glm::vec4(vert.position, 1.f));
 			for (int c = 0; c < 3; c++) {
-				vert.position = glm::vec3(glm::vec4(vert.position, 1.f) * joint.glOffset);
 				maxVert[c] = maxVal(maxVert[c], vert.position[c]);
 				minVert[c] = minVal(minVert[c], vert.position[c]);
 			}
 		}
-		
-		joint.center = glm::vec4((maxVert + minVert) * 0.5f, 1.f);// *joint.glOffset;
-		joint.extents = glm::vec4((maxVert - minVert) * 0.5f, 1.f);//  *joint.glOffset;
-		//joint.glTransform[3] = glm::vec4(joint.center, 1.f);
-		//joint.glInvBindPose = glm::transpose(joint.glTransform);
+
+		joint.center = glm::vec3((maxVert + minVert) * 0.5f);// , 1.f);// *joint.glOffset;
+		joint.extents = glm::vec3((maxVert - minVert) * 0.5f);// , 1.f);//  *joint.glOffset;
+		joint.glGlobalTransform[3] = joint.glGlobalTransform[3] - (glm::vec4(joint.glGlobalTransform[3] - glm::vec4(joint.center, 1.f)));
+
 		for (auto& vert : joint.verts) {
 			vert.position -= joint.center;// glm::vec3(glm::vec4(vert.position, 1.f) * joint.glOffset);
+			//vert.position -= glm::vec3(joint.glGlobalTransform[3]);
+		}
+		for (auto& shape : joint.shapes) {
+			shape.center -= joint.center;
+			//shape.center = glm::vec3(joint.glOffset * glm::vec4(shape.center, 1.f)) - joint.center;
 		}
 
 	}
-
 	return true;
 }
 

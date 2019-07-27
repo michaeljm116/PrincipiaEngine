@@ -28,7 +28,7 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 			mat4 invWorld = inverse(primitives[i].world);
 			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
-			flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));// primitives[i].extents);
+			flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));// primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) { //hits the boundingbox, doesnt necessarily mean tri hit
 				//Mesh m = meshes[primitives[i].id];
 				//id.pId = i;
@@ -95,9 +95,9 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 	for (int i = 0; i < joints.length(); ++i) {
 		Joint j = joints[i];
 		mat4 invWorld = inverse(j.world);
-		vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;
-		vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;
-		flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));
+		vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / j.extents;
+		vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / j.extents;
+		flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));
 		if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) {
 
 			for (int f = j.startIndex; f < j.endIndex; ++f) {
@@ -110,7 +110,10 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 				}
 			}
 			for (int s = j.startShape; s < j.endShape; ++s) {
-				float tSphere = skinnedSphereIntersect(roo, rdd, shapes[s]);
+				Shape shape = shapes[s];
+				//shape.center = shape.center + vec3(j.world[3]).xyz;
+				//shape.extents = s.extents;
+				float tSphere = skinnedSphereIntersect(roo, rdd, shape);
 				if ((tSphere > EPSILON) && (tSphere < resT)) {
 					id = sectID(TYPE_SPHERE, s, -1);
 					resT = tSphere;
@@ -132,12 +135,11 @@ float calcShadow(in vec3 rayO, in vec3 rayD, in sectID primitiveId, inout float 
 			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
 			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
 
-			flool tMesh = boundsIntersect(roo, rdd, vec3(1, 1, 1));// primitives[i].extents);
+			flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));// primitives[i].extents);
 			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)) {
 				int startIndex = primitives[i].startIndex;
 				int endIndex = primitives[i].endIndex;
 				for (int j = startIndex; j < endIndex; j++) {
-					vec3 normal = vec3(0, 1, 0);
 					vec4 tQuad = quadIntersect(roo, rdd, faces[j]);
 					if (tQuad.x > 0) {
 						if ((tQuad.x > EPSILON) && (tQuad.x < t)) {

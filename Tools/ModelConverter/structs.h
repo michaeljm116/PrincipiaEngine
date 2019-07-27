@@ -86,6 +86,7 @@ struct  Joint
 	aiMatrix4x4 offset;
 	glm::mat4 glInvBindPose;
 	glm::mat4 glTransform;
+	glm::mat4 glGlobalTransform;
 	glm::mat4 glOffset;
 	std::vector<JointObject> jointObjs;
 	glm::vec3 center;
