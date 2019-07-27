@@ -141,9 +141,24 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){
 	//build position and scale matrix;
 	positionM = glm::translate(tc->local.position);
 	scaleM = glm::scale(tc->local.scale);
-	hasParent ? tc->global.scale = tc->local.scale * ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->global.scale : tc->global.scale = tc->local.scale;
-	//combine them into 1 and multiply by parent if u haz parent;
 	glm::mat4 local = positionM * rotationM;// *scaleM;
+
+	//if (hasParent) {
+	//	TransformComponent* pt = (TransformComponent*)nc->parent->data->getComponent<TransformComponent>();
+	//	tc->global.scale = tc->local.scale * pt->global.scale;
+	//	tc->TRM = tc->world * local;
+	//	local = local * scaleM;
+	//	tc->world = pt->world * local;
+	//}
+	//else {
+	//	tc->global.scale = tc->local.scale;
+	//	tc->TRM = local;
+	//	local = local * scaleM;
+	//	tc->world = local;
+	//}
+	hasParent ? tc->global.scale = tc->local.scale * ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->global.scale : tc->global.scale = tc->local.scale;
+	
+	//combine them into 1 and multiply by parent if u haz parent;
 	hasParent ? tc->TRM = ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->world * local : tc->TRM = local;
 	local = local * scaleM;
 	hasParent ? tc->world = ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->world * local : tc->world = local;

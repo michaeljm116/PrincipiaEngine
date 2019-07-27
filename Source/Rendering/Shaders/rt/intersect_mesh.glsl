@@ -3,11 +3,11 @@
 #include "structs.glsl"
 #include "layouts.glsl"
 
-flool boundsIntersect(vec3 rayO, vec3 rayD, in vec3 extents) {
+flool boundsIntersect(vec3 rayO, vec3 rayD) {
 
 	vec3 invDir = 1 / rayD;
 	vec3 invRay = invDir * rayO;
-	vec3 k = abs(invDir) * extents;
+	vec3 k = abs(invDir);
 
 	float tMin = FLT_MIN;
 	float tMax = FLT_MAX;

@@ -251,6 +251,7 @@ void RenderSystem::loadResources()
 		}
 	}
 
+	shapes.push_back(ssShape(glm::vec3(0.f), glm::vec3(1.f), -1));
 	compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
 	compute.storageBuffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
 	compute.storageBuffers.shapes.InitStorageBufferWithStaging(vkDevice, shapes, shapes.size());

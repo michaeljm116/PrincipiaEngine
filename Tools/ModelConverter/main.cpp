@@ -17,7 +17,6 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn);
 
 
 PrincipiaModel ReadPEModel(const char* pFile);
-bool SkeletonScaler(PrincipiaSkeleton& s);
 bool LoadDirectory(std::string directory);
 
 
@@ -141,7 +140,10 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 		binaryio.write(sj.name.c_str(), jointNameLength);
 		binaryio.write(CCAST(&sj.parentIndex), sizeof(int));
 		binaryio.write(CCAST(&sj.glInvBindPose), sizeof(glm::mat4)); //MEOW: THIS MAY NEED TO BE CONVERTED
-		binaryio.write(CCAST(&sj.glTransform), sizeof(glm::mat4));
+		
+		binaryio.write(CCAST(&sj.glGlobalTransform), sizeof(glm::mat4));
+		//binaryio.write(CCAST(&sj.glTransform), sizeof(glm::mat4));
+
 		binaryio.write(CCAST(&sj.center), sizeof(glm::vec3));
 		binaryio.write(CCAST(&sj.extents), sizeof(glm::vec3));
 		
@@ -405,8 +407,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 
 		/////////////////DO THE STUPID NAME THING HERE IF DOESN'T WORK PRIOR/////////////
 
-		aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
-		subset.transform = aiMatrix4x4ToGlm(subchild);
+		//aiMatrix4x4 subchild = sceneChildren.find(subset.name)->second->mTransformation;
+		//subset.transform = aiMatrix4x4ToGlm(subchild);
 		//m.meshes.push_back(subset);
 		ShapeType type = ShapeCheck(subset.name);
 		if (type == ShapeType::MESH) { 
@@ -536,27 +538,6 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	return true;
 }
 
-
-bool SkeletonScaler(PrincipiaSkeleton& s) {
-	//So first you have to find the global transform....
-	//then you get hte greatest extents for the globe, then for every local you have to divide by that ratio?
-	float maxE = FLT_MIN;
-	for (int j = 0; j < s.joints.size(); ++j) {
-		for (int i = 0; i < 3; ++i) {
-			maxE = maxVal(maxE, abs(s.joints[j].glTransform[i][3]));
-		}
-	}
-
-	float ratio = 1 / maxE;
-	for (int j = 0; j < s.joints.size(); ++j) {
-		for (int i = 0; i < 3; ++i) {
-			s.joints[j].glTransform[i][3] *= maxE;
-		}
-	}
-
-	return true;
-}
-
 bool LoadDirectory(std::string directory)
 {
 	for (const auto & p : fs::directory_iterator(directory)) {
@@ -574,9 +555,10 @@ bool LoadDirectory(std::string directory)
 			if (hasAnim) {
 				ConvertJointVerts(mod, skeleton);
 				GetJointExtents(mod, skeleton);
-				ModelScaler(mod);
+				//ModelScaler(mod);
+				//SkeletonScaler(skeleton);
 			}
-			else
+			//else
 			ModelScaler(mod);
 			if (triangulate)
 				mod.name += "_t";
@@ -611,22 +593,34 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
 		}
 	}
 
+	//LEGACY ALERT
 	//This gets a hashmap of the names of everybone the animations use
-	std::unordered_map<std::string, bool> animNameMap;
+	std::unordered_map<std::string, bool> boneNameMap;
 	auto numAnims = scene->mNumAnimations;
 	for (auto i = 0; i < numAnims; ++i) {
 		auto numChannels = scene->mAnimations[i]->mNumChannels;
 		for (auto c = 0; c < numChannels; c++) {
-			animNameMap[scene->mAnimations[i]->mChannels[c]->mNodeName.data] = true;
+			boneNameMap[scene->mAnimations[i]->mChannels[c]->mNodeName.data] = true;
 		}
 	}
+
+	//This gets a hashmap of the names of everybone the meshs use
+	//std::unordered_map<std::string, bool> boneNameMap;
+	//std::unordered_map<std::string, aiBone*> boneMap;
+	//for (size_t i = 0; i < scene->mNumMeshes; i++) {
+	//	aiMesh* mesh = scene->mMeshes[i];
+	//	for (size_t c = 0; c < mesh->mNumBones; c++) {
+	//		boneNameMap[mesh->mBones[c]->mName.data] = true;
+	//		boneMap[mesh->mBones[c]->mName.data] = mesh->mBones[c];
+	//	}
+	//}
 
 	//So we have a flat list of the rootnames, and a hash of the anim names
 	//we now go through the list of rootnames and if its in the anim names, push it in a new array
 	std::vector<aiNode*> confirmedNodes;
-	confirmedNodes.reserve(animNameMap.size());
+	confirmedNodes.reserve(boneNameMap.size());
 	for (auto i : nodes) {
-		if (animNameMap[i->mName.data] == true)
+		if (boneNameMap[i->mName.data] == true)
 			confirmedNodes.emplace_back(i);
 	}
 
@@ -653,9 +647,11 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
 		j.name = confirmedNodes[i]->mName.data;
 		j.parentIndex = parentIndexes[i];
 		j.transform = confirmedNodes[i]->mTransformation;
-		j.invBindPose = confirmedNodes[i]->mTransformation.Transpose();
+		j.invBindPose = confirmedNodes[i]->mTransformation.Inverse();// Transpose();
 		j.glTransform = aiMatrix4x4ToGlm(j.transform);
 		j.glInvBindPose = aiMatrix4x4ToGlm(j.invBindPose);
+		//j.offset = boneMap[j.name]->mOffsetMatrix;
+		//j.glOffset = aiMatrix4x4ToGlm(j.offset);
 
 		tds.skeletonJoints.emplace_back(j);
 	}

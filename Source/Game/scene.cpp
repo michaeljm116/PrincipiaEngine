@@ -196,6 +196,7 @@ void Scene::createSkinnedModel(rSkeleton resource, std::string name, glm::vec3 p
 	rs->updateJointMemory();
 	as->change(*entity);
 	parents.push_back(parent);
+	ts->recursiveTransform(parent);
 }
 
 
