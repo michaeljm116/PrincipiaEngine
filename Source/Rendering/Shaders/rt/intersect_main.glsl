@@ -109,17 +109,17 @@ sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 					norm.y = tQuad.z;
 				}
 			}
-			for (int s = j.startShape; s < j.endShape; ++s) {
-				Shape shape = shapes[s];
-				//shape.center = shape.center + vec3(j.world[3]).xyz;
-				//shape.extents = s.extents;
-				float tSphere = skinnedSphereIntersect(roo, rdd, shape);
-				if ((tSphere > EPSILON) && (tSphere < resT)) {
-					id = sectID(TYPE_SPHERE, s, -1);
-					resT = tSphere;
-				}
+		}
+		for (int s = j.startShape; s < j.endShape; ++s) {
+			Shape shape = shapes[s];
+			shape.center = vec3(j.world * vec4(shape.center, 1.f)).xyz;
+			//shape.center = shape.center + vec3(j.world[3]).xyz;
+			//shape.extents = s.extents;
+			float tSphere = skinnedSphereIntersect(rayO, rayD, shape);
+			if ((tSphere > EPSILON) && (tSphere < resT)) {
+				id = sectID(TYPE_SPHERE, s, -1);
+				resT = tSphere;
 			}
-
 		}
 
 	}

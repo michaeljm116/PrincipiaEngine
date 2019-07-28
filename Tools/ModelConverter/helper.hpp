@@ -229,6 +229,7 @@ bool SkeletonScaler(PrincipiaSkeleton& s) {
 
 	//Scale the bounds and verts
 	for (auto& joint : s.joints) {
+		joint.glGlobalTransform = world * joint.glGlobalTransform;
 		joint.center = glm::vec3(world * glm::vec4(joint.center, 1.f));
 		joint.extents = glm::vec3(world * glm::vec4(joint.extents, 1.f));
 		for (auto& vert : joint.verts)
@@ -260,8 +261,8 @@ bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
 		//	joint.glOffset = s.joints[joint.parentIndex].glOffset * joint.glInvBindPose :
 		//	joint.glOffset = joint.glInvBindPose * s.globalInverseTransform;
 		joint.parentIndex > -1 ?
-			joint.glGlobalTransform = s.joints[joint.parentIndex].glGlobalTransform * joint.glTransform :
-			joint.glGlobalTransform = joint.glTransform;// *s.globalInverseTransform;
+			joint.glGlobalTransform = joint.glInvBindPose * s.joints[joint.parentIndex].glGlobalTransform * joint.glTransform :
+			joint.glGlobalTransform = joint.glInvBindPose * joint.glTransform;// * s.globalInverseTransform;
 
 		glm::vec3 maxVert = -glm::vec3(FLT_MAX);
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
@@ -277,9 +278,10 @@ bool GetJointExtents(PrincipiaModel& m,  PrincipiaSkeleton& s) {
 
 		joint.center = glm::vec3((maxVert + minVert) * 0.5f);// , 1.f);// *joint.glOffset;
 		joint.extents = glm::vec3((maxVert - minVert) * 0.5f);// , 1.f);//  *joint.glOffset;
-		joint.glGlobalTransform[3] = joint.glGlobalTransform[3] - (glm::vec4(joint.glGlobalTransform[3] - glm::vec4(joint.center, 1.f)));
+		joint.glGlobalTransform[3] = joint.glGlobalTransform[3] - (joint.glGlobalTransform[3] - glm::vec4(joint.center, 1.f));
 
 		for (auto& vert : joint.verts) {
+			//vert.position = glm::vec3(s.globalInverseTransform * glm::vec4(vert.position, 1.f));
 			vert.position -= joint.center;// glm::vec3(glm::vec4(vert.position, 1.f) * joint.glOffset);
 			//vert.position -= glm::vec3(joint.glGlobalTransform[3]);
 		}

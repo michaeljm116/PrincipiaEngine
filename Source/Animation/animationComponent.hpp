@@ -28,7 +28,7 @@ struct JointComponent : public artemis::Component {
 	glm::mat4 global_Transform;
 	glm::mat4 final_Transform;
 
-	//glm::vec3 center;
+	glm::vec3 center;
 	glm::vec3 extents;
 	int parentIndex;
 	int uniqueID;
@@ -58,7 +58,7 @@ struct AnimationComponent : public artemis::Component {
 	std::vector<Channel> channels;
 	float time;
 	bool loop;
-	bool on = false;
+	bool on = true;
 
 	AnimationComponent(int id) {
 		time = 0.f;
