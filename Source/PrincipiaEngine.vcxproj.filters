@@ -653,6 +653,9 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\bvhSystem.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -1646,6 +1649,12 @@
     </ClInclude>
     <ClInclude Include="Audio\audioComponents.h">
       <Filter>Source Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\bvhSystem.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\kdtree.hpp">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

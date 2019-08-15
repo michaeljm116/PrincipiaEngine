@@ -80,7 +80,7 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 		
 		glm::mat4 world = glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
 		world[3] = glm::vec4(currentKey->pos, 1.f);
-		//world[3] = glm::vec4(currentKey->pos - (currentKey->pos - ac->skeleton.joints[i]->center), 1.f);
+		world[3] = glm::vec4(currentKey->pos - (currentKey->pos - ac->skeleton.joints[i]->center), 1.f);
 
 
 		bool animon = ac->on;
@@ -91,13 +91,18 @@ void AnimationSystem::processEntity(artemis::Entity & e)
 		if (animon) {
 			ac->channels[i].combined = world;// glm::translate(currentKey->pos) * glm::toMat4(currentKey->rot) * glm::scale(currentKey->sca);
 			//ac->channels[i].combined = glm::translate(pos) * glm::toMat4(rot) * glm::scale(sca);
-			if (pi > -1)
-				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[pi]->global_Transform * ac->skeleton.joints[i]->invBindPose *   ac->channels[i].combined;
-			else
+			if (pi > -1) {
+				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[i]->invBindPose * ac->skeleton.joints[pi]->global_Transform * ac->channels[i].combined;
+				ac->skeleton.joints[i]->global_Transform[3] = ac->skeleton.joints[i]->global_Transform[3] - (ac->skeleton.joints[i]->global_Transform[3] - glm::vec4(ac->skeleton.joints[i]->center, 1.f));
+				 
+			}
+			else {
 				ac->skeleton.joints[i]->global_Transform = ac->skeleton.joints[i]->invBindPose * ac->channels[i].combined;
+				ac->skeleton.joints[i]->global_Transform[3] = ac->skeleton.joints[i]->global_Transform[3] - (ac->skeleton.joints[i]->global_Transform[3] - glm::vec4(ac->skeleton.joints[i]->center, 1.f));
 
+			}
 			//
-			ac->skeleton.joints[i]->global_Transform[3] = ac->skeleton.joints[i]->global_Transform[3] - (ac->skeleton.joints[i]->global_Transform[3] - glm::vec4(ac->skeleton.joints[i]->center, 1.f));
+			//ac->skeleton.joints[i]->global_Transform[3] = ac->skeleton.joints[i]->global_Transform[3] - (ac->skeleton.joints[i]->global_Transform[3] - glm::vec4(ac->skeleton.joints[i]->center, 1.f));
 			ac->skeleton.joints[i]->final_Transform = tc->world * ac->skeleton.joints[i]->global_Transform;// *skele->globalInverseTransform;// *tc->worldM;
 		}
 		else {

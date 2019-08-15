@@ -57,6 +57,11 @@ void Scene::doStuff() {
 	//rs->buildBVH();
 }
 
+void Scene::buildBVH()
+{
+	//topLevelBVH.build(SplitMethod::Middle, TreeType::Recursive, objectComps, objects);
+}
+
 #pragma region Creation Functions
 void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic) {
 

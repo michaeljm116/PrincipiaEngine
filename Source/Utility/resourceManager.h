@@ -50,29 +50,29 @@ public:
 	rConfig& getConfig() { return config; };
 
 #pragma region Models
-	rModel&		getModel(int i) { return models[i]; };
-	rModel&		getModel(std::string n) {
+	inline rModel&		getModel(int i) { return models[i]; };
+	inline rModel&		getModel(std::string n) {
 		for (std::vector<rModel>::iterator itr = models.begin(); itr != models.end(); ++itr) {
 			if (itr->name == n)
 				return *itr;
 		}
 		return rModel();
 	}
-	rModel&		getModelU(int i) {
+	inline rModel&		getModelU(int i) {
 		for (std::vector<rModel>::iterator itr = models.begin(); itr != models.end(); ++itr) {
 			if (itr->uniqueID == i) {
 				return *itr;
 			}
 		}
 	}
-	int			getModelIndex(std::string n) {
+	inline int			getModelIndex(std::string n) {
 		for (int i = 0; i < models.size(); ++i) {
 			if (models[i].name == n)
 				return i;
 		}
 		return 0;
 	}
-	int			getModelIndex(int n) {
+	inline int			getModelIndex(int n) {
 		for (int i = 0; i < models.size(); ++i) {
 			if (models[i].uniqueID == n)
 				return i;
@@ -80,58 +80,58 @@ public:
 		return 0;
 	}
 
-	std::vector<rModel> getModels() { return models; };
+	inline std::vector<rModel> getModels() { return models; };
 
 #pragma endregion
-	std::vector<rSkeleton> getSkeletons() { return skeletons; };
-	rSkeleton& getSkeleton(int i) {
+	inline std::vector<rSkeleton> getSkeletons() { return skeletons; };
+	inline rSkeleton& getSkeleton(int i) {
 		return skeletons[i];
 	}
-	rSkeleton& getSkeletonID(int id) {
+	inline rSkeleton& getSkeletonID(int id) {
 		for (std::vector<rSkeleton>::iterator itr = skeletons.begin(); itr != skeletons.end(); ++itr) {
 			if (itr->id == id) {
 				return *itr;
 			}
 		}
 	}
-	int getSkeletonIndex(int id) {
+	inline int getSkeletonIndex(int id) {
 		for (int i = 0; i < skeletons.size(); ++i)
 			if (skeletons[i].id == id)
 				return i;
 	}
 
 #pragma region materials
-	rMaterial& getMaterial(int i) { return materials[i]; };
-	rMaterial getMaterial(std::string n) {
+	inline rMaterial& getMaterial(int i) { return materials[i]; };
+	inline rMaterial getMaterial(std::string n) {
 		for (auto itr = materials.begin(); itr != materials.end(); ++itr) {https://www.amazon.com/gp/mas/your-account/myapps
 			if (itr->name == n)
 				return *itr;
 		}
 		return rMaterial();
 	}
-	int		  getMaterialIndex(std::string n) {
+	inline int		  getMaterialIndex(std::string n) {
 		for (int i = 0; i < materials.size(); ++i) {
 			if (materials[i].name == n)
 				return i;
 		}
 		return 0;
 	}
-	rMaterial getMaterialU(int i) {
+	inline rMaterial getMaterialU(int i) {
 		for (std::vector<rMaterial>::const_iterator itr = materials.begin(); itr != materials.end(); ++itr) {
 			if (itr->uniqueID == i)
 				return *itr;
 			return rMaterial();
 		}
 	}
-	int getMaterialIndexU(int i) {
+	inline int getMaterialIndexU(int i) {
 		for (size_t j = 0; j < materials.size(); ++j) {
 			if (materials[j].uniqueID == i)
 				return j;
 		}
 		return 0;
 	}
-	std::vector<rMaterial> getMaterials() { return materials; };
-	void addMaterial(std::string s, glm::vec3 diff, float r, float rg, float tr, float ri) {
+	inline std::vector<rMaterial> getMaterials() { return materials; };
+	inline void addMaterial(std::string s, glm::vec3 diff, float r, float rg, float tr, float ri) {
 		rMaterial mat = rMaterial(s, diff, r, rg, tr, ri);
 		materials.push_back(mat);
 	}

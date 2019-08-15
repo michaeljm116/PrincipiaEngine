@@ -215,6 +215,7 @@
     <ClCompile Include="Rendering\renderbase.cpp" />
     <ClCompile Include="Rendering\rendermanagers.cpp" />
     <ClCompile Include="Rendering\Texture.cpp" />
+    <ClCompile Include="Utility\bvhSystem.cpp" />
     <ClCompile Include="Utility\resourceManager.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -550,8 +551,10 @@
     <ClInclude Include="Rendering\VulkanBuffer.hpp" />
     <ClInclude Include="Rendering\VulkanInitializers.hpp" />
     <ClInclude Include="Utility\bvh.hpp" />
+    <ClInclude Include="Utility\bvhSystem.h" />
     <ClInclude Include="Utility\componentIncludes.h" />
     <ClInclude Include="Utility\helpers.h" />
+    <ClInclude Include="Utility\kdtree.hpp" />
     <ClInclude Include="Utility\key.h" />
     <ClInclude Include="Utility\mouse.h" />
     <ClInclude Include="Utility\nodeComponent.hpp" />

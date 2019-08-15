@@ -17,6 +17,7 @@ loading/saving scene, creating/copying/deleting objects
 #include "Gameplay/ballScoreSystem.h"
 #include "Gameplay/ballComponents.hpp"
 #include "../Audio/audioComponents.h"
+#include "../Utility/bvh.hpp"
 
 #define SCENE Scene::get()
 
@@ -47,12 +48,16 @@ public:
 	ControllerSystem* input;
 
 	std::vector<NodeComponent*> parents;
+	std::vector<TransformComponent*> transforms;
+	BVHTree topLevelBVH;
 
 	int sceneNumber;
 	
 	void init(artemis::World& w);
 
 	void doStuff();
+	void buildBVH();
+
 	void createModel(rModel resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic = true);
 	void createSkinnedModel(rSkeleton resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic = true);
 
