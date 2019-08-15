@@ -1,11 +1,2 @@
 ﻿  main.cpp
-c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(9): error C2011: 'sqt': 'struct' type redefinition
-  c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(9): note: see declaration of 'sqt'
-c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(18): error C2011: 'Bounds': 'struct' type redefinition
-  c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(18): note: see declaration of 'Bounds'
-c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(25): error C2011: 'TransformComponent': 'struct' type redefinition
-  c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(25): note: see declaration of 'TransformComponent'
-c:\users\mike\principiaengine\tools\scenetester\scenetester\kdtree.hpp(40): error C2027: use of undefined type 'Bounds'
-  c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(18): note: see declaration of 'Bounds'
-c:\users\mike\principiaengine\tools\scenetester\scenetester\kdtree.hpp(47): error C2027: use of undefined type 'Bounds'
-  c:\users\mike\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(18): note: see declaration of 'Bounds'
+  SceneTester.vcxproj -> C:\Users\Mike\PrincipiaEngine\Tools\SceneTester\SceneTester\Debug\SceneTester.exe

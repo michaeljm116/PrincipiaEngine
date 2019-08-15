@@ -38,7 +38,7 @@
     <ClInclude Include="kdtree.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bvh.hpp">
+    <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

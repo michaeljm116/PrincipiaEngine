@@ -122,8 +122,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Lib\tinyxml2\tinyxml2.h" />
-    <ClInclude Include="bvh.hpp" />
     <ClInclude Include="kdtree.hpp" />
+    <ClInclude Include="main.h" />
     <ClInclude Include="sceneLoader.hpp" />
     <ClInclude Include="transformComponent.hpp" />
   </ItemGroup>

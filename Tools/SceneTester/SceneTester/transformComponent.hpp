@@ -6,6 +6,14 @@
 #include <gtx/quaternion.hpp>
 #include <gtx/transform.hpp>
 
+struct Bounds {
+	glm::vec3 center;
+	glm::vec3 extents;
+
+	Bounds(const glm::vec3& c, const glm::vec3& e) : center(c), extents(e) {};
+	Bounds() {};
+};
+
 struct sqt {
 	glm::quat rotation;
 	glm::vec3 position;
@@ -15,13 +23,6 @@ private:
 	float _pad[2];
 }; //48bytes //can be 40 if necessary
 
-struct Bounds {
-	glm::vec3 center;
-	glm::vec3 extents;
-
-	Bounds(const glm::vec3& c, const glm::vec3& e) : center(c), extents(e) {};
-	Bounds() {};
-};
 struct TransformComponent{
 	glm::mat4 world; //	translation rotation scale matrix
 	glm::mat4 TRM;  // note: this is a Translation+Rotation Matrix, scale is left separate

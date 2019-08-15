@@ -1,0 +1,18 @@
+okay so what you want to do is initialize and instantiate memory etc...
+but then if you have prims left then do the left-righti stufff
+how do you do this recursively?!?!??  or do u need to?!?!?
+
+what if you do this breathfirsty
+i mean doing this insertively youve done before....
+
+step 1 build the node with no left and right
+step 2 build the left and right
+	but the left and right have no left and right
+step 2 also if leaf then build leaf
+
+find median and axis
+instanciate node with those two things
+link it to whatever tree structure its already apart of????
+so there should be a setleft setright thing
+it takes the prev node and sets it to the data
+so you pass in the parent node and you put or no well idk u want no returns irght or do you why is this so  confusing rn?!?!?!
