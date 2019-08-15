@@ -849,12 +849,6 @@ void RenderSystem::recreateSwapChain()
 
 #pragma region CREATION FUNCTIONS
 
-void RenderSystem::buildBVH()
-{
-	topLevelBVH.build(SplitMethod::Middle, TreeType::Recursive, objectComps, objects);
-	int a = 4;
-}
-
 void RenderSystem::createGraphicsPipeline() {
 	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState =
 		vks::initializers::pipelineInputAssemblyStateCreateInfo(

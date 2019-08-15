@@ -88,7 +88,6 @@ public:
 	ssJoint& getJoint(int i) { return joints[i]; };
 	ssPrimitive& getObject(int i) { return objects[i]; };
 	ssLight& getLight(int i) { return lights[i]; };
-	void buildBVH();
 
 private:
 
@@ -159,7 +158,6 @@ private:
 	std::unordered_map<int32_t, std::pair<int, int>> jointAssigner;
 	std::unordered_map<int32_t, std::pair<int, int>> shapeAssigner;
 
-	BVHTree topLevelBVH;
 	Scripto testScript;
 
 

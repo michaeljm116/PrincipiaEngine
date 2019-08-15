@@ -20,7 +20,7 @@ struct TransformComponent : public artemis::Component {
 
 	glm::vec3 eulerRotation;
 
-	TransformComponent() { local.scale = glm::vec4(1.f); local.rotation = glm::quat(); local.position = glm::vec4(0); world = glm::mat4(0); };
+	TransformComponent() { local.scale = glm::vec3(1.f); local.rotation = glm::quat(); local.position = glm::vec3(0); world = glm::mat4(0); };
 	TransformComponent(glm::vec3 center, glm::vec3 extents) {
 		*this = TransformComponent(center, glm::vec3(0.f), extents);
 	}

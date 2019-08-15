@@ -43,26 +43,26 @@ enum class SplitMethod {
 	Middle, SAH, EqualsCounts
 };
 struct BVHBounds {
-	glm::vec2 center;
-	glm::vec2 extents;
+	glm::vec3 center;
+	glm::vec3 extents;
 
-	BVHBounds(glm::vec2 c, glm::vec2 e) : center(c), extents(e) {};
+	BVHBounds(glm::vec3 c, glm::vec3 e) : center(c), extents(e) {};
 	BVHBounds() {};
-	glm::vec2 max() {
+	glm::vec3 max() {
 		return center + extents;
 	}
-	glm::vec2 min() {
+	glm::vec3 min() {
 		return center - extents;
 	}
 	
 	BVHBounds combine(BVHBounds b) {
 		//find the highest and the lowest x and y values
-		glm::vec2 max = tulip::maxV(this->max(), b.max());
-		glm::vec2 min = tulip::minV(this->min(), b.min());
+		glm::vec3 max = tulip::maxV(this->max(), b.max());
+		glm::vec3 min = tulip::minV(this->min(), b.min());
 
 		//center = halfway between the two, extents = max-center
-		glm::vec2 c = (max + min) * 0.5f;
-		glm::vec2 e = max - c;
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 e = max - c;
 
 		return BVHBounds(c, e);
 	}
@@ -182,24 +182,24 @@ private:
 	BVHBounds computeBounds(const std::vector<ssPrimitive> &prims, int s, int e) {
 		//make an aabb of the entire scene basically
 		//find the minimum x and maximum x and bounds = max-min/2 = center
-		glm::vec2 min(FLT_MAX);
-		glm::vec2 max(-FLT_MAX);
+		glm::vec3 min(FLT_MAX);
+		glm::vec3 max(-FLT_MAX);
 		for (int i = s; i < e; ++i) {
-			min = tulip::minV(min, glm::vec2(prims[i].world[3]) + glm::vec2(prims[i].extents));
-			max = tulip::maxV(max, glm::vec2(prims[i].world[3]) + glm::vec2(prims[i].extents));
+			min = tulip::minV(min, glm::vec3(prims[i].world[3]) + glm::vec3(prims[i].extents));
+			max = tulip::maxV(max, glm::vec3(prims[i].world[3]) + glm::vec3(prims[i].extents));
 		}
-		glm::vec2 c = (max + min) * 0.5f;
-		glm::vec2 ex = max - c;
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 ex = max - c;
 		
 		return BVHBounds(c, ex);
 	}
 	glm::vec2 computeCenter(const std::vector<ssPrimitive> &prims, int s, int e) {
-		glm::vec2 min(FLT_MAX);
-		glm::vec2 max(-FLT_MAX);
+		glm::vec3 min(FLT_MAX);
+		glm::vec3 max(-FLT_MAX);
 		for (int i = s; i < e; ++i) {
 			min.length();
-			min = tulip::minV(min, glm::vec2(prims[i].world[3]));
-			max = tulip::maxV(max, glm::vec2(prims[i].world[3]));
+			min = tulip::minV(min, glm::vec3(prims[i].world[3]));
+			max = tulip::maxV(max, glm::vec3(prims[i].world[3]));
 		}
 
 		return glm::vec2((max - min) * 0.5f);
