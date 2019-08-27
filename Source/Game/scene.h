@@ -8,16 +8,13 @@ loading/saving scene, creating/copying/deleting objects
 
 #include "../pch.h"
 #include "../Utility/resourceManager.h"
-#include "../Physics/physicsSystem.h"
 #include "../Animation/animationSystem.h"
 #include "script.hpp"
 #include "transformSystem.h"
 #include "Application/controllerSystem.h"
 #include "Gameplay/characterController.h"
-#include "Gameplay/ballScoreSystem.h"
-#include "Gameplay/ballComponents.hpp"
 #include "../Audio/audioComponents.h"
-#include "../Utility/bvh.hpp"
+#include "../Utility/bvhSystem.h"
 
 #define SCENE Scene::get()
 
@@ -40,7 +37,6 @@ public:
 
 	RenderSystem*	rs;
 	TransformSystem* ts;
-	PhysicsSystem* ps;
 	EngineUISystem* ui;
 	AnimationSystem* as;
 
@@ -49,13 +45,15 @@ public:
 
 	std::vector<NodeComponent*> parents;
 	std::vector<TransformComponent*> transforms;
-	BVHTree topLevelBVH;
+
+	BvhSystem* bvh;
 
 	int sceneNumber;
 	
 	void init(artemis::World& w);
 
 	void doStuff();
+	void postStart();
 	void buildBVH();
 
 	void createModel(rModel resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic = true);

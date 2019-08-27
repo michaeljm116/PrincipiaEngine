@@ -4,7 +4,6 @@
 #include "Rendering/rendermanagers.h"
 #include "Rendering/renderSystem.h"
 #include "Rendering/engineUISystem.h"
-#include "Physics/physicsSystem.h"
 #include "ArtemisFrameWork/Artemis/Artemis.h"
 #include "Utility/resourceManager.h"
 #include "Game/scene.h"
@@ -21,7 +20,6 @@ int main() {
 	RenderSystem*	 renderSys	  = (RenderSystem*)	  sm->setSystem(new RenderSystem());
 	EngineUISystem*	 engineUISys  = (EngineUISystem*) sm->setSystem(new EngineUISystem());
 	TransformSystem* transformSys = (TransformSystem*)sm->setSystem(new TransformSystem());
-	PhysicsSystem*	 physicsSys	  = (PhysicsSystem*)  sm->setSystem(new PhysicsSystem());
 	AnimationSystem* animSys	  = (AnimationSystem*)sm->setSystem(new AnimationSystem());
 	ApplicationSystem* appSys	  = (ApplicationSystem*)sm->setSystem(new ApplicationSystem());
 
@@ -68,15 +66,18 @@ int main() {
 		Window::get().init();
 		Input::get().init();
 		transformSys->initialize();
-		physicsSys->initialize();
 		//physicsSys->addGroundForNow();
 		renderSys->preInit();
 		Scene::get().init(world);
+		//world.loopStart();
 		Scene::get().doStuff();
 		renderSys->initialize();
 		animSys->initialize();
 		appSys->initialize();
 		//appSys->instantGameStart();
+
+		world.loopStart();
+		Scene::get().postStart();
 
 		static std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
 		static std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();

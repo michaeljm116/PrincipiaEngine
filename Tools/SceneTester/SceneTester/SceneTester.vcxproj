@@ -122,10 +122,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Lib\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="bvh.hpp" />
+    <ClInclude Include="helper.h" />
     <ClInclude Include="kdtree.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="sceneLoader.hpp" />
     <ClInclude Include="transformComponent.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Text.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

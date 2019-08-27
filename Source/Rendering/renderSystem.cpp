@@ -15,6 +15,7 @@ static const int MAXOBJS		= 256;
 static const int MAXLIGHTS		= 256;
 static const int MAXGUIS		= 256;
 static const int MAXJOINTS		= 256;
+static const int MAXNODES		= 256;
 
 // Setup and fill the compute shader storage buffers containing primitives for the raytraced scene
 void RenderSystem::prepareStorageBuffers()
@@ -50,6 +51,7 @@ void RenderSystem::prepareStorageBuffers()
 	guiComp->ref = guis.size();
 	guis.push_back(gui);
 	compute.storageBuffers.guis.InitStorageBufferCustomSize(vkDevice, guis, guis.size(), MAXGUIS);
+	compute.storageBuffers.bvh.InitStorageBufferCustomSize(vkDevice, bvh, bvh.size(), MAXNODES);
 }
 
 // Prepare a texture target that is used to store compute shader calculations
@@ -340,6 +342,8 @@ void RenderSystem::addNode(NodeComponent* node) {
 
 		//put into list
 		objComp->objIndex = objects.size();
+		objComp->center = trans->world[3];
+		objComp->extents = trans->local.scale;
 		objects.push_back(object);
 		objectComps.push_back(objComp);
 
@@ -643,6 +647,60 @@ void RenderSystem::updateCamera(CameraComponent* c) {
 	compute.uniformBuffer.ApplyChanges(vkDevice, compute.ubo);
 
 	//updateUniformBuffer();
+}
+void RenderSystem::updateBVH(std::vector<artemis::Entity*>& orderedPrims, std::shared_ptr<BVHNode> root, int numNodes)
+{
+	//reserve newobjects array
+	std::vector<ssPrimitive> newObjs;
+	size_t numPrims = orderedPrims.size();
+	newObjs.reserve(numPrims);
+
+	//fill in the new objects array;
+	for (size_t i = 0; i < numPrims; ++i) {
+		PrimitiveComponent* pc = (PrimitiveComponent*)orderedPrims[i]->getComponent<PrimitiveComponent>();
+		if (pc) {
+			newObjs.push_back(objects[pc->objIndex]);
+			pc->objIndex = newObjs.size() - 1;
+		}
+	}
+
+	//replace objects with it
+	objects = std::move(newObjs);
+
+	//now that the objs are ordered relative to the BVH, you can flatten the BVH;
+	int offset = 0;
+	bvh.reserve(numNodes);
+	flattenBVH(root, &offset);
+
+	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
+	updateDescriptors();
+	
+}
+int RenderSystem::flattenBVH(std::shared_ptr<BVHNode> node, int * offset)
+{
+	//first pusch back a node
+	ssBVHNode bvhNode;
+	bvhNode.center = node->bounds.center;
+	bvhNode.extents = node->bounds.extents;
+	//bvhNode.splitAxis = node->splitAxis;
+	bvh.emplace_back(bvhNode);
+	int index = bvh.size() - 1;
+	
+	//increment the offset
+	*offset += 1;
+
+	//check if leaf
+	if (node->nPrims > 0) {
+		bvh[index].numChildren = node->nPrims;
+		bvh[index].offset = node->firstPrimOffset;
+	} //else make new node
+	else {
+		flattenBVH(node->children[0], offset);
+		bvh[index].offset = flattenBVH(node->children[1], offset);
+
+	}
+	return *offset;
 }
 //void RenderSystem::updateLight(LightComponent* l) {
 //	compute.ubo.lightPos = l->pos;
@@ -1092,7 +1150,13 @@ void RenderSystem::updateDescriptors()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			9,
-			&compute.storageBuffers.guis.Descriptor())
+			&compute.storageBuffers.guis.Descriptor()),
+		//Binding 10 for bvhnodes
+		vks::initializers::writeDescriptorSet(
+			compute.descriptorSet,
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			10,
+			&compute.storageBuffers.bvh.Descriptor())
 	};
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
 	//vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -1104,7 +1168,7 @@ void RenderSystem::createDescriptorPool() {
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 3 + MAXTEXTURES),	// Graphics image samplers || +4 FOR TEXTURE
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 8),			// Storage buffer for the scene primitives
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 9),			// Storage buffer for the scene primitives
 		//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
 	};
 
@@ -1255,11 +1319,16 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			9),
-		// Binding 10: the textures
+		// bINDING 10: the bvh
+		vks::initializers::descriptorSetLayoutBinding(
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			VK_SHADER_STAGE_COMPUTE_BIT,
+			10),
+		// Binding 11: the textures
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_SAMPLER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			10, MAXTEXTURES)
+			11, MAXTEXTURES)
 	};
 
 	VkDescriptorSetLayoutCreateInfo descriptorLayout =
@@ -1352,12 +1421,18 @@ void RenderSystem::prepareCompute()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			9,
-			&compute.storageBuffers.lights.Descriptor()),
-		//bINDING 10 FOR TEXTURES
+			&compute.storageBuffers.guis.Descriptor()),
+		//Binding 10 for bvhs
+		vks::initializers::writeDescriptorSet(
+			compute.descriptorSet,
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			10,
+			&compute.storageBuffers.bvh.Descriptor()),
+		//bINDING 11 FOR TEXTURES
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet, 
 			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-			10, 
+			11, 
 			textureimageinfos, MAXTEXTURES)
 	};
 
@@ -1408,6 +1483,7 @@ void RenderSystem::destroyCompute()
 	compute.storageBuffers.materials.Destroy(vkDevice);
 	compute.storageBuffers.lights.Destroy(vkDevice);
 	compute.storageBuffers.guis.Destroy(vkDevice);
+	compute.storageBuffers.bvh.Destroy(vkDevice);
 
 	computeTexture.destroy(vkDevice.logicalDevice); 
 	for(int i = 0; i < MAXTEXTURES; ++i)

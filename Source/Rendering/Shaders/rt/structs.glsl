@@ -16,6 +16,13 @@ struct Primitive
 	int endIndex;
 };
 
+struct BVHNode {
+	vec3 center;
+	int offset;
+	vec3 extents;
+	int numChildren;
+};
+
 struct Joint {
 	mat4 world;
 	vec3 extents;

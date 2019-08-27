@@ -9,7 +9,7 @@ static const int COMPONENT_TRANSFORM = 0x02;
 
 
 namespace SceneLoader {
-	std::vector<TransformComponent*> loadNodes(tinyxml2::XMLElement* start, tinyxml2::XMLElement* finish) {
+	std::vector<TransformComponent*> loadNodes(tinyxml2::XMLElement* start, tinyxml2::XMLElement* finish, TransformComponent* par) {
 		std::vector<TransformComponent*> ret;
 		bool lastOne = false;
 		// node
@@ -26,6 +26,8 @@ namespace SceneLoader {
 			start->QueryIntAttribute("Flags", &flags);
 			start->QueryIntAttribute("Tags", &tags);
 			start->QueryBoolAttribute("Dynamic", &dynamic);
+
+			TransformComponent* trans = nullptr;
 
 			if (flags & COMPONENT_TRANSFORM) {
 				glm::vec3 pos;
@@ -49,14 +51,75 @@ namespace SceneLoader {
 				scale->QueryFloatAttribute("y", &sca.y);
 				scale->QueryFloatAttribute("z", &sca.z);
 
-				TransformComponent* trans = new TransformComponent(pos, rot, sca);
+				trans = new TransformComponent(pos + par->local.position, rot * par->local.rotation, sca * par->local.scale);
 
 				ret.push_back(trans);
 			}
 
 			////////////////// HAS CHILDREN ///////////////////
 			if (hasChildren) {
-				std::vector<TransformComponent*> children = loadNodes(start->FirstChildElement("Node"), start->LastChildElement("Node"));
+				std::vector<TransformComponent*> children = loadNodes(start->FirstChildElement("Node"), start->LastChildElement("Node"), trans);
+				for (auto c : children)
+					ret.push_back(c);
+			}
+			///////////////////////////////////////////////////
+
+			//loop it up;
+			if (start != finish)
+				start = start->NextSiblingElement();
+			else
+				lastOne = true;
+		}
+		return ret;
+	}
+
+	std::vector<TransformComponent*> loadNodes(tinyxml2::XMLElement* start, tinyxml2::XMLElement* finish) {
+		std::vector<TransformComponent*> ret;
+		bool lastOne = false;
+		// node
+		while (!lastOne) {
+
+			const char* name;
+			bool hasChildren;
+			int flags;
+			int tags;
+			bool dynamic;
+
+			start->QueryStringAttribute("Name", &name);
+			start->QueryBoolAttribute("hasChildren", &hasChildren);
+			start->QueryIntAttribute("Flags", &flags);
+			start->QueryIntAttribute("Tags", &tags);
+			start->QueryBoolAttribute("Dynamic", &dynamic);
+			TransformComponent* trans = nullptr;
+			if (flags & COMPONENT_TRANSFORM) {
+				glm::vec3 pos;
+				glm::vec3 rot;
+				glm::vec3 sca;
+
+				tinyxml2::XMLElement* transform = start->FirstChildElement("Transform");
+
+				tinyxml2::XMLElement* position = transform->FirstChildElement("Position");
+				position->QueryFloatAttribute("x", &pos.x);
+				position->QueryFloatAttribute("y", &pos.y);
+				position->QueryFloatAttribute("z", &pos.z);
+
+				tinyxml2::XMLElement* rotation = transform->FirstChildElement("Rotation");
+				rotation->QueryFloatAttribute("x", &rot.x);
+				rotation->QueryFloatAttribute("y", &rot.y);
+				rotation->QueryFloatAttribute("z", &rot.z);
+
+				tinyxml2::XMLElement* scale = transform->FirstChildElement("Scale");
+				scale->QueryFloatAttribute("x", &sca.x);
+				scale->QueryFloatAttribute("y", &sca.y);
+				scale->QueryFloatAttribute("z", &sca.z);
+
+				trans = new TransformComponent(pos, rot, sca);
+				ret.push_back(trans);
+			}
+
+			////////////////// HAS CHILDREN ///////////////////
+			if (hasChildren) {
+				std::vector<TransformComponent*> children = loadNodes(start->FirstChildElement("Node"), start->LastChildElement("Node"), trans);
 				for (auto c : children)
 					ret.push_back(c);
 			}

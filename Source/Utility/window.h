@@ -7,48 +7,49 @@ probably should be a system instead
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include "../pch.h"
+#include <GLFW/glfw3.h>
 
 //#define UI_ENABLED
 
 #define WINDOW Window::get()
 
-class Window
-{
-public:
-	static Window& get() {
-		static Window instance;
+	class Window
+	{
+	public:
+		static Window& get() {
+			static Window instance;
 
-		return instance;
-	}
-private: 
-	Window() {}
+			return instance;
+		}
+	private:
+		Window() {}
 
-public: 
-	void init();
-	void update();
-	void toggleMaximized();
-	void resize();
-
-
-	GLFWwindow*		getWindow() { return window; }
-	uint16_t		getHeight() { return height; }
-	uint16_t		getWidth()	{ return width; }
+	public:
+		void init();
+		void update();
+		void toggleMaximized();
+		void resize();
 
 
-	Window(Window const&) = delete;
-	void operator=(Window const&) = delete;
-	~Window();
+		GLFWwindow*		getWindow() { return window; }
+		uint16_t		getHeight() { return height; }
+		uint16_t		getWidth() { return width; }
 
-	
 
-private:
-	GLFWwindow* window;
-	GLFWmonitor* primary;
-	uint16_t	height;
-	uint16_t	width;
-	bool		maximized;
-	const GLFWvidmode* mode;
-};
+		Window(Window const&) = delete;
+		void operator=(Window const&) = delete;
+		~Window();
+
+
+
+	private:
+		GLFWwindow* window;
+		GLFWmonitor* primary;
+		uint16_t	height;
+		uint16_t	width;
+		bool		maximized;
+		const GLFWvidmode* mode;
+	};
+
 
 #endif // !WINDOW_H

@@ -1,6 +1,5 @@
 #pragma once
 #include "../../Utility/componentIncludes.h"
-#include "../../Physics/physicsSystem.h"
 #include "characterComponent.hpp"
 #include "../Application/controllerComponent.hpp"
 
@@ -13,7 +12,6 @@ private:
 
 	artemis::EntityManager* em;
 	artemis::SystemManager* sm;
-	PhysicsSystem* ps;
 
 public:
 	CharacterController();

@@ -13,7 +13,7 @@ much rework but brotha aint got time fo dat
 #include "../Game/camera.hpp"
 #include "../Game/script.hpp"
 #include "../Utility/window.h"
-#include "../Utility/bvh.hpp"
+#include "../Utility/bvhComponent.hpp"
 
 static const int MAXTEXTURES = 5;
 
@@ -76,6 +76,8 @@ public:
 	};
 	void updateBuffers();
 	void updateCamera(CameraComponent* c);
+	void updateBVH(std::vector<artemis::Entity*>& ordredPrims, std::shared_ptr<BVHNode> root, int numNodes);
+	int flattenBVH(std::shared_ptr<BVHNode> node, int* offset);
 	//void updateLight(LightComponent* l);
 
 	virtual void cleanup();
@@ -121,6 +123,7 @@ private:
 			VBuffer<ssMaterial> materials;	// (Shader) storage buffer object with scene Materials
 			VBuffer<ssLight> lights;
 			VBuffer<ssGUI> guis;
+			VBuffer<ssBVHNode> bvh;			// for the bvh bruh
 
 		} storageBuffers;
 
@@ -141,12 +144,12 @@ private:
 		VBuffer<UBOCompute> uniformBuffer;			// Uniform buffer object containing scene data
 	} compute;
 
-
 	std::vector<ssPrimitive> objects;
 	std::vector<ssJoint> joints;
 	std::vector<ssMaterial> materials;
 	std::vector<ssLight> lights;
 	std::vector<ssGUI> guis;
+	std::vector<ssBVHNode> bvh;
 
 
 	std::vector<MeshComponent*> meshComps;
