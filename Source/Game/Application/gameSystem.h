@@ -5,12 +5,7 @@ use or not
 */
 #include "../scene.h" 
 #include "applicationComponents.h"
-#include "../Gameplay/ballCollisionSystem.h"
-#include "../Gameplay/ballMovementSystem.h"
-#include "../Gameplay/ballSpawnSystem.h"
-#include "../Gameplay/ballScoreSystem.h"
 #include "../Gameplay/characterController.h"
-#include "../Physics/collisionSystem.h"
 #include "../Audio/audioSystem.h"
 
 class GameSystem : public artemis::EntityProcessingSystem {
@@ -23,17 +18,11 @@ private:
 
 	RenderSystem*	rs;
 	TransformSystem* ts;
-	PhysicsSystem* ps;
 	EngineUISystem* ui;
 	AnimationSystem* as;
 
 	CharacterController* cc;
 
-	CollisionSystem* cs;
-	BallSpawnSystem* spawner;
-	BallScoreSystem* scorer;
-	BallMovementSystem* bms;
-	BallCollisionSystem* bcs;
 	AudioSystem* audio;
 
 

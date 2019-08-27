@@ -15,11 +15,13 @@ void Scene::init(artemis::World& w) {
 	rs = (RenderSystem*)sm->getSystem<RenderSystem>();
 	ts = (TransformSystem*)sm->getSystem<TransformSystem>();
 	ui = (EngineUISystem*)sm->getSystem<EngineUISystem>();
-	ps = (PhysicsSystem*)sm->getSystem<PhysicsSystem>();
 	as = (AnimationSystem*)sm->getSystem<AnimationSystem>();
 
 	cc = (CharacterController*)sm->setSystem(new CharacterController());
 	input = (ControllerSystem*)sm->setSystem(new ControllerSystem());
+
+	bvh = (BvhSystem*)sm->setSystem(new BvhSystem());
+	bvh->initialize();
 
 	LoadScene("Pong/Arena");
 	//LoadScene("Level1/QuadsTest");
@@ -55,6 +57,12 @@ void Scene::doStuff() {
 	}
 
 	//rs->buildBVH();
+}
+
+void Scene::postStart()
+{
+	bvh->build();
+	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
 }
 
 void Scene::buildBVH()
@@ -105,6 +113,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		rs->addNode(childNode);
 
 		++i;
+		child->refresh();
 	}
 	for (i = 0; i < resource.shapes.size(); ++i) {
 		//Create Entity
@@ -124,6 +133,8 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		childNode->flags |= COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE;
 		parent->children.push_back(childNode);
 		rs->addNode(childNode);
+
+		child->refresh();
 	}
 
 	//rs->addNode(parent);
@@ -194,6 +205,7 @@ void Scene::createSkinnedModel(rSkeleton resource, std::string name, glm::vec3 p
 		//jointComp->
 
 		animComp->skeleton.joints.emplace_back(jointComp);
+		child->refresh();
 	}
 
 	animComp->channels.resize(i);
@@ -283,10 +295,10 @@ void Scene::insertRigidBody(NodeComponent* nc) {
 	nc->flags |= COMPONENT_RIGIDBODY;
 	TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 
-	nc->data->addComponent(new RigidBodyComponent(1.f, tc->world));
-	nc->data->refresh();
-	ps->change(*nc->data);
-	ps->addNode(nc);
+	//nc->data->addComponent(new RigidBodyComponent(1.f, tc->world));
+	//nc->data->refresh();
+	//ps->change(*nc->data);
+	//ps->addNode(nc);
 
 	if (nc->flags & COMPONENT_COLIDER) {
 		//nc->data->addComponent(new CollisionComponent());
@@ -348,7 +360,6 @@ void Scene::deleteNode(std::vector<NodeComponent*>& nParents, int nIndex)
 		deleteAllChildren(parent);
 	//delete stuff 
 	rs->deleteNode(parent);
-	ps->deleteNode(parent);
 	em->remove(*parent->data);
 	nParents.erase(nParents.begin() + nIndex);	
 	rs->updateObjectMemory();
@@ -356,7 +367,6 @@ void Scene::deleteNode(std::vector<NodeComponent*>& nParents, int nIndex)
 void Scene::deleteNode(NodeComponent* parent) {
 	//delete stuff 
 	rs->deleteNode(parent);
-	ps->deleteNode(parent);
 	em->remove(*parent->data);
 	//nParents.erase(nParents.begin() + nIndex);
 	rs->updateObjectMemory();
@@ -772,7 +782,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			alignmentExtents->QueryFloatAttribute("y", &alignExt.y);
 			if (tags == 8) {
 				int goalNum = n->name.at(n->name.length() - 1) - '0';
-				e->addComponent(new BallScoreComponent(goalNum));
+				//e->addComponent(new BallScoreComponent(goalNum));
 				GUINumberComponent* guinumber = new GUINumberComponent(pos, ext, 0);
 				guinumber->visible = false;
 				e->addComponent(guinumber);
@@ -885,6 +895,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 
 		//loop it up
 		n->parent = p;
+		e->refresh();
 		nodes.push_back(n);
 		if (start != finish)
 			start = start->NextSiblingElement();

@@ -43,6 +43,10 @@ layout(std140, binding = 9) buffer Guis {
 	Gui guis[];
 };
 
-layout(binding = 10) uniform sampler2D guiTest[5];
+layout(std140, binding = 10) buffer BvhNodes {
+	BVHNode bvhNodes[];
+};
+
+layout(binding = 11) uniform sampler2D guiTest[5];
 
 #endif

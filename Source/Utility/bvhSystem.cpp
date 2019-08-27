@@ -1,23 +1,44 @@
 #include "bvhSystem.h"
 
-
-
 BvhSystem::BvhSystem()
 {
 	addComponentType<TransformComponent>();
+	addComponentType<PrimitiveComponent>();
 }
 
 BvhSystem::~BvhSystem()
 {
-	transMapper.init(*world);
 }
 
 void BvhSystem::initialize()
 {
+	transMapper.init(*world);
+	primMapper.init(*world);
+}
+
+void BvhSystem::build()
+{
+	if (rebuild) {
+		std::vector<artemis::Entity*> orderedPrims;
+
+		//reserve data
+		size_t count = getEntityCount();
+		prims.reserve(count);
+		orderedPrims.reserve(count);
+
+		//load up entities
+		process();
+
+		//Build the bvh
+		build(SplitMethod::Middle, TreeType::Recursive, orderedPrims);
+		rebuild = false;
+	}
+
 }
 
 void BvhSystem::processEntity(artemis::Entity & e)
 {
+	prims.emplace_back(&e);
 }
 
 void BvhSystem::begin()
@@ -33,59 +54,59 @@ void BvhSystem::end()
 
 void BvhSystem::added(artemis::Entity & e)
 {
-	prims.push_back(&e);
+	rebuild = true;
+	//prims.push_back(&e);
 }
 
 void BvhSystem::removed(artemis::Entity & e)
 {
 }
 
-void BvhSystem::build(SplitMethod sm, TreeType tt)
+void BvhSystem::build(SplitMethod sm, TreeType tt, std::vector<artemis::Entity*> &ops)
 {
-	std::unique_ptr<BVHNode> root;
-	int totalNodes = 0;
+	totalNodes = 0;
 
-	root = recursiveBuild(0, prims.size(), &totalNodes);
+	root = recursiveBuild(0, prims.size(), &totalNodes, ops);
 
-	int a = 4;
+	prims = std::move(ops);
+	//prims = ops;
 }
 
-std::unique_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * totalNodes)
+std::shared_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * totalNodes, std::vector<artemis::Entity*> &orderedPrims)
 {
 	*totalNodes += 1;
-	std::unique_ptr<BVHNode> node = std::make_unique<BVHNode>();
+	std::shared_ptr<BVHNode> node(new BVHNode);// std::make_shared<BVHNode>();
 	BVHBounds bounds = computeBounds(start, end);
 
 	//Check if leaf
 	int numPrims = end - start;
-	if (numPrims < 3) { //create leaf
-		int firstPrimOffset = orderedPrims.size();
+	int prevOrdered = orderedPrims.size();
+	if (numPrims < MAX_BVH_OBJECTS) { //create leaf
 		for (int i = start; i < end; ++i)
-			orderedPrims.push_back(prims[i]);
-		node->initLeaf(firstPrimOffset, numPrims, bounds);
+			orderedPrims.emplace_back(prims[i]);
+		node->initLeaf(prevOrdered, numPrims, bounds);
 	}
 	//Not a leaf, create a new node
 	else {
-		glm::vec3 center = computeCenter(start, end);
-		int axis = 0;
-		center.x > center.y ? axis = 0 : axis = 1;
-		for (int i = 1; i < 3; ++i){
-			if (center[i] > center[axis])
-				axis = i;
+		BVHBounds centroid = computeCentroidBounds(start, end);
+		int axis = chooseAxis(centroid.center);
+		int mid = (start + end) / 2;
+		
+		//edgecase
+		if (centroid.max()[axis] == centroid.min()[axis]) {
+			for (int i = start; i < end; ++i)
+				orderedPrims.emplace_back(prims[i]);
+			node->initLeaf(prevOrdered, numPrims, bounds);
+			return node;
 		}
-
-		int mid;
-
-		artemis::ComponentMapper<TransformComponent>* ptm = &transMapper;
-		switch (splitMethod) {
+		else {
+			artemis::ComponentMapper<TransformComponent>* ptm = &transMapper;
+			switch (splitMethod) {
 			case SplitMethod::Middle: {
-				//float pmid = center[axis];
-				//artemis::Entity** midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [axis, pmid, ptm](artemis::Entity& e) {
-				//	return ptm->get(e)->world[3][axis] < pmid;
-				//});
-				//mid = midPtr - &prims[0];
-				//if (mid != start && mid != end)
-				//	break;
+				artemis::Entity **midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [axis, centroid, ptm](artemis::Entity * a) {
+					return ptm->get(*a)->world[3][axis] < centroid.center[axis];
+				});
+				mid = midPtr - &prims[0];
 			}
 			case SplitMethod::EqualsCounts: {
 				mid = (start + end) / 2;
@@ -94,12 +115,13 @@ std::unique_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * tot
 				//});
 				//break;
 			}
-			case SplitMethod::SAH:{}
-			default: 
+			case SplitMethod::SAH: {}
+			default:
 				break;
-		}
+			}
 
-		node->initInterior(axis, recursiveBuild(start, mid, totalNodes), recursiveBuild(mid, end, totalNodes));
+			node->initInterior(axis, recursiveBuild(start, mid, totalNodes, orderedPrims), recursiveBuild(mid, end, totalNodes, orderedPrims));
+		}
 	}
 	return node;
 	//return std::unique_ptr<BVHNode>();
@@ -113,6 +135,8 @@ BVHBounds BvhSystem::computeBounds(int s, int e)
 	glm::vec3 max(-FLT_MAX);
 	for (int i = s; i < e; ++i) {
 		TransformComponent* tc = transMapper.get(*prims[i]);
+		PrimitiveComponent* pc = primMapper.get(*prims[i]);
+		//AABBComponent* bc = boundsMapper.get(*prims[i]);
 		min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 		max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 	}
@@ -122,16 +146,27 @@ BVHBounds BvhSystem::computeBounds(int s, int e)
 	return BVHBounds(c, ex);
 }
 
-glm::vec3 BvhSystem::computeCenter(int s, int e)
+BVHBounds BvhSystem::computeCentroidBounds(int s, int e)
 {
+	//make an aabb of the entire scene basically
+	//find the minimum x and maximum x and bounds = max-min/2 = center
 	glm::vec3 min(FLT_MAX);
 	glm::vec3 max(-FLT_MAX);
 	for (int i = s; i < e; ++i) {
 		TransformComponent* tc = transMapper.get(*prims[i]);
-		min.length();
-		min = tulip::minV(min, glm::vec3(tc->world[3]));
-		max = tulip::maxV(max, glm::vec3(tc->world[3]));
+		//AABBComponent* bc = boundsMapper.get(*prims[i]);
+		min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 	}
+	glm::vec3 c = (max + min) * 0.5f;
+	glm::vec3 ex = max - c;
 
-	return glm::vec3((max - min) * 0.5f);
+	return BVHBounds(c, ex);
 }
+
+int BvhSystem::chooseAxis(const glm::vec3& c) {
+	if ((c.x > c.y) && (c.x > c.z)) return 0;
+	else if ((c.y > c.x) && (c.y > c.z)) return 1;
+	else return 2;
+}
+

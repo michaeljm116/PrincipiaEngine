@@ -8,8 +8,9 @@ struct KdTreeNode {
 	float median = 0;
 	int axis = 0;
 	bool isLeaf = false;
-	std::unique_ptr<KdTreeNode> child_left;
-	std::unique_ptr<KdTreeNode> child_right;
+	int level = 0;
+	std::shared_ptr<KdTreeNode> child_left;
+	std::shared_ptr<KdTreeNode> child_right;
 	std::vector<Bounds> prims;
 
 	KdTreeNode(float m, int a) {
@@ -20,78 +21,78 @@ struct KdTreeNode {
 	KdTreeNode(std::vector<Bounds> p) : prims(p) { isLeaf = true; }
 
 	KdTreeNode() {};
-	~KdTreeNode() {
+	~KdTreeNode() {/*
 		if (child_left)
 			child_left.release();
 		if (child_right)
-			child_right.release();
+			child_right.release();*/
 	};
 
-	inline void setLeft(std::unique_ptr<KdTreeNode> node) {
-		child_left = std::move(node);
+	inline void incrementAxis() {
+		axis > 1 ? axis = 0 : axis++;
 	}
 
-};
+	void makeLeaf(std::vector<Bounds> p, int& nN, int& nL) {
+		nL++;
+		prims = std::move(p);
+		isLeaf = true;
+	}
+	void makeNode(std::vector<Bounds> ps, int a, int& nN, int& nL) {
+		nN++;
+		isLeaf = false;
+		axis = a;
 
-class KdTree {
-public:
-	void build(std::vector<Bounds> prims, int a) {
-		float median = 0;
-		for (const auto& p : prims)
+		//set up the median
+		median = 0;
+		for (const auto& p : ps)
 			median += p.center[axis];
-		median /= (float)prims.size();
+		median /= (float)ps.size();
 
-		//sort by median
+		//set up the bounds
 		std::vector<Bounds> leftBounds;
 		std::vector<Bounds> rightBounds;
-		for (const auto& p : prims) {
+		for (const auto& p : ps) {
 			p.center[axis] < median ?
 				leftBounds.push_back(p) :
 				rightBounds.push_back(p);
 		}
+		incrementAxis();
 
-		//make new node
-		std::unique_ptr<KdTreeNode> root = std::make_unique<KdTreeNode>(median, axis);
-		IncrementAxis();
-		root->child_left = build(leftBounds);
-		root->child_right = build(rightBounds);
+		//recurse
+		if (leftBounds.size() > 0) {
+			child_left = std::make_shared<KdTreeNode>();
+			leftBounds.size() < 3 ? child_left.get()->makeLeaf(leftBounds, nN, nL) :
+				child_left.get()->makeNode(leftBounds, axis, nN, nL);
+		}
+		else {makeLeaf(rightBounds, nN, nL); return; }
+		if (rightBounds.size() > 0) {
+			child_right = std::make_shared<KdTreeNode>();
+			rightBounds.size() < 3 ? child_right.get()->makeLeaf(rightBounds, nN, nL) :
+				child_right.get()->makeNode(rightBounds, axis, nN, nL);
+		}
+		else {makeLeaf(leftBounds, nN, nL); return; }
+
 	}
-private:
-	std::unique_ptr<KdTreeNode> root;
+};
+
+struct KdTree {
+
+	std::shared_ptr<KdTreeNode> root;
 	int axis = 1;
-	std::unique_ptr<KdTreeNode> build(std::vector<Bounds> prims) {
-		if (prims.size() < 1)
-			return nullptr;
-		if (prims.size() < 3) {
-			return std::make_unique<KdTreeNode>(prims);
-		}
-		else {
-			//get the median
-			float median = 0;
-			for (const auto& p : prims) 
-				median += p.center[axis];
-			median /= (float)prims.size();
+	int numNodes = 0;
+	int numLeaves = 0;
+	int maxDepth = 0;
 
-			//sort by median
-			std::vector<Bounds> leftBounds;
-			std::vector<Bounds> rightBounds;
-			for (const auto& p : prims) {
-				p.center[axis] < median ?
-					leftBounds.push_back(p) :
-					rightBounds.push_back(p);
-			}
-
-			//make new node
-			std::unique_ptr<KdTreeNode> node = std::make_unique<KdTreeNode>(median, axis);
-			IncrementAxis();
-			node->child_left = build(leftBounds);
-			node->child_right = build(rightBounds);
-
-			return node;
-		}
+	void build(std::vector<Bounds> prims) {
+		root = std::make_shared<KdTreeNode>();
+		root.get()->makeNode(prims, axis, numNodes, numLeaves);
+		int a = 4;
 	}
 
-	inline void IncrementAxis() {
-		axis > 1 ? axis = 0 : axis++;
-	}
+	//int maxDepth(std::shared_ptr<KdTreeNode> n) {
+	//	if (n == nullptr)
+	//		return 0;
+
+	//}
+	
 };

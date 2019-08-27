@@ -139,7 +139,8 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 	float diffuse = 0;
 	float specular = 0;
 	float power = 0;
-	float shadow = 0;
+	//float shadow = 0;
+	float shadow = 1;
 	for(int i = 0; i < lights.length(); ++i){
 		vec3 distance = lights[i].pos - pos;
 		vec3 lightVec = normalize(distance);
@@ -147,8 +148,8 @@ finalmaterial renderScene(inout vec3 rayO, inout vec3 rayD, inout vec3 norm, in 
 		diffuse += lightDiffuse(normal, lightVec);
 		specular += lightSpecular(normal, lightVec, 32.0f);
 		power += lights[i].intensity / (ld * ld);
-		if (power > 0.1)
-			shadow += calcShadow(pos, lightVec, primitiveID, ld);
+		//if (power > 0.1)
+		//	shadow += calcShadow(pos, lightVec, primitiveID, ld);
 	}
 	if (power > 1) power = 1;
 	if (shadow > 1) shadow = 1;

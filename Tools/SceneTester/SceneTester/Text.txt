@@ -16,3 +16,8 @@ link it to whatever tree structure its already apart of????
 so there should be a setleft setright thing
 it takes the prev node and sets it to the data
 so you pass in the parent node and you put or no well idk u want no returns irght or do you why is this so  confusing rn?!?!?!
+from 8 to 9
+
+so the problem is you have 6 objects with the same center and extents... what do?!??!?
+
+well if therre's a case where there's a 0... shouldn't the other by definition be a leaf?!?!?

@@ -81,7 +81,7 @@ struct MeshComponent : artemis::Component {
 
 struct PrimitiveComponent : artemis::Component {
 	int objIndex;	// where this object resides in the cpu @rendersystem.h...idk why its not called cpuindex
-	int gpuIndex;	// where this object resides in the gpu
+	//int gpuIndex;	// where this object resides in the gpu
 	int uniqueID;	// reference back to the resource manager
 	glm::vec3 center;
 	glm::vec3 extents;

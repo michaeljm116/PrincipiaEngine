@@ -7,6 +7,7 @@
 #include "intersect_mesh.glsl"
 #include "intersect_cylinder.glsl"
 #include "intersect_disk.glsl"
+#include "intersect_bvh.glsl"
 
 #define TRIINTERSECT true
 #define SHADOW 0.2
@@ -22,74 +23,158 @@ const uint TYPE_JOINT = 0x00000040u;
 sectID intersect(in vec3 rayO, in vec3 rayD, inout float resT, inout vec3 norm)
 {
 	sectID id = sectID(0, -1, -1);
+	int n = 0;
 
-	for (int i = 0; i < primitives.length(); ++i) {
-		if (primitives[i].id > -1) {
-			mat4 invWorld = inverse(primitives[i].world);
-			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
-			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
-			flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));// primitives[i].extents);
-			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) { //hits the boundingbox, doesnt necessarily mean tri hit
-				//Mesh m = meshes[primitives[i].id];
-				//id.pId = i;
-				//rdd /= primitives[i].extents;
-				//roo /= primitives[i].extents;
-				int startIndex = primitives[i].startIndex;
-				int endIndex = primitives[i].endIndex;
-				for (int f = startIndex; f < endIndex; f++) {
-					vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
-					if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
-						id = sectID(TYPE_MESH, f, i);
-						resT = tQuad.x;
-						norm.x = tQuad.y;
-						norm.y = tQuad.z;
+	//for (int n = 0; n < bvhNodes.length(); ++n) 
+	while(n < bvhNodes.length())
+	{
+		if (bvhNodes[n].numChildren > 0) {
+			for (int i = bvhNodes[n].offset; i < bvhNodes[n].offset + bvhNodes[n].numChildren; ++i) {
+				//do the calcs here
+				if (primitives[i].id > -1) {
+					mat4 invWorld = inverse(primitives[i].world);
+					vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
+					vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
+					flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));// primitives[i].extents);
+					if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) { //hits the boundingbox, doesnt necessarily mean tri hit
+						//Mesh m = meshes[primitives[i].id];
+						//id.pId = i;
+						//rdd /= primitives[i].extents;
+						//roo /= primitives[i].extents;
+						int startIndex = primitives[i].startIndex;
+						int endIndex = primitives[i].endIndex;
+						for (int f = startIndex; f < endIndex; f++) {
+							vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
+							if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
+								id = sectID(TYPE_MESH, f, i);
+								resT = tQuad.x;
+								norm.x = tQuad.y;
+								norm.y = tQuad.z;
+							}
+						}
+					}
+				}//id > 0
+
+				else if (primitives[i].id == -1) { //SPHERE INTERSECT
+					float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
+					if ((tSphere > EPSILON) && (tSphere < resT))
+					{
+						id = sectID(TYPE_SPHERE, i, -1);
+						resT = tSphere;
+					}
+				}
+				else if (primitives[i].id == -2) { //BOX INTERSECT
+					vec4 tBox = boxIntersect(rayO, rayD, primitives[i]);
+					if (tBox.x > 0) {
+						if ((tBox.x > EPSILON) && (tBox.x < resT)) {
+							id = sectID(TYPE_BOX, i, -1);
+							resT = tBox.x;
+							norm = tBox.yzw;
+						}
+					}
+				}
+				else if (primitives[i].id == -3) { //CYLINDER INTERSECT
+					vec4 tCylinder = cylinderIntersect(rayO, rayD, primitives[i]);
+					if ((tCylinder.x > EPSILON) && (tCylinder.x < resT)) {
+						id = sectID(TYPE_CYLINDER, i, -1);
+						resT = tCylinder.x;
+						norm = tCylinder.yzw;
+					}
+				}
+				else if (primitives[i].id == -4) { //PLANE INTERSECT
+					float tplane = planeIntersect(rayO, rayD, primitives[i]);
+					if ((tplane > EPSILON) && (tplane < resT))
+					{
+						id = sectID(TYPE_PLANE, i, -1);
+						resT = tplane;
+					}
+				}
+				else if (primitives[i].id == -5) { //DISK INTERSECT
+					float tDisk = diskIntersect(rayO, rayD, primitives[i]);
+					if ((tDisk > EPSILON) && (tDisk < resT)) {
+						id = sectID(TYPE_DISK, i, -1);
+						resT = tDisk;
 					}
 				}
 			}
-		}//id > 0
-
-		else if (primitives[i].id == -1) { //SPHERE INTERSECT
-			float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
-			if ((tSphere > EPSILON) && (tSphere < resT))
-			{
-				id = sectID(TYPE_SPHERE, i, -1);
-				resT = tSphere;
-			}
+			n = bvhNodes.length();
 		}
-		else if (primitives[i].id == -2) { //BOX INTERSECT
-			vec4 tBox = boxIntersect(rayO, rayD, primitives[i]);
-			if (tBox.x > 0) {
-				if ((tBox.x > EPSILON) && (tBox.x < resT)) {
-					id = sectID(TYPE_BOX, i, -1);
-					resT = tBox.x;
-					norm = tBox.yzw;
-				}
-			}
+		else if (bvhIntersect(rayO, rayD, bvhNodes[n+1].center, bvhNodes[n+1].extents)) {
+			n++;
 		}
-		else if (primitives[i].id == -3) { //CYLINDER INTERSECT
-			vec4 tCylinder = cylinderIntersect(rayO, rayD, primitives[i]);
-			if ((tCylinder.x > EPSILON) && (tCylinder.x < resT)) {
-				id = sectID(TYPE_CYLINDER, i, -1);
-				resT = tCylinder.x;
-				norm = tCylinder.yzw;
-			}
+		else if (bvhIntersect(rayO, rayD, bvhNodes[bvhNodes[n].offset].center, bvhNodes[bvhNodes[n].offset].extents)) {
+			n = bvhNodes[n].offset;
 		}
-		else if (primitives[i].id == -4) { //PLANE INTERSECT
-			float tplane = planeIntersect(rayO, rayD, primitives[i]);
-			if ((tplane > EPSILON) && (tplane < resT))
-			{
-				id = sectID(TYPE_PLANE, i, -1);
-				resT = tplane;
-			}
-		}
-		else if (primitives[i].id == -5) { //DISK INTERSECT
-			float tDisk = diskIntersect(rayO, rayD, primitives[i]);
-			if ((tDisk > EPSILON) && (tDisk < resT)) {
-				id = sectID(TYPE_DISK, i, -1);
-				resT = tDisk;
-			}
-		}
+		else n = bvhNodes.length();
 	}
+
+	//for (int i = 0; i < primitives.length(); ++i) {
+	//	if (primitives[i].id > -1) {
+	//		mat4 invWorld = inverse(primitives[i].world);
+	//		vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
+	//		vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
+	//		flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));// primitives[i].extents);
+	//		if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < resT)) { //hits the boundingbox, doesnt necessarily mean tri hit
+	//			//Mesh m = meshes[primitives[i].id];
+	//			//id.pId = i;
+	//			//rdd /= primitives[i].extents;
+	//			//roo /= primitives[i].extents;
+	//			int startIndex = primitives[i].startIndex;
+	//			int endIndex = primitives[i].endIndex;
+	//			for (int f = startIndex; f < endIndex; f++) {
+	//				vec4 tQuad = quadIntersect(roo, rdd, faces[f]);
+	//				if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < resT)) {
+	//					id = sectID(TYPE_MESH, f, i);
+	//					resT = tQuad.x;
+	//					norm.x = tQuad.y;
+	//					norm.y = tQuad.z;
+	//				}
+	//			}
+	//		}
+	//	}//id > 0
+
+	//	else if (primitives[i].id == -1) { //SPHERE INTERSECT
+	//		float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
+	//		if ((tSphere > EPSILON) && (tSphere < resT))
+	//		{
+	//			id = sectID(TYPE_SPHERE, i, -1);
+	//			resT = tSphere;
+	//		}
+	//	}
+	//	else if (primitives[i].id == -2) { //BOX INTERSECT
+	//		vec4 tBox = boxIntersect(rayO, rayD, primitives[i]);
+	//		if (tBox.x > 0) {
+	//			if ((tBox.x > EPSILON) && (tBox.x < resT)) {
+	//				id = sectID(TYPE_BOX, i, -1);
+	//				resT = tBox.x;
+	//				norm = tBox.yzw;
+	//			}
+	//		}
+	//	}
+	//	else if (primitives[i].id == -3) { //CYLINDER INTERSECT
+	//		vec4 tCylinder = cylinderIntersect(rayO, rayD, primitives[i]);
+	//		if ((tCylinder.x > EPSILON) && (tCylinder.x < resT)) {
+	//			id = sectID(TYPE_CYLINDER, i, -1);
+	//			resT = tCylinder.x;
+	//			norm = tCylinder.yzw;
+	//		}
+	//	}
+	//	else if (primitives[i].id == -4) { //PLANE INTERSECT
+	//		float tplane = planeIntersect(rayO, rayD, primitives[i]);
+	//		if ((tplane > EPSILON) && (tplane < resT))
+	//		{
+	//			id = sectID(TYPE_PLANE, i, -1);
+	//			resT = tplane;
+	//		}
+	//	}
+	//	else if (primitives[i].id == -5) { //DISK INTERSECT
+	//		float tDisk = diskIntersect(rayO, rayD, primitives[i]);
+	//		if ((tDisk > EPSILON) && (tDisk < resT)) {
+	//			id = sectID(TYPE_DISK, i, -1);
+	//			resT = tDisk;
+	//		}
+	//	}
+	//}
 
 	//FOR SKELETAL ANIMATION
 	for (int i = 0; i < joints.length(); ++i) {

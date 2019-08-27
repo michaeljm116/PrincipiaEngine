@@ -5,13 +5,32 @@
 #include <glm.hpp>
 #include <gtx/quaternion.hpp>
 #include <gtx/transform.hpp>
+#include "helper.h"
 
 struct Bounds {
 	glm::vec3 center;
 	glm::vec3 extents;
 
 	Bounds(const glm::vec3& c, const glm::vec3& e) : center(c), extents(e) {};
-	Bounds() {};
+	Bounds() { center = glm::vec3(0); extents = glm::vec3(0); };
+	inline glm::vec3 max() {
+		return center + extents;
+	}
+	inline glm::vec3 min() {
+		return center - extents;
+	}
+
+	Bounds combine(Bounds& b) {
+		//find the highest and the lowest x and y values
+		glm::vec3 max = maxV(this->max(), b.max());
+		glm::vec3 min = minV(this->min(), b.min());
+
+		//center = halfway between the two, extents = max-center
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 e = max - c;
+
+		return Bounds(c, e);
+	}
 };
 
 struct sqt {
