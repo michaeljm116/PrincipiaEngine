@@ -1,13 +1,13 @@
 #ifndef _INTERSECT_BOX_GLSL
 #define _INTERSECT_BOX_GLSL
 #include "structs.glsl"
-vec4 boxIntersect(in vec3 ro, in vec3 rd, in Primitive box)
+vec4 boxIntersect(in Ray ray, in Primitive box)
 {
 	// convert from ray to box space
 	// currently 147/148
 	mat4 invWorld = inverse(box.world);
-	vec3 rdd = (invWorld*vec4(rd, 0.0)).xyz;
-	vec3 roo = (invWorld*vec4(ro, 1.0)).xyz;
+	vec3 rdd = (invWorld*vec4(ray.d, 0.0)).xyz;
+	vec3 roo = (invWorld*vec4(ray.o, 1.0)).xyz;
 
 	// ray-box intersection in box space
 	vec3 m = 1.0 / rdd;

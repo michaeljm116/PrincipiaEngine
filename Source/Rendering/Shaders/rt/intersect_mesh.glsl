@@ -3,10 +3,10 @@
 #include "structs.glsl"
 #include "layouts.glsl"
 
-flool boundsIntersect(vec3 rayO, vec3 rayD) {
+flool boundsIntersect(in Ray ray) {
 
-	vec3 invDir = 1 / rayD;
-	vec3 invRay = invDir * rayO;
+	vec3 invDir = 1 / ray.d;
+	vec3 invRay = invDir * ray.o;
 	vec3 k = abs(invDir);
 
 	float tMin = FLT_MIN;
@@ -19,22 +19,23 @@ flool boundsIntersect(vec3 rayO, vec3 rayD) {
 		tMin = max(tMin, min(t1[i], t2[i]));
 		tMax = min(tMax, max(t1[i], t2[i]));
 	}
+
 	flool bob = flool(tMin, (tMax > max(tMin, 0.0)));
 	return bob;
 }
 
-flool innerBoundsIntersect(vec3 rayO, vec3 rayD, in vec3 center, in vec3 extents) {
+flool innerBoundsIntersect(in Ray ray, in vec3 center, in vec3 extents) {
 
 	vec3 upperBounds = center + extents;
 	vec3 lowerBounds = center - extents;
 
-	vec3 invDir = 1 / rayD;
+	vec3 invDir = 1 / ray.d;
 	float tMin = FLT_MIN;
 	float tMax = FLT_MAX;
 
 	for (int i = 0; i < 3; ++i) {
-		float t1 = (upperBounds[i] - rayO[i]) * invDir[i];
-		float t2 = (lowerBounds[i] - rayO[i]) * invDir[i];
+		float t1 = (upperBounds[i] - ray.o[i]) * invDir[i];
+		float t2 = (lowerBounds[i] - ray.o[i]) * invDir[i];
 
 		tMin = max(tMin, min(t1, t2));
 		tMax = min(tMax, max(t1, t2));
@@ -53,21 +54,21 @@ vec3 triNormal(Primitive prim, Face tri) {
 	return normalize(cross(edge1, edge2));
 }
 
-flool triIntersect(vec3 rayO, vec3 rayD, Face tri) {
+flool triIntersect(Ray ray, Face tri) {
 
 	vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
 	vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
-	vec3 h = cross(rayD, edge2);
+	vec3 h = cross(ray.d, edge2);
 	float a = dot(edge1, h);
 	if (a > -EPSILON && a < EPSILON)
 		return flool(0, false);
 	float f = 1 / a;
-	vec3 s = rayO - verts[tri.v[0]].pos;
+	vec3 s = ray.o - verts[tri.v[0]].pos;
 	float u = f * dot(s, h);
 	if (u < 0.f || u > 1.f)
 		return flool(0, false);
 	vec3 q = cross(s, edge1);
-	float v = f * dot(rayD, q);
+	float v = f * dot(ray.d, q);
 	if (v < 0.f || u + v > 1.f)
 		return flool(0, false);
 
@@ -131,18 +132,18 @@ float copysign(float x, float y) {
 		return -x;
 	return x;
 }
-vec4 quadIntersect(in vec3 rO, in vec3 rd, in Face q) {
+vec4 quadIntersect(in Ray ray, in Face q) {
 	vec3 q00 = verts[q.v[0]].pos, q10 = verts[q.v[1]].pos, q11 = verts[q.v[2]].pos, q01 = verts[q.v[3]].pos;
 	vec3 e10 = q10 - q00;
 	vec3 e11 = q11 - q10;
 	vec3 e00 = q01 - q00;
 	vec3 qn = cross(e10, (q01 - q11));
 	//vec3 n;
-	q00 -= rO;
-	q10 -= rO;
-	float a = dot(cross(q00, rd), e00);
-	float c = dot(qn, rd);
-	float b = dot(cross(q10, rd), e11);
+	q00 -= ray.o;
+	q10 -= ray.o;
+	float a = dot(cross(q00, ray.d), e00);
+	float c = dot(qn, ray.d);
+	float b = dot(cross(q10, ray.d), e11);
 	b -= a + c;
 	float det = b * b - 4 * a*c;
 	if (det < 0) return vec4(-1);
@@ -161,11 +162,11 @@ vec4 quadIntersect(in vec3 rO, in vec3 rd, in Face q) {
 	if (0 <= u1 && u1 <= 1) {
 		vec3 pa = mix(q00, q10, u1);
 		vec3 pb = mix(e00, e11, u1);
-		vec3 n = cross(rd, pb);
+		vec3 n = cross(ray.d, pb);
 		det = dot(n, n);
 		n = cross(n, pa);
 		float t1 = dot(n, pb);
-		float v1 = dot(n, rd);
+		float v1 = dot(n, ray.d);
 		if (t1 > 0 && 0 <= v1 && v1 <= det) {
 			t = t1 / det; 
 			u = u1; 
@@ -177,11 +178,11 @@ vec4 quadIntersect(in vec3 rO, in vec3 rd, in Face q) {
 	if (0 <= u2 && u2 <= 1) {
 		vec3 pa = mix(q00, q10, u2);
 		vec3 pb = mix(e00, e11, u2);
-		vec3 n = cross(rd, pb);
+		vec3 n = cross(ray.d, pb);
 		det = dot(n, n);
 		n = cross(n, pa);
 		float t2 = dot(n, pb) / det;
-		float v2 = dot(n, rd);
+		float v2 = dot(n, ray.d);
 		if (0 <= v2 && v2 <= det && t > t2 && t2 > 0) {
 			t = t2; 
 			u = u2; 

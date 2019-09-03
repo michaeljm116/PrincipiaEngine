@@ -4,6 +4,13 @@
 #define FLT_MAX 3.402823466e+38
 #define FLT_MIN 1.175494351e-38
 
+struct Ray {
+	vec3 o;
+	float t;
+	vec3 d;
+	float normal;
+};
+
 struct Primitive
 {
 	mat4 world;
