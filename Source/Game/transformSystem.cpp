@@ -186,6 +186,8 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){
 		//obj.invWorld = glm::inverse(tc->TRM);
 		//obj.world = tc->world;
 		objComp->uniqueID < 0 ? obj.world = tc->TRM : obj.world = tc->world;
+		objComp->center = tc->world[3];
+		objComp->extents = tc->global.scale;
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 	}
 

@@ -134,11 +134,13 @@ BVHBounds BvhSystem::computeBounds(int s, int e)
 	glm::vec3 min(FLT_MAX);
 	glm::vec3 max(-FLT_MAX);
 	for (int i = s; i < e; ++i) {
-		TransformComponent* tc = transMapper.get(*prims[i]);
+		//TransformComponent* tc = transMapper.get(*prims[i]);
 		PrimitiveComponent* pc = primMapper.get(*prims[i]);
 		//AABBComponent* bc = boundsMapper.get(*prims[i]);
-		min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
-		max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		//min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		//max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		min = tulip::minV(min, glm::vec3(pc->center) - glm::vec3(pc->extents));
+		max = tulip::maxV(max, glm::vec3(pc->center) + glm::vec3(pc->extents));
 	}
 	glm::vec3 c = (max + min) * 0.5f;
 	glm::vec3 ex = max - c;
@@ -153,10 +155,13 @@ BVHBounds BvhSystem::computeCentroidBounds(int s, int e)
 	glm::vec3 min(FLT_MAX);
 	glm::vec3 max(-FLT_MAX);
 	for (int i = s; i < e; ++i) {
-		TransformComponent* tc = transMapper.get(*prims[i]);
+		//TransformComponent* tc = transMapper.get(*prims[i]);
 		//AABBComponent* bc = boundsMapper.get(*prims[i]);
-		min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
-		max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		PrimitiveComponent* pc = primMapper.get(*prims[i]);
+		//min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		//max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
+		min = tulip::minV(min, pc->center - pc->extents);
+		max = tulip::maxV(max, pc->center + pc->extents);
 	}
 	glm::vec3 c = (max + min) * 0.5f;
 	glm::vec3 ex = max - c;

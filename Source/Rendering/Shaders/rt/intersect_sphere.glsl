@@ -2,10 +2,10 @@
 #define _INTERSECT_SPHERE_GLSL
 #include "structs.glsl"
 
-float sphereIntersect(in vec3 rayO, in vec3 rayD, in Primitive sphere)
+float sphereIntersect(inout Ray ray, in Primitive sphere)
 {
-	vec3 oc = rayO - sphere.world[3].xyz;
-	float b = 2.0 * dot(oc, rayD);
+	vec3 oc = ray.o - sphere.world[3].xyz;
+	float b = 2.0 * dot(oc, ray.d);
 	float c = dot(oc, oc) - sphere.extents.x*sphere.extents.x;
 	float h = b * b - 4.0*c;
 	if (h < 0.0)
@@ -16,10 +16,10 @@ float sphereIntersect(in vec3 rayO, in vec3 rayD, in Primitive sphere)
 
 	return t;
 }
-float skinnedSphereIntersect(in vec3 rayO, in vec3 rayD, in Shape sphere)
+float skinnedSphereIntersect(inout Ray ray, in Shape sphere)
 {
-	vec3 oc = rayO - sphere.center;
-	float b = 2.0 * dot(oc, rayD);
+	vec3 oc = ray.o - sphere.center;
+	float b = 2.0 * dot(oc, ray.d);
 	float c = dot(oc, oc) - sphere.extents.x*sphere.extents.x;
 	float h = b * b - 4.0*c;
 	if (h < 0.0)

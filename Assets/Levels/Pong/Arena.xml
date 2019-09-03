@@ -2,7 +2,7 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-0.31989861" y="17.369099" z="-4.5801659"/>
+            <Position x="-2.0999126" y="14.709167" z="-4.7901268"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="3.0699999"/>
         </Transform>
@@ -123,9 +123,9 @@
     </Node>
     <Node Name="New Model!" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-7.7199078" y="0.8495903" z="-8.560009"/>
+            <Position x="-6.4698887" y="2.7795601" z="-6.6800308"/>
             <Rotation x="0" y="9.9999997e-05" z="167"/>
-            <Scale x="1" y="1" z="1"/>
+            <Scale x="4" y="4" z="4"/>
         </Transform>
         <Node Name="nb_ShoeRight" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
             <Transform>
@@ -169,7 +169,7 @@
                 <Rotation x="0" y="0" z="0"/>
                 <Scale x="0.10303903" y="0.047930125" z="0.083197728"/>
             </Transform>
-            <Material ID="-842150451"/>
+            <Material ID="-573082831"/>
             <Object ID="1238927240"/>
         </Node>
         <Node Name="EyebrowLeft" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">

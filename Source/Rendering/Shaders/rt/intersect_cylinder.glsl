@@ -4,7 +4,7 @@
 
 // Cylinder =========================================================
 // cylinder defined by extremes pa and pb, and radious ra
-vec4 cylinderIntersect(in vec3 ro, in vec3 rd, in Primitive cyl) // extreme a, extreme b, radius
+vec4 cylinderIntersect(in Ray ray, in Primitive cyl) // extreme a, extreme b, radius
 {
 	vec3 pb = cyl.world[3].xyz;//cyl.bottom;
 	vec3 pa = cyl.world[3].xyz;
@@ -17,14 +17,14 @@ vec4 cylinderIntersect(in vec3 ro, in vec3 rd, in Primitive cyl) // extreme a, e
 
 	vec3 ca = pb - pa;
 
-	vec3  oc = ro - pa;
+	vec3  oc = ray.o - pa;
 
 	float caca = dot(ca, ca);
-	float card = dot(ca, rd);
+	float card = dot(ca, ray.d);
 	float caoc = dot(ca, oc);
 
 	float a = caca - card * card;
-	float b = caca * dot(oc, rd) - caoc * card;
+	float b = caca * dot(oc, ray.d) - caoc * card;
 	float c = caca * dot(oc, oc) - caoc * caoc - ra * ra*caca;
 	float h = b * b - a * c;
 	if (h < 0.0) return vec4(-1.0);
@@ -33,7 +33,7 @@ vec4 cylinderIntersect(in vec3 ro, in vec3 rd, in Primitive cyl) // extreme a, e
 
 	// body
 	float y = caoc + t * card;
-	if (y > 0.0 && y < caca) return vec4(t, (oc + t * rd - ca * y / caca) / ra);
+	if (y > 0.0 && y < caca) return vec4(t, (oc + t * ray.d - ca * y / caca) / ra);
 
 	// caps
 	t = (((y < 0.0) ? 0.0 : caca) - caoc) / card;
