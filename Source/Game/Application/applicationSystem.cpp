@@ -23,6 +23,7 @@ void ApplicationSystem::initialize()
 	as = (AnimationSystem*)sm->getSystem<AnimationSystem>();
 	ui = (EngineUISystem*)sm->getSystem<EngineUISystem>();
 	controllers = (ControllerSystem*)sm->getSystem<ControllerSystem>();// setSystem(new ControllerSystem());
+	bvh = (BvhSystem*)sm->getSystem<BvhSystem>();
 
 	//next create references to new systems
 	game = (GameSystem*)sm->setSystem(new GameSystem());
@@ -78,9 +79,16 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	menu->process();
 	pause->process();
 
+
 	//render
 	as->process();
+	
 	rs->process();// mainLoop();
+
+	//build the bvh
+	//bvh->rebuild = true;
+	//bvh->build();
+	//rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
 
 	//get the input, if in editor use editor controller, else regular controllers
 	if (ac->state == AppState::Editor)

@@ -8,8 +8,10 @@ i ever do a hybrid approach*/
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #endif // !GLM_FORCE_RADIANS
 
-#include "../pch.h"
+//#include "../pch.h"
 #include "VulkanInitializers.hpp"
+#include <glm/glm.hpp>
+#include <array>
 //#include"../Game/transform.hpp"
 
 //Regular Vertex

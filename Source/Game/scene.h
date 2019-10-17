@@ -6,7 +6,6 @@ loading/saving scene, creating/copying/deleting objects
 */
 
 
-#include "../pch.h"
 #include "../Utility/resourceManager.h"
 #include "../Animation/animationSystem.h"
 #include "script.hpp"
@@ -53,7 +52,6 @@ public:
 	void init(artemis::World& w);
 
 	void doStuff();
-	void postStart();
 	void buildBVH();
 
 	void createModel(rModel resource, std::string name, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, bool dynamic = true);

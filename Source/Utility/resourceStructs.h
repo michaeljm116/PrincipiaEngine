@@ -4,7 +4,8 @@ the resource manager
 */
 #pragma once
 #include <array>
-#include "../pch.h"
+//#include <glm/glm.hpp>
+//#include "../pch.h"
 
 //Structure for the config file, will expand moar l8r
 struct rConfig {

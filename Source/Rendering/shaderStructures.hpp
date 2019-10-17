@@ -11,8 +11,8 @@ shader, everything must be 16byte aligned
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #endif
-
-#include "../pch.h"
+#include <glm/glm.hpp>
+//#include "../pch.h"
 
 struct ssGUI {
 	glm::vec2 min;
@@ -104,25 +104,3 @@ struct ssLight {
 	int id;
 };
 
-struct Timer {
-	std::chrono::time_point<std::chrono::steady_clock> start;
-	std::chrono::time_point<std::chrono::steady_clock> end;
-	std::chrono::duration<float> duration;
-	const char* name;
-	float ms;
-
-	Timer() {};
-	Timer(const char* n) {
-		name = n;
-	};
-	~Timer() {};
-	void Start() {
-		start = std::chrono::high_resolution_clock::now();
-	};
-	void End() {
-		end = std::chrono::high_resolution_clock::now();
-		duration = end - start;
-
-		ms = duration.count() * 1000.0f;
-	};
-};

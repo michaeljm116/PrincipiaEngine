@@ -262,15 +262,15 @@ void RenderSystem::loadResources()
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
 	//compute.storageBuffers.meshes.InitStorageBufferCustomSize(vkDevice, meshes, meshes.size(), MAXMESHES);
 
-	guiTextures[0].path = "../Assets/Levels/Pong/Textures/numbers.png";
+	guiTextures[0].path = "../Assets/Levels/RayTracedInvaders/Textures/numbers.png";
 	guiTextures[0].CreateTexture(vkDevice);
-	guiTextures[1].path = "../Assets/Levels/Pong/Textures/title.png";
+	guiTextures[1].path = "../Assets/Levels/RayTracedInvaders/Textures/title.png";
 	guiTextures[1].CreateTexture(vkDevice);
-	guiTextures[2].path = "../Assets/Levels/Pong/Textures/menu.png";
+	guiTextures[2].path = "../Assets/Levels/RayTracedInvaders/Textures/menu.png";
 	guiTextures[2].CreateTexture(vkDevice);
-	guiTextures[3].path = "../Assets/Levels/Pong/Textures/ARROW.png";
+	guiTextures[3].path = "../Assets/Levels/RayTracedInvaders/Textures/ARROW.png";
 	guiTextures[3].CreateTexture(vkDevice);
-	guiTextures[4].path = "../Assets/Levels/Pong/Textures/circuit.jpg";
+	guiTextures[4].path = "../Assets/Levels/RayTracedInvaders/Textures/circuit.jpg";
 	guiTextures[4].CreateTexture(vkDevice);
 
 }
@@ -635,8 +635,11 @@ void RenderSystem::updateBuffers()
 		compute.storageBuffers.joints.UpdateBuffers(vkDevice, joints);
 		updateflags &= UPDATE_JOINT;
 	}
+	
 
 	updateflags |= UPDATE_NONE;
+	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
 	updateDescriptors();
 }
 
@@ -650,6 +653,8 @@ void RenderSystem::updateCamera(CameraComponent* c) {
 }
 void RenderSystem::updateBVH(std::vector<artemis::Entity*>& orderedPrims, std::shared_ptr<BVHNode> root, int numNodes)
 {
+
+	//Principia::NamedTimer nt("BVHUPDATE");
 	//reserve newobjects array
 	std::vector<ssPrimitive> newObjs;
 	size_t numPrims = orderedPrims.size();
@@ -669,38 +674,44 @@ void RenderSystem::updateBVH(std::vector<artemis::Entity*>& orderedPrims, std::s
 
 	//now that the objs are ordered relative to the BVH, you can flatten the BVH;
 	int offset = 0;
-	bvh.reserve(numNodes);
+	//bvh.reserve(numNodes);
+	bvh.resize(numNodes);
 	flattenBVH(root, &offset);
+	vkWaitForFences(vkDevice.logicalDevice, 1, &compute.fence, VK_TRUE, UINT64_MAX);
 
 	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
 	compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
-	updateDescriptors();
+	//updateDescriptors();
+
 	
 }
 int RenderSystem::flattenBVH(std::shared_ptr<BVHNode> node, int * offset)
 {
 	//first pusch back a node
-	ssBVHNode bvhNode;
-	bvhNode.center = node->bounds.center;
-	bvhNode.extents = node->bounds.extents;
+	ssBVHNode* bvhNode = &bvh[*offset];
+	bvhNode->upper = node->bounds.center + node->bounds.extents;
+	bvhNode->lower = node->bounds.center - node->bounds.extents;
 	//bvhNode.splitAxis = node->splitAxis;
-	bvh.emplace_back(bvhNode);
-	int index = bvh.size() - 1;
 	
 	//increment the offset
-	*offset += 1;
+	int myOffset = (*offset)++;
 
 	//check if leaf
 	if (node->nPrims > 0) {
-		bvh[index].numChildren = node->nPrims;
-		bvh[index].offset = node->firstPrimOffset;
+		bvhNode->numChildren = node->nPrims;
+		//bvhNode->numChildren |= (node->splitAxis << 29);
+		//bvh[index].numChildren |= (node->splitAxis << 29);
+		bvhNode->offset = node->firstPrimOffset;
 	} //else make new node
 	else {
 		flattenBVH(node->children[0], offset);
-		bvh[index].offset = flattenBVH(node->children[1], offset);
+		bvhNode->offset = flattenBVH(node->children[1], offset);
+		bvhNode->numChildren = 0;
+		//bvhNode->numChildren |= (node->splitAxis << 29);
+		//bvh[index].numChildren |= (node->splitAxis << 29);
 
 	}
-	return *offset;
+	return myOffset;
 }
 //void RenderSystem::updateLight(LightComponent* l) {
 //	compute.ubo.lightPos = l->pos;
@@ -869,6 +880,12 @@ void RenderSystem::drawFrame() {//1.get img frm swapc 2.do da cmdbuf wit da imag
 		throw std::runtime_error("failed to submit compute commadn buffer!");
 	m_RenderTime.End();
 	INPUT.renderTime = m_RenderTime.ms;
+}
+void RenderSystem::startFrame()
+{
+}
+void RenderSystem::endFrame()
+{
 }
 void RenderSystem::cleanup() {
 	vkDeviceWaitIdle(vkDevice.logicalDevice);

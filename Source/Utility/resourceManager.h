@@ -7,7 +7,6 @@ has a list of all the resources
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-#include "../pch.h"
 #include "../tinyxml2/tinyxml2.h"
 #include "../Utility/componentIncludes.h"
 #include <filesystem>

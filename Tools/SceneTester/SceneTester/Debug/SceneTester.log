@@ -1,2 +1,5 @@
 ﻿  main.cpp
+c:\users\mike\principiaengine\tools\scenetester\scenetester\bvh.hpp(158): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\scenetester\scenetester\bvh.hpp(189): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\scenetester\scenetester\bvh.hpp(192): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
   SceneTester.vcxproj -> C:\Users\Mike\PrincipiaEngine\Tools\SceneTester\SceneTester\Debug\SceneTester.exe

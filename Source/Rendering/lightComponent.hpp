@@ -1,6 +1,7 @@
 #pragma once
+#include <Artemis/Artemis.h>
+#include <glm/glm.hpp>
 
-#include "../pch.h"
 struct LightComponent : public artemis::Component {
 	glm::vec3 color;
 	float intensity;

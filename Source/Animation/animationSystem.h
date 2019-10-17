@@ -5,7 +5,6 @@ there needs to be a complete rework in which i will
 create bone bounding boxes
 */
 #include "../Utility/componentIncludes.h"
-#include "../pch.h"
 #include "../Rendering/renderSystem.h"
 
 class AnimationSystem : public artemis::EntityProcessingSystem

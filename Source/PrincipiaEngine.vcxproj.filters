@@ -63,6 +63,9 @@
     <Filter Include="Source Files\Game\Application\Components">
       <UniqueIdentifier>{7f244813-2630-4d3b-b4d3-4e3d17477d1b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Physics\Components">
+      <UniqueIdentifier>{3620f858-bc49-4146-a4c0-2480b27bb0b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -112,9 +115,6 @@
     </ClCompile>
     <ClCompile Include="ArtemisFrameWork\World.cpp">
       <Filter>Source Files\ArtemisFramework</Filter>
-    </ClCompile>
-    <ClCompile Include="Rendering\rendermanagers.cpp">
-      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\renderbase.cpp">
       <Filter>Source Files\Rendering</Filter>
@@ -184,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="Utility\bvhSystem.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\collisionSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -480,6 +483,18 @@
     <ClInclude Include="Utility\bvhComponent.hpp">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\timer.hpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Components\collisionComponent.h">
+      <Filter>Source Files\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\collisionSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\Components\gameObjectTypeComponent.h">
+      <Filter>Source Files\Game\Gameplay\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.h">
@@ -496,7 +511,10 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Assets\Levels\Pong\Arena.xml">
+    <Xml Include="..\Assets\Levels\RayTracedInvaders\Arena.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
+    <Xml Include="..\Assets\Levels\RayTracedInvaders\Materials.xml">
       <Filter>Resource Files</Filter>
     </Xml>
   </ItemGroup>

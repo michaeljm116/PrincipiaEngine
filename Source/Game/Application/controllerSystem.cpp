@@ -1,6 +1,6 @@
+#include "../pch.h"
 #include "controllerSystem.h"
 #include "applicationSystem.h"
-#include "../pch.h"
 
 ControllerSystem::ControllerSystem() { 
 	addComponentType<ControllerComponent>(); 

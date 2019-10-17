@@ -5,7 +5,6 @@
 #include "../Utility/Input.h"
 #include "../Gameplay/characterComponent.hpp"
 #include "ControllerComponent.hpp"
-#include "../pch.h"
 
 class ApplicationSystem;
 

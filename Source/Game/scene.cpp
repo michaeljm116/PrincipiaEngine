@@ -23,7 +23,7 @@ void Scene::init(artemis::World& w) {
 	bvh = (BvhSystem*)sm->setSystem(new BvhSystem());
 	bvh->initialize();
 
-	LoadScene("Pong/Arena");
+	LoadScene("RayTracedInvaders/Arena");
 	//LoadScene("Level1/QuadsTest");
 	//LoadScene("Level1/Scene1");
 
@@ -59,14 +59,11 @@ void Scene::doStuff() {
 	//rs->buildBVH();
 }
 
-void Scene::postStart()
-{
-	bvh->build();
-	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
-}
-
 void Scene::buildBVH()
 {
+	bvh->rebuild = true;
+	bvh->build();
+	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
 	//topLevelBVH.build(SplitMethod::Middle, TreeType::Recursive, objectComps, objects);
 }
 
@@ -724,7 +721,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 
 
 		if (tags == 4) {
-			e->addComponent(new AudioComponent(dir + "Pong/Audio/wallcol.wav"));
+			//e->addComponent(new AudioComponent(dir + "RayTracedInvaders/Audio/wallcol.wav"));
 		}
 	
 		if (flags & COMPONENT_TRANSFORM) {
@@ -786,7 +783,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 				GUINumberComponent* guinumber = new GUINumberComponent(pos, ext, 0);
 				guinumber->visible = false;
 				e->addComponent(guinumber);
-				e->addComponent(new AudioComponent(dir + "Pong/Audio/goal.wav"));
+				e->addComponent(new AudioComponent(dir + "RayTracedInvaders/Audio/goal.wav"));
 			}
 		}
 		if (flags & COMPONENT_MATERIAL) {
@@ -873,8 +870,8 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			//audio string stuff
 			std::string audioFile;
 			index == 0 ?
-				audioFile = dir + "Pong/Audio/player1.wav" :
-				audioFile = dir + "Pong/Audio/player2.wav";
+				audioFile = dir + "RayTracedInvaders/Audio/player1.wav" :
+				audioFile = dir + "RayTracedInvaders/Audio/player2.wav";
 			e->addComponent(new AudioComponent(audioFile));
 
 			//insertController(n);

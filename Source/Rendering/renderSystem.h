@@ -5,7 +5,6 @@ much rework but brotha aint got time fo dat
 */
 
 
-#include "../pch.h"
 #include "rendermanagers.h"
 #include "renderbase.h"
 #include "shaderStructures.hpp"
@@ -14,6 +13,7 @@ much rework but brotha aint got time fo dat
 #include "../Game/script.hpp"
 #include "../Utility/window.h"
 #include "../Utility/bvhComponent.hpp"
+#include "../Utility/timer.hpp"
 
 static const int MAXTEXTURES = 5;
 
@@ -27,6 +27,8 @@ public:
 	void initialize();
 	void mainLoop();
 	void drawFrame();
+	void startFrame();
+	void endFrame();
 	void updateUniformBuffer();
 	void processEntity(artemis::Entity &e);
 	void end();
@@ -170,7 +172,7 @@ private:
 	bool prepared = false;
 
 	Camera m_Cam;
-	Timer m_RenderTime;
+	Principia::Timer m_RenderTime;
 
 	Texture			computeTexture;
 	Texture			guiTextures[MAXTEXTURES];

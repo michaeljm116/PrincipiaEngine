@@ -2,7 +2,7 @@
 #ifndef MATERIALCOMPONENT_HPP
 #define MATERIALCOMPONENT_HPP
 
-#include "../pch.h"
+
 
 struct MaterialComponent : public artemis::Component{
 	//glm::vec3*  diffuse; 

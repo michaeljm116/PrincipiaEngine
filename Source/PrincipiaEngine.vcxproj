@@ -23,7 +23,12 @@
     <ClCompile Include="..\Lib\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Lib\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="Animation\animationSystem.cpp" />
+    <ClCompile Include="Animation\animationSystem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="ArtemisFrameWork\Component.cpp" />
     <ClCompile Include="ArtemisFrameWork\ComponentType.cpp" />
     <ClCompile Include="ArtemisFrameWork\ComponentTypeManager.cpp" />
@@ -40,13 +45,23 @@
     <ClCompile Include="ArtemisFrameWork\World.cpp" />
     <ClCompile Include="Audio\audioSystem.cpp" />
     <ClCompile Include="Game\Application\applicationSystem.cpp" />
-    <ClCompile Include="Game\Application\controllerSystem.cpp" />
+    <ClCompile Include="Game\Application\controllerSystem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Game\Application\gameSystem.cpp" />
     <ClCompile Include="Game\Application\menuSystem.cpp" />
     <ClCompile Include="Game\Application\pauseSystem.cpp" />
     <ClCompile Include="Game\Application\titleSystem.cpp" />
     <ClCompile Include="Game\Gameplay\characterController.cpp" />
-    <ClCompile Include="Game\scene.cpp" />
+    <ClCompile Include="Game\scene.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Game\transformSystem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -54,23 +69,38 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Physics\collisionSystem.cpp" />
     <ClCompile Include="Rendering\engineUISystem.cpp" />
-    <ClCompile Include="Rendering\renderSystem.cpp" />
+    <ClCompile Include="Rendering\renderSystem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Rendering\renderbase.cpp" />
-    <ClCompile Include="Rendering\rendermanagers.cpp" />
     <ClCompile Include="Rendering\Texture.cpp" />
-    <ClCompile Include="Utility\bvhSystem.cpp" />
-    <ClCompile Include="Utility\resourceManager.cpp" />
+    <ClCompile Include="Utility\bvhSystem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="Utility\resourceManager.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="main.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utility\Input.cpp" />
     <ClCompile Include="Utility\window.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,12 +167,15 @@
     <ClInclude Include="Game\Application\titleSystem.h" />
     <ClInclude Include="Game\camera.hpp" />
     <ClInclude Include="Game\Gameplay\characterController.h" />
+    <ClInclude Include="Game\Gameplay\Components\gameObjectTypeComponent.h" />
     <ClInclude Include="Game\primitive.hpp" />
     <ClInclude Include="Game\scene.h" />
     <ClInclude Include="Game\transformComponent.hpp" />
     <ClInclude Include="Game\transformSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\collisionComponents.hpp" />
+    <ClInclude Include="Physics\collisionSystem.h" />
+    <ClInclude Include="Physics\Components\collisionComponent.h" />
     <ClInclude Include="Rendering\cameraComponent.hpp" />
     <ClInclude Include="Rendering\constantbuffer.hpp" />
     <ClInclude Include="Rendering\engineUISystem.h" />
@@ -172,6 +205,7 @@
     <ClInclude Include="Utility\resourceManager.h" />
     <ClInclude Include="Utility\resourceStructs.h" />
     <ClInclude Include="Utility\Input.h" />
+    <ClInclude Include="Utility\timer.hpp" />
     <ClInclude Include="Utility\window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +215,8 @@
     <Text Include="TODO.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Assets\Levels\Pong\Arena.xml" />
+    <Xml Include="..\Assets\Levels\RayTracedInvaders\Arena.xml" />
+    <Xml Include="..\Assets\Levels\RayTracedInvaders\Materials.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -238,10 +273,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2015;..\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2015;..\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>

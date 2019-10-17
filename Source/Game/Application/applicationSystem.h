@@ -5,6 +5,7 @@
 #include "titleSystem.h"
 #include "menuSystem.h"
 #include "pauseSystem.h"
+#include "../Utility/bvhSystem.h"
 
 class ControllerSystem;
 
@@ -24,6 +25,7 @@ private:
 	AnimationSystem* as;
 	EngineUISystem* ui;
 	ControllerSystem* controllers;
+	BvhSystem* bvh;
 
 public:
 	ApplicationSystem();
