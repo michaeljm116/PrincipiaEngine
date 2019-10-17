@@ -143,7 +143,70 @@ struct BVHTree {
 				}
 				//Note: using SAH will make it so your bvh actually doesn't suck
 				case SplitMethod::SAH:
-				{}
+				{
+					if (numPrims <= 4) {
+						mid = (start + end) >> 1;
+						std::nth_element(&prims[start], &prims[mid], &prims[end - 1] + 1, [axis](const Bounds& a, const Bounds& b) {
+							return a.center[axis] < b.center[axis];
+						});
+					}
+					else {
+						//initialize the buckets
+						constexpr int numBuckets = 12;
+						Bucket buckets[numBuckets];
+						for (int i = start; i < end; ++i) {
+							int b = numBuckets * centroidBounds.Offset(prims[i].center, axis);
+							if (b == numBuckets) b--;
+							buckets[b].count++;
+							buckets[b].bounds.combine(prims[i]);
+						}
+
+						constexpr int nb = numBuckets - 1;
+						float cost[nb];
+						for (int i = 0; i < nb; ++i) {
+							Bounds b0, b1;
+							int c0 = 0, c1 = 0;
+
+							for (int j = 0; j <= i; ++j) {
+								b0.combine(buckets[j].bounds);
+								c0 += buckets[j].count;
+							}
+							for (int j = i + 1; j < numBuckets; ++j) {
+								b1.combine(buckets[j].bounds);
+								c1 += buckets[j].count;
+							}
+							cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
+						}
+
+						float minCost = cost[0];
+						int minCostSplitBucket = 0;
+						for (int i = 0; i < nb; ++i) {
+							if (cost[i] < minCost) {
+								minCost = cost[i];
+								minCostSplitBucket = i;
+							}
+						}
+						float leafCost = numPrims;
+						if (numPrims > MAX_BVH_OBJECTS || minCost < leafCost) {
+							Bounds *midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [centroidBounds, numBuckets, minCostSplitBucket, axis](const Bounds &a) {
+								int b = (numBuckets) * centroidBounds.Offset(a.center, axis);
+								if (b == numBuckets) b = numBuckets - 1;
+								return b <= minCostSplitBucket;
+								//return a.center[axis] < centroidBounds.center[axis];
+							});
+							mid = midPtr - &prims[0];
+							if (mid != start && mid != end)
+								break;
+						}
+						else { //create leaf
+							for (int i = start; i < end; ++i) {
+								orderedPrims.push_back(prims[i]);
+							}
+							node->initLeaf(prims, bounds, prevOrdered, numPrims);
+							return node;
+						}
+					}
+				}
 				default:
 					break;
 				}

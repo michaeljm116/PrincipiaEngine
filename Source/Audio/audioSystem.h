@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../pch.h"
 #include "../Utility/componentIncludes.h"
 #include "../Game/Gameplay/characterComponent.hpp"
 #include "audioComponents.h"

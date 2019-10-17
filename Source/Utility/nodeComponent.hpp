@@ -1,56 +1,9 @@
 #ifndef NODECOMPONENT_H_
 #define NODECOMPONENT_H_
 
-#include "../pch.h"
-//enum class ComponentFlag {
-//	None = 0,
-//	Node = 1 << 0,
-//	Transform = 1 << 1,
-//	Material = 1 << 2,
-//	Light = 1 << 3,
-//	Camera = 1 << 4,
-//	Mesh = 1 << 5,
-//	Subset = 1 << 6,
-//	Box = 1 << 7,
-//	Sphere = 1 << 8,
-//	AABB = 1 << 9
-//};
 
-/*typedef unsigned char ComponentFlag;
-enum class ComponentFlag {
-	Node = 0x01,
-	Transform = 0x02,
-	Material = 0x04,
-	Light = 0x08,
-	Camera = 0x10,
-	Mesh = 0x20,
-	Subset = 0x40,
-	Box = 0x80,
-	//Sphere = 0xF0
-};*/
-
-/*
-
-if (node->flags & COMPONENT_TRANSFORM) {
-}
-if (node->flags & COMPONENT_MATERIAL) {
-}
-if (node->flags & COMPONENT_LIGHT) {
-}
-if (node->flags & COMPONENT_CAMERA){
-}
-if (node->flags & COMPONENT_MESH) {
-}
-if (node->flags & COMPONENT_SUBSET) {
-}
-if (node->flags & COMPONENT_BOX) {
-}
-if (node->flags & COMPONENT_SPHERE) {
-}
-if (node->flags & COMPONENT_PLANE) {
-}
-
-*/
+#include <Artemis/Artemis.h>
+#include <vector>
 
 enum ComponentFlag {
 	COMPONENT_NODE = 0x01,

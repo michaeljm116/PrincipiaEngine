@@ -3,7 +3,9 @@
 #define COLLISIONCOMPONENTS_HPP
 
 
-#include "../pch.h"
+#include <Artemis/Artemis.h>
+#include <glm/glm.hpp>
+#include <unordered_map>
 
 struct BBComponent {
 	glm::vec3 center;

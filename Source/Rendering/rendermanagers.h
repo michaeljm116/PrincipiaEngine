@@ -12,7 +12,7 @@ if i ever decide to add textures to the game
 #include "model.h"
 #include "light.hpp"
 #include "constantbuffer.hpp"
-#include "../pch.h"
+//#include "../pch.h"
 
 /*
 template<typename T>

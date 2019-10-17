@@ -2,7 +2,9 @@
 #ifndef RENDERCOMPONENTS_HPP
 #define RENDERCOMPONENTS_HPP
 
-#include "../pch.h"
+#include <Artemis/Artemis.h>
+#include <glm/glm.hpp>
+#include <vector>
 
 //enum class ObjectType {
 //	Sphere,

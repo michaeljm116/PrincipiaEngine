@@ -8,7 +8,7 @@ struct Ray {
 	vec3 o;
 	float t;
 	vec3 d;
-	float normal;
+	float tbvh;
 };
 
 struct Primitive
@@ -24,9 +24,9 @@ struct Primitive
 };
 
 struct BVHNode {
-	vec3 center;
+	vec3 upper;
 	int offset;
-	vec3 extents;
+	vec3 lower;
 	int numChildren;
 };
 

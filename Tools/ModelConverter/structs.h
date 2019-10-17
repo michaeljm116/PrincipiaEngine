@@ -39,9 +39,53 @@ struct VertexBoneData
 struct TriIndex {
 	int v[3];
 };
-struct Face {
-	glm::ivec4 v;
+
+struct Bounds {
+	glm::vec3 center;
+	glm::vec3 extents;
+
+	Bounds(const glm::vec3& c, const glm::vec3& e) : center(c), extents(e) {};
+	Bounds() { center = glm::vec3(0); extents = glm::vec3(0); };
+	inline glm::vec3 max() {
+		return center + extents;
+	}
+	inline glm::vec3 min() {
+		return center - extents;
+	}
+
+	Bounds combine(Bounds& b) {
+		//find the highest and the lowest x and y values
+		
+		//this is stupid and slow but i dont care cause its offline and im lazy righit now
+		glm::vec3 max;
+		for (int i = 0; i < 3; ++i) max[i] = std::max(this->max()[i], b.max()[i]);// std::max(this->max(), b.max());
+		glm::vec3 min;// = std::min(this->min(), b.min());
+		for (int i = 0; i < 3; ++i) min[i] = std::min(this->min()[i], b.min()[i]);
+
+		//center = halfway between the two, extents = max-center
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 e = max - c;
+
+		return Bounds(c, e);
+	}
+
+	float Offset(glm::vec3 c, int a) const {
+		float ret = (c[a] - (center[a] - extents[a])) / (extents[a] * 2);
+		return ret;
+	}
+
+	float SurfaceArea() {
+		glm::vec3 te = extents * 2.f;
+		return 2 * (te.x * te.y + te.x * te.z + te.y * te.z);
+	}
 };
+
+struct kBounds {
+	//this is just an interface 
+	//kBounds(Mesh* m) : mesh(m) {};
+	virtual Bounds getBounds()  = 0;
+};
+
 
 struct JointObject {
 	int objID;
@@ -58,6 +102,32 @@ struct Vertex {
 	Vertex(aiVector3D p, aiVector3D n) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); }
 	Vertex(const aiVector3D &p, const aiVector3D &n, const ai_real &u, const ai_real &v) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); uv = glm::vec2(u, v); }
 };
+
+struct Face : public kBounds {
+	glm::ivec4 v;
+	std::vector<Vertex> const * vertices;
+
+	Face(std::vector<Vertex> const * verts) : vertices(verts) {};
+	
+	Bounds getBounds() override {
+		//find dthe max and min qualities in the verts and make a bounds from it
+		glm::vec3 max = vertices->at(v.x).position;
+		glm::vec3 min = vertices->at(v.x).position;
+
+		for (int i = 1; i < 4; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				max[j] = std::max(max[j], vertices->at(i).position[j]);
+				min[j] = std::min(min[j], vertices->at(i).position[j]);
+			}
+		}
+
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 e = max - c;
+		return Bounds(c, e);
+
+	}
+};
+
 struct Mesh {
 	std::string name;
 	std::string originalName;
@@ -69,12 +139,16 @@ struct Mesh {
 	int id;
 };
 
-struct Shape {
+struct Shape : public kBounds {
 	int type;
 	std::string name;
 	std::string originalName;
 	glm::vec3 center;
 	glm::vec3 extents;
+
+	Bounds getBounds() override {
+		return Bounds(center, extents);
+	};
 };
 
 struct  Joint
@@ -132,6 +206,10 @@ struct  PrincipiaSkeleton
 
 	glm::vec3 center;
 	glm::vec3 extents;
+
+};
+
+struct KdTreeNode {
 
 };
 

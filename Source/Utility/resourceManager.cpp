@@ -1,7 +1,7 @@
+#include "../pch.h"
 #include "resourceManager.h"
 #include "../Rendering/model.h"
 #include "window.h"
-#include "../pch.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }

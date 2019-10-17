@@ -264,7 +264,7 @@ PrincipiaModel ReadPEModel(const char* pFile){
 			m.vertices.push_back(vert);
 		}
 		for (int t = 0; t < numFaces; ++t) {
-			Face face;
+			Face face(&m.vertices);
 			binaryio.read(CCAST(&face), sizeof(TriIndex));
 			m.faces.push_back(face);
 		}
@@ -306,7 +306,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	m.name = pScene->GetShortFilename(pFile.c_str());
 	//shorten name
 	int indexico;
-	for (int i = 0; i < m.name.size(); ++i) {
+	for (size_t i = 0; i < m.name.size(); ++i) {
 		if (m.name.at(i) == '.') {
 			indexico = i;
 			break;
@@ -324,7 +324,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 
 	auto root = pScene->mRootNode;
 	std::map<std::string, aiNode*> sceneChildren;
-	for (int i = 0; i < root->mNumChildren; ++i) {
+	for (size_t i = 0; i < root->mNumChildren; ++i) {
 		sceneChildren[root->mChildren[i]->mName.data] = root->mChildren[i];
 	}
 
@@ -333,7 +333,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	for (size_t i = 0; i < numMeshes; ++i) {
 		sceneMeshes[pScene->mMeshes[i]->mName.data] = i;
 	}
-	for (int i = 0; i < pScene->mNumMeshes; ++i) {
+	for (size_t i = 0; i < pScene->mNumMeshes; ++i) {
 		Mesh subset;
 		aiMesh* paiMesh = pScene->mMeshes[i];
 
@@ -352,7 +352,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		glm::vec3 minVert = glm::vec3(FLT_MAX);
 
 		//aiMatrix4x4 trans = name_transformMap[paiMesh[i].mName.C_Str()];
-		for (int v = 0; v < paiMesh->mNumVertices; ++v) {
+		for (size_t v = 0; v < paiMesh->mNumVertices; ++v) {
 			aiVector3D vert = paiMesh->mVertices[v];
 			aiVector3D norm = paiMesh->mNormals[v];
 			aiVector3D* txtr = nullptr;
@@ -374,11 +374,11 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			minVert.z = minVal(minVert.z, vert.z);
 
 		}
-		for (int f = 0; f < paiMesh->mNumFaces; ++f) {
+		for (size_t f = 0; f < paiMesh->mNumFaces; ++f) {
 			//subset.faces.push_back(paiMesh->mFaces[f]);
 			//TriIndex tri;
-			Face face;
-			for (int t = 0; t < paiMesh->mFaces[f].mNumIndices; t++) {
+			Face face(&subset.vertices);
+			for (size_t t = 0; t < paiMesh->mFaces[f].mNumIndices; t++) {
 				if (t < 4)
 					face.v[t] = paiMesh->mFaces[f].mIndices[t];
 			}
@@ -428,7 +428,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			std::vector<std::vector<int>> boneFaces;
 
 			//load up the data
-			for (int i = 0; i < paiMesh->mNumBones; ++i) {
+			for (size_t i = 0; i < paiMesh->mNumBones; ++i) {
 				bones.push_back(paiMesh->mBones[i]);
 
 
@@ -447,7 +447,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 					//use map which is a red-black tree, then do in-order traversal pushback into the vw list
 					std::vector<aiVertexWeight> vw;
 					std::map<int, aiVertexWeight> vwmap;
-					for (int b = 0; b < paiMesh->mBones[i]->mNumWeights; b++) {
+					for (size_t b = 0; b < paiMesh->mBones[i]->mNumWeights; b++) {
 						auto weight = paiMesh->mBones[i]->mWeights[b];
 						vwmap.insert(std::pair<int, aiVertexWeight>(weight.mVertexId, weight));
 					}
@@ -460,7 +460,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 					//Now that you have a list of in-order vertex id's you can compare with the faces in an efficient manner
 					//for each face, check if the bone has f[0] f[1] f[2] and f[3]. it's already sorted so you can iterate through and look for a > value to cancel out
 					std::vector<int> bfs;
-					for (auto fid = 0; fid < subset.faces.size(); ++fid) {
+					for (size_t fid = 0; fid < subset.faces.size(); ++fid) {
 						Face* itrFace = &subset.faces[fid];
 						bool allfour = true;
 						for (size_t i = 0; i < 4; ++i) {
@@ -487,7 +487,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		s.globalInverseTransform = aiMatrix4x4ToGlm(glit);
 		s.joints = tds.skeletonJoints;
 		s.numJoints = tds.skeletonJoints.size();
-		int a = 0;
+		size_t a = 0;
 		for (; a < pScene->mNumAnimations; ++a) {
 			aiAnimation* anim = pScene->mAnimations[a];
 			PrincipiaAnimation animation;
@@ -496,8 +496,8 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			animation.fps = anim->mTicksPerSecond;
 			animation.skeletonID = s.uniqueID;
 
-			for (int j = 0; j < s.joints.size(); ++j) {
-				for (int ch = 0; ch < anim->mNumChannels; ch++) {
+			for (size_t j = 0; j < s.joints.size(); ++j) {
+				for (size_t ch = 0; ch < anim->mNumChannels; ch++) {
 					aiNodeAnim* ana = anim->mChannels[ch];
 					if (!::strcmp(ana->mNodeName.data, s.joints[j].name.c_str())) {
 						AnimChannel channel;
@@ -505,7 +505,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 						if ((ana->mNumPositionKeys != ana->mNumRotationKeys) || (ana->mNumPositionKeys != ana->mNumScalingKeys) || (ana->mNumRotationKeys != ana->mNumScalingKeys))
 							std::cout << "ERROR, UNEVEN KEYS\n";
 
-						for (int k = 0; k < ana->mNumRotationKeys; k++) {
+						for (size_t k = 0; k < ana->mNumRotationKeys; k++) {
 							KeySQT key;
 							key.pos = ana->mPositionKeys[k];
 							key.rot = ana->mRotationKeys[k];
@@ -524,14 +524,14 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	}
 	s.name = m.name + "_skel";// tds.skelename;
 
-	for (int i = 0; i < m.meshes.size(); ++i)
+	for (size_t i = 0; i < m.meshes.size(); ++i)
 		m.meshes[i].id = sceneMeshes[m.meshes[i].originalName];
 	
 	// We're done. Everything will be cleaned up by the importer destructor
 	aiNode* rooot = pScene->mRootNode;
 	std::vector<std::string> names;
 	std::vector<aiMatrix4x4> transforms;
-	for (int i = 0; i < rooot->mNumChildren; ++i) {
+	for (size_t i = 0; i < rooot->mNumChildren; ++i) {
 		transforms.push_back(rooot->mChildren[i]->mTransformation);
 		names.push_back(rooot->mChildren[i]->mName.C_Str());
 	}
@@ -584,11 +584,11 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
 	nodeQueue.push(armature);
 	while (!nodeQueue.empty()) {
 		size_t qsize = nodeQueue.size();
-		for (int i = 0; i < qsize; ++i) {
+		for (size_t i = 0; i < qsize; ++i) {
 			aiNode* n = nodeQueue.front();
 			nodeQueue.pop();
 			nodes.push_back(n);
-			for (int c = 0; c < n->mNumChildren; c++)
+			for (size_t c = 0; c < n->mNumChildren; c++)
 				nodeQueue.push(n->mChildren[c]);
 		}
 	}
@@ -597,9 +597,9 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
 	//This gets a hashmap of the names of everybone the animations use
 	std::unordered_map<std::string, bool> boneNameMap;
 	auto numAnims = scene->mNumAnimations;
-	for (auto i = 0; i < numAnims; ++i) {
+	for (size_t i = 0; i < numAnims; ++i) {
 		auto numChannels = scene->mAnimations[i]->mNumChannels;
-		for (auto c = 0; c < numChannels; c++) {
+		for (size_t c = 0; c < numChannels; c++) {
 			boneNameMap[scene->mAnimations[i]->mChannels[c]->mNodeName.data] = true;
 		}
 	}
@@ -628,7 +628,7 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
 	//create a hashmap of the node with their indexes and then a list that compares parentnames with indexes
 	std::unordered_map<std::string, int> confirmedNodeIndexes;
 	auto numConfirmedNodes = confirmedNodes.size();
-	for (auto i = 0; i < numConfirmedNodes; ++i) {
+	for (size_t i = 0; i < numConfirmedNodes; ++i) {
 		confirmedNodeIndexes[confirmedNodes[i]->mName.data] = i;
 	}
 
@@ -636,13 +636,13 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds) {
 	std::vector<int> parentIndexes;
 	parentIndexes.reserve(numConfirmedNodes);
 	parentIndexes.emplace_back(-1);
-	for (auto i = 1; i < numConfirmedNodes; ++i) {
+	for (size_t i = 1; i < numConfirmedNodes; ++i) {
 		parentIndexes.emplace_back(confirmedNodeIndexes[confirmedNodes[i]->mParent->mName.data]);
 	}
 
 	//Now we load up the joints
 	tds.skeletonJoints.reserve(numConfirmedNodes);
-	for (int i = 0; i < numConfirmedNodes; ++i) {
+	for (size_t i = 0; i < numConfirmedNodes; ++i) {
 		Joint j;
 		j.name = confirmedNodes[i]->mName.data;
 		j.parentIndex = parentIndexes[i];

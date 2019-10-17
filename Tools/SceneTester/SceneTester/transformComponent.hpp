@@ -31,6 +31,21 @@ struct Bounds {
 
 		return Bounds(c, e);
 	}
+
+	float Offset(glm::vec3 c, int a) const {
+		float ret =  (c[a] - (center[a] - extents[a])) / (extents[a] * 2);
+		return ret;
+	}
+
+	float SurfaceArea() {
+		glm::vec3 te = extents * 2.f;
+		return 2 * (te.x * te.y + te.x * te.z + te.y * te.z);
+	}
+};
+
+struct Bucket {
+	int count = 0;
+	Bounds bounds;
 };
 
 struct sqt {

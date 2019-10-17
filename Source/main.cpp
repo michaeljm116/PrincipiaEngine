@@ -29,9 +29,9 @@ int main() {
 	world.setSingleton(singletonEntity);
 
 	Resources::get().LoadConfig("");
-	Resources::get().LoadMaterials("../Assets/Levels/Pong/Materials.xml");
-	Resources::get().LoadDirectory("../Assets/Levels/Pong/Models/");
-	Resources::get().LoadAnimations("../Assets/Levels/Pong/Animations/");
+	Resources::get().LoadMaterials("../Assets/Levels/RayTracedInvaders/Materials.xml");
+	Resources::get().LoadDirectory("../Assets/Levels/RayTracedInvaders/Models/");
+	Resources::get().LoadAnimations("../Assets/Levels/RayTracedInvaders/Animations/");
 	//Resources::get().LoadMaterials("../Assets/Levels/Level1/Materials.xml");
 	//Resources::get().LoadDirectory("../Assets/Levels/Level1/Models/");
 	//Resources::get().LoadAnimations("../Assets/Levels/Level1/Animations/");
@@ -76,8 +76,8 @@ int main() {
 		appSys->initialize();
 		//appSys->instantGameStart();
 
-		world.loopStart();
-		Scene::get().postStart();
+		//world.loopStart();
+		//Scene::get().buildBVH();
 
 		static std::chrono::time_point<std::chrono::high_resolution_clock> start = std::chrono::high_resolution_clock::now();
 		static std::chrono::time_point<std::chrono::high_resolution_clock> end = std::chrono::high_resolution_clock::now();
@@ -87,6 +87,7 @@ int main() {
 		while (!glfwWindowShouldClose(WINDOW.getWindow())) {
 			duration = end - start;
 			world.loopStart();
+			Scene::get().buildBVH();
 			float delta = duration.count();
 			if (delta > 0 && delta < 1.f)
 				world.setDelta(delta);

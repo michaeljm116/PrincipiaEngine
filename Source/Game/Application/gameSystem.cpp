@@ -28,9 +28,9 @@ void GameSystem::initialize()
 
 	//button = (ButtonSystem*)sm->getSystem<ButtonSystem>();
 
-	audio = (AudioSystem*)sm->setSystem(new AudioSystem());
+	//audio = (AudioSystem*)sm->setSystem(new AudioSystem());
 
-	audio->initialize();
+	//audio->initialize();
 
 
 }
@@ -53,7 +53,7 @@ void GameSystem::processEntity(artemis::Entity & e)
 {
 
 	cc->process();
-	audio->process();
+	//audio->process();
 
 	ControllerComponent* c = controllerMapper.get(e);
 

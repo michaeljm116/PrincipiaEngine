@@ -10,7 +10,8 @@
 
 #pragma once
 
-#include "../pch.h"
+//#include "../pch.h"
+#include <vector>
 #include "vulkan/vulkan.h"
 
 namespace vks

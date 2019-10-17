@@ -1,5 +1,7 @@
 #pragma once
 #include "bvhComponent.hpp"
+//#include "../Game/transformComponent.hpp"
+//#include "../Rendering/renderComponents.hpp"
 #include "componentIncludes.h"
 
 static const int MAX_BVH_OBJECTS = 4;
@@ -24,13 +26,13 @@ public:
 
 	
 	std::vector<artemis::Entity*> prims;
-	SplitMethod splitMethod = SplitMethod::EqualsCounts;
+	SplitMethod splitMethod = SplitMethod::SAH;
 	std::shared_ptr<BVHNode> root;
 	int totalNodes;
 	bool rebuild = true;
 
 private:
-	void build(SplitMethod sm, TreeType tt, std::vector<artemis::Entity*> &ops);
+	void build(TreeType tt, std::vector<artemis::Entity*> &ops);
 	std::shared_ptr<BVHNode> recursiveBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*> &orderedPrims);
 	BVHBounds computeBounds(int s, int e);
 	BVHBounds computeCentroidBounds(int s, int e);

@@ -175,17 +175,17 @@ bool ModelScaler(PrincipiaModel& m) {
 	//so if the world = glm::translate(center) * inversetransform of the mesh
 
 	//Scale the bounds
-	for (int i = 0; i < m.meshes.size(); ++i) {
+	for (size_t i = 0; i < m.meshes.size(); ++i) {
 		m.meshes[i].center = glm::vec3(world * glm::vec4(m.meshes[i].center, 1.f));
 		m.meshes[i].extent = glm::vec3(world * glm::vec4(m.meshes[i].extent, 1.f));
-		for (int j = 0; j < m.meshes[i].vertices.size(); j++) {
+		for (size_t j = 0; j < m.meshes[i].vertices.size(); j++) {
 			m.meshes[i].vertices[j].position = glm::vec3(world * glm::vec4(m.meshes[i].vertices[j].position, 1.f)) - m.meshes[i].center;
 		}
 		//avgCenter += m.meshes[i].center;
 	}
 
 	//Scale the shapes
-	for (int i = 0; i < m.shapes.size(); ++i) {
+	for (size_t i = 0; i < m.shapes.size(); ++i) {
 		m.shapes[i].center  = glm::vec3(world * glm::vec4(m.shapes[i].center, 1.f));
 		m.shapes[i].extents = glm::vec3(world * glm::vec4(m.shapes[i].extents, 1.f));
 		//avgCenter += m.meshes[i].center;
@@ -310,7 +310,7 @@ bool ConvertJointVerts(PrincipiaModel& m,  PrincipiaSkeleton& s) {
 			if (jo.objID > -1) {// aka if its not a shape
 				//Get the Face and convert the vertices to joint space
 				const Face& mFace = m.meshes[jo.objID].faces[jo.faceID];
-				Face newFace;
+				Face newFace(&m.meshes[jo.objID].vertices);
 				for (int i = 0; i < 4; ++i) {
 					//Make a key of hte mesh id and the face index
 					std::pair<int, int> key = std::make_pair(jo.objID, mFace.v[i]);

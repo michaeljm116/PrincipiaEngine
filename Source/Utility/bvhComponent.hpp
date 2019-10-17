@@ -12,6 +12,7 @@ enum class TreeType {
 enum class SplitMethod {
 	Middle, SAH, EqualsCounts
 };
+
 struct BVHBounds {
 	glm::vec3 center;
 	glm::vec3 extents;
@@ -26,6 +27,7 @@ struct BVHBounds {
 	}
 
 	BVHBounds combine(BVHBounds b) {
+		if (center.x == NAN) return b;
 		//find the highest and the lowest x and y values
 		glm::vec3 max = tulip::maxV(this->max(), b.max());
 		glm::vec3 min = tulip::minV(this->min(), b.min());
@@ -36,6 +38,29 @@ struct BVHBounds {
 
 		return BVHBounds(c, e);
 	}
+
+	BVHBounds combine(glm::vec3 c, glm::vec3 e) {
+		glm::vec3 max = tulip::maxV(this->max(), (c + e));
+		glm::vec3 min = tulip::minV(this->min(), (c - e));
+		glm::vec3 ce = (max + min) * 0.5f;
+
+		return BVHBounds(ce, max - ce);
+	}
+
+	float Offset(glm::vec3 c, int a) const {
+		float ret = (c[a] - (center[a] - extents[a])) / (extents[a] * 2);
+		return ret;
+	}
+
+	float SurfaceArea() {
+		glm::vec3 te = extents * 2.f;
+		return 2 * (te.x * te.y + te.x * te.z + te.y * te.z);
+	}
+};
+
+struct BVHBucket {
+	int count = 0;
+	BVHBounds bounds;// = BVHBounds(glm::vec3(0), glm::vec3(0));
 };
 
 struct BVHNode {
@@ -63,8 +88,8 @@ struct BVHNode {
 };
 
 struct ssBVHNode {
-	glm::vec3 center;
+	glm::vec3 upper;
 	int offset;
-	glm::vec3 extents;
+	glm::vec3 lower;
 	int numChildren;
 };
