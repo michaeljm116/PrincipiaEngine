@@ -1,7 +1,7 @@
 #pragma once
 #include "Artemis/Component.h"
 
-namespace Principium {
+namespace Principia {
 	enum GameObjectType {
 		GAMEOBJECT_NONE = 0x00,
 		GAMEOBJECT_PLAYER = 0x01,
@@ -12,5 +12,6 @@ namespace Principium {
 
 	struct GameObjectTypeComponent : public artemis::Component {
 		GameObjectType type;
+		GameObjectTypeComponent(GameObjectType t) : type(t) {};
 	};
 }

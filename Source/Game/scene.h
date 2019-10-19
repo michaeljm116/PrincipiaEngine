@@ -14,6 +14,7 @@ loading/saving scene, creating/copying/deleting objects
 #include "Gameplay/characterController.h"
 #include "../Audio/audioComponents.h"
 #include "../Utility/bvhSystem.h"
+#include "../Physics/collisionSystem.h"
 
 #define SCENE Scene::get()
 
@@ -46,6 +47,7 @@ public:
 	std::vector<TransformComponent*> transforms;
 
 	BvhSystem* bvh;
+	Principia::CollisionSystem* colsys;
 
 	int sceneNumber;
 	

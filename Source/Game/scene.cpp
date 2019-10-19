@@ -2,6 +2,7 @@
 #include "../pch.h"
 #include "scene.h"
 #include "../tinyxml2/tinyxml2.h"
+#include "../Rendering/Components/renderComponents.hpp"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
@@ -23,6 +24,9 @@ void Scene::init(artemis::World& w) {
 	bvh = (BvhSystem*)sm->setSystem(new BvhSystem());
 	bvh->initialize();
 
+	colsys = (Principia::CollisionSystem*)sm->setSystem(new Principia::CollisionSystem());
+	colsys->initialize();
+
 	LoadScene("RayTracedInvaders/Arena");
 	//LoadScene("Level1/QuadsTest");
 	//LoadScene("Level1/Scene1");
@@ -30,7 +34,7 @@ void Scene::init(artemis::World& w) {
 };
 
 void Scene::doStuff() {
-	rs->addNodes(parents);
+	//rs->addNodes(parents);
 
 	ui->setActiveNode(parents[0]);
 	cc->camera.transform = (TransformComponent*)parents[0]->data->getComponent<TransformComponent>();
@@ -224,12 +228,13 @@ artemis::Entity* Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 s
 	
 	e->addComponent(new PrimitiveComponent(type));
 	e->addComponent(new MaterialComponent(matID));
+	e->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 	e->addComponent(trans);
 	e->addComponent(parent);
 
 	parent->isDynamic = dynamic;
 	e->refresh();
-	rs->addNode(parent);
+	//rs->addNode(parent);
 	parents.push_back(parent);
 	ts->recursiveTransform(parent);
 	rs->updateObjectMemory();
@@ -253,6 +258,7 @@ artemis::Entity* Scene::createGameShape(std::string name, glm::vec3 pos, glm::ve
 	ts->recursiveTransform(parent);
 	rs->updateObjectMemory();
 
+	parents.push_back(parent);
 	return e;
 }
 
@@ -395,6 +401,7 @@ void Scene::copyNode(NodeComponent * node, NodeComponent* parent, std::vector<No
 	}
 	if (node->flags & COMPONENT_LIGHT) {
 		e->addComponent(new LightComponent(*(LightComponent*)node->data->getComponent<LightComponent>()));
+		e->addComponent(new RenderComponent(RenderType::RENDER_LIGHT));
 	}
 	if (node->flags & COMPONENT_PRIMITIVE) {
 		e->addComponent(new PrimitiveComponent(*(PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>()));
@@ -811,6 +818,8 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			intensity->QueryFloatAttribute("i", &i);
 			id->QueryIntAttribute("id", &idyo);
 			e->addComponent(new LightComponent(c, i, idyo));
+			e->addComponent(new RenderComponent(RenderType::RENDER_LIGHT));
+
 		}
 		if (flags & COMPONENT_CAMERA) {
 			XMLElement* lookat = start->FirstChildElement("LookAt");
@@ -825,6 +834,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			fov->QueryFloatAttribute("fov", &f);
 
 			e->addComponent(new CameraComponent(l,f));
+			e->addComponent(new RenderComponent(RenderType::RENDER_CAMERA));
 		}
 		if (flags & COMPONENT_MODEL) {
 			int a = 4;
@@ -847,6 +857,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			int id;
 			Object->QueryIntAttribute("ID", &id);
 			e->addComponent(new PrimitiveComponent(id));
+			e->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 		}
 		if (flags & COMPONENT_AABB) {
 			e->addComponent(new AABBComponent());
@@ -877,7 +888,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			//insertController(n);
 		}
 		if (flags & COMPONENT_COLIDER) {
-			e->addComponent(new CollisionComponent());
+			//e->addComponent(new CollisionComponent());
 		}
 		//if (flags & COMPONENT_BUTTON) {
 		//	e->addComponent(new ButtonComponent());

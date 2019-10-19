@@ -66,6 +66,9 @@
     <Filter Include="Source Files\Physics\Components">
       <UniqueIdentifier>{3620f858-bc49-4146-a4c0-2480b27bb0b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\Components">
+      <UniqueIdentifier>{aba7ef95-dd08-4309-9c01-44176053943f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Physics\collisionSystem.cpp">
       <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Gameplay\gameSceneSystem.cpp">
+      <Filter>Source Files\Game\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -453,9 +459,6 @@
     <ClInclude Include="Game\Application\applicationComponents.h">
       <Filter>Source Files\Game\Application\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\renderComponents.hpp">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Gameplay\characterController.h">
       <Filter>Source Files\Game\Gameplay</Filter>
     </ClInclude>
@@ -494,6 +497,15 @@
     </ClInclude>
     <ClInclude Include="Game\Gameplay\Components\gameObjectTypeComponent.h">
       <Filter>Source Files\Game\Gameplay\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\Components\gameSceneComponent.h">
+      <Filter>Source Files\Game\Gameplay\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\gameSceneSystem.h">
+      <Filter>Source Files\Game\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\renderComponents.hpp">
+      <Filter>Source Files\Rendering\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,22 +1,23 @@
 #include "collisionSystem.h"
+#include "../Game/transformComponent.hpp"
 
-Principium::CollisionSystem::CollisionSystem()
+Principia::CollisionSystem::CollisionSystem()
 {
 	addComponentType<CollisionComponent>();
 	addComponentType<GameObjectTypeComponent>();
 }
 
-Principium::CollisionSystem::~CollisionSystem()
+Principia::CollisionSystem::~CollisionSystem()
 {
 }
 
-void Principium::CollisionSystem::initialize()
+void Principia::CollisionSystem::initialize()
 {
 	colMapper.init(*world);
 	gotMapper.init(*world);
 }
 
-void Principium::CollisionSystem::begin()
+void Principia::CollisionSystem::begin()
 {
 	for (auto enemy : enemies) {
 		for (auto player : players) {
@@ -25,11 +26,11 @@ void Principium::CollisionSystem::begin()
 	}
 }
 
-void Principium::CollisionSystem::end()
+void Principia::CollisionSystem::end()
 {
 }
 
-void Principium::CollisionSystem::added(artemis::Entity & e)
+void Principia::CollisionSystem::added(artemis::Entity & e)
 {
 	GameObjectType t = gotMapper.get(e)->type;
 	if (t & GameObjectType::GAMEOBJECT_ENEMY)
@@ -38,7 +39,7 @@ void Principium::CollisionSystem::added(artemis::Entity & e)
 		players.insert(&e);
 }
 
-void Principium::CollisionSystem::removed(artemis::Entity & e)
+void Principia::CollisionSystem::removed(artemis::Entity & e)
 {
 	GameObjectType t = gotMapper.get(e)->type;
 	if (t & GameObjectType::GAMEOBJECT_ENEMY)
@@ -47,16 +48,25 @@ void Principium::CollisionSystem::removed(artemis::Entity & e)
 		players.erase(&e);
 }
 
-void Principium::CollisionSystem::checkCollision(artemis::Entity & a, artemis::Entity & b)// const
+void Principia::CollisionSystem::processEntity(artemis::Entity & e)
+{
+	TransformComponent* tc = (TransformComponent*) e.getComponent<TransformComponent>();
+	colMapper.get(e)->position = tc->world[3];// tc->global.position;
+}
+
+void Principia::CollisionSystem::checkCollision(artemis::Entity & a, artemis::Entity & b)// const
 {
 	
 	CollisionComponent* ccA = colMapper.get(a);
 	CollisionComponent* ccB = colMapper.get(b);
 
+	float dist = sqrt(pow(ccA->position.x - ccB->position.x, 2) + pow(ccA->position.y - ccB->position.y, 2) + pow(ccA->position.z - ccB->position.z, 2));
+	if(dist < ccA->radius + ccB->radius)
+/*	
 	glm::vec3 diff = abs(ccA->position - ccB->position);
 	glm::vec3 res = diff - ccA->radius;
 	int comp = signbit(res.x) + signbit(res.y) + signbit(res.z);
-	if (comp == 3) {
+	if (comp == 3) */{
 		ccB->collider = a.getId();
 		ccB->state == CollisionState::Start ? ccB->state = CollisionState::Repeat : ccB->state = CollisionState::Start;
 

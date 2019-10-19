@@ -1,7 +1,7 @@
 #pragma once
 #include "bvhComponent.hpp"
 //#include "../Game/transformComponent.hpp"
-//#include "../Rendering/renderComponents.hpp"
+//#include "../Rendering/Components/renderComponents.hpp"
 #include "componentIncludes.h"
 
 static const int MAX_BVH_OBJECTS = 4;

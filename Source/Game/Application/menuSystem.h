@@ -1,7 +1,7 @@
 #pragma once
 
 #include "applicationComponents.h"
-#include "../Rendering/renderComponents.hpp"
+#include "../Rendering/Components/renderComponents.hpp"
 #include "controllerComponent.hpp"
 
 class MenuSystem : public artemis::EntityProcessingSystem {

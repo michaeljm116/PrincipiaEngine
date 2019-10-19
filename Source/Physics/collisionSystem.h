@@ -6,7 +6,7 @@
 #include "../Game/Gameplay/Components/gameObjectTypeComponent.h"
 #include <set>
 
-namespace Principium {
+namespace Principia {
 	class CollisionSystem : public artemis::EntityProcessingSystem {
 	public:
 		CollisionSystem();
@@ -15,8 +15,9 @@ namespace Principium {
 		void initialize();
 		void begin();
 		void end();
-		void added(artemis::Entity &e);
-		void removed(artemis::Entity &e);
+		void added(artemis::Entity &e) override;
+		void removed(artemis::Entity &e) override;
+		void processEntity(artemis::Entity &e) override;
 
 		void checkCollision(artemis::Entity& a, artemis::Entity& b);
 		

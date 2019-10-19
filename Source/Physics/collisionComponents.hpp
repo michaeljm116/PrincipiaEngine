@@ -71,9 +71,9 @@ struct CollisionData {
 	//CollisionData(const btVector3& p, const btVector3& n) : pos(p), norm(n) { state = CollisionState::Start; };
 	//CollisionData() {};
 };
-struct CollisionComponent : public artemis::Component {
-	std::unordered_map<int, CollisionData> collisions; 
-};
+//struct CollisionComponent : public artemis::Component {
+//	std::unordered_map<int, CollisionData> collisions; 
+//};
 
 struct SpringComponent : public artemis::Component {
 	//btVector3 normal;
