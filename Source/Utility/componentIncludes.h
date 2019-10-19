@@ -9,7 +9,7 @@
 #include "../Rendering/lightComponent.hpp"
 #include "../Rendering/cameraComponent.hpp"
 #include "../Rendering/materialComponent.hpp"
-#include "../Rendering/renderComponents.hpp"
+#include "../Rendering/Components/renderComponents.hpp"
 #include "../Animation/animationComponent.hpp"
 #include "../Game/Application/controllerComponent.hpp"
 #include "../Game/Gameplay/characterComponent.hpp"

@@ -3,7 +3,7 @@
 
 
 #include <Artemis/Artemis.h>
-#include <vector>
+#include <vector>f
 
 enum ComponentFlag {
 	COMPONENT_NODE = 0x01,

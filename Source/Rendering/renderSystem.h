@@ -22,7 +22,6 @@ class RenderSystem : public RenderBase, public artemis::EntityProcessingSystem
 public:
 	RenderSystem();
 	~RenderSystem();
-
 	void preInit();
 	void initialize();
 	void mainLoop();
@@ -31,7 +30,10 @@ public:
 	void endFrame();
 	void updateUniformBuffer();
 	void processEntity(artemis::Entity &e);
-	void end();
+
+	void added(artemis::Entity &e) override;
+	void removed(artemis::Entity &e) override;
+	void end() override;
 
 	void loadResources();
 

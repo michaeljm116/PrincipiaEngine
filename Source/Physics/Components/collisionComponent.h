@@ -2,7 +2,7 @@
 #include "Artemis/Component.h"
 #include <glm/glm.hpp>
 
-namespace Principium {
+namespace Principia {
 	enum class CollisionState {
 		None, Start, Repeat, Exit
 	};
@@ -12,5 +12,6 @@ namespace Principium {
 		int collider;
 		float radius;
 		glm::vec3 position;
+		CollisionComponent(glm::vec3 pos, float r) : position(pos), radius(r) { state = CollisionState::None, collider = 0; }
 	};
 }

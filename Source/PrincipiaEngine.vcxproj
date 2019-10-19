@@ -56,6 +56,7 @@
     <ClCompile Include="Game\Application\pauseSystem.cpp" />
     <ClCompile Include="Game\Application\titleSystem.cpp" />
     <ClCompile Include="Game\Gameplay\characterController.cpp" />
+    <ClCompile Include="Game\Gameplay\gameSceneSystem.cpp" />
     <ClCompile Include="Game\scene.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
@@ -168,6 +169,8 @@
     <ClInclude Include="Game\camera.hpp" />
     <ClInclude Include="Game\Gameplay\characterController.h" />
     <ClInclude Include="Game\Gameplay\Components\gameObjectTypeComponent.h" />
+    <ClInclude Include="Game\Gameplay\Components\gameSceneComponent.h" />
+    <ClInclude Include="Game\Gameplay\gameSceneSystem.h" />
     <ClInclude Include="Game\primitive.hpp" />
     <ClInclude Include="Game\scene.h" />
     <ClInclude Include="Game\transformComponent.hpp" />

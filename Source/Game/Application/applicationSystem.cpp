@@ -24,12 +24,14 @@ void ApplicationSystem::initialize()
 	ui = (EngineUISystem*)sm->getSystem<EngineUISystem>();
 	controllers = (ControllerSystem*)sm->getSystem<ControllerSystem>();// setSystem(new ControllerSystem());
 	bvh = (BvhSystem*)sm->getSystem<BvhSystem>();
+	col = (Principia::CollisionSystem*)sm->getSystem<Principia::CollisionSystem>();
 
 	//next create references to new systems
 	game = (GameSystem*)sm->setSystem(new GameSystem());
 	title = (TitleSystem*)sm->setSystem(new TitleSystem());
 	menu = (MenuSystem*)sm->setSystem(new MenuSystem());
 	pause = (PauseSystem*)sm->setSystem(new PauseSystem());
+	gss = (GameSceneSystem*)sm->setSystem(new GameSceneSystem());
 
 	//next initialize the old systems
 	ui->initialize();
@@ -40,6 +42,7 @@ void ApplicationSystem::initialize()
 	title->initialize();
 	menu->initialize();
 	pause->initialize();
+	gss->initialize();
 }
 
 void ApplicationSystem::processEntity(artemis::Entity & e)
@@ -82,7 +85,7 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 
 	//render
 	as->process();
-	
+	col->process();
 	rs->process();// mainLoop();
 
 	//build the bvh

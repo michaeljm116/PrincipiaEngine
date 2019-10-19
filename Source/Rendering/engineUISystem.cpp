@@ -1067,7 +1067,7 @@ bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
 					updateActiveNode(activeNode);
 				}
 				if (ImGui::Selectable("Add Collision")) {
-					activeNode->data->addComponent(new CollisionComponent());
+					//activeNode->data->addComponent(new CollisionComponent());
 					activeNode->flags |= COMPONENT_COLIDER;
 					activeNode->data->refresh();
 				}

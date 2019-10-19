@@ -168,6 +168,94 @@ void RenderSystem::processEntity(artemis::Entity & e)
 	type = RENDER_NONE;
 }
 
+void RenderSystem::added(artemis::Entity & e)
+{
+	RenderType t = renderMapper.get(e)->type;
+
+	if (t & RENDER_MATERIAL) {
+
+	}
+	if (t & RENDER_PRIMITIVE) {
+		ssPrimitive object;
+		PrimitiveComponent* objComp = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
+		//AABBComponent* aabb = (AABBComponent*)e.getComponent<AABBComponent>();
+		MaterialComponent* mat = (MaterialComponent*)e.getComponent<MaterialComponent>();
+		TransformComponent* trans = (TransformComponent*)e.getComponent<TransformComponent>();
+
+		object.world = trans->world;
+		//object.center = trans->world[3];// aabb->center;
+		object.extents = trans->local.scale;// aabb->extents;
+		object.matId = mat->matID;
+
+		//set up the ids
+		if (objComp->uniqueID > 0) {
+			std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
+			object.id = objComp->uniqueID;
+			object.startIndex = temp.first;
+			object.endIndex = temp.second;
+		}
+		else
+			object.id = objComp->uniqueID;
+
+		//put into list
+		objComp->objIndex = objects.size();
+		objComp->center = trans->world[3];
+		objComp->extents = trans->local.scale;
+		objects.push_back(object);
+		objectComps.push_back(objComp);
+
+
+		//updateObjectMemory();
+		setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
+	}
+	if (t & RENDER_LIGHT) {
+
+		LightComponent* lightComp = (LightComponent*)e.getComponent<LightComponent>();
+		TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
+		ssLight light;
+		light.pos = transComp->global.position;
+		light.color = lightComp->color;
+		light.intensity = lightComp->intensity;
+		light.id = lightComp->id;
+
+		lights.push_back(light);
+		lightComps.push_back(lightComp);
+
+		//NodeComponent* node = (NodeComponent*)e.getComponent<NodeComponent>();
+		//addNode(node);
+
+		compute.storageBuffers.lights.UpdateAndExpandBuffers(vkDevice, lights, lights.size());
+		updateDescriptors();
+	}
+	if (t & RENDER_GUI) {
+
+	}
+	if (t & RENDER_GUINUM) {
+		GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
+		std::vector<int> nums = intToArrayOfInts(gnc->number);
+		for (int i = 0; i < nums.size(); ++i) {
+			ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+			gnc->shaderReferences.push_back(guis.size());
+			gui.visible = gnc->visible;
+			guis.push_back(gui);
+		}
+		gnc->ref = gnc->shaderReferences[0];
+		setRenderUpdate(UPDATE_GUI);
+	}
+	if (t & RENDER_CAMERA) {
+		CameraComponent* cam = (CameraComponent*)e.getComponent<CameraComponent>();
+		TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
+		compute.ubo.lookat = cam->lookat;
+		compute.ubo.pos = transComp->global.position;
+		compute.ubo.fov = cam->fov;
+	}
+
+}
+
+void RenderSystem::removed(artemis::Entity & e)
+{
+}
+
 void RenderSystem::end()
 {
 	updateBuffers();
@@ -305,12 +393,16 @@ void RenderSystem::addMaterial(glm::vec3 diff, float rfl, float rough, float tra
 }
 
 void RenderSystem::addNodes(std::vector<NodeComponent*> nodes) {
-	for (int i = 0; i < nodes.size(); ++i) {
-		addNode(nodes[i]);
-		if (nodes[i]->children.size() > 0) {
-			addNodes(nodes[i]->children);
-		}
+	for (auto n : nodes) {
+		if (n->children.size() > 0)
+			addNodes(n->children);
 	}
+	//for (int i = 0; i < nodes.size(); ++i) {
+	//	addNode(nodes[i]);
+	//	if (nodes[i]->children.size() > 0) {
+	//		addNodes(nodes[i]->children);
+	//	}
+	//}
 }
 
 void RenderSystem::addNode(NodeComponent* node) {

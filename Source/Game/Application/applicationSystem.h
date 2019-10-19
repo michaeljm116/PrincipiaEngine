@@ -6,6 +6,8 @@
 #include "menuSystem.h"
 #include "pauseSystem.h"
 #include "../Utility/bvhSystem.h"
+#include "../Physics/collisionSystem.h"
+#include "../Gameplay/gameSceneSystem.h"
 
 class ControllerSystem;
 
@@ -26,6 +28,8 @@ private:
 	EngineUISystem* ui;
 	ControllerSystem* controllers;
 	BvhSystem* bvh;
+	Principia::CollisionSystem* col;
+	GameSceneSystem* gss;
 
 public:
 	ApplicationSystem();
