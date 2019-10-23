@@ -51,6 +51,7 @@ struct NodeComponent : artemis::Component{
 	std::string name;
 	bool clicked = false;
 	bool isDynamic = false;
+	bool isParent = false;
 	unsigned int flags = COMPONENT_NODE;
 	unsigned int tags = TAG_NONE;
 

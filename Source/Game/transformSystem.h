@@ -7,6 +7,8 @@ a movement system.
 */
 #include "../Utility/componentIncludes.h"
 #include "../Rendering/renderSystem.h"
+#include "../Physics/Components/collisionComponent.h"
+
 class TransformSystem : public artemis::EntityProcessingSystem
 {
 private:
@@ -14,6 +16,7 @@ private:
 
 	artemis::ComponentMapper<TransformComponent> transformMapper;
 	artemis::ComponentMapper<NodeComponent> nodeMapper;
+	artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
 
 	artemis::EntityManager* em;
 	artemis::SystemManager* sm;

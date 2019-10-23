@@ -254,6 +254,21 @@ void RenderSystem::added(artemis::Entity & e)
 
 void RenderSystem::removed(artemis::Entity & e)
 {
+	if (!world->getShutdown()) {
+		RenderType t = renderMapper.get(e)->type;
+		if (t && RenderType::RENDER_PRIMITIVE) {
+			PrimitiveComponent* o = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
+			if (o != nullptr) {
+				objects.erase(objects.begin() + o->objIndex);
+				objectComps.erase(objectComps.begin() + o->objIndex);
+				for (int i = o->objIndex; i < objectComps.size(); ++i)
+					objectComps[i]->objIndex--;
+				//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+				//updateDescriptors();
+				setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
+			}
+		}
+	}
 }
 
 void RenderSystem::end()
@@ -889,8 +904,10 @@ void RenderSystem::mainLoop() {
 		if(ui->visible)
 			ui->updateOverlay();
 	//}
-	if(glfwWindowShouldClose(WINDOW.getWindow()))
+	if(glfwWindowShouldClose(WINDOW.getWindow())){
+		world->setShutdown();
 		vkDeviceWaitIdle(vkDevice.logicalDevice); //so it can destroy properly
+	}
 }
 void RenderSystem::drawFrame() {//1.get img frm swapc 2.do da cmdbuf wit da image 3.put it back in da swapc
 	//Timer timer("Rendering: ");

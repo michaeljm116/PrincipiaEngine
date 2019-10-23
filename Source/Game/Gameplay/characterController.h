@@ -2,7 +2,7 @@
 #include "../../Utility/componentIncludes.h"
 #include "characterComponent.hpp"
 #include "../Application/controllerComponent.hpp"
-
+#include "Components/projectileComponent.h"
 
 class CharacterController : public artemis::EntityProcessingSystem
 {
@@ -27,6 +27,8 @@ public:
 	} camera;
 
 	bool reachedMax = false;
+
+	void fireProjectile(const glm::vec3& pos);
 	   
 };
 

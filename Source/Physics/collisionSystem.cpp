@@ -73,7 +73,7 @@ void Principia::CollisionSystem::checkCollision(artemis::Entity & a, artemis::En
 		ccA->collider = b.getId();
 		ccA->state == CollisionState::Start ? ccA->state = CollisionState::Repeat : ccA->state = CollisionState::Start;
 
-		std::cout << "Collision occured!1!!!!!!!!!";
+		//std::cout << "Collision occured!1!!!!!!!!!";
 	}
 	
 }

@@ -36,6 +36,9 @@ namespace artemis {
     void loopStart();
 	void setSingleton(Entity* e) { singleton = e; };
 	Entity* getSingleton() { return singleton; };
+	
+	void setShutdown() { shutdown = true; };
+	bool getShutdown() { return shutdown; };
     
   private:
     SystemManager * systemManager;
@@ -46,6 +49,7 @@ namespace artemis {
     Bag<Entity*> refreshed;
     Bag<Entity*> deleted;
 	Entity* singleton;
+	bool shutdown = false;
 	};
 };
 #endif // $(Guard token)

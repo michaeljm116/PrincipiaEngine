@@ -194,6 +194,12 @@
     <ClCompile Include="Game\Gameplay\gameSceneSystem.cpp">
       <Filter>Source Files\Game\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Gameplay\projectileMovementSystem.cpp">
+      <Filter>Source Files\Game\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Gameplay\enemyController.cpp">
+      <Filter>Source Files\Game\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -506,6 +512,18 @@
     </ClInclude>
     <ClInclude Include="Rendering\renderComponents.hpp">
       <Filter>Source Files\Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\Components\projectileComponent.h">
+      <Filter>Source Files\Game\Gameplay\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\projectileMovementSystem.h">
+      <Filter>Source Files\Game\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\Components\enemyComponent.h">
+      <Filter>Source Files\Game\Gameplay\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\enemyController.h">
+      <Filter>Source Files\Game\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

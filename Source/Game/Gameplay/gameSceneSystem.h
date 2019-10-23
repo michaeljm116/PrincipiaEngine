@@ -2,9 +2,7 @@
 #include "Components/gameSceneComponent.h"
 #include "Components/gameObjectTypeComponent.h"
 
-#include <Artemis/EntityProcessingSystem.h>
-#include <Artemis/ComponentMapper.h>
-#include <Artemis/Entity.h>
+#include <Artemis/Artemis.h>
 
 #include <glm/glm.hpp>
 #include "../scene.h"
@@ -36,5 +34,7 @@ public:
 
 private:
 	artemis::ComponentMapper<GameSceneComponent> gscMapper;
-	void createShape(std::string name, glm::vec3 pos, glm::vec3 scale, int matID, int type, bool dynamic);
+	void createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);
+	void createPlayer(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);
+	artemis::Entity* createModel(std::string, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);
 };

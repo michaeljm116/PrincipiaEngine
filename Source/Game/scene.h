@@ -71,6 +71,7 @@ public:
 
 	void deleteNode(std::vector<NodeComponent*>& nParents, int nIndex);
 	void deleteNode(NodeComponent* parent);
+	void deleteNode(artemis::Entity& e);
 	void copyNode(NodeComponent* node, NodeComponent* parent, std::vector<NodeComponent*>& list);
 	void makeParent(NodeComponent * child);
 	void makeChild(NodeComponent* node, NodeComponent* parent, std::vector<NodeComponent*>& list);

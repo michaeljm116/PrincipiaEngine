@@ -25,7 +25,10 @@ void GameSystem::initialize()
 
 	cc = (CharacterController*)sm->getSystem<CharacterController>();// setSystem(new CharacterController());
 	cc->initialize();
-
+	ec = (EnemyController*)sm->setSystem(new EnemyController());
+	ec->initialize();
+	pms = (ProjectileMovementSystem*)sm->setSystem(new ProjectileMovementSystem());
+	pms->initialize();
 	//button = (ButtonSystem*)sm->getSystem<ButtonSystem>();
 
 	//audio = (AudioSystem*)sm->setSystem(new AudioSystem());
@@ -51,14 +54,16 @@ void GameSystem::removed(artemis::Entity & e)
 
 void GameSystem::processEntity(artemis::Entity & e)
 {
-
+	pms->process();
 	cc->process();
+	ec->process();
+	ts->process();
 	//audio->process();
 
 	ControllerComponent* c = controllerMapper.get(e);
 
 	//pause button
-	if (c->buttons[4].action == 1) {
+	if (c->buttons[9].action == 1) {
 		//c->buttons[4].action = 0;
 		//c->buttons[4].time = 0.f;
 		RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
