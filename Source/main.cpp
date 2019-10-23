@@ -76,7 +76,7 @@ int main() {
 		renderSys->initialize();
 		animSys->initialize();
 		appSys->initialize();
-		//appSys->instantGameStart();
+		appSys->instantGameStart();
 		world.loopStart();
 		Scene::get().doStuff();
 		//world.loopStart();

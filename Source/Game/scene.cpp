@@ -82,6 +82,8 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	parent->isDynamic = dynamic; 
 	entity->addComponent(parent);
 	entity->addComponent(parentTransform);
+	//entity->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
+
 	entity->refresh();
 	
 	//set up the subsetsx
@@ -100,6 +102,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 
 		child->addComponent(new MeshComponent(resource.uniqueID, i));
 		child->addComponent(new PrimitiveComponent(resource.uniqueID + i));
+		child->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 		child->addComponent(new MaterialComponent(0));
 		//child->addComponent(new AABBComponent());	//SubsetAABB's point to the rendering system
 
@@ -111,10 +114,11 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		childNode->name = resource.meshes[i].name;// "Child " + std::to_string(i);
 		childNode->flags |= COMPONENT_MESH | COMPONENT_MATERIAL | COMPONENT_AABB | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE;
 		parent->children.push_back(childNode);
-		rs->addNode(childNode);
 
 		++i;
 		child->refresh();
+		//rs->addNode(childNode);
+		//rs->change(*child);
 	}
 	for (i = 0; i < resource.shapes.size(); ++i) {
 		//Create Entity
@@ -127,21 +131,24 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		child->addComponent(childNode);
 		child->addComponent(childTransform);
 		child->addComponent(new PrimitiveComponent(resource.shapes[i].type));
+		child->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 		child->addComponent(new MaterialComponent(0));
 		child->addComponent(new AABBComponent()); //will this even be used???
 
 		childNode->name = resource.shapes[i].name;
 		childNode->flags |= COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE;
 		parent->children.push_back(childNode);
-		rs->addNode(childNode);
-
+		
 		child->refresh();
+		//rs->addNode(childNode);
+		//rs->change(*child);
 	}
 
 	//rs->addNode(parent);
+	//rs->change(*entity);
 	rs->updateObjectMemory();
 	parents.push_back(parent);
-	ts->recursiveTransform(parent);
+	//ts->recursiveTransform(parent);
 
 	//if its animatable....
 	//if (resource.skeletonID > 0) {
@@ -258,7 +265,7 @@ artemis::Entity* Scene::createGameShape(std::string name, glm::vec3 pos, glm::ve
 	ts->recursiveTransform(parent);
 	rs->updateObjectMemory();
 
-	parents.push_back(parent);
+	//parents.push_back(parent);
 	return e;
 }
 
@@ -373,6 +380,16 @@ void Scene::deleteNode(NodeComponent* parent) {
 	em->remove(*parent->data);
 	//nParents.erase(nParents.begin() + nIndex);
 	rs->updateObjectMemory();
+}
+
+void Scene::deleteNode(artemis::Entity & e)
+{
+	NodeComponent* nc = (NodeComponent*)e.getComponent<NodeComponent>();
+	em->remove(*nc->data);
+	
+	//YOURE GONAN HAVE A LOT OF USELESS PARENTS ithink
+
+
 }
 
 void Scene::copyNode(NodeComponent * node, NodeComponent* parent, std::vector<NodeComponent*>& list)

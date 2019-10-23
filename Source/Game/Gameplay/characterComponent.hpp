@@ -2,7 +2,7 @@
 #include "../pch.h"
 
 struct CharacterComponent : public artemis::Component {
-	float speed = 1.f;
+	float speed = 20.f;
 	float maxSpeed = 1.f;
 	float jumpSpeed = 1.f;
 	float maxJumpHeight = 1.f;

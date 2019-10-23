@@ -9,7 +9,7 @@
 #include "../Physics/collisionSystem.h"
 #include "../Gameplay/gameSceneSystem.h"
 
-class ControllerSystem;
+//class ControllerSystem;
 
 class ApplicationSystem : public artemis::EntityProcessingSystem {
 private:

@@ -61,9 +61,7 @@ col state is another way???
 
 
 */
-enum class CollisionState {
-	Start, Continue, Exit
-};
+//6
 struct CollisionData {
 	//btVector3 pos;
 	//btVector3 norm;

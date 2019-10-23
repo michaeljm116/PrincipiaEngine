@@ -563,8 +563,8 @@ bool LoadDirectory(std::string directory)
 			if (triangulate)
 				mod.name += "_t";
 			
-						WritePEModel(mod,		"../../Assets/Levels/Pong/Models/"	   + mod.name + ".pm");
-			if(hasAnim) WriteSkeleton(skeleton, "../../Assets/Levels/Pong/Animations/" + mod.name + ".pa");
+						WritePEModel(mod,		"../../Assets/Levels/RayTracedInvaders/Models/"	   + mod.name + ".pm");
+			if(hasAnim) WriteSkeleton(skeleton, "../../Assets/Levels/RayTracedInvaders/Animations/" + mod.name + ".pa");
 		}
 	}
 	return false;

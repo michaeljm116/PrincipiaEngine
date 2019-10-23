@@ -131,11 +131,13 @@ void EngineUISystem::added(artemis::Entity & e)
 }
 void EngineUISystem::removed(artemis::Entity & e)
 {
-	//RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	//rs->togglePlayMode(true);
-	//ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
-	//ac->state = AppState::Play;
-	//ac->transition = true;
+	if (!world->getShutdown()) {
+		RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+		rs->togglePlayMode(true);
+		ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
+		ac->state = AppState::Play;
+		ac->transition = true;
+	}
 }
 
 void EngineUISystem::CleanUp() {

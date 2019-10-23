@@ -63,10 +63,18 @@ void BvhSystem::added(artemis::Entity & e)
 {
 	rebuild = true;
 	prims.push_back(&e);
+	primMapper.get(e)->bvhIndex = prims.size();
 }
 
 void BvhSystem::removed(artemis::Entity & e)
 {
+	int i = 0;
+	for (auto p : prims) {
+		if (p == &e)
+			break;
+		i++;
+	}
+	prims.erase(prims.begin() + i);
 }
 
 void BvhSystem::build(TreeType tt, std::vector<artemis::Entity*> &ops)

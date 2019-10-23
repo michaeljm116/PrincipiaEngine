@@ -1,3 +1,4 @@
+//#include "../pch.h"
 #include "transformSystem.h"
 
 /*
@@ -18,7 +19,8 @@ and the system does thing automatically
 */
 TransformSystem::TransformSystem()
 {
-	addComponentType<RigidBodyComponent>();
+	//addComponentType<RigidBodyComponent>();
+	addComponentType<Principia::CollisionComponent>();
 	addComponentType<NodeComponent>();
 }
 
@@ -41,11 +43,15 @@ void TransformSystem::processEntity(artemis::Entity & e)
 {
 	TransformComponent* tc = transformMapper.get(e);
 	NodeComponent* nc = nodeMapper.get(e);
-
-	size_t numChildren = nc->children.size();
-	for (int c = 0; c < numChildren; c++) {
-		SQTTransform(nc, tc->local);
-	}
+	if (nc->isParent)
+		recursiveTransform(nc);
+	//size_t numChildren = nc->children.size();
+	//for (int c = 0; c < numChildren; c++) {
+	//	SQTTransform(nc, tc->local);
+	//}
+	//if (numChildren == 0 && nc->isParent) {
+	//	recursiveTransform(nc);
+	//}
 }
 
 void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)

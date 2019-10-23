@@ -108,7 +108,9 @@ void ApplicationSystem::instantGameStart()
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 	rs->togglePlayMode(true);
 	game->findGoals();
-	//toggleEditor(AppState::Editor);
+	AppState& as = appMapper.get(*world->getSingleton())->state;// = AppState::Editor;
+	as = AppState::Editor;
+	toggleEditor(as);
 }
 
 

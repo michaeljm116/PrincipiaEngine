@@ -6,7 +6,9 @@ use or not
 #include "../scene.h" 
 #include "applicationComponents.h"
 #include "../Gameplay/characterController.h"
+#include "../Gameplay/enemyController.h"
 #include "../Audio/audioSystem.h"
+#include "../Gameplay/projectileMovementSystem.h"
 
 class GameSystem : public artemis::EntityProcessingSystem {
 private:
@@ -22,6 +24,8 @@ private:
 	AnimationSystem* as;
 
 	CharacterController* cc;
+	EnemyController* ec;
+	ProjectileMovementSystem* pms;
 
 	AudioSystem* audio;
 
