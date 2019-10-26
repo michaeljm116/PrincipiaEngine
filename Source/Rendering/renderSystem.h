@@ -81,7 +81,7 @@ public:
 	void updateBuffers();
 	void updateCamera(CameraComponent* c);
 	void updateBVH(std::vector<artemis::Entity*>& ordredPrims, std::shared_ptr<BVHNode> root, int numNodes);
-	int flattenBVH(std::shared_ptr<BVHNode> node, int* offset);
+	int flattenBVH(std::shared_ptr<BVHNode> node, int* offset, std::vector<ssBVHNode>& bvh);
 	//void updateLight(LightComponent* l);
 
 	virtual void cleanup();
@@ -92,7 +92,7 @@ public:
 	//std::vector<ssMesh>& getMeshes() { return meshes; };
 	//ssMesh& getMesh(int i) { return meshes[i]; };
 	ssJoint& getJoint(int i) { return joints[i]; };
-	ssPrimitive& getObject(int i) { return objects[i]; };
+	//ssPrimitive& getObject(int i) { return objects[i]; };
 	ssLight& getLight(int i) { return lights[i]; };
 
 private:
@@ -122,7 +122,7 @@ private:
 			VBuffer<ssVert> verts;			// (Shader) storage buffer object with scene verts
 			VBuffer<ssIndex> faces;			// (Shader) storage buffer object with scene indices
 			VBuffer<ssShape> shapes;		// for animatied shapes 
-			VBuffer<ssPrimitive> objects;	// for the primitives
+			VBuffer<ssPrimitive> primitives;	// for the primitives
 			VBuffer<ssJoint> joints;		// for the animated joints
 			VBuffer<ssMaterial> materials;	// (Shader) storage buffer object with scene Materials
 			VBuffer<ssLight> lights;
@@ -148,7 +148,7 @@ private:
 		VBuffer<UBOCompute> uniformBuffer;			// Uniform buffer object containing scene data
 	} compute;
 
-	std::vector<ssPrimitive> objects;
+	std::vector<ssPrimitive> primitives;
 	std::vector<ssJoint> joints;
 	std::vector<ssMaterial> materials;
 	std::vector<ssLight> lights;
@@ -157,7 +157,7 @@ private:
 
 
 	std::vector<MeshComponent*> meshComps;
-	std::vector<PrimitiveComponent*> objectComps;
+	//std::vector<PrimitiveComponent*> objectComps;
 	std::vector<JointComponent*> jointComps;
 	std::vector<LightComponent*> lightComps;
 

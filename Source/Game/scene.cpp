@@ -42,7 +42,6 @@ void Scene::doStuff() {
 
 	for each (NodeComponent* node in parents) {
 		//ts->recursiveTransform(node);
-		ts->recursiveTransform(node);
 		
 		if (node->flags & COMPONENT_RIGIDBODY)
 			insertRigidBody(node);
@@ -80,6 +79,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 	NodeComponent* parent = new NodeComponent(entity, name, COMPONENT_MODEL | COMPONENT_TRANSFORM | COMPONENT_AABB);// | COMPONENT_PRIMITIVE);
 
 	parent->isDynamic = dynamic; 
+	parent->isParent = true;
 	entity->addComponent(parent);
 	entity->addComponent(parentTransform);
 	//entity->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
@@ -688,7 +688,7 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 	if (parent->flags & COMPONENT_PRIMITIVE) {
 		PrimitiveComponent* obj = (PrimitiveComponent*)parent->data->getComponent<PrimitiveComponent>();
 		XMLElement* pObj = doc->NewElement("Object");
-		pObj->SetAttribute("ID", obj->uniqueID);
+		pObj->SetAttribute("ID", obj->id);
 		pNode->InsertEndChild(pObj);
 	}
 
@@ -836,7 +836,8 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			id->QueryIntAttribute("id", &idyo);
 			e->addComponent(new LightComponent(c, i, idyo));
 			e->addComponent(new RenderComponent(RenderType::RENDER_LIGHT));
-
+			NodeComponent* nc = (NodeComponent*)e->getComponent<NodeComponent>();
+			nc->isParent = true;
 		}
 		if (flags & COMPONENT_CAMERA) {
 			XMLElement* lookat = start->FirstChildElement("LookAt");
@@ -851,9 +852,13 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			fov->QueryFloatAttribute("fov", &f);
 
 			e->addComponent(new CameraComponent(l,f));
-			e->addComponent(new RenderComponent(RenderType::RENDER_CAMERA));
+			e->addComponent(new RenderComponent(RenderType::RENDER_CAMERA)); 
+			NodeComponent* nc = (NodeComponent*)e->getComponent<NodeComponent>();
+			nc->isParent = true;
 		}
 		if (flags & COMPONENT_MODEL) {
+			NodeComponent* nc = (NodeComponent*)e->getComponent<NodeComponent>();
+			nc->isParent = true;
 			int a = 4;
 		}
 		//if (flags & COMPONENT_MODEL) {

@@ -4,9 +4,9 @@
 
 struct ProjectileComponent : public artemis::Component {
 	glm::vec3 dir;
-	float speed = 0.75f;
+	float speed = 1.75f;
 	float time = 0.f;
-	float maxTime = 0.5f;
+	float maxHeight = 30.f;
 
 	ProjectileComponent(glm::vec3 d, float s) : dir(d), speed(s) {};
 };

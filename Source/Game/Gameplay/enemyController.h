@@ -9,6 +9,7 @@
 #include "../Utility/nodeComponent.hpp"
 #include "../Physics/Components/collisionComponent.h"
 
+#include <unordered_map>
 class EnemyController : public artemis::EntityProcessingSystem {
 public:
 
@@ -40,10 +41,12 @@ private:
 
 	float* leftBounds;// = FLT_MAX;
 	float* rightBounds;// = -FLT_MAX;
-	artemis::Entity* leftEnt;
-	artemis::Entity* rightEnt;
 
-	float speed = 50.f;
+	int leftEnt;
+	int rightEnt;
+	std::vector<std::pair<glm::vec3*, int>> positions;
+	std::unordered_map<int, int> pmap;
+	float speed = 5.f;
 	float hstep = 0.f;
 	float vstep = -0.25f;
 	float dir = 1.f;
@@ -52,4 +55,6 @@ private:
 
 	float stageLeftBounds = -40.f;
 	float stageRightBounds = 40.f;
+
+	bool heapify = false;
 };

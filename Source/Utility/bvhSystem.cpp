@@ -21,7 +21,7 @@ void BvhSystem::initialize()
 void BvhSystem::build()
 {
 
-	if (rebuild) {
+	//if (rebuild) {
 		std::vector<artemis::Entity*> orderedPrims;
 
 		//reserve data
@@ -37,7 +37,7 @@ void BvhSystem::build()
 
 		build(TreeType::Recursive, orderedPrims);
 		rebuild = false;
-	}
+	//}
 
 }
 
@@ -49,7 +49,6 @@ void BvhSystem::processEntity(artemis::Entity & e)
 
 void BvhSystem::begin()
 {
-
 }
 
 void BvhSystem::end()
@@ -63,7 +62,7 @@ void BvhSystem::added(artemis::Entity & e)
 {
 	rebuild = true;
 	prims.push_back(&e);
-	primMapper.get(e)->bvhIndex = prims.size();
+	//primMapper.get(e)->bvhIndex = prims.size();
 }
 
 void BvhSystem::removed(artemis::Entity & e)
@@ -119,20 +118,20 @@ std::shared_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * tot
 			switch (splitMethod) {
 			case SplitMethod::Middle: {
 				artemis::Entity **midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [axis, centroid, ptm](artemis::Entity * a) {
-					return ptm->get(*a)->center[axis] < centroid.center[axis];
+					return ptm->get(*a)->center()[axis] < centroid.center[axis];
 				});
 				mid = midPtr - &prims[0];
 			}
 			case SplitMethod::EqualsCounts: {
 				std::nth_element(&prims[start], &prims[mid], &prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
-					return ptm->get(*a)->center[axis] < ptm->get(*b)->center[axis];
+					return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
 				});
 			}
 			case SplitMethod::SAH: {
 				if (numPrims <= MAX_BVH_OBJECTS) {
 					mid = (start + end) >> 1;
 					std::nth_element(&prims[start], &prims[mid], &prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
-						return ptm->get(*a)->center[axis] < ptm->get(*b)->center[axis];
+						return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
 					});
 				}
 				else {
@@ -141,8 +140,8 @@ std::shared_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * tot
 					BVHBucket buckets[numBuckets];
 					for (int i = start; i < end; ++i) {
 						PrimitiveComponent* pc = ptm->get(*prims[i]);
-						BVHBounds tempBounds = BVHBounds(pc->center, pc->extents);
-						int b = numBuckets * centroid.Offset(pc->center, axis);
+						BVHBounds tempBounds = BVHBounds(pc->center(), pc->extents);
+						int b = numBuckets * centroid.Offset(pc->center(), axis);
 						if (b == numBuckets) b--;
 						buckets[b].count++;
 						buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
@@ -176,7 +175,7 @@ std::shared_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * tot
 					float leafCost = numPrims;
 					if (numPrims > MAX_BVH_OBJECTS || minCost < leafCost) {
 						artemis::Entity **midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [axis, centroid, ptm, minCostSplitBucket, numBuckets](artemis::Entity * a) {
-							int b = (numBuckets)* centroid.Offset(ptm->get(*a)->center, axis);
+							int b = (numBuckets)* centroid.Offset(ptm->get(*a)->center(), axis);
 							if (b == numBuckets) b = numBuckets - 1;
 							return b <= minCostSplitBucket;
 
@@ -223,8 +222,8 @@ BVHBounds BvhSystem::computeBounds(int s, int e)
 		//AABBComponent* bc = boundsMapper.get(*prims[i]);
 		//min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 		//max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
-		min = tulip::minV(min, glm::vec3(pc->center) - glm::vec3(pc->extents));
-		max = tulip::maxV(max, glm::vec3(pc->center) + glm::vec3(pc->extents));
+		min = tulip::minV(min, pc->center() - glm::vec3(pc->extents));
+		max = tulip::maxV(max, pc->center() + glm::vec3(pc->extents));
 	}
 	glm::vec3 c = (max + min) * 0.5f;
 	glm::vec3 ex = max - c;
@@ -244,8 +243,8 @@ BVHBounds BvhSystem::computeCentroidBounds(int s, int e)
 		PrimitiveComponent* pc = primMapper.get(*prims[i]);
 		//min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 		//max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
-		min = tulip::minV(min, pc->center - pc->extents);
-		max = tulip::maxV(max, pc->center + pc->extents);
+		min = tulip::minV(min, pc->center() - pc->extents);
+		max = tulip::maxV(max, pc->center() + pc->extents);
 	}
 	glm::vec3 c = (max + min) * 0.5f;
 	glm::vec3 ex = max - c;

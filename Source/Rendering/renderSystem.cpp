@@ -20,7 +20,7 @@ static const int MAXNODES		= 256;
 // Setup and fill the compute shader storage buffers containing primitives for the raytraced scene
 void RenderSystem::prepareStorageBuffers()
 {
-	objects.reserve(MAXOBJS);
+	//objects.reserve(MAXOBJS);
 	joints.reserve(MAXJOINTS);
 	//verts.reserve(MAXVERTS);
 	//indices.reserve(MAXINDS);
@@ -36,7 +36,9 @@ void RenderSystem::prepareStorageBuffers()
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
 
 	//these are changable 
-	compute.storageBuffers.objects.InitStorageBufferCustomSize(vkDevice, objects, objects.size(), MAXOBJS);
+	//std::vector<PrimitiveComponent> temp;
+	//temp.push_back(PrimitiveComponent());
+	compute.storageBuffers.primitives.InitStorageBufferCustomSize(vkDevice, primitives, primitives.size(), MAXOBJS);
 	compute.storageBuffers.joints.InitStorageBufferCustomSize(vkDevice, joints, joints.size(), MAXJOINTS);
 	compute.storageBuffers.materials.InitStorageBufferCustomSize(vkDevice, materials, materials.size(), MAXMATERIALS);
 	compute.storageBuffers.lights.InitStorageBufferCustomSize(vkDevice, lights, lights.size(), MAXLIGHTS);
@@ -51,6 +53,9 @@ void RenderSystem::prepareStorageBuffers()
 	guiComp->ref = guis.size();
 	guis.push_back(gui);
 	compute.storageBuffers.guis.InitStorageBufferCustomSize(vkDevice, guis, guis.size(), MAXGUIS);
+
+	//std::vector<ssBVHNode> tempbvh;
+	//tempbvh.push_back(ssBVHNode());
 	compute.storageBuffers.bvh.InitStorageBufferCustomSize(vkDevice, bvh, bvh.size(), MAXNODES);
 }
 
@@ -176,34 +181,19 @@ void RenderSystem::added(artemis::Entity & e)
 
 	}
 	if (t & RENDER_PRIMITIVE) {
-		ssPrimitive object;
-		PrimitiveComponent* objComp = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
+		PrimitiveComponent* primComp = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
 		//AABBComponent* aabb = (AABBComponent*)e.getComponent<AABBComponent>();
 		MaterialComponent* mat = (MaterialComponent*)e.getComponent<MaterialComponent>();
 		TransformComponent* trans = (TransformComponent*)e.getComponent<TransformComponent>();
 
-		object.world = trans->world;
-		//object.center = trans->world[3];// aabb->center;
-		object.extents = trans->local.scale;// aabb->extents;
-		object.matId = mat->matID;
-
-		//set up the ids
-		if (objComp->uniqueID > 0) {
-			std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
-			object.id = objComp->uniqueID;
-			object.startIndex = temp.first;
-			object.endIndex = temp.second;
+		primComp->matId = mat->matID;
+		primComp->world = trans->world;
+		primComp->extents = trans->local.scale;
+		if (primComp->id > 0) {
+			std::pair<int, int> temp = meshAssigner[primComp->id];
+			primComp->startIndex = temp.first;
+			primComp->endIndex = temp.second;
 		}
-		else
-			object.id = objComp->uniqueID;
-
-		//put into list
-		objComp->objIndex = objects.size();
-		objComp->center = trans->world[3];
-		objComp->extents = trans->local.scale;
-		objects.push_back(object);
-		objectComps.push_back(objComp);
-
 
 		//updateObjectMemory();
 		setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
@@ -254,26 +244,27 @@ void RenderSystem::added(artemis::Entity & e)
 
 void RenderSystem::removed(artemis::Entity & e)
 {
-	if (!world->getShutdown()) {
-		RenderType t = renderMapper.get(e)->type;
-		if (t && RenderType::RENDER_PRIMITIVE) {
-			PrimitiveComponent* o = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
-			if (o != nullptr) {
-				objects.erase(objects.begin() + o->objIndex);
-				objectComps.erase(objectComps.begin() + o->objIndex);
-				for (int i = o->objIndex; i < objectComps.size(); ++i)
-					objectComps[i]->objIndex--;
-				//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
-				//updateDescriptors();
-				setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
-			}
-		}
-	}
+	//if (!world->getShutdown()) {
+	//	RenderType t = renderMapper.get(e)->type;
+	//	if (t && RenderType::RENDER_PRIMITIVE) {
+	//		PrimitiveComponent* o = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
+	//		if (o != nullptr) {
+	//			objects.erase(objects.begin() + o->objIndex);
+	//			objectComps.erase(objectComps.begin() + o->objIndex);
+	//			for (int i = o->objIndex; i < objectComps.size(); ++i)
+	//				objectComps[i]->objIndex--;
+	//			//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	//			//updateDescriptors();
+	//			setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
+	//		}
+	//	}
+	//}
 }
 
 void RenderSystem::end()
 {
 	updateBuffers();
+	updateDescriptors();
 	mainLoop();
 	//updateBuffers();
 }
@@ -426,33 +417,33 @@ void RenderSystem::addNode(NodeComponent* node) {
 	}
 	if (node->flags & COMPONENT_PRIMITIVE) {
 		//start constructing the object;
-		ssPrimitive object;
-		PrimitiveComponent* objComp = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
-		//AABBComponent* aabb = (AABBComponent*)node->data->getComponent<AABBComponent>();
-		MaterialComponent* mat = (MaterialComponent*)node->data->getComponent<MaterialComponent>();
-		TransformComponent* trans = (TransformComponent*)node->data->getComponent<TransformComponent>();
+		//ssPrimitive object;
+		//PrimitiveComponent* objComp = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
+		////AABBComponent* aabb = (AABBComponent*)node->data->getComponent<AABBComponent>();
+		//MaterialComponent* mat = (MaterialComponent*)node->data->getComponent<MaterialComponent>();
+		//TransformComponent* trans = (TransformComponent*)node->data->getComponent<TransformComponent>();
 
-		object.world = trans->world;
-		//object.center = trans->world[3];// aabb->center;
-		object.extents = trans->local.scale;// aabb->extents;
-		object.matId = mat->matID;
+		//object.world = trans->world;
+		////object.center = trans->world[3];// aabb->center;
+		//object.extents = trans->local.scale;// aabb->extents;
+		//object.matId = mat->matID;
 
-		//set up the ids
-		if (objComp->uniqueID > 0) {
-			std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
-			object.id = objComp->uniqueID;
-			object.startIndex = temp.first;
-			object.endIndex = temp.second;
-		}
-		else
-			object.id = objComp->uniqueID;
+		////set up the ids
+		//if (objComp->uniqueID > 0) {
+		//	std::pair<int, int> temp = meshAssigner[objComp->uniqueID];
+		//	object.id = objComp->uniqueID;
+		//	object.startIndex = temp.first;
+		//	object.endIndex = temp.second;
+		//}
+		//else
+		//	object.id = objComp->uniqueID;
 
-		//put into list
-		objComp->objIndex = objects.size();
-		objComp->center = trans->world[3];
-		objComp->extents = trans->local.scale;
-		objects.push_back(object);
-		objectComps.push_back(objComp);
+		////put into list
+		//objComp->objIndex = objects.size();
+		//objComp->center = trans->world[3];
+		//objComp->extents = trans->local.scale;
+		//objects.push_back(object);
+		//objectComps.push_back(objComp);
 
 		
 		//updateObjectMemory();
@@ -663,22 +654,22 @@ void RenderSystem::deleteNode(NodeComponent * node)
 		updateDescriptors();
 	}*/
 
-	if (node->flags & COMPONENT_PRIMITIVE) {
-		PrimitiveComponent* o = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
-		objects.erase(objects.begin() + o->objIndex);
-		objectComps.erase(objectComps.begin() + o->objIndex);
-		for (int i = o->objIndex; i < objects.size(); ++i)
-			objectComps[i]->objIndex--;
-		compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
-		updateDescriptors();
-	}
+	//if (node->flags & COMPONENT_PRIMITIVE) {
+	//	PrimitiveComponent* o = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
+	//	objects.erase(objects.begin() + o->objIndex);
+	//	objectComps.erase(objectComps.begin() + o->objIndex);
+	//	for (int i = o->objIndex; i < objects.size(); ++i)
+	//		objectComps[i]->objIndex--;
+	//	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	//	updateDescriptors();
+	//}
 	
 }
 
 
 void RenderSystem::updateObjectMemory()
 {
-	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
 	updateDescriptors();
 }
 
@@ -724,7 +715,7 @@ void RenderSystem::updateBuffers()
 	if (updateflags & UPDATE_NONE)
 		return;
 	if (updateflags & UPDATE_OBJECT) {
-		compute.storageBuffers.objects.UpdateBuffers(vkDevice, objects);
+		//compute.storageBuffers.primitives.UpdateBuffers(vkDevice, primitives);
 		updateflags &= ~UPDATE_OBJECT;
 	}
 	if (updateflags & UPDATE_MATERIAL) {
@@ -745,8 +736,8 @@ void RenderSystem::updateBuffers()
 	
 
 	updateflags |= UPDATE_NONE;
-	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
-	compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
+	//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	//compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
 	updateDescriptors();
 }
 
@@ -763,36 +754,36 @@ void RenderSystem::updateBVH(std::vector<artemis::Entity*>& orderedPrims, std::s
 
 	//Principia::NamedTimer nt("BVHUPDATE");
 	//reserve newobjects array
-	std::vector<ssPrimitive> newObjs;
+	//std::vector<ssPrimitive> newObjs;
 	size_t numPrims = orderedPrims.size();
-	newObjs.reserve(numPrims);
+	primitives.clear();
+	primitives.reserve(numPrims);
 
 	//fill in the new objects array;
 	for (size_t i = 0; i < numPrims; ++i) {
 		PrimitiveComponent* pc = (PrimitiveComponent*)orderedPrims[i]->getComponent<PrimitiveComponent>();
 		if (pc) {
-			newObjs.push_back(objects[pc->objIndex]);
-			pc->objIndex = newObjs.size() - 1;
+			primitives.emplace_back(ssPrimitive(pc));
+			//pc->objIndex = newObjs.size() - 1;
 		}
 	}
 
 	//replace objects with it
-	objects = std::move(newObjs);
+	//primitives = std::move(newObjs);
 
 	//now that the objs are ordered relative to the BVH, you can flatten the BVH;
 	int offset = 0;
 	//bvh.reserve(numNodes);
 	bvh.resize(numNodes);
-	flattenBVH(root, &offset);
+	flattenBVH(root, &offset, bvh);
 	vkWaitForFences(vkDevice.logicalDevice, 1, &compute.fence, VK_TRUE, UINT64_MAX);
 
-	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+	compute.storageBuffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives, primitives.size());
 	compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
-	//updateDescriptors();
 
 	
 }
-int RenderSystem::flattenBVH(std::shared_ptr<BVHNode> node, int * offset)
+int RenderSystem::flattenBVH(std::shared_ptr<BVHNode> node, int * offset, std::vector<ssBVHNode>& bvh)
 {
 	//first pusch back a node
 	ssBVHNode* bvhNode = &bvh[*offset];
@@ -811,8 +802,8 @@ int RenderSystem::flattenBVH(std::shared_ptr<BVHNode> node, int * offset)
 		bvhNode->offset = node->firstPrimOffset;
 	} //else make new node
 	else {
-		flattenBVH(node->children[0], offset);
-		bvhNode->offset = flattenBVH(node->children[1], offset);
+		flattenBVH(node->children[0], offset, bvh);
+		bvhNode->offset = flattenBVH(node->children[1], offset, bvh);
 		bvhNode->numChildren = 0;
 		//bvhNode->numChildren |= (node->splitAxis << 29);
 		//bvh[index].numChildren |= (node->splitAxis << 29);
@@ -893,7 +884,7 @@ void RenderSystem::mainLoop() {
 	//Or the window is closed
 	//while (!glfwWindowShouldClose(WINDOW.getWindow())) {
 	//	glfwPollEvents();
-		updateBuffers();
+		//updateBuffers();
 		//INPUT.update();
 		if (!prepared)
 			return;
@@ -1252,7 +1243,7 @@ void RenderSystem::updateDescriptors()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			5,
-			&compute.storageBuffers.objects.Descriptor()),
+			&compute.storageBuffers.primitives.Descriptor()),
 		// Binding 6: for Joints
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
@@ -1523,7 +1514,7 @@ void RenderSystem::prepareCompute()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			5,
-			&compute.storageBuffers.objects.Descriptor()),
+			&compute.storageBuffers.primitives.Descriptor()),
 		// Binding 6: for joints
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
@@ -1604,7 +1595,7 @@ void RenderSystem::destroyCompute()
 	compute.storageBuffers.verts.Destroy(vkDevice);
 	compute.storageBuffers.faces.Destroy(vkDevice);
 	compute.storageBuffers.shapes.Destroy(vkDevice);
-	compute.storageBuffers.objects.Destroy(vkDevice);
+	compute.storageBuffers.primitives.Destroy(vkDevice);
 	compute.storageBuffers.joints.Destroy(vkDevice);
 	compute.storageBuffers.materials.Destroy(vkDevice);
 	compute.storageBuffers.lights.Destroy(vkDevice);

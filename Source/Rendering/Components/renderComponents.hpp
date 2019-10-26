@@ -82,17 +82,19 @@ struct MeshComponent : artemis::Component {
 };
 
 struct PrimitiveComponent : artemis::Component {
-	int objIndex;	// where this object resides in the cpu @rendersystem.h...idk why its not called cpuindex
-	//int gpuIndex;	// where this object resides in the gpu
-	int uniqueID;	// reference back to the resource manager
-	int bvhIndex;
+	glm::mat4 world; //64bytes
+	glm::vec3 extents; //12bytes
+	int numChildren = 0; //4bytes;
 
-	glm::vec3 center;
-	glm::vec3 extents;
+	int id; //4bytes
+	int matId; //4bytes
+	int startIndex = 0;
+	int endIndex = 0;
 	
 
 	PrimitiveComponent() {};
-	PrimitiveComponent(int id) : uniqueID(id) {};
+	PrimitiveComponent(int i) : id(i) {};
+	inline glm::vec3 center() { return glm::vec3(world[3].x, world[3].y, world[3].z); };
 };
 
 struct ModelComponent : artemis::Component {

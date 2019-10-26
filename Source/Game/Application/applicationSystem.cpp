@@ -86,6 +86,9 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	//render
 	as->process();
 	col->process();
+
+	bvh->build();
+	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
 	rs->process();// mainLoop();
 
 	//build the bvh

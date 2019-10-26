@@ -1464,7 +1464,8 @@ void EngineUISystem::materialSelect()
 
 	if (activeNode->flags & COMPONENT_PRIMITIVE) {
 		PrimitiveComponent* objComp = (PrimitiveComponent*)activeNode->data->getComponent<PrimitiveComponent>();
-		rs->getObject(objComp->objIndex).matId = matIndex;
+		//rs->getObject(objComp->objIndex).matId = matIndex;
+		objComp->matId = matIndex;
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 	}
 
