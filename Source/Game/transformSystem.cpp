@@ -20,7 +20,8 @@ and the system does thing automatically
 TransformSystem::TransformSystem()
 {
 	//addComponentType<RigidBodyComponent>();
-	addComponentType<Principia::CollisionComponent>();
+	//addComponentType<Principia::CollisionComponent>();
+	addComponentType<TransformComponent>();
 	addComponentType<NodeComponent>();
 }
 
@@ -39,11 +40,21 @@ void TransformSystem::initialize()
 
 }
 
+void TransformSystem::added(artemis::Entity & e)
+{
+	NodeComponent* nc = nodeMapper.get(e);
+	if (nc->isParent) {
+		recursiveTransform(nc);
+	}
+}
+
+
+
 void TransformSystem::processEntity(artemis::Entity & e)
 {
-	TransformComponent* tc = transformMapper.get(e);
+	//TransformComponent* tc = transformMapper.get(e);
 	NodeComponent* nc = nodeMapper.get(e);
-	if (nc->isParent)
+	if (nc->isParent && nc->isDynamic)
 		recursiveTransform(nc);
 	//size_t numChildren = nc->children.size();
 	//for (int c = 0; c < numChildren; c++) {
@@ -73,13 +84,13 @@ void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
 	if (nc->flags & COMPONENT_PRIMITIVE) {
 		
 		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
-		ssPrimitive& obj = rs->getObject(objComp->objIndex);
+		//ssPrimitive& obj = rs->getObject(objComp->objIndex);
 		//so what im looking for is the resource manager's
 
 		//scale the aabb
 		//obj.center = tc->global.position;
-		obj.extents = tc->global.scale;// rotateAABB(tc->global.rotation, obj.extents * tc->global.scale);
-		obj.world = tc->world;
+		objComp->extents = tc->global.scale;// rotateAABB(tc->global.rotation, obj.extents * tc->global.scale);
+		objComp->world = tc->world;
 
 		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 	}
@@ -172,7 +183,7 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){
 	if (nc->flags & COMPONENT_PRIMITIVE) {
 		//GET THE OBJ
 		PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
-		ssPrimitive& obj = rs->getObject(objComp->objIndex);
+		//ssPrimitive& obj = rs->getObject(objComp->objIndex);
 
 		//these are primitive shapes, the extents are basically used as the bounds of the shapes
 		//if (objComp->uniqueID < 0) {
@@ -188,13 +199,13 @@ void TransformSystem::recursiveTransform(NodeComponent* nc){
 		//	glm::vec3 center = objComp->center * tc->global.rotation + tc->global.position;
 		//	tc->world[3] = glm::vec4(center, 1.f);
 		//}
-		obj.extents = tc->global.scale;
+		objComp->extents = tc->global.scale;
 		//obj.invWorld = glm::inverse(tc->TRM);
 		//obj.world = tc->world;
-		objComp->uniqueID < 0 ? obj.world = tc->TRM : obj.world = tc->world;
-		objComp->center = tc->world[3];
-		objComp->extents = tc->global.scale;
-		rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
+		objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
+		//objComp->center = tc->world[3];
+		//objComp->extents = tc->global.scale;
+		//rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 	}
 
 	else if (nc->flags & COMPONENT_CAMERA) {

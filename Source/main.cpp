@@ -90,7 +90,7 @@ int main() {
 		while (!glfwWindowShouldClose(WINDOW.getWindow())) {
 			duration = end - start;
 			world.loopStart();
-			Scene::get().buildBVH();
+			//Scene::get().buildBVH();
 			float delta = duration.count();
 			if (delta > 0 && delta < 1.f)
 				world.setDelta(delta);

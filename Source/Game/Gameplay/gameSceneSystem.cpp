@@ -34,8 +34,8 @@ void GameSceneSystem::added(artemis::Entity & e)
 	e.removeComponent<GameSceneComponent>();
 	//load scene
 	glm::vec3 pos = glm::vec3(0.f, 1.f, 2.f);
-	for (float x = -20.f; x < 21.f; x += 10.f) {
-		for (float z = 15.f; z > 0.f; z -= 5.f) {
+	for (float x = -35.f; x < 36.f; x += 9.f) {
+		for (float z = 25.f; z > 0.f; z -= 5.f) {
 			pos = glm::vec3(x, 0.f, z);
 			//artemis::Entity* enemy = SCENE.createGameShape("Enemy", pos, glm::vec3(1.f), 1, -1, true);
 			//enemy->addComponent(new Principia::CollisionComponent(pos, 1));

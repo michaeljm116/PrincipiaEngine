@@ -16,7 +16,7 @@ private:
 
 	artemis::ComponentMapper<TransformComponent> transformMapper;
 	artemis::ComponentMapper<NodeComponent> nodeMapper;
-	artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
+	//artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
 
 	artemis::EntityManager* em;
 	artemis::SystemManager* sm;
@@ -27,9 +27,11 @@ public:
 	TransformSystem();
 	~TransformSystem();
 	void initialize();
+	void added(artemis::Entity &e) override;
 
 	//void Scale(NodeComponent* nc);
 	//void Translate(NodeComponent* nc, glm::mat4 pt);
+
 	void processEntity(artemis::Entity &e);
 	void SQTTransform(NodeComponent* nc, sqt parent);// glm::vec3 sca, glm::quat rot, glm::vec3 pos);
 	void regularTransform(NodeComponent* nc, TransformComponent* parent);

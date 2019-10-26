@@ -39,9 +39,9 @@ void CharacterController::processEntity(artemis::Entity & e)
 	//tc->world[3].x += ic->axis.x;
 	//tc->world[3].z += ic->axis.y;
 	glm::vec3 movement = glm::vec3(ic->axis.x, 0, ic->axis.y);
-	movement *= pc->speed * 0.10f;
+	movement *= pc->speed * 2.0f;
 	//tc->global.position += movement;
-	tc->local.position += movement;
+	tc->local.position += movement * world->getDelta();
 
 	if (ic->buttons[4].action > 0) {
 		//if (ic->buttons[4].time > 0.2f) {
@@ -53,9 +53,9 @@ void CharacterController::processEntity(artemis::Entity & e)
 
 void CharacterController::fireProjectile(const glm::vec3& pos)
 {
-	glm::vec3 sca = glm::vec3(0.8f);
+	glm::vec3 sca = glm::vec3(0.4f);
 	glm::vec3 dir = glm::vec3(0.f, 0.f, 1.f);
-	float speed = 2.f;
+	float speed = 15.f;
 	artemis::Entity* proj = SCENE.createGameShape("bp", pos, sca, 0, -1, true);
 	NodeComponent* nc = (NodeComponent*)proj->getComponent<NodeComponent>();
 	nc->isParent = true;

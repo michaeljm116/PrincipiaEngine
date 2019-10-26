@@ -28,8 +28,8 @@ void ProjectileMovementSystem::removed(artemis::Entity & e)
 void ProjectileMovementSystem::processEntity(artemis::Entity & e)
 {
 	ProjectileComponent* p = projMapper.get(e);
-	p->time += world->getDelta();
-	transMapper.get(e)->local.position += p->dir * p->speed;
+	TransformComponent* t = transMapper.get(e);
+	t->local.position += p->dir * p->speed * world->getDelta();
 
 	//if you collide remove
 	if (colMapper.get(e)->state == Principia::CollisionState::Start) {
@@ -38,7 +38,7 @@ void ProjectileMovementSystem::processEntity(artemis::Entity & e)
 	}
 
 	//if you exist for more than 
-	if (p->time > p->maxTime) {
+	if (t->local.position.z > p->maxHeight) {
 		e.removeComponent<ProjectileComponent>();
 		change(e);
 	}

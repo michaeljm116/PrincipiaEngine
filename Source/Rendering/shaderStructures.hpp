@@ -13,6 +13,7 @@ shader, everything must be 16byte aligned
 #endif
 #include <glm/glm.hpp>
 //#include "../pch.h"
+#include "Components/renderComponents.hpp"
 
 struct ssGUI {
 	glm::vec2 min;
@@ -27,7 +28,7 @@ struct ssGUI {
 	ssGUI() {};
 	ssGUI(glm::vec2 min, glm::vec2 max, glm::vec2 aMin, glm::vec2 aExt, int l, int i) : min(min), extents(max), alignMin(aMin), alignExt(aExt), layer(l), id(i) {};
 };
-
+//
 struct ssPrimitive {
 	glm::mat4 world; //64bytes
 	glm::vec3 extents; //12bytes
@@ -37,6 +38,11 @@ struct ssPrimitive {
 	int matId; //4bytes
 	int startIndex = 0;
 	int endIndex = 0;
+
+	ssPrimitive() {};
+	ssPrimitive(PrimitiveComponent* pc) : world(pc->world), extents(pc->extents), numChildren(pc->numChildren),
+		id(pc->id), matId(pc->matId), startIndex(pc->startIndex), endIndex(pc->endIndex)
+	{};
 
 };//Total = 96bytes
 
