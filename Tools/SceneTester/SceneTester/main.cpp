@@ -66,6 +66,17 @@ void reverseString(std::vector<char>& s) {
 
 int main() {
 	
+	int bm= 0;
+	bm = 1 << 0;
+	bm = 1 << 1;
+	bm = 1 << 2;
+	bm = 1 << 3;
+	bm = 1 << 4;
+	bm = 3 << 1;
+	bm = 3 << 2;
+	bm = 3 << 4;
+
+
 	
 	std::string dir = "../../../Assets/Levels/";
 	glm::vec3 bob = glm::vec3(1);

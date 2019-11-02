@@ -1,4 +1,4 @@
-#include "structs.h"
+#include "bvh.hpp"
 #include "helper.hpp"
 #include <queue>
 namespace fs = std::filesystem;
@@ -70,6 +70,7 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 		int meshNameLength = m.meshes[i].name.length();
 		int numVerts = m.meshes[i].vertices.size();
 		int numTris = m.meshes[i].faces.size();
+		int numNodes = m.meshes[i].bvh.size();
 		//int meshIndex = m.meshes
 		//asdfadsf
 		//Name
@@ -92,6 +93,11 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 		}
 		for (int t = 0; t < numTris; t++) {
 			binaryio.write(CCAST(&m.meshes[i].faces[t].v), sizeof(glm::ivec4));
+		}
+
+		//BVHs
+		for (auto n : m.meshes[i].bvh) {
+			binaryio.write(CCAST(&n), sizeof(flatBVHNode));
 		}
 	}
 
@@ -147,7 +153,7 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 		binaryio.write(CCAST(&sj.center), sizeof(glm::vec3));
 		binaryio.write(CCAST(&sj.extents), sizeof(glm::vec3));
 		
-		int numVerts, numFaces, numShapes;
+		int numVerts, numFaces, numShapes, numNodes;
 		numVerts = sj.verts.size();
 		numFaces = sj.faces.size();
 		numShapes = sj.shapes.size();
@@ -560,11 +566,15 @@ bool LoadDirectory(std::string directory)
 			}
 			//else
 			ModelScaler(mod);
+
+			//Build the bvh
+			Build(mod);
+
 			if (triangulate)
 				mod.name += "_t";
-			
-						WritePEModel(mod,		"../../Assets/Levels/RayTracedInvaders/Models/"	   + mod.name + ".pm");
-			if(hasAnim) WriteSkeleton(skeleton, "../../Assets/Levels/RayTracedInvaders/Animations/" + mod.name + ".pa");
+			WritePEModel(mod,"../../Assets/Levels/RayTracedInvaders/Models/"+ mod.name + ".pm");
+			if(hasAnim) 
+				WriteSkeleton(skeleton, "../../Assets/Levels/RayTracedInvaders/Animations/" + mod.name + ".pa");
 		}
 	}
 	return false;

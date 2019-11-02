@@ -21,7 +21,7 @@ void Principia::CollisionSystem::begin()
 {
 	for (auto enemy : enemies) {
 		for (auto player : players) {
-			checkCollision(*player, *enemy);
+			checkCollision(world->getEntity(player), world->getEntity(enemy));// *player, *enemy);
 		}
 	}
 }
@@ -34,18 +34,18 @@ void Principia::CollisionSystem::added(artemis::Entity & e)
 {
 	GameObjectType t = gotMapper.get(e)->type;
 	if (t & GameObjectType::GAMEOBJECT_ENEMY)
-		enemies.insert(&e);
+		enemies.insert(e.getId());
 	else if (t & GameObjectType::GAMEOBJECT_PLAYER)
-		players.insert(&e);
+		players.insert(e.getId());
 }
 
 void Principia::CollisionSystem::removed(artemis::Entity & e)
 {
 	GameObjectType t = gotMapper.get(e)->type;
 	if (t & GameObjectType::GAMEOBJECT_ENEMY)
-		enemies.erase(&e);
+		enemies.erase(e.getId());
 	else if (t & GameObjectType::GAMEOBJECT_PLAYER)
-		players.erase(&e);
+		players.erase(e.getId());
 }
 
 void Principia::CollisionSystem::processEntity(artemis::Entity & e)
@@ -56,7 +56,6 @@ void Principia::CollisionSystem::processEntity(artemis::Entity & e)
 
 void Principia::CollisionSystem::checkCollision(artemis::Entity & a, artemis::Entity & b)// const
 {
-	
 	CollisionComponent* ccA = colMapper.get(a);
 	CollisionComponent* ccB = colMapper.get(b);
 

@@ -76,7 +76,8 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 
 	// Get intersected primitive ID
 	sectID primitiveID = intersectMBVH(ray, norm);
-	
+	//sectID primitiveID = intersect(ray, norm);
+
 	if (primitiveID.id == -1)
 	{
 		return fMat;

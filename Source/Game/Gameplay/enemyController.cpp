@@ -81,10 +81,12 @@ void EnemyController::removed(artemis::Entity & e)
 	NodeComponent* nc = nodeMapper.get(e);
 	for (auto child : nc->children) {
 		child->data->remove();
+		child->data->refresh();
 		//world->getEntityManager()->remove(*child->data);
 	}
  	//world->getEntityManager()->remove(e);
 	e.remove();
+	e.refresh();
 	if (leftEnt == rightEnt) {
 		//GAME OVER YOU WIN WOOOOOOO
 	}

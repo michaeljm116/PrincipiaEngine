@@ -52,6 +52,8 @@ struct Bounds {
 	inline glm::vec3 min() {
 		return center - extents;
 	}
+	inline glm::vec3 getCenter() { return center; };
+	inline glm::vec3 getExtents() { return extents; };
 
 	Bounds combine(Bounds& b) {
 		//find the highest and the lowest x and y values
@@ -128,11 +130,19 @@ struct Face : public kBounds {
 	}
 };
 
+struct flatBVHNode {
+	glm::vec3 upper;
+	int offset;
+	glm::vec3 lower;
+	int numChildren;
+};
+
 struct Mesh {
 	std::string name;
 	std::string originalName;
 	std::vector<Face> faces;
 	std::vector<Vertex> vertices;
+	std::vector<flatBVHNode> bvh;
 	glm::vec3 extent;
 	glm::vec3 center;
 	glm::mat4 transform;
@@ -209,9 +219,6 @@ struct  PrincipiaSkeleton
 
 };
 
-struct KdTreeNode {
-
-};
 
 struct PrincipiaModel {
 	std::string name;

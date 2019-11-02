@@ -2,7 +2,30 @@
 
 #include "sceneLoader.hpp"
 #include <iostream>
+#include <unordered_map>
 
+struct FlatKdNode {
+	union {
+		float split;
+		int onePrim;
+		int primOffset;
+	};
+	union {
+		int flags;
+		int numPrims;
+		int aboveChild;
+	};
+
+	//FlatKdNode(std::vector<FlatKdNode*>& tree, std::unordered_map<int, int>& comp,  KdTreeNode* node) {
+	//	if (node->isLeaf) {
+	//		//first check to see this hasn't been already pushed into the tree
+	//		for (auto p : node->prims) {
+	//			if(!comp.find(p) == comp.end())
+	//		}
+
+	//	}
+	//}
+};
 
 struct KdTreeNode {
 	float median = 0;

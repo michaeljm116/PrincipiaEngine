@@ -149,8 +149,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bvh.hpp" />
     <ClInclude Include="helper.hpp" />
     <ClInclude Include="includes.h" />
+    <ClInclude Include="kdtree.hpp" />
     <ClInclude Include="structs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
