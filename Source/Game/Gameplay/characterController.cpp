@@ -56,7 +56,7 @@ void CharacterController::fireProjectile(const glm::vec3& pos)
 	glm::vec3 sca = glm::vec3(0.4f);
 	glm::vec3 dir = glm::vec3(0.f, 0.f, 1.f);
 	float speed = 15.f;
-	artemis::Entity* proj = SCENE.createGameShape("bp", pos, sca, 0, -1, true);
+	artemis::Entity* proj = SCENE.createGameShape("bp", pos, sca, 5, -1, true);
 	NodeComponent* nc = (NodeComponent*)proj->getComponent<NodeComponent>();
 	nc->isParent = true;
 	proj->addComponent(new CollisionComponent(pos, sca.x));

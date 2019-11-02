@@ -29,5 +29,11 @@
     <ClInclude Include="includes.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="kdtree.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="bvh.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

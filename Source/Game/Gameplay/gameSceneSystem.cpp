@@ -35,19 +35,21 @@ void GameSceneSystem::added(artemis::Entity & e)
 	//load scene
 	glm::vec3 pos = glm::vec3(0.f, 1.f, 2.f);
 	for (float x = -35.f; x < 36.f; x += 9.f) {
-		for (float z = 25.f; z > 0.f; z -= 5.f) {
+		for (float z = 15.f; z > -10.f; z -= 5.f) {
 			pos = glm::vec3(x, 0.f, z);
 			//artemis::Entity* enemy = SCENE.createGameShape("Enemy", pos, glm::vec3(1.f), 1, -1, true);
 			//enemy->addComponent(new Principia::CollisionComponent(pos, 1));
 			//enemy->addComponent(new Principia::GameObjectTypeComponent(Principia::GameObjectType::GAMEOBJECT_ENEMY));
 			//enemy->addComponent(new EnemyComponent());
 			//enemy->refresh();
-			createEnemy(pos, glm::vec3(1.f), glm::vec3(2.f));
+			int m = 10 - z / 5.f;
+			if (m > 12) m = 12;
+			createEnemy(pos, glm::vec3(1.f), glm::vec3(2.f), m );
 		}
 	}
 	
 
-	pos = glm::vec3(0.f, 0.f, -5.f);
+	pos = glm::vec3(0.f, 0.f, -15.f);
 	createPlayer(pos, glm::vec3(1.f), glm::vec3(2.f));
 }
 
@@ -59,12 +61,20 @@ void GameSceneSystem::processEntity(artemis::Entity & e)
 {
 }
 
-void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
+void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, int matID)
 {
 	artemis::Entity* enemy = createModel("Low_poly_UFO", pos, rot, sca);
-	enemy->addComponent(new Principia::CollisionComponent(pos, 1));
+	enemy->addComponent(new Principia::CollisionComponent(pos, sca.x));
 	enemy->addComponent(new Principia::GameObjectTypeComponent(Principia::GameObjectType::GAMEOBJECT_ENEMY));
 	enemy->addComponent(new EnemyComponent());
+
+	NodeComponent* enemyNode = (NodeComponent*)enemy->getComponent<NodeComponent>();
+	int i = 0;
+	for (auto child : enemyNode->children) {
+		MaterialComponent* mc = (MaterialComponent*)child->data->getComponent<MaterialComponent>();
+		i == 2 ? mc->matID = 2 : mc->matID = matID;
+		++i;
+	}
 	enemy->refresh();
 	
 }
@@ -72,11 +82,23 @@ void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
 void GameSceneSystem::createPlayer(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
 {
 	artemis::Entity* player = createModel("Low_poly_UFO", pos, rot, sca);
-	player->addComponent(new Principia::CollisionComponent(pos, 1));
+	player->addComponent(new Principia::CollisionComponent(pos, sca.x));
 	player->addComponent(new Principia::GameObjectTypeComponent(Principia::GameObjectType::GAMEOBJECT_PLAYER));
 	player->addComponent(new CharacterComponent());
 	//player->addComponent(new ControllerComponent(1));
-	SCENE.insertController((NodeComponent*)player->getComponent<NodeComponent>());
+	NodeComponent* playerNode = (NodeComponent*)player->getComponent<NodeComponent>();
+	SCENE.insertController(playerNode);
+	
+	int i = 0;
+	for (auto child : playerNode->children) {
+		MaterialComponent* mc = (MaterialComponent*)child->data->getComponent<MaterialComponent>();
+		//PrimitiveComponent* pc = (PrimitiveComponent*)child->data->getComponent<PrimitiveComponent>();
+		i == 2 ? mc->matID = 6 : mc->matID = 2;
+		//i == 2 ? pc->matId =
+		child->data->refresh();
+		++i;
+	}
+	
 	player->refresh();
 }
 

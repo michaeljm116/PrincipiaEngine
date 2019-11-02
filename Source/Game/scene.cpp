@@ -260,10 +260,11 @@ artemis::Entity* Scene::createGameShape(std::string name, glm::vec3 pos, glm::ve
 	e->addComponent(parent);
 
 	parent->isDynamic = dynamic;
+	parent->isParent = true;
 	e->refresh();
-	rs->addNode(parent);
-	ts->recursiveTransform(parent);
-	rs->updateObjectMemory();
+	//rs->addNode(parent);
+	//ts->recursiveTransform(parent);
+	//rs->updateObjectMemory();
 
 	//parents.push_back(parent);
 	return e;

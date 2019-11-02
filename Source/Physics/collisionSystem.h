@@ -25,8 +25,8 @@ namespace Principia {
 		artemis::ComponentMapper<CollisionComponent> colMapper;
 		artemis::ComponentMapper<GameObjectTypeComponent> gotMapper;
 
-		std::set<artemis::Entity*> players;
-		std::set<artemis::Entity*> enemies;
+		std::set<int> players;
+		std::set<int> enemies;
 
 	};
 }

@@ -7,11 +7,8 @@
     <Material Name="Cobalt" DiffuseR="0.66212398" DiffuseG="0.65486401" DiffuseB="0.63373202" Reflective="0.5" Roughness="0.1" Transparency="0" Refractive="1"/>
     <Material Name="Platinum" DiffuseR="0.67241102" DiffuseG="0.63733101" DiffuseB="0.58545601" Reflective="0.5" Roughness="0.1" Transparency="0" Refractive="1"/>
     <Material Name="Blue" DiffuseR="0" DiffuseG="0.45377639" DiffuseB="0.70098042" Reflective="0.60699999" Roughness="1" Transparency="0" Refractive="1"/>
-    <Material Name="Black" DiffuseR="0" DiffuseG="6.4736889e-07" DiffuseB="1e-06" Reflective="0.27900001" Roughness="1" Transparency="0" Refractive="1"/>
-    <Material Name="White" DiffuseR="1" DiffuseG="1" DiffuseB="1" Reflective="0" Roughness="1" Transparency="0" Refractive="1"/>
     <Material Name="Jasper" DiffuseR="0.84313726" DiffuseG="0.23137255" DiffuseB="0.24313726" Reflective="0.48899999" Roughness="1" Transparency="0" Refractive="1"/>
     <Material Name="Ball" DiffuseR="0" DiffuseG="0.44117647" DiffuseB="0.22058813" Reflective="0.59500003" Roughness="1" Transparency="0" Refractive="0"/>
-    <Material Name="shiny" DiffuseR="4.9019604e-07" DiffuseG="1e-06" DiffuseB="9.4234349e-07" Reflective="0" Roughness="1" Transparency="0" Refractive="0"/>
     <Material Name="Enemy" DiffuseR="1" DiffuseG="0" DiffuseB="0" Reflective="0.70899999" Roughness="0.58200002" Transparency="0" Refractive="0"/>
     <Material Name="Player" DiffuseR="0" DiffuseG="0.66176474" DiffuseB="0" Reflective="0.70899999" Roughness="0.58200002" Transparency="0" Refractive="0"/>
 </Root>
