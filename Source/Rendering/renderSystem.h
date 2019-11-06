@@ -47,13 +47,9 @@ public:
 	void addGuiNumber(GUINumberComponent* gnc);
 	void updateGuiNumber(GUINumberComponent* gnc);
 
-	void deleteMesh(NodeComponent* node);
-	void deleteNode(NodeComponent* node);
 
 	void updateObjectMemory();
 	void updateJointMemory();
-	void updateMeshMemory();
-	void updateGeometryMemory(ObjectType type);
 
 	float getRenderTime() { return m_RenderTime.ms; }
 
@@ -119,9 +115,13 @@ private:
 	// Resources for the compute part of the example
 	struct {
 		struct {
+			//GPU READ ONLY
 			VBuffer<ssVert> verts;			// (Shader) storage buffer object with scene verts
 			VBuffer<ssIndex> faces;			// (Shader) storage buffer object with scene indices
+			VBuffer<ssBVHNode> blas;		// (Shader) storage buffer object with bottom level acceleration structure
 			VBuffer<ssShape> shapes;		// for animatied shapes 
+
+			//CPU + GPU 
 			VBuffer<ssPrimitive> primitives;	// for the primitives
 			VBuffer<ssJoint> joints;		// for the animated joints
 			VBuffer<ssMaterial> materials;	// (Shader) storage buffer object with scene Materials

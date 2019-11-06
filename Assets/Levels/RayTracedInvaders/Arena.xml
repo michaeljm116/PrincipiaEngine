@@ -19,4 +19,52 @@
         <Intensity i="1000"/>
         <ID id="0"/>
     </Node>
+    <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="0" y="-10" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="40" y="10" z="40"/>
+        </Transform>
+        <Material ID="476364240"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="0" y="-0.41000366" z="38.899994"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="40" y="10" z="10"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="BottomWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="0" y="0" z="-40"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="40" y="10" z="10"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="leftWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="-40" y="7.3900032" z="0"/>
+            <Rotation x="0" y="0" z="9.9999997e-05"/>
+            <Scale x="10" y="10" z="40"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="40" y="0" z="0"/>
+            <Rotation x="0" y="0" z="9.9999997e-05"/>
+            <Scale x="10" y="10" z="40"/>
+        </Transform>
+        <Material ID="150738392"/>
+        <Object ID="-2"/>
+    </Node>
 </Root>

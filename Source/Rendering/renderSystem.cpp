@@ -275,6 +275,7 @@ void RenderSystem::loadResources()
 	std::vector<ssVert> verts;
 	std::vector<ssIndex> faces;
 	std::vector<ssShape> shapes;
+	std::vector<ssBVHNode> blas;
 
 	std::vector<rModel>& models = RESOURCEMANAGER.getModels();
 	std::vector<rSkeleton>& skeletons = RESOURCEMANAGER.getSkeletons();
@@ -287,6 +288,7 @@ void RenderSystem::loadResources()
 			//toss in the vertice data
 			int prevVertSize = verts.size();
 			int prevIndSize = faces.size();
+			int prevBlasSize = blas.size();
 
 
 			//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
@@ -302,9 +304,15 @@ void RenderSystem::loadResources()
 				faces.emplace_back(ssIndex(*itr + prevVertSize));// , ++currId));
 			}
 
+			//Load up da bottom level acceleration structure
+			blas.reserve(prevBlasSize + rmesh.bvh.size());
+			for (auto itr : rmesh.bvh) {
+				itr.offset += prevBlasSize;
+				blas.emplace_back(itr);
+			}
 
 			//finish mia
-			meshAssigner[mod.uniqueID + i ] = std::pair<int, int>(prevIndSize, faces.size());
+			meshAssigner[mod.uniqueID + i ] = std::pair<int, int>(prevBlasSize, blas.size());
 		}
 		
 	}
@@ -350,6 +358,7 @@ void RenderSystem::loadResources()
 	shapes.push_back(ssShape(glm::vec3(0.f), glm::vec3(1.f), -1));
 	compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
 	compute.storageBuffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
+	compute.storageBuffers.blas.InitStorageBufferWithStaging(vkDevice, blas, blas.size());
 	compute.storageBuffers.shapes.InitStorageBufferWithStaging(vkDevice, shapes, shapes.size());
 
 	//compute.storageBuffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
@@ -536,137 +545,6 @@ void RenderSystem::updateGuiNumber(GUINumberComponent * gnc)
 	setRenderUpdate(UPDATE_GUI);
 }
 
-void RenderSystem::deleteMesh(NodeComponent * node)
-{
-//	//Find the lowest and highest verts/inds/subs in the mesh
-//	int startVert = INT32_MAX, startIndex = INT32_MAX, startMesh = INT32_MAX;
-//	int endVert = INT32_MIN, endIndex = INT32_MIN, endMesh = INT32_MIN;
-//	for each (NodeComponent* child in node->children)
-//	{
-//		MeshComponent* meshComp = (MeshComponent*)child->data->getComponent<MeshComponent>();
-//		ssMesh& mesh = meshes[meshComp->meshIndex];
-//
-//		startVert = minVal(startVert, mesh.startVert);
-//		startIndex = minVal(startIndex, mesh.startIndex);
-//		startMesh = minVal(startMesh, meshComp->meshIndex);
-//
-//		endVert = maxVal(endVert, mesh.endVert);
-//		endIndex = maxVal(endIndex, mesh.endIndex);
-//		endMesh = maxVal(endMesh, meshComp->meshIndex);
-//	}
-//
-//	//Get the differences between them
-//	int diffVert = endVert - startVert + 1;
-//	int diffIndex = endIndex - startIndex;
-//	int diffMesh = endMesh - startMesh + 1;
-//
-//	//delete their info
-//	verts.erase(verts.begin() + startVert, verts.begin() + endVert + 1);
-//	indices.erase(indices.begin() + startIndex, indices.begin() + endIndex);
-//	meshes.erase(meshes.begin() + startMesh, meshes.begin() + endMesh + 1);
-//	meshComps.erase(meshComps.begin() + startMesh, meshComps.begin() + endMesh + 1);
-//
-//	//Update everything to the left of them in memory;
-//	for (int i = startMesh; i < meshes.size(); ++i) {
-//		meshes[i].startVert -= diffVert;// -1;
-//		meshes[i].endVert -= diffVert;// -1;
-//		meshes[i].startIndex -= diffIndex;// -1;
-//		meshes[i].endIndex -= diffIndex;// -1;
-//
-//		meshComps[i]->meshIndex -= diffMesh;// +1;
-//	}
-//	glm::ivec3 diffVerts = glm::ivec3(diffVert);
-//#pragma omp parallel for
-//	for(int i = startIndex; i < indices.size(); ++i)
-//		indices[i].v -= diffVerts;
-//
-//	//tell the gpu what u dun did y0
-//	updateMeshMemory();
-}
-void RenderSystem::deleteNode(NodeComponent * node)
-{
-	/*
-	if (node->flags & COMPONENT_MESH) {
-		MeshComponent* meshComp = (MeshComponent*)node->data->getComponent<MeshComponent>();
-		ssMesh& mesh = meshes[meshComp->meshIndex];
-
-		//get the differences between them
-		int diffVert = mesh.endVert - mesh.startVert + 1;
-		int diffIndex = mesh.endIndex - mesh.startIndex;
-
-		//delete their info
-		verts.erase(verts.begin() + mesh.startVert, verts.begin() + mesh.endVert + 1);
-		indices.erase(indices.begin() + mesh.startIndex, indices.begin() + mesh.endIndex);
-		meshes.erase(meshes.begin() + meshComp->meshIndex);
-		meshComps.erase(meshComps.begin() + meshComp->meshIndex);
-
-		//Update everything to the left of them in memory;
-		for (int i = meshComp->meshIndex; i < meshes.size(); ++i) {
-			meshes[i].startVert -= diffVert;// -1;
-			meshes[i].endVert -= diffVert;// -1;
-			meshes[i].startIndex -= diffIndex;// -1;
-			meshes[i].endIndex -= diffIndex;// -1;
-
-			meshComps[i]->meshIndex--;// -= diffmesh;// +1;
-		}
-		glm::ivec3 diffVerts = glm::ivec3(diffVert);
-#pragma omp parallel for
-		for (int i = mesh.startIndex; i < indices.size(); ++i)
-			indices[i].v -= diffVerts;
-
-		//tell the gpu what u dun did y0
-		updateMeshMemory();
-	}
-	if (node->flags & COMPONENT_SPHERE) {
-		SphereComponent* s = (SphereComponent*)node->data->getComponent<SphereComponent>();
-		spheres.erase(spheres.begin() + s->sphereIndex);
-		sphereComps.erase(sphereComps.begin() + s->sphereIndex);
-		for (int i = s->sphereIndex; i < spheres.size(); ++i)
-			sphereComps[i]->sphereIndex--;
-		compute.storageBuffers.spheres.UpdateAndExpandBuffers(vkDevice, spheres, spheres.size());
-		updateDescriptors();
-	}
-	if (node->flags & COMPONENT_BOX) {
-		BoxComponent* b = (BoxComponent*)node->data->getComponent<BoxComponent>();
-		boxes.erase(boxes.begin() + b->boxIndex);
-		BoxComps.erase(BoxComps.begin() + b->boxIndex);
-		for (int i = b->boxIndex; i < boxes.size(); ++i)
-			BoxComps[i]->boxIndex--;
-		compute.storageBuffers.boxes.UpdateAndExpandBuffers(vkDevice, boxes, boxes.size());
-		updateDescriptors();
-	}
-	if (node->flags & COMPONENT_CYLINDER) {
-		CylinderComponent* c = (CylinderComponent*)node->data->getComponent<CylinderComponent>();
-		cylinders.erase(cylinders.begin() + c->cylinderIndex);
-		cylinderComps.erase(cylinderComps.begin() + c->cylinderIndex);
-		for (int i = c->cylinderIndex; i < cylinders.size(); ++i)
-			cylinderComps[i]->cylinderIndex--;
-		compute.storageBuffers.cylinders.UpdateAndExpandBuffers(vkDevice, cylinders, cylinders.size());
-		updateDescriptors();
-	}
-	if (node->flags & COMPONENT_PLANE) {
-		PlaneComponent* p = (PlaneComponent*)node->data->getComponent <PlaneComponent>();
-		planes.erase(planes.begin() + p->planeIndex);
-		PlaneComps.erase(PlaneComps.begin() + p->planeIndex);
-		for (int i = p->planeIndex; i < planes.size(); ++i)
-			PlaneComps[i]->planeIndex--;
-		compute.storageBuffers.planes.UpdateAndExpandBuffers(vkDevice, planes, planes.size());
-		updateDescriptors();
-	}*/
-
-	//if (node->flags & COMPONENT_PRIMITIVE) {
-	//	PrimitiveComponent* o = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
-	//	objects.erase(objects.begin() + o->objIndex);
-	//	objectComps.erase(objectComps.begin() + o->objIndex);
-	//	for (int i = o->objIndex; i < objects.size(); ++i)
-	//		objectComps[i]->objIndex--;
-	//	compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
-	//	updateDescriptors();
-	//}
-	
-}
-
-
 void RenderSystem::updateObjectMemory()
 {
 	//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
@@ -678,37 +556,6 @@ void RenderSystem::updateJointMemory()
 	compute.storageBuffers.joints.UpdateAndExpandBuffers(vkDevice, joints, joints.size());
 	updateDescriptors();
 }
-
-void RenderSystem::updateMeshMemory() {
-	//compute.storageBuffers.meshes.UpdateAndExpandBuffers(vkDevice, meshes, meshes.size());
-	//compute.storageBuffers.verts.UpdateAndExpandBuffers(vkDevice, verts, verts.size());
-	//compute.storageBuffers.indices.UpdateAndExpandBuffers(vkDevice, indices, indices.size());
-
-	//updateDescriptors();
-}
-
-void RenderSystem::updateGeometryMemory(ObjectType type)
-{
-	//switch (type)
-	//{
-	//case ObjectType::Sphere:{
-	//	compute.storageBuffers.spheres.UpdateAndExpandBuffers(vkDevice, spheres, spheres.size());
-	//	break;}
-	//case ObjectType::Box:{
-	//	compute.storageBuffers.boxes.UpdateAndExpandBuffers(vkDevice, boxes, boxes.size());
-	//	break;}
-	//case ObjectType::Plane: {
-	//	compute.storageBuffers.planes.UpdateAndExpandBuffers(vkDevice, planes, planes.size());
-	//	break;}
-	//case ObjectType::Cylinder: {
-	//	compute.storageBuffers.cylinders.UpdateAndExpandBuffers(vkDevice, cylinders, cylinders.size());
-	//	break;}
-	//default: {
-	//	break; }
-	//}
-	//updateDescriptors();
-}
-
 
 void RenderSystem::updateBuffers()
 {
@@ -1208,71 +1055,41 @@ void RenderSystem::updateDescriptors()
 
 	computeWriteDescriptorSets =
 	{
-		//// Binding 0: Output storage image
-		//vks::initializers::writeDescriptorSet(
-		//	compute.descriptorSet,
-		//	VK_DESCRIPTOR_TYPE_STORAGE_IMAGE,
-		//	0,
-		//	&computeTexture.descriptor),
-		//// Binding 1: Uniform buffer block
-		//vks::initializers::writeDescriptorSet(
-		//	compute.descriptorSet,
-		//	VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
-		//	1,
-		//	&compute.uniformBuffer.Descriptor()),
-		//// Binding 2: Shader storage buffer for the verts
-		//vks::initializers::writeDescriptorSet(
-		//	compute.descriptorSet,
-		//	VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-		//	2,
-		//	&compute.storageBuffers.verts.Descriptor()),
-		//// Binding 3: Shader storage buffer for the indices
-		//vks::initializers::writeDescriptorSet(
-		//	compute.descriptorSet,
-		//	VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-		//	3,
-		//	&compute.storageBuffers.indices.Descriptor()),
-		//// Binding 4: Shader storage buffer for the meshes
-		//vks::initializers::writeDescriptorSet(
-		//	compute.descriptorSet,
-		//	VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-		//	4,
-		//	&compute.storageBuffers.meshes.Descriptor()),
 		// Binding 5: for objects
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			5,
+			6,
 			&compute.storageBuffers.primitives.Descriptor()),
 		// Binding 6: for Joints
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			6,
+			7,
 			&compute.storageBuffers.joints.Descriptor()),
 		//Binding 6 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			7,
+			8,
 			&compute.storageBuffers.materials.Descriptor()),
 		//Binding 7 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			8,
+			9,
 			&compute.storageBuffers.lights.Descriptor()),
 		//Binding 8 for gui
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			9,
+			10,
 			&compute.storageBuffers.guis.Descriptor()),
 		//Binding 10 for bvhnodes
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			10,
+			11,
 			&compute.storageBuffers.bvh.Descriptor())
 	};
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -1285,7 +1102,7 @@ void RenderSystem::createDescriptorPool() {
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 3 + MAXTEXTURES),	// Graphics image samplers || +4 FOR TEXTURE
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 9),			// Storage buffer for the scene primitives
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 10),			// Storage buffer for the scene primitives
 		//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
 	};
 
@@ -1406,46 +1223,51 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			3),
-		// Binding 4: Shader storage buffer for the shapes
+		// Binding 4: Shader storage buffer for the blas
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			4),
-		// Binding 5: Shader storage buffer for the objects
+		// Binding 5: Shader storage buffer for the shapes
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			5),
-		// Binding 6: Shader storage buffer for the joints
+		// Binding 6: Shader storage buffer for the objects
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			6),
-		// Binding 7: Shader storage buffer for the materials
+		// Binding 7: Shader storage buffer for the joints
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			7),
-		// binding 8: Shader storage buffer for the lights
+		// Binding 8: Shader storage buffer for the materials
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			8),
-		// Binding 9: Shader storage buffer for the guis?
+		// binding 9: Shader storage buffer for the lights
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			9),
-		// bINDING 10: the bvh
+		// Binding 10: Shader storage buffer for the guis?
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			10),
-		// Binding 11: the textures
+		// bINDING 11: the bvh
+		vks::initializers::descriptorSetLayoutBinding(
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			VK_SHADER_STAGE_COMPUTE_BIT,
+			11),
+		// Binding 12: the textures
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_SAMPLER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			11, MAXTEXTURES)
+			12, MAXTEXTURES)
 	};
 
 	VkDescriptorSetLayoutCreateInfo descriptorLayout =
@@ -1503,53 +1325,59 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			3,
 			&compute.storageBuffers.faces.Descriptor()),
-		// Binding 5: for objectss
+		// Binding 4: for blas
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			4,
-			&compute.storageBuffers.shapes.Descriptor()),
-		// Binding 5: for objectss
+			&compute.storageBuffers.blas.Descriptor()),
+		//Binding 5: for shapes
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			5,
-			&compute.storageBuffers.primitives.Descriptor()),
-		// Binding 6: for joints
+			&compute.storageBuffers.shapes.Descriptor()),
+		// Binding 6: for objectss
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			6,
-			&compute.storageBuffers.joints.Descriptor()),
-		//Binding 7 for materials
+			&compute.storageBuffers.primitives.Descriptor()),
+		// Binding 7: for joints
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			7,
-			&compute.storageBuffers.materials.Descriptor()),
-		//Binding 8 for lights
+			&compute.storageBuffers.joints.Descriptor()),
+		//Binding 8 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			8,
-			&compute.storageBuffers.lights.Descriptor()),
-		//Binding 9 for guis
+			&compute.storageBuffers.materials.Descriptor()),
+		//Binding 9 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			9,
-			&compute.storageBuffers.guis.Descriptor()),
-		//Binding 10 for bvhs
+			&compute.storageBuffers.lights.Descriptor()),
+		//Binding 10 for guis
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			10,
+			&compute.storageBuffers.guis.Descriptor()),
+		//Binding 11 for bvhs
+		vks::initializers::writeDescriptorSet(
+			compute.descriptorSet,
+			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+			11,
 			&compute.storageBuffers.bvh.Descriptor()),
-		//bINDING 11 FOR TEXTURES
+		//bINDING 12 FOR TEXTURES
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet, 
 			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-			11, 
+			12, 
 			textureimageinfos, MAXTEXTURES)
 	};
 
@@ -1594,6 +1422,7 @@ void RenderSystem::destroyCompute()
 	compute.uniformBuffer.Destroy(vkDevice);
 	compute.storageBuffers.verts.Destroy(vkDevice);
 	compute.storageBuffers.faces.Destroy(vkDevice);
+	compute.storageBuffers.blas.Destroy(vkDevice);
 	compute.storageBuffers.shapes.Destroy(vkDevice);
 	compute.storageBuffers.primitives.Destroy(vkDevice);
 	compute.storageBuffers.joints.Destroy(vkDevice);

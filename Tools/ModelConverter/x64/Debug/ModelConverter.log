@@ -1,6 +1,48 @@
-﻿main.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@@Z)
-main.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@@Z)
+﻿  main.cpp
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(172): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(208): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(239): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(242): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(247): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(305): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\helper.hpp(199): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(52): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(57): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(66): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(71): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(72): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(73): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(74): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(107): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(110): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(134): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(146): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(159): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(160): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(161): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(174): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(191): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(197): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(158): warning C4101: 'numNodes': unreferenced local variable
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(319): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(342): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(367): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(375): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(391): warning C4267: 'argument': conversion from 'size_t' to 'glm::tvec4<int,0>::length_type', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(423): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(451): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(476): warning C4267: 'argument': conversion from 'size_t' to 'glm::tvec4<int,0>::length_type', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(483): warning C4267: 'argument': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(497): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(503): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(504): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(521): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(524): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(527): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(644): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::Importer(void)" (??0Importer@Assimp@@QEAA@XZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &,bool)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@_N@Z)
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl Assimp::Importer::~Importer(void)" (??1Importer@Assimp@@QEAA@XZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &,bool)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@_N@Z)
 main.obj : error LNK2019: unresolved external symbol "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(char const *,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@PEBDI@Z) referenced in function "public: struct aiScene const * __cdecl Assimp::Importer::ReadFile(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,unsigned int)" (?ReadFile@Importer@Assimp@@QEAAPEBUaiScene@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@I@Z)
-main.obj : error LNK2019: unresolved external symbol "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@@Z)
+main.obj : error LNK2019: unresolved external symbol "public: char const * __cdecl Assimp::Importer::GetErrorString(void)const " (?GetErrorString@Importer@Assimp@@QEBAPEBDXZ) referenced in function "bool __cdecl DoTheImportThing(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,struct PrincipiaModel &,struct PrincipiaSkeleton &,bool)" (?DoTheImportThing@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAUPrincipiaModel@@AEAUPrincipiaSkeleton@@_N@Z)
 ..\..\Lib\Assimp\lib\x64\assimp.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
 C:\Users\Mike\PrincipiaEngine\Tools\ModelConverter\x64\Debug\ModelConverter.exe : fatal error LNK1120: 4 unresolved externals

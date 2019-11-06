@@ -19,6 +19,56 @@
         <Intensity i="1000"/>
         <ID id="0"/>
     </Node>
+  <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
+    <Transform>
+      <Position x="0" y="-13.370005" z="0"/>
+      <Rotation x="0" y="9.9999997e-05" z="0"/>
+      <Scale x="19.07" y="10" z="20"/>
+    </Transform>
+    <Material ID="476364240"/>
+    <Object ID="-2"/>
+    <Rigid Rigid="true"/>
+  </Node>
+  <Node Name="Goal2" hasChildren="false" Flags="368647" Tags="1" Dynamic="false">
+    <Transform>
+      <Position x="-20.39978" y="0" z="0"/>
+      <Rotation x="0" y="9.9999997e-05" z="0"/>
+      <Scale x="10" y="10" z="20"/>
+    </Transform>
+    <Material ID="476364240"/>
+    <Object ID="-2"/>
+    <Rigid Rigid="true"/>
+  </Node>
+  <Node Name="Goal1" hasChildren="false" Flags="368647" Tags="1" Dynamic="false">
+    <Transform>
+      <Position x="21.289978" y="0" z="0"/>
+      <Rotation x="0" y="9.9999997e-05" z="0"/>
+      <Scale x="10" y="10" z="20"/>
+    </Transform>
+    <Material ID="476364240"/>
+    <Object ID="-2"/>
+    <Rigid Rigid="true"/>
+  </Node>
+  <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
+    <Transform>
+      <Position x="0" y="-0.41000366" z="20.249786"/>
+      <Rotation x="0" y="9.9999997e-05" z="0"/>
+      <Scale x="20" y="10" z="10"/>
+    </Transform>
+    <Material ID="476364240"/>
+    <Object ID="-2"/>
+    <Rigid Rigid="true"/>
+  </Node>
+  <Node Name="BottomWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
+    <Transform>
+      <Position x="0" y="0" z="-19.309998"/>
+      <Rotation x="0" y="9.9999997e-05" z="0"/>
+      <Scale x="20" y="10" z="10"/>
+    </Transform>
+    <Material ID="476364240"/>
+    <Object ID="-2"/>
+    <Rigid Rigid="true"/>
+  </Node>
     <Node Name="Player" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
         <Transform>
             <Position x="-3.6499023" y="0.21007538" z="-9.4802094"/>
@@ -36,39 +86,5 @@
         </Transform>
         <Material ID="1318694716"/>
         <Object ID="-1"/>
-    </Node>
-    <Node Name="Ship" hasChildren="true" Flags="1059" Tags="1" Dynamic="false">
-        <Transform>
-            <Position x="-5.6198406" y="7.3901711" z="-1.9400263"/>
-            <Rotation x="166" y="185" z="-67"/>
-            <Scale x="1" y="1" z="1"/>
-        </Transform>
-        <Node Name="UFO_body" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
-            <Transform>
-                <Position x="0.00051824294" y="0.0007923721" z="-0.033870436"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1" y="1" z="0.28882045"/>
-            </Transform>
-            <Material ID="2054138304"/>
-            <Object ID="1358930652"/>
-        </Node>
-        <Node Name="UFO_body" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
-            <Transform>
-                <Position x="0.00051824294" y="0.0007923721" z="0.0074328026"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1" y="1" z="0.025186628"/>
-            </Transform>
-            <Material ID="564706208"/>
-            <Object ID="1358930653"/>
-        </Node>
-        <Node Name="ns_UFO_cockpit" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
-            <Transform>
-                <Position x="0" y="0" z="0.0077664852"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="0.43798211" y="0.43798211" z="0.14632514"/>
-            </Transform>
-            <Material ID="-951317523"/>
-            <Object ID="-1"/>
-        </Node>
     </Node>
 </Root>

@@ -4,6 +4,7 @@ the resource manager
 */
 #pragma once
 #include <array>
+#include "bvhComponent.hpp"
 //#include <glm/glm.hpp>
 //#include "../pch.h"
 
@@ -70,6 +71,7 @@ struct rVertex{
 struct rMesh {
 	std::vector<rVertex> verts;
 	std::vector<glm::ivec4> faces;
+	std::vector<ssBVHNode> bvh;
 	std::vector<rJointData> bones;
 
 	glm::vec3 center;

@@ -1,3 +1,4 @@
+#include "structs.h"
 #include "bvh.hpp"
 #include "helper.hpp"
 #include <queue>
@@ -83,6 +84,7 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 		//Nums
 		binaryio.write(CCAST(&numVerts), sizeof(int));
 		binaryio.write(CCAST(&numTris), sizeof(int));
+		binaryio.write(CCAST(&numNodes), sizeof(int));
 
 		//AABBs
 		binaryio.write(CCAST(&m.meshes[i].center), sizeof(glm::vec3));
