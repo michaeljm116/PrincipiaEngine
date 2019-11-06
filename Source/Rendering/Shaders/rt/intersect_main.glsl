@@ -21,6 +21,50 @@ const uint TYPE_DISK = 0x00000020u;
 const uint TYPE_JOINT = 0x00000040u;
 const int BIT_000_MAX = 268435455;
 
+sectID intersectPrimBVH(inout Ray ray, inout vec3 norm, in Ray tRay, int start, int end) {
+	sectID id = sectID(0, -1, -1);
+	int stack[8];
+	int sp = 0;
+	stack[0] = start;
+	vec3 invDir = 1 / tRay.d;
+	
+	while (sp > -1) {
+		int offset = stack[sp];
+		BVHNode node = blas[offset];
+		sp--;
+
+		//its a leaf
+		if (node.numChildren > 0) {
+			for (int f = node.offset; f < node.offset + node.numChildren; ++f) {
+				vec4 tQuad = quadIntersect(tRay, faces[f]);
+				if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
+					id = sectID(TYPE_MESH, f, -1); //the neg1 will be the index of the prim???
+					ray.t = tQuad.x;
+					norm.x = tQuad.y;
+					norm.y = tQuad.z;
+				}
+			}
+		}
+		//its a node
+		else {
+			offset = offset + 1;
+			if (mbvhIntersect(tRay, invDir, blas[offset])) {
+				sp++;
+				stack[sp] = offset;
+			}
+			if (node.offset < end) {
+				if (mbvhIntersect(tRay, invDir, blas[node.offset])) {
+					sp++;
+					stack[sp] = node.offset;
+				}
+			}
+		}
+
+	}
+
+	return id;
+
+}
 
 sectID intersectBVH(inout Ray ray, inout vec3 norm) {
 	sectID id = sectID(0, -1, -1);
@@ -138,7 +182,7 @@ sectID intersectBVH(inout Ray ray, inout vec3 norm) {
 
 sectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 	sectID id = sectID(0, -1, -1);
-	int stack[16];
+	int stack[32];
 	int sp = 0; //stack pointer
 	stack[0] = 0;	
 	vec3 invDir = 1 / ray.d;
@@ -162,20 +206,10 @@ sectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 					r.o = (invWorld*vec4(ray.o, 1.0)).xyz;// / primitives[i].extents;
 					flool tMesh = boundsIntersect(r);// , vec3(1, 1, 1));// primitives[i].extents);
 					if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
-						//Mesh m = meshes[primitives[i].id];
-						//id.pId = i;
-						//rdd /= primitives[i].extents;
-						//roo /= primitives[i].extents;
-						int startIndex = primitives[i].startIndex;
-						int endIndex = primitives[i].endIndex;
-						for (int f = startIndex; f < endIndex; f++) {
-							vec4 tQuad = quadIntersect(r, faces[f]);
-							if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
-								id = sectID(TYPE_MESH, f, i);
-								ray.t = tQuad.x;
-								norm.x = tQuad.y;
-								norm.y = tQuad.z;
-							}
+						sectID temp = intersectPrimBVH(ray, norm, r, primitives[i].startIndex, primitives[i].endIndex);
+						if (temp.id != -1) {
+							id = temp;
+							id.pId = i;
 						}
 					}
 				}//id > 0

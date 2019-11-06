@@ -1,7 +1,7 @@
-﻿  scene.cpp
+﻿  main.cpp
   Generating code
-  15 of 8475 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    14 functions had inline decision re-evaluated but remain unchanged
+  49 of 8411 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+    3 functions were new in current compilation
+    11 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Release\Principia Engine.exe

@@ -1,4 +1,7 @@
 #pragma once
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
 #include "includes.h"
 
 #define MAX_BONES 64
@@ -256,3 +259,6 @@ struct tempRJoint {
 	std::string name;
 	std::vector<int> verts;
 };
+
+
+#endif // !STRUCTS_H

@@ -370,14 +370,14 @@ void Scene::deleteNode(std::vector<NodeComponent*>& nParents, int nIndex)
 	if (parent->children.size() > 0)
 		deleteAllChildren(parent);
 	//delete stuff 
-	rs->deleteNode(parent);
+	//rs->deleteNode(parent);
 	em->remove(*parent->data);
 	nParents.erase(nParents.begin() + nIndex);	
 	rs->updateObjectMemory();
 }
 void Scene::deleteNode(NodeComponent* parent) {
 	//delete stuff 
-	rs->deleteNode(parent);
+	//rs->deleteNode(parent);
 	em->remove(*parent->data);
 	//nParents.erase(nParents.begin() + nIndex);
 	rs->updateObjectMemory();
@@ -947,7 +947,7 @@ void Scene::deleteAllChildren(NodeComponent* parent)
 			deleteAllChildren(child);
 
 		//remove from rendering
-		rs->deleteNode(child);
+		//rs->deleteNode(child);
 		em->remove(*child->data);
 	}
 	parent->children.clear();

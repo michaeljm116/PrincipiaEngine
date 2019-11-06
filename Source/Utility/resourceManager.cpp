@@ -130,6 +130,7 @@ bool Resources::LoadPModel(std::string fileName)
 		int meshNameLength;
 		int numVerts;
 		int numFaces;
+		int numNodes;
 		int meshID;
 
 		//name
@@ -144,7 +145,8 @@ bool Resources::LoadPModel(std::string fileName)
 		//nums
 		binaryio.read(reinterpret_cast<char*>(&numVerts), sizeof(int));
 		binaryio.read(reinterpret_cast<char*>(&numFaces), sizeof(int));
-
+		binaryio.read(reinterpret_cast<char*>(&numNodes), sizeof(int));
+		
 		//aabbs
 		binaryio.read(reinterpret_cast<char*>(&m.center), sizeof(glm::vec3));
 		binaryio.read(reinterpret_cast<char*>(&m.extents), sizeof(glm::vec3));
@@ -157,13 +159,22 @@ bool Resources::LoadPModel(std::string fileName)
 			//m.verts.push_back(vert);
 			m.verts.emplace_back(vert);
 		}
-		//tris
+		//faces
 		m.faces.reserve(numFaces);
 		for (int t = 0; t < numFaces; ++t) {
 			glm::ivec4 face;
 			binaryio.read(reinterpret_cast<char*>(&face), sizeof(glm::ivec4));
 			m.faces.emplace_back(face);
 		}
+
+		//bvh nodes
+		m.bvh.reserve(numNodes);
+		for (int b = 0; b < numNodes; ++b) {
+			ssBVHNode node;
+			binaryio.read(reinterpret_cast<char*>(&node), sizeof(ssBVHNode));
+			m.bvh.emplace_back(node);
+		}
+
 		m.meshID = meshID;
 		//add the model
 		mod.meshes.push_back(m);

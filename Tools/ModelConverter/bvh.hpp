@@ -1,4 +1,5 @@
 #pragma once
+
 #include "structs.h"
 
 namespace tulip {
@@ -41,7 +42,7 @@ enum class SplitMethod {
 	Middle, SAH, EqualsCounts
 };
 
-#define MAX_BVH_OBJECTS 4
+#define MAX_BVH_OBJECTS 3
 
 struct BVHBounds {
 	glm::vec3 center;
@@ -199,7 +200,7 @@ std::shared_ptr<BVHNode> recursiveBuild(int start, int end, int * totalNodes, st
 			}
 			else {
 				//initialize the buckets
-				constexpr int numBuckets = 12;
+				constexpr int numBuckets = 24;
 				BVHBucket buckets[numBuckets];
 				for (int i = start; i < end; ++i) {
 					Bounds fb = prims[i].getBounds();
