@@ -4,6 +4,7 @@
 #include "../Application/controllerComponent.hpp"
 #include "Components/projectileComponent.h"
 
+using namespace Principia;
 class CharacterController : public artemis::EntityProcessingSystem
 {
 private:

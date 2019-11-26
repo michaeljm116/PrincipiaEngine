@@ -38,8 +38,8 @@ void GameSceneSystem::added(artemis::Entity & e)
 		for (float z = 15.f; z > -10.f; z -= 5.f) {
 			pos = glm::vec3(x, 0.f, z);
 			//artemis::Entity* enemy = SCENE.createGameShape("Enemy", pos, glm::vec3(1.f), 1, -1, true);
-			//enemy->addComponent(new Principia::CollisionComponent(pos, 1));
-			//enemy->addComponent(new Principia::GameObjectTypeComponent(Principia::GameObjectType::GAMEOBJECT_ENEMY));
+			//enemy->addComponent(new CollisionComponent(pos, 1));
+			//enemy->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_ENEMY));
 			//enemy->addComponent(new EnemyComponent());
 			//enemy->refresh();
 			int m = 10 - z / 5.f;
@@ -64,8 +64,8 @@ void GameSceneSystem::processEntity(artemis::Entity & e)
 void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, int matID)
 {
 	artemis::Entity* enemy = createModel("Low_poly_UFO", pos, rot, sca);
-	enemy->addComponent(new Principia::CollisionComponent(pos, sca.x));
-	enemy->addComponent(new Principia::GameObjectTypeComponent(Principia::GameObjectType::GAMEOBJECT_ENEMY));
+	enemy->addComponent(new CollisionComponent(pos, sca.x));
+	enemy->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_ENEMY));
 	enemy->addComponent(new EnemyComponent());
 
 	NodeComponent* enemyNode = (NodeComponent*)enemy->getComponent<NodeComponent>();
@@ -82,8 +82,8 @@ void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, i
 void GameSceneSystem::createPlayer(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
 {
 	artemis::Entity* player = createModel("Low_poly_UFO", pos, rot, sca);
-	player->addComponent(new Principia::CollisionComponent(pos, sca.x));
-	player->addComponent(new Principia::GameObjectTypeComponent(Principia::GameObjectType::GAMEOBJECT_PLAYER));
+	player->addComponent(new CollisionComponent(pos, sca.x));
+	player->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_PLAYER));
 	player->addComponent(new CharacterComponent());
 	//player->addComponent(new ControllerComponent(1));
 	NodeComponent* playerNode = (NodeComponent*)player->getComponent<NodeComponent>();
@@ -164,7 +164,7 @@ artemis::Entity * GameSceneSystem::createModel(std::string, glm::vec3 pos, glm::
 		child->addComponent(childTransform);
 		child->addComponent(new PrimitiveComponent(resource.shapes[i].type));
 		child->addComponent(new MaterialComponent(0));
-		child->addComponent(new AABBComponent()); //will this even be used???
+		//child->addComponent(new AABBComponent()); //will this even be used???
 		child->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 
 		childNode->name = resource.shapes[i].name;

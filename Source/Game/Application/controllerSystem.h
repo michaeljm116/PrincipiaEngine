@@ -6,6 +6,7 @@
 #include "../Gameplay/characterComponent.hpp"
 #include "ControllerComponent.hpp"
 
+using namespace Principia;
 class ApplicationSystem;
 
 class ControllerSystem : public artemis::EntityProcessingSystem {

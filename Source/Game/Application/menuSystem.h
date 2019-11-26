@@ -4,6 +4,7 @@
 #include "../Rendering/Components/renderComponents.hpp"
 #include "controllerComponent.hpp"
 
+using namespace Principia;
 class MenuSystem : public artemis::EntityProcessingSystem {
 private:
 	artemis::ComponentMapper<MenuComponent> menuMapper;

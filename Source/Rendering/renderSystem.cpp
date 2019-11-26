@@ -5,6 +5,7 @@
 #include "../Utility/resourceManager.h"
 #include "../Utility/Input.h"
 //#include "../Utility/octree.hpp"
+namespace Principia {
 
 static int currId = 0;	// Id used to identify objects by the ray tracing shader
 static const int MAXMATERIALS	= 256;
@@ -307,12 +308,13 @@ void RenderSystem::loadResources()
 			//Load up da bottom level acceleration structure
 			blas.reserve(prevBlasSize + rmesh.bvh.size());
 			for (auto itr : rmesh.bvh) {
-				itr.offset += prevBlasSize;
+				itr.numChildren > 0 ? itr.offset += prevIndSize : itr.offset += prevBlasSize;
 				blas.emplace_back(itr);
 			}
 
 			//finish mia
-			meshAssigner[mod.uniqueID + i ] = std::pair<int, int>(prevBlasSize, blas.size());
+			//meshAssigner[mod.uniqueID + i ] = std::pair<int, int>(prevBlasSize, blas.size());
+			meshAssigner[mod.uniqueID + i] = std::pair<int, int>(prevIndSize, faces.size());
 		}
 		
 	}
@@ -359,7 +361,7 @@ void RenderSystem::loadResources()
 	compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
 	compute.storageBuffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
 	compute.storageBuffers.blas.InitStorageBufferWithStaging(vkDevice, blas, blas.size());
-	compute.storageBuffers.shapes.InitStorageBufferWithStaging(vkDevice, shapes, shapes.size());
+ 	compute.storageBuffers.shapes.InitStorageBufferWithStaging(vkDevice, shapes, shapes.size());
 
 	//compute.storageBuffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
@@ -590,8 +592,9 @@ void RenderSystem::updateBuffers()
 
 void RenderSystem::updateCamera(CameraComponent* c) {
 	compute.ubo.lookat = c->lookat;
-	//compute.ubo.fov = c->fov;
+	compute.ubo.fov = c->fov;
 	compute.ubo.pos = c->pos;
+	compute.ubo.rotM = c->rotM;
 	compute.uniformBuffer.ApplyChanges(vkDevice, compute.ubo);
 
 	//updateUniformBuffer();
@@ -668,14 +671,14 @@ int RenderSystem::flattenBVH(std::shared_ptr<BVHNode> node, int * offset, std::v
 void RenderSystem::SetStuffUp()
 {
 	m_Cam.type = Camera::CameraType::lookat;
-	m_Cam.setPerspective(60.0f, 1280.f / 720.f, 0.1f, 1256.0f);
-	m_Cam.setRotation(testScript.vData[6]);// glm::vec3(5.0f, 90.0f, 0.0f));
+	m_Cam.setPerspective(13.0f, 1280.f / 720.f, 0.1f, 1256.0f);
+	m_Cam.setRotation(glm::vec3(35.0f, 90.0f, 45.0f));
 	m_Cam.setTranslation(glm::vec3(0.0f, 0.0f, -4.0f));
 	m_Cam.rotationSpeed = 0.0f;
 	m_Cam.movementSpeed = 7.5f;
 
 	compute.ubo.aspectRatio = m_Cam.aspect;
-	compute.ubo.lookat = glm::vec3(0.f, 90.f, 0.f);// testScript.vData[6];// m_Cam.rotation;
+	compute.ubo.lookat = glm::vec3(1.f, 1.f, 1.f);// testScript.vData[6];// m_Cam.rotation;
 	//compute.ubo.pos = m_Cam.position * -1.0f;
 	compute.ubo.fov = glm::tan(m_Cam.fov * 0.03490658503); //0.03490658503 = pi / 180 / 2
 }
@@ -695,16 +698,15 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::preInit()
 {
-	testScript.loadScript("Game/testscript.xml");
+
+
+	initVulkan();
+	SetStuffUp();
 	std::vector<rMaterial> copy = RESOURCEMANAGER.getMaterials();
 	for (std::vector<rMaterial>::iterator itr = copy.begin(); itr != copy.end(); ++itr) {
 		materials.push_back(ssMaterial(itr->diffuse, itr->reflective, itr->roughness, itr->transparency, itr->refractiveIndex));
 		itr->renderedMat = &materials.back();// materials.end();
 	}
-
-	initVulkan();
-	SetStuffUp();
-
 	loadResources();
 }
 
@@ -720,11 +722,12 @@ void RenderSystem::initialize() {
 	createDescriptorSets();
 	prepareCompute();
 	createCommandBuffers(0.6666666666666f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+	updateDescriptors();
+
 	setupUI();
 	prepared = true;
 	
 	//glfwMaximizeWindow(WINDOW.getWindow());
-	updateDescriptors();
 }
 void RenderSystem::mainLoop() {
 	//Keeps the app running until an error occurs
@@ -1507,22 +1510,19 @@ void RenderSystem::updateMaterial(int id)
 	updateMaterials();
 }
 
-void RenderSystem::togglePlayMode(bool playMode)
+void RenderSystem::showUI()
 {
-	//INPUT.playToggled = !INPUT.playToggled;
-	//playMode = !playMode;
-	if (playMode) {
-		WINDOW.resize();
-		RenderBase::recreateSwapChain();
-		createDescriptorSetLayout();
-		createGraphicsPipeline();
-		createCommandBuffers(1.f, 0, 0);
-		ui->visible = false;
-		//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
-	}
-	else {
-		recreateSwapChain();
-	}
+	ui->visible = true;
+	recreateSwapChain();
 }
-
+void RenderSystem::removeUI()
+{
+	WINDOW.resize();
+	RenderBase::recreateSwapChain();
+	createDescriptorSetLayout();
+	createGraphicsPipeline();
+	createCommandBuffers(1.f, 0, 0);
+	ui->visible = false;
+}
+}
 #pragma endregion

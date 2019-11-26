@@ -11,6 +11,7 @@ probably should be a system instead
 
 //#define UI_ENABLED
 
+namespace Principia {
 #define WINDOW Window::get()
 
 	class Window
@@ -51,5 +52,5 @@ probably should be a system instead
 		const GLFWvidmode* mode;
 	};
 
-
+}
 #endif // !WINDOW_H

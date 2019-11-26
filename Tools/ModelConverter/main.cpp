@@ -362,10 +362,12 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 		//aiMatrix4x4 trans = name_transformMap[paiMesh[i].mName.C_Str()];
 		for (size_t v = 0; v < paiMesh->mNumVertices; ++v) {
 			aiVector3D vert = paiMesh->mVertices[v];
-			aiVector3D norm = paiMesh->mNormals[v];
+			aiVector3D norm = aiVector3D();// paiMesh->mNormals[v];
 			aiVector3D* txtr = nullptr;
 			if (paiMesh->HasTextureCoords(v))
 				txtr = paiMesh->mTextureCoords[v];
+			if (paiMesh->HasNormals())
+				norm = paiMesh->mNormals[v];
 
 			//Transform the verts;
 			//auto node = sceneChildren[subset.name];
@@ -394,7 +396,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			int numIndices = paiMesh->mFaces[f].mNumIndices;
 			if (numIndices == 3) {
 				numtris++;
-				face.v[3] = face.v[2];
+				face.v[3] = face.v[0];
 			}
 			if (numIndices == 4)
 				numquads++;

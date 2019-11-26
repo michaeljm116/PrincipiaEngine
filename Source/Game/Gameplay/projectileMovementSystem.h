@@ -6,7 +6,7 @@
 #include "../Physics/Components/collisionComponent.h"
 #include "../Game/transformComponent.hpp"
 
-//using namespace Principia;
+using namespace Principia;
 //moves the projectiles in a particular direction and yeah thats about it
 class ProjectileMovementSystem : public artemis::EntityProcessingSystem {
 public:
@@ -20,6 +20,6 @@ public:
 private:
 	artemis::ComponentMapper<ProjectileComponent> projMapper;
 	artemis::ComponentMapper<TransformComponent> transMapper;
-	artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
+	artemis::ComponentMapper<CollisionComponent> colMapper;
 };
 

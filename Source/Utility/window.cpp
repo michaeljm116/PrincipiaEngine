@@ -8,6 +8,7 @@ height = 720;
 width = 1280;
 }*/
 
+namespace Principia {
 	Window::~Window()
 	{
 		glfwDestroyWindow(window);
@@ -59,3 +60,4 @@ width = 1280;
 		height = _height;
 
 	}
+}

@@ -5,7 +5,6 @@
 #include "nodeComponent.hpp"
 
 #include "../Game/transformComponent.hpp"
-#include "../Physics/collisionComponents.hpp"
 #include "../Rendering/lightComponent.hpp"
 #include "../Rendering/cameraComponent.hpp"
 #include "../Rendering/materialComponent.hpp"

@@ -202,10 +202,10 @@ void main()
 	if(txt.a > .99f)
 		imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);		
 	else{
-
-		vec2 ps = (-1.0 + 2.0 * uv) * vec2(ubo.aspectRatio, 1.0);
+		vec3 ps = vec3(-1);// * inverse(ubo.rotM);
+		ps.xy = (-1.0 + 2.0 * uv) * vec2(ubo.aspectRatio, 1.0);
 		Ray ray;
-		ray.d = normalize(vec3(ps.x, -1.0, ps.y)); 		
+		ray.d =  normalize(ps.xzy);
 		ray.o = ubo.pos;
 		vec3 normal = vec3(0.f, 0.f, 0.f);
 

@@ -10,6 +10,7 @@ use or not
 #include "../Audio/audioSystem.h"
 #include "../Gameplay/projectileMovementSystem.h"
 
+using namespace Principia;
 class GameSystem : public artemis::EntityProcessingSystem {
 private:
 	artemis::ComponentMapper<GameComponent> gameMapper;

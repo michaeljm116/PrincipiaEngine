@@ -18,6 +18,7 @@ It creates entities of:
  - Enemies
 
 */
+using namespace Principia;
 class GameSceneSystem : public artemis::EntityProcessingSystem {
 
 public:

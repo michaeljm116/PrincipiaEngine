@@ -12,6 +12,8 @@
 #include "../Utility/componentIncludes.h"
 #include "../Game/Application/applicationComponents.h"
 
+using namespace Principia;
+
 struct UIOverlayCreateInfo
 {
 	VulkanDevice *device;

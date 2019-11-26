@@ -2,28 +2,28 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="0" y="20" z="0"/>
+            <Position x="0" y="9" z="0"/>
             <Rotation x="0" y="0" z="0"/>
-            <Scale x="1" y="1" z="3.0699999"/>
+            <Scale x="1" y="1" z="1"/>
         </Transform>
-        <LookAt x="0" y="0.5" z="0"/>
-        <FOV fov="10"/>
+        <LookAt x="4.3977365" y="1.1690426" z="5.5667791"/>
+        <FOV fov="4.9855648e-09"/>
     </Node>
     <Node Name="Light" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="0" y="9.8001328" z="0"/>
+            <Position x="0" y="3.1700001" z="0"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
         <Color r="255" g="255" b="255"/>
-        <Intensity i="1000"/>
+        <Intensity i="61.069"/>
         <ID id="0"/>
     </Node>
     <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="-10" z="0"/>
+            <Position x="0" y="-15" z="0"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
-            <Scale x="40" y="10" z="40"/>
+            <Scale x="11" y="10" z="10"/>
         </Transform>
         <Material ID="476364240"/>
         <Object ID="-2"/>
@@ -31,40 +31,516 @@
     </Node>
     <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="-0.41000366" z="38.899994"/>
+            <Position x="-6" y="-10" z="7"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
-            <Scale x="40" y="10" z="10"/>
+            <Scale x="4" y="10" z="1"/>
         </Transform>
-        <Material ID="150738392"/>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+        <Rigid Rigid="true"/>
+    </Node>
+    <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="6" y="-10" z="7"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="4" y="10" z="1"/>
+        </Transform>
+        <Material ID="588622944"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
     <Node Name="BottomWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="0" z="-40"/>
+            <Position x="0" y="-10" z="-7"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
-            <Scale x="40" y="10" z="10"/>
+            <Scale x="9" y="10" z="1"/>
         </Transform>
-        <Material ID="150738392"/>
+        <Material ID="588622944"/>
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
     <Node Name="leftWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-40" y="7.3900032" z="0"/>
+            <Position x="-9" y="-10" z="0"/>
             <Rotation x="0" y="0" z="9.9999997e-05"/>
-            <Scale x="10" y="10" z="40"/>
+            <Scale x="1" y="10" z="8"/>
         </Transform>
-        <Material ID="150738392"/>
+        <Material ID="588622944"/>
         <Object ID="-2"/>
     </Node>
     <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="40" y="0" z="0"/>
+            <Position x="9" y="-10" z="5"/>
             <Rotation x="0" y="0" z="9.9999997e-05"/>
-            <Scale x="10" y="10" z="40"/>
+            <Scale x="1" y="10" z="3"/>
         </Transform>
-        <Material ID="150738392"/>
+        <Material ID="588622944"/>
         <Object ID="-2"/>
+    </Node>
+    <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="9" y="-10" z="-5"/>
+            <Rotation x="0" y="0" z="9.9999997e-05"/>
+            <Scale x="1" y="10" z="3"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="AwningTop" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="0" y="-1" z="7"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="2" y="1" z="1"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="AwningRight" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="9" y="-1" z="0"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="1" z="2"/>
+        </Transform>
+        <Material ID="588622944"/>
+        <Object ID="-2"/>
+    </Node>
+    <Node Name="froku" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="-0.46936035" y="-4" z="1.0205078"/>
+            <Rotation x="-55" y="9.9999997e-05" z="180"/>
+            <Scale x="1.5" y="1.5" z="1.5"/>
+        </Transform>
+        <Node Name="nb_ShoeRight" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.27981943" y="-0.088618144" z="-0.51360631"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.15018201" y="0.16927229" z="0.035980538"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1216573300"/>
+        </Node>
+        <Node Name="EyebrowRight" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.17300549" y="-0.3776046" z="0.75592679"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.13005248" y="0.049679007" z="0.046615068"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1216573301"/>
+        </Node>
+        <Node Name="Pants" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="-0.03737567" z="-0.36243582"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.22785141" y="0.17910743" z="0.17973661"/>
+            </Transform>
+            <Material ID="563290200"/>
+            <Object ID="1216573302"/>
+        </Node>
+        <Node Name="Shirt" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.00366324" y="0.013188405" z="-0.0088286744"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.15216514" y="0.16500001" z="0.20401029"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1216573303"/>
+        </Node>
+        <Node Name="Beard" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.0023738793" y="-0.37770471" z="0.39414814"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.10303903" y="0.047930125" z="0.083197728"/>
+            </Transform>
+            <Material ID="-573082831"/>
+            <Object ID="1216573304"/>
+        </Node>
+        <Node Name="EyebrowLeft" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.17300549" y="-0.3776046" z="0.75592679"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.13005248" y="0.049679007" z="0.046615068"/>
+            </Transform>
+            <Material ID="-573082831"/>
+            <Object ID="1216573305"/>
+        </Node>
+        <Node Name="Afro" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.0023738323" y="0.070161611" z="0.95853221"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.66012746" y="0.57690746" z="0.49188095"/>
+            </Transform>
+            <Material ID="-573082831"/>
+            <Object ID="1216573306"/>
+        </Node>
+        <Node Name="Head" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="-0.032641925" z="0.65928829"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.3955223" y="0.42816421" z="0.3955223"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216573307"/>
+        </Node>
+        <Node Name="nb_ShoeLeft" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.27981943" y="-0.088618144" z="-0.51360631"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.15018201" y="0.16927229" z="0.035980538"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="1216573308"/>
+        </Node>
+        <Node Name="Body" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.0094382642" y="0.013193019" z="0.015195502"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.33056843" y="0.16431886" z="0.27717209"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216573309"/>
+        </Node>
+        <Node Name="ns_HandRight" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.29300001" y="0.077" z="-0.23999999"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.082450055" y="0.082450002" z="0.08245001"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="-1"/>
+        </Node>
+        <Node Name="ns_EarRight" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.42088184" y="-0.039088871" z="0.63907385"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.076926574" y="0.076926552" z="0.076926574"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="-1"/>
+        </Node>
+        <Node Name="ns_EyeRight" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-0.1698409" y="-0.37162253" z="0.60825294"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.076926574" y="0.076926552" z="0.076926552"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="-1"/>
+        </Node>
+        <Node Name="ns_EarLeft" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.42088184" y="-0.039088871" z="0.63907385"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.076926574" y="0.076926552" z="0.076926574"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="-1"/>
+        </Node>
+        <Node Name="ns_EyeLeft" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.1698409" y="-0.37162253" z="0.60825294"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.076926574" y="0.076926552" z="0.076926552"/>
+            </Transform>
+            <Material ID="564706208"/>
+            <Object ID="-1"/>
+        </Node>
+        <Node Name="ns_HandLeft" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0.303" y="-0.013" z="-0.25999999"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.082450055" y="0.082450002" z="0.08245001"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="-1"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="7" y="-4" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="5" y="-4" z="5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="7" y="-4" z="3"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="7" y="-4" z="-5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="6.999939" y="-4" z="-3"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="5" y="-4" z="-5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="-7" y="-4" z="-5"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="barrel" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="-6.5597534" y="-4" z="4.8898315"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024058761" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.84447956" y="0.60821021" z="0.84447956"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572566"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.025000047" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.79646611" y="1" z="0.79646611"/>
+            </Transform>
+            <Material ID="-289020352"/>
+            <Object ID="1216572567"/>
+        </Node>
+        <Node Name="Mesh" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0.024999637" z="-1.4712264e-06"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="0.49437231" y="0.90044123" z="0.49437231"/>
+            </Transform>
+            <Material ID="2054138304"/>
+            <Object ID="1216572568"/>
+        </Node>
+    </Node>
+    <Node Name="New Model!" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+        <Transform>
+            <Position x="0" y="0" z="0"/>
+            <Rotation x="0" y="0" z="0"/>
+            <Scale x="1" y="1" z="1"/>
+        </Transform>
+        <Node Name="Vert" hasChildren="false" Flags="33863" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="-3" y="-3.9990001" z="-1"/>
+                <Rotation x="-90" y="9.9999997e-05" z="665"/>
+                <Scale x="1.1565616" y="0.53424245" z="1"/>
+            </Transform>
+            <Material ID="150738392"/>
+            <Object ID="1216575066"/>
+        </Node>
     </Node>
 </Root>

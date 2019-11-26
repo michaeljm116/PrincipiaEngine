@@ -100,14 +100,20 @@ void EngineUISystem::processEntity(artemis::Entity & e)
 		if (action == GLFW_PRESS) {
 			if (i == 6) { e.removeComponent<EditorComponent>(); 
 			RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-			rs->togglePlayMode(true);
+			rs->removeUI();
 			ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
 			ac->state = AppState::Play;
 			e.addComponent(new GameComponent());
 			e.refresh();
 			}
 			if (i == 7) WINDOW.toggleMaximized();
-			if (i == 8) glfwSetWindowShouldClose(WINDOW.getWindow(), 1);
+			if (i == 8) {
+				RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+				visible ? rs->removeUI() : rs->showUI();
+			}
+				
+			if (i == 9) 
+				glfwSetWindowShouldClose(WINDOW.getWindow(), 1);
 		}
 		if (action >= GLFW_PRESS) {
 			gc->buttons[i].time += INPUT.deltaTime;
@@ -121,11 +127,12 @@ void EngineUISystem::processEntity(artemis::Entity & e)
 		}
 	}
 	gc->axis = tempAxis;
+	updateInput();
 }
 void EngineUISystem::added(artemis::Entity & e)
 {
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	rs->togglePlayMode(false);
+	rs->showUI();
 	ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
 	ac->state = AppState::Editor;
 }
@@ -133,7 +140,7 @@ void EngineUISystem::removed(artemis::Entity & e)
 {
 	if (!world->getShutdown()) {
 		RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-		rs->togglePlayMode(true);
+		rs->removeUI();
 		ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
 		ac->state = AppState::Play;
 		ac->transition = true;
@@ -930,7 +937,7 @@ void EngineUISystem::updateOverlay()
 	io.MouseDown[0] = INPUT.mouse.buttons[0] & (GLFW_REPEAT | GLFW_PRESS);
 	io.MouseDown[1] = INPUT.mouse.buttons[1] & (GLFW_REPEAT | GLFW_PRESS);
 	
-	updateInput();
+	//updateInput();
 
 	ImGui::NewFrame();
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0);
@@ -995,6 +1002,20 @@ void EngineUISystem::updateInput()
 		//activeTransform->global.rotation = glm::toQuat(rotationM);
 		//SCENE.ts->SQTTransform(activeNode, activeTransform->global);
 		SCENE.ts->recursiveTransform(activeNode);// activeNode, activeTransform, glm::mat4(1.f), glm::mat4(1.f), glm::mat4(1.f),true); //SCENE.ts->updateTransform(activeNode);
+	}
+	if (INPUT.pressed && controller->buttons[7].action == 1) {
+		visible = !visible;
+	}
+	if (INPUT.pressed && activeNode->flags & COMPONENT_CAMERA) {
+		CameraComponent* cc = (CameraComponent*)activeNode->data->getComponent<CameraComponent>();
+		float x = (INPUT.mouse.x - INPUT.mouse.prevX);// / WINDOW.getWidth();
+		float y = (INPUT.mouse.y - INPUT.mouse.prevY);// / WINDOW.getHeight();
+
+		glm::vec3 nla = cc->lookat;
+		nla.x += x * INPUT.deltaTime;
+		nla.y += y * INPUT.deltaTime;
+		nla.z = nla.x + nla.y;
+		cc->lookat = nla;
 	}
 }
 
@@ -1489,7 +1510,7 @@ void EngineUISystem::animationSelect()
 
 void EngineUISystem::findActiveCamera()
 {
-	for each (NodeComponent* node in SCENE.parents)
+	for(auto* node : SCENE.parents)
 	{
 		CameraComponent* cam = (CameraComponent*)node->data->getComponent<CameraComponent>();
 		if (cam != nullptr) {

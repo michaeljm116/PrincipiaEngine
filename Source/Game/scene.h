@@ -16,6 +16,8 @@ loading/saving scene, creating/copying/deleting objects
 #include "../Utility/bvhSystem.h"
 #include "../Physics/collisionSystem.h"
 
+using namespace Principia;
+
 #define SCENE Scene::get()
 
 

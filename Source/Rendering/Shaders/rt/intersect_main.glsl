@@ -23,7 +23,7 @@ const int BIT_000_MAX = 268435455;
 
 sectID intersectPrimBVH(inout Ray ray, inout vec3 norm, in Ray tRay, int start, int end) {
 	sectID id = sectID(0, -1, -1);
-	int stack[8];
+	int stack[16];
 	int sp = 0;
 	stack[0] = start;
 	vec3 invDir = 1 / tRay.d;
@@ -52,7 +52,7 @@ sectID intersectPrimBVH(inout Ray ray, inout vec3 norm, in Ray tRay, int start, 
 				sp++;
 				stack[sp] = offset;
 			}
-			if (node.offset < end) {
+			if (node.offset <= end) {
 				if (mbvhIntersect(tRay, invDir, blas[node.offset])) {
 					sp++;
 					stack[sp] = node.offset;
@@ -182,12 +182,10 @@ sectID intersectBVH(inout Ray ray, inout vec3 norm) {
 
 sectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 	sectID id = sectID(0, -1, -1);
-	int stack[32];
+	int stack[16];
 	int sp = 0; //stack pointer
 	stack[0] = 0;	
 	vec3 invDir = 1 / ray.d;
-
-
 
 	while (sp > -1) {
 		int offset = stack[sp];
@@ -206,11 +204,22 @@ sectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 					r.o = (invWorld*vec4(ray.o, 1.0)).xyz;// / primitives[i].extents;
 					flool tMesh = boundsIntersect(r);// , vec3(1, 1, 1));// primitives[i].extents);
 					if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
-						sectID temp = intersectPrimBVH(ray, norm, r, primitives[i].startIndex, primitives[i].endIndex);
-						if (temp.id != -1) {
-							id = temp;
-							id.pId = i;
+						int startIndex = primitives[i].startIndex;
+						int endIndex = primitives[i].endIndex;
+						for (int f = startIndex; f < endIndex; f++) {
+							vec4 tQuad = quadIntersect(r, faces[f]);
+							if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
+								id = sectID(TYPE_MESH, f, i);
+								ray.t = tQuad.x;
+								norm.x = tQuad.y;
+								norm.y = tQuad.z;
+							}
 						}
+						//sectID temp = intersectPrimBVH(ray, norm, r, primitives[i].startIndex, primitives[i].endIndex);
+						//if (temp.id != -1) {
+						//	id = temp;
+						//	id.pId = i;
+						//}
 					}
 				}//id > 0
 
@@ -281,7 +290,7 @@ sectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 sectID intersect(inout Ray ray, inout vec3 norm)
 {
 	for (int i = 0; i < bvhNodes.length(); ++i) {
-		bvhNodes[i].numChildren = bvhNodes[i].numChildren  & BIT_000_MAX;
+		bvhNodes[i].numChildren = bvhNodes[i].numChildren & BIT_000_MAX;
 		//bvhNodes[i].numChildren = bvhNodes[i].numChildren >> 29;
 
 	}
