@@ -109,7 +109,7 @@ void ApplicationSystem::instantGameStart()
 	//WINDOW.toggleMaximized();
 	WINDOW.toggleMaximized();
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	rs->togglePlayMode(true);
+	rs->removeUI();
 	game->findGoals();
 	AppState& as = appMapper.get(*world->getSingleton())->state;// = AppState::Editor;
 	as = AppState::Editor;

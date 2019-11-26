@@ -11,6 +11,7 @@
 
 //class ControllerSystem;
 
+using namespace Principia;
 class ApplicationSystem : public artemis::EntityProcessingSystem {
 private:
 	artemis::ComponentMapper<ApplicationComponent> appMapper;

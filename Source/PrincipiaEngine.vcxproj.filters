@@ -333,9 +333,6 @@
     <ClInclude Include="Rendering\rendermanagers.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\model.h">
-      <Filter>Source Files\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Rendering\VulkanInitializers.hpp">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
@@ -344,12 +341,6 @@
     </ClInclude>
     <ClInclude Include="..\Lib\tinyxml2\tinyxml2.h">
       <Filter>Source Files\tinyxml2</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility\octree.hpp">
-      <Filter>Source Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility\quadtree.hpp">
-      <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Utility\resourceManager.h">
       <Filter>Source Files\Utility</Filter>
@@ -360,14 +351,8 @@
     <ClInclude Include="Utility\nodeComponent.hpp">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\collisionComponents.hpp">
-      <Filter>Source Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\componentIncludes.h">
       <Filter>Source Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Rendering\light.hpp">
-      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="Rendering\constantbuffer.hpp">
       <Filter>Source Files\Rendering</Filter>
@@ -434,12 +419,6 @@
     </ClInclude>
     <ClInclude Include="Utility\window.h">
       <Filter>Source Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\camera.hpp">
-      <Filter>Source Files\Game\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\primitive.hpp">
-      <Filter>Source Files\Game\Other</Filter>
     </ClInclude>
     <ClInclude Include="Game\scene.h">
       <Filter>Source Files\Game\Other</Filter>
@@ -510,9 +489,6 @@
     <ClInclude Include="Game\Gameplay\gameSceneSystem.h">
       <Filter>Source Files\Game\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\renderComponents.hpp">
-      <Filter>Source Files\Rendering\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Gameplay\Components\projectileComponent.h">
       <Filter>Source Files\Game\Gameplay\Components</Filter>
     </ClInclude>
@@ -524,6 +500,9 @@
     </ClInclude>
     <ClInclude Include="Game\Gameplay\enemyController.h">
       <Filter>Source Files\Game\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\Components\renderComponents.hpp">
+      <Filter>Source Files\Rendering\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

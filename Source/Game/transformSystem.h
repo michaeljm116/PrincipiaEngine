@@ -9,33 +9,37 @@ a movement system.
 #include "../Rendering/renderSystem.h"
 #include "../Physics/Components/collisionComponent.h"
 
-class TransformSystem : public artemis::EntityProcessingSystem
-{
-private:
-	//glm::mat4 world;
+namespace Principia {
 
-	artemis::ComponentMapper<TransformComponent> transformMapper;
-	artemis::ComponentMapper<NodeComponent> nodeMapper;
-	//artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
+	class TransformSystem : public artemis::EntityProcessingSystem
+	{
+	private:
+		//glm::mat4 world;
 
-	artemis::EntityManager* em;
-	artemis::SystemManager* sm;
-	RenderSystem* rs;
-	
+		artemis::ComponentMapper<TransformComponent> transformMapper;
+		artemis::ComponentMapper<NodeComponent> nodeMapper;
+		//artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
 
-public:
-	TransformSystem();
-	~TransformSystem();
-	void initialize();
-	void added(artemis::Entity &e) override;
+		artemis::EntityManager* em;
+		artemis::SystemManager* sm;
+		RenderSystem* rs;
 
-	//void Scale(NodeComponent* nc);
-	//void Translate(NodeComponent* nc, glm::mat4 pt);
 
-	void processEntity(artemis::Entity &e);
-	void SQTTransform(NodeComponent* nc, sqt parent);// glm::vec3 sca, glm::quat rot, glm::vec3 pos);
-	void regularTransform(NodeComponent* nc, TransformComponent* parent);
-	void recursiveTransform(NodeComponent* nc);// , TransformComponent global = TransformComponent());
-	glm::vec3 rotateAABB(const glm::quat& m, const glm::vec3& extents);
-	void geometryTransformConverter(NodeComponent* nc);
-};
+	public:
+		TransformSystem();
+		~TransformSystem();
+		void initialize();
+		void added(artemis::Entity &e) override;
+
+		//void Scale(NodeComponent* nc);
+		//void Translate(NodeComponent* nc, glm::mat4 pt);
+
+		void processEntity(artemis::Entity &e);
+		void SQTTransform(NodeComponent* nc, sqt parent);// glm::vec3 sca, glm::quat rot, glm::vec3 pos);
+		void regularTransform(NodeComponent* nc, TransformComponent* parent);
+		void recursiveTransform(NodeComponent* nc);// , TransformComponent global = TransformComponent());
+		glm::vec3 rotateAABB(const glm::quat& m, const glm::vec3& extents);
+		void geometryTransformConverter(NodeComponent* nc);
+	};
+
+}

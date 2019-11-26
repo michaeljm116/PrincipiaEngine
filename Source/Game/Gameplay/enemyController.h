@@ -10,6 +10,7 @@
 #include "../Physics/Components/collisionComponent.h"
 
 #include <unordered_map>
+using namespace Principia;
 class EnemyController : public artemis::EntityProcessingSystem {
 public:
 

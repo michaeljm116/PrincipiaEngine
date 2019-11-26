@@ -14,7 +14,7 @@ flool boundsIntersect(in Ray ray) {
 
 	vec3 t1 = -invRay - k;
 	vec3 t2 = -invRay + k;
-
+	
 	for (int i = 0; i < 3; ++i) {
 		tMin = max(tMin, min(t1[i], t2[i]));
 		tMax = min(tMax, max(t1[i], t2[i]));

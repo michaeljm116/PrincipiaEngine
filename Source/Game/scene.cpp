@@ -133,7 +133,7 @@ void Scene::createModel(rModel resource, std::string name, glm::vec3 pos, glm::v
 		child->addComponent(new PrimitiveComponent(resource.shapes[i].type));
 		child->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 		child->addComponent(new MaterialComponent(0));
-		child->addComponent(new AABBComponent()); //will this even be used???
+		//child->addComponent(new AABBComponent()); //will this even be used???
 
 		childNode->name = resource.shapes[i].name;
 		childNode->flags |= COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE;
@@ -425,7 +425,7 @@ void Scene::copyNode(NodeComponent * node, NodeComponent* parent, std::vector<No
 		e->addComponent(new PrimitiveComponent(*(PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>()));
 	}
 	if (node->flags & COMPONENT_AABB) {
-		e->addComponent(new AABBComponent(*(AABBComponent*)node->data->getComponent<AABBComponent>()));
+		//e->addComponent(new AABBComponent(*(AABBComponent*)node->data->getComponent<AABBComponent>()));
 	}
 	if (node->flags & COMPONENT_RIGIDBODY) {
 		insertRigidBody(copy);
@@ -883,7 +883,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			e->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
 		}
 		if (flags & COMPONENT_AABB) {
-			e->addComponent(new AABBComponent());
+			//e->addComponent(new AABBComponent());
 		}
 		if (flags & COMPONENT_RIGIDBODY) {
 			//insertRigidBody(n);

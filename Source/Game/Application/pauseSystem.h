@@ -4,6 +4,8 @@
 #include "../Rendering/Components/renderComponents.hpp"
 #include "controllerComponent.hpp"
 
+using namespace Principia;
+
 class PauseSystem : public artemis::EntityProcessingSystem {
 private:
 	artemis::ComponentMapper<PauseComponent> pauseMapper;

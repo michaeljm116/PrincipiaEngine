@@ -4,6 +4,8 @@
 #include "../Rendering/Components/renderComponents.hpp"
 #include "controllerComponent.hpp"
 
+using namespace Principia;
+
 class TitleSystem : public artemis::EntityProcessingSystem {
 private:
 	artemis::ComponentMapper<TitleComponent> titleMapper;

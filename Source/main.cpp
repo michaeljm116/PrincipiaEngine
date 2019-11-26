@@ -42,7 +42,7 @@ int main() {
 	singletonEntity->addComponent(new ApplicationComponent());
 	singletonEntity->addComponent(new GUIComponent(glm::vec2(0.0f, 0.f), glm::vec2(1.f, 1.f), glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f), 0, 1, false));
 	singletonEntity->addComponent(new EditorComponent);
-	singletonEntity->addComponent(new GameSceneComponent(0));
+	//singletonEntity->addComponent(new GameSceneComponent(0));
 	//singletonEntity->addComponent(new TitleComponent());
 	GlobalController* controller = new GlobalController();
 	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i)
@@ -70,13 +70,16 @@ int main() {
 		transformSys->initialize();
 		//physicsSys->addGroundForNow();
 		renderSys->preInit();
+		renderSys->initialize();
+
+
 		Scene::get().init(world);
+		engineUISys->findActiveCamera();
 		//world.loopStart();
 		//Scene::get().doStuff();
-		renderSys->initialize();
 		animSys->initialize();
 		appSys->initialize();
-		appSys->instantGameStart();
+		//appSys->instantGameStart();
 		world.loopStart();
 		Scene::get().doStuff();
 		//world.loopStart();
@@ -104,7 +107,7 @@ int main() {
 
 			end = std::chrono::high_resolution_clock::now();
 		}
-
+		world.setShutdown();
 		vkDeviceWaitIdle(renderSys->vkDevice.logicalDevice); //so it can destroy properly
 	//	world.~World();
 		renderSys->cleanup();

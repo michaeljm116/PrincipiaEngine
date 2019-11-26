@@ -3,29 +3,29 @@
 #define MATERIALCOMPONENT_HPP
 
 
+namespace Principia {
+	struct MaterialComponent : public artemis::Component {
+		//glm::vec3*  diffuse; 
+		//float*		roughness;
+		//float*		metallic;
 
-struct MaterialComponent : public artemis::Component{
-	//glm::vec3*  diffuse; 
-	//float*		roughness;
-	//float*		metallic;
+		/*
+		glm::vec3	diffuse;
+		float		reflective;
+		float		roughness;
+		float		transparency;
+		float		refractiveIndex;*/
 
-	/*
-	glm::vec3	diffuse;
-	float		reflective;
-	float		roughness;
-	float		transparency;
-	float		refractiveIndex;*/
+		int			matID;
+		int			matUnqiueID;
 
-	int			matID;
-	int			matUnqiueID;
+		MaterialComponent() {};
+		MaterialComponent(int i) { matID = i; };
+		MaterialComponent(int i, int ui) { matID = i; matUnqiueID = ui; };
+		//MaterialComponent(glm::vec3 diff, float ref, float rough, float trans, float ri, int i, int ui) :
+		//	diffuse(diff), reflective(ref), roughness(rough), transparency(trans), refractiveIndex(ri), matID(i), matUnqiueID(ui) {};
+		//MaterialComponent(glm::vec3* d, float* r, float* m) : diffuse(d) { roughness = r; metallic = m; };
 
-	MaterialComponent() {};
-	MaterialComponent(int i) { matID = i; };
-	MaterialComponent(int i, int ui) { matID = i; matUnqiueID = ui; };
-	//MaterialComponent(glm::vec3 diff, float ref, float rough, float trans, float ri, int i, int ui) :
-	//	diffuse(diff), reflective(ref), roughness(rough), transparency(trans), refractiveIndex(ri), matID(i), matUnqiueID(ui) {};
-	//MaterialComponent(glm::vec3* d, float* r, float* m) : diffuse(d) { roughness = r; metallic = m; };
-
-};
-
+	};
+}
 #endif // !MATERIALCOMPONENT_HPP

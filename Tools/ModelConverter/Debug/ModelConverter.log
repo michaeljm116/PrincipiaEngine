@@ -1,9 +1,9 @@
 ﻿  main.cpp
-c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(208): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(239): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(242): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(213): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(254): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 c:\users\mike\principiaengine\tools\modelconverter\main.cpp(158): warning C4101: 'numNodes': unreferenced local variable
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(503): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(504): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(521): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(505): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(506): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\principiaengine\tools\modelconverter\main.cpp(523): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   ModelConverter.vcxproj -> C:\Users\Mike\PrincipiaEngine\Tools\ModelConverter\Debug\ModelConverter.exe

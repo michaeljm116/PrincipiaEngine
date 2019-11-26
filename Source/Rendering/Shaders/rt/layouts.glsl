@@ -7,6 +7,8 @@ layout(binding = 1) uniform UBO
 	float aspectRatio;
 	vec3 lookat;
 	float fov;
+	mat3 rotM;
+	vec3 pad;
 } ubo;
 
 

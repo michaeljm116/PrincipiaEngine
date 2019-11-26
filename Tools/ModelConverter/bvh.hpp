@@ -42,7 +42,7 @@ enum class SplitMethod {
 	Middle, SAH, EqualsCounts
 };
 
-#define MAX_BVH_OBJECTS 3
+#define MAX_BVH_OBJECTS 13
 
 struct BVHBounds {
 	glm::vec3 center;
@@ -180,7 +180,6 @@ std::shared_ptr<BVHNode> recursiveBuild(int start, int end, int * totalNodes, st
 		BVHBounds centroid = computeCentroidBounds(start, end, prims);
 		int axis = chooseAxis(centroid.center);
 		int mid = (start + end) >> 1;
-
 		//edgecase
 		if (centroid.max()[axis] == centroid.min()[axis]) {
 			for (int i = start; i < end; ++i)
@@ -199,49 +198,62 @@ std::shared_ptr<BVHNode> recursiveBuild(int start, int end, int * totalNodes, st
 				});
 			}
 			else {
-				//initialize the buckets
-				constexpr int numBuckets = 24;
-				BVHBucket buckets[numBuckets];
-				for (int i = start; i < end; ++i) {
-					Bounds fb = prims[i].getBounds();
-					BVHBounds tempBounds = BVHBounds(fb.center, fb.extents);
-					int b = numBuckets * centroid.Offset(fb.center, axis);
-					if (b == numBuckets) b--;
-					buckets[b].count++;
-					buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
+				int bestAxis = 0;
+				int bestMinCost = numPrims;
+				int bestMinCostSplitBucket = INT_MAX;
+				constexpr int numBuckets = 16;
+
+				for (int ba = 0; ba < 3; ++ba) {
+
+					//initialize the buckets
+					BVHBucket buckets[numBuckets];
+					for (int i = start; i < end; ++i) {
+						Bounds fb = prims[i].getBounds();
+						BVHBounds tempBounds = BVHBounds(fb.center, fb.extents);
+						int b = numBuckets * centroid.Offset(fb.center, ba);
+						if (b == numBuckets) b--;
+						buckets[b].count++;
+						buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
+					}
+
+					constexpr int nb = numBuckets - 1;
+					float cost[nb];
+					for (int i = 0; i < nb; ++i) {
+						BVHBounds b0, b1;
+						int c0 = 0, c1 = 0;
+
+						for (int j = 0; j <= i; ++j) {
+							b0 = b0.combine(buckets[j].bounds);
+							c0 += buckets[j].count;
+						}
+						for (int j = i + 1; j < numBuckets; ++j) {
+							b1 = b1.combine(buckets[j].bounds);
+							c1 += buckets[j].count;
+						}
+						cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
+					}
+
+					float minCost = cost[0];
+					int minCostSplitBucket = 0;
+					for (int i = 0; i < nb; ++i) {
+						if (cost[i] < minCost) {
+							minCost = cost[i];
+							minCostSplitBucket = i;
+						}
+					}
+					if (minCost < bestMinCost) {
+						bestMinCost = minCost;
+						bestMinCostSplitBucket = minCostSplitBucket;
+						bestAxis = ba;
+					}
+					axis = bestAxis;
 				}
 
-				constexpr int nb = numBuckets - 1;
-				float cost[nb];
-				for (int i = 0; i < nb; ++i) {
-					BVHBounds b0, b1;
-					int c0 = 0, c1 = 0;
-
-					for (int j = 0; j <= i; ++j) {
-						b0 = b0.combine(buckets[j].bounds);
-						c0 += buckets[j].count;
-					}
-					for (int j = i + 1; j < numBuckets; ++j) {
-						b1 = b1.combine(buckets[j].bounds);
-						c1 += buckets[j].count;
-					}
-					cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
-				}
-
-				float minCost = cost[0];
-				int minCostSplitBucket = 0;
-				for (int i = 0; i < nb; ++i) {
-					if (cost[i] < minCost) {
-						minCost = cost[i];
-						minCostSplitBucket = i;
-					}
-				}
-				float leafCost = numPrims;
-				if (numPrims > MAX_BVH_OBJECTS || minCost < leafCost) {
-					Face* midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [axis, centroid,  minCostSplitBucket, numBuckets](Face& a) {
-						int b = (numBuckets)* centroid.Offset(a.getBounds().center, axis);
+				if (numPrims > MAX_BVH_OBJECTS || bestMinCost < numPrims) {
+					Face* midPtr = std::partition(&prims[start], &prims[end - 1] + 1, [bestAxis, centroid,  bestMinCostSplitBucket, numBuckets](Face& a) {
+						int b = (numBuckets)* centroid.Offset(a.getBounds().center, bestAxis);
 						if (b == numBuckets) b = numBuckets - 1;
-						return b <= minCostSplitBucket;
+						return b <= bestMinCostSplitBucket;
 
 					});
 					mid = midPtr - &prims[0];
@@ -264,6 +276,8 @@ std::shared_ptr<BVHNode> recursiveBuild(int start, int end, int * totalNodes, st
 			} 
 			node->initInterior(axis, recursiveBuild(start, mid, totalNodes, orderedPrims, prims), recursiveBuild(mid, end, totalNodes, orderedPrims, prims));
 		}
+
+
 	}
 	return node;
 	//return std::unique_ptr<BVHNode>();
