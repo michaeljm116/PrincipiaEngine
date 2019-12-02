@@ -7,6 +7,7 @@ CharacterController::CharacterController()
 {
 	addComponentType<ControllerComponent>();
 	addComponentType<CharacterComponent>();
+	addComponentType<CharacterRotationComponent>();
 }
 
 
@@ -22,6 +23,7 @@ void CharacterController::initialize()
 
 	inputMapper.init(*world);
 	characterMapper.init(*world);
+	rotMapper.init(*world);
 }
 
 void CharacterController::processEntity(artemis::Entity & e)
@@ -38,10 +40,11 @@ void CharacterController::processEntity(artemis::Entity & e)
 	TransformComponent* tc = (TransformComponent*)e.getComponent<TransformComponent>();
 	//tc->world[3].x += ic->axis.x;
 	//tc->world[3].z += ic->axis.y;
+
 	glm::vec3 movement = glm::vec3(ic->axis.x, 0, ic->axis.y);
-	movement *= pc->speed * 2.0f;
+	movement *= pc->speed * 0.25f;
 	//tc->global.position += movement;
-	tc->local.position += movement * world->getDelta();
+	tc->local.position += movement * world->getDelta() * rotMapper.get(e)->movementMul;
 
 	if (ic->buttons[4].action > 0) {
 		//if (ic->buttons[4].time > 0.2f) {

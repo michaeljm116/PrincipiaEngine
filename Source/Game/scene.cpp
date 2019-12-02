@@ -347,7 +347,7 @@ artemis::Entity* Scene::createLight() {//glm::vec3 pos, glm::vec3 color, float i
 artemis::Entity* Scene::createCamera() {// glm::vec3 pos) {
 	artemis::Entity* e = &em->create();
 
-	e->addComponent(new CameraComponent(glm::vec3(0.f), glm::vec3(0.f, 0.5f, 0.0f), 10.f));
+	e->addComponent(new CameraComponent(1.6f, 60.f));
 	e->addComponent(new TransformComponent(glm::vec3(0), glm::vec3(0.f), glm::vec3(0.f)));
 	e->addComponent(new NodeComponent(e));
 	//ui->addParentEntity(e, "Camera");
@@ -674,10 +674,8 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 	{
 		CameraComponent* c = (CameraComponent*)parent->data->getComponent<CameraComponent>();
 
-		XMLElement* pLookAt = doc->NewElement("LookAt");
-		pLookAt->SetAttribute("x", c->lookat.x);
-		pLookAt->SetAttribute("y", c->lookat.y);
-		pLookAt->SetAttribute("z", c->lookat.z);
+		XMLElement* pLookAt = doc->NewElement("AspectRatio");
+		pLookAt->SetAttribute("ratio", c->aspectRatio);
 
 		XMLElement* pFOV = doc->NewElement("FOV");
 		pFOV->SetAttribute("fov", c->fov);
@@ -841,18 +839,16 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			nc->isParent = true;
 		}
 		if (flags & COMPONENT_CAMERA) {
-			XMLElement* lookat = start->FirstChildElement("LookAt");
+			XMLElement* ratio = start->FirstChildElement("AspectRatio");
 			XMLElement* fov = start->FirstChildElement("FOV");
 
-			glm::vec3 l;
+			float r;
 			float f;
 
-			lookat->QueryFloatAttribute("x", &l.x);
-			lookat->QueryFloatAttribute("y", &l.y);
-			lookat->QueryFloatAttribute("z", &l.z);
+			ratio->QueryFloatAttribute("ratio", &r);
 			fov->QueryFloatAttribute("fov", &f);
 
-			e->addComponent(new CameraComponent(l,f));
+			e->addComponent(new CameraComponent(r,f));
 			e->addComponent(new RenderComponent(RenderType::RENDER_CAMERA)); 
 			NodeComponent* nc = (NodeComponent*)e->getComponent<NodeComponent>();
 			nc->isParent = true;

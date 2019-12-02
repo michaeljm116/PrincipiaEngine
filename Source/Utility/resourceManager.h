@@ -130,8 +130,8 @@ namespace Principia {
 			return 0;
 		}
 		inline std::vector<rMaterial> getMaterials() { return materials; };
-		inline void addMaterial(std::string s, glm::vec3 diff, float r, float rg, float tr, float ri) {
-			rMaterial mat = rMaterial(s, diff, r, rg, tr, ri);
+		inline void addMaterial(std::string s, glm::vec3 diff, float r, float rg, float tr, float ri, int ti) {
+			rMaterial mat = rMaterial(s, diff, r, rg, tr, ri, ti);
 			materials.push_back(mat);
 		}
 #pragma endregion 

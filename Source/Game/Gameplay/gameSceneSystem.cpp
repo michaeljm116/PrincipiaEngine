@@ -5,6 +5,8 @@
 #include "../Gameplay/Components/gameObjectTypeComponent.h"
 #include "characterComponent.hpp"
 #include "Components/enemyComponent.h"
+#include "Components/chracterRotationComponent.h"
+#include <unordered_set>
 
 GameSceneSystem::GameSceneSystem()
 {
@@ -32,25 +34,9 @@ void GameSceneSystem::added(artemis::Entity & e)
 {
 	int lvl = gscMapper.get(e)->levelIndex;
 	e.removeComponent<GameSceneComponent>();
-	//load scene
-	glm::vec3 pos = glm::vec3(0.f, 1.f, 2.f);
-	for (float x = -35.f; x < 36.f; x += 9.f) {
-		for (float z = 15.f; z > -10.f; z -= 5.f) {
-			pos = glm::vec3(x, 0.f, z);
-			//artemis::Entity* enemy = SCENE.createGameShape("Enemy", pos, glm::vec3(1.f), 1, -1, true);
-			//enemy->addComponent(new CollisionComponent(pos, 1));
-			//enemy->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_ENEMY));
-			//enemy->addComponent(new EnemyComponent());
-			//enemy->refresh();
-			int m = 10 - z / 5.f;
-			if (m > 12) m = 12;
-			createEnemy(pos, glm::vec3(1.f), glm::vec3(2.f), m );
-		}
-	}
-	
+	//find player
+	assignPlayer();
 
-	pos = glm::vec3(0.f, 0.f, -15.f);
-	createPlayer(pos, glm::vec3(1.f), glm::vec3(2.f));
 }
 
 void GameSceneSystem::removed(artemis::Entity & e)
@@ -59,6 +45,31 @@ void GameSceneSystem::removed(artemis::Entity & e)
 
 void GameSceneSystem::processEntity(artemis::Entity & e)
 {
+}
+
+void GameSceneSystem::assignPlayer()
+{
+	NodeComponent* player = nullptr;
+	std::unordered_set<std::string> us;
+	us.insert("froku");
+	for (auto& p : SCENE.parents) {
+		if (us.find(p->name) != us.end()) {
+			player = p;
+			break;
+		}
+	}
+	if (player == nullptr)
+		return;
+	artemis::Entity* pe = player->data;
+
+	TransformComponent* t = (TransformComponent*)pe->getComponent<TransformComponent>();
+	pe->addComponent(new CollisionComponent(glm::vec3(t->world[3]), 1));
+	pe->addComponent(new CharacterComponent());
+	pe->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_PLAYER));
+	pe->addComponent(new CharacterComponent());
+	pe->addComponent(new CharacterRotationComponent(RotationDir::down));
+
+	SCENE.insertController(player);
 }
 
 void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, int matID)

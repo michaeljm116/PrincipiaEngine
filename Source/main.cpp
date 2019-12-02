@@ -80,8 +80,8 @@ int main() {
 		animSys->initialize();
 		appSys->initialize();
 		//appSys->instantGameStart();
-		world.loopStart();
 		Scene::get().doStuff();
+		world.loopStart();
 		//world.loopStart();
 		//Scene::get().buildBVH();
 

@@ -4,14 +4,12 @@
 
 namespace Principia {
 	struct CameraComponent : public artemis::Component {
-		glm::vec3 lookat;
-		glm::vec3 pos;
+		float aspectRatio;
 		float fov;
-		glm::mat3 rotM;
+		glm::mat4 rotM;
 
 		CameraComponent() {};
-		CameraComponent(glm::vec3 l, float f) :lookat(l), fov(glm::tan(f * 0.03490658503)) {};
-		CameraComponent(glm::vec3 l, glm::vec3 p, float f) : lookat(l), pos(p), fov(f) {};
+		CameraComponent(float ar, float f) :aspectRatio(ar), fov(f) {};
 	};
 
 	class Camera

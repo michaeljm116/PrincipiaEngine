@@ -35,6 +35,7 @@ public:
 
 private:
 	artemis::ComponentMapper<GameSceneComponent> gscMapper;
+	void assignPlayer();
 	void createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, int matID);
 	void createPlayer(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);
 	artemis::Entity* createModel(std::string, glm::vec3 pos, glm::vec3 rot, glm::vec3 sca);

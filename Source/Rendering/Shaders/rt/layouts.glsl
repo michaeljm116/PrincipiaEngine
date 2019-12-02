@@ -3,12 +3,10 @@
 
 layout(binding = 1) uniform UBO
 {
-	vec3 pos;
-	float aspectRatio;
-	vec3 lookat;
+	mat4 rotM;
 	float fov;
-	mat3 rotM;
-	vec3 pad;
+	float aspectRatio;
+		
 } ubo;
 
 

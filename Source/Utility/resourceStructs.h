@@ -50,11 +50,12 @@ namespace Principia {
 		ssMaterial* renderedMat;
 
 		rMaterial() {};
-		rMaterial(std::string n, glm::vec3 d, float rfl, float rgh, float trns, float rfr) {
+		rMaterial(std::string n, glm::vec3 d, float rfl, float rgh, float trns, float rfr, int ti) {
 
 			name = n;			diffuse = d;
 			reflective = rfl;	refractiveIndex = rfr;
 			roughness = rgh;	transparency = trns;
+			textureID = ti;
 
 			uniqueID = name[0];
 			for (int i = 1; i < name.size(); ++i) {
