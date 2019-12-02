@@ -151,6 +151,7 @@ private:
 	MaterialComponent*	activeMaterial;
 	LightComponent* activeLight;
 	NodeComponent* activeCamera;
+	CameraComponent* activeCameraComp;
 	AnimationComponent* activeAnimation;
 	CharacterComponent* activeController;
 	//ObjectType activeType;

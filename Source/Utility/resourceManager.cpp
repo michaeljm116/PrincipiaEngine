@@ -405,6 +405,7 @@ namespace Principia {
 			float ref;
 			float trans;
 			float ri;
+			int ti;
 
 			first->QueryStringAttribute("Name", &name);
 			first->QueryFloatAttribute("DiffuseR", &diff.r);
@@ -415,8 +416,9 @@ namespace Principia {
 			first->QueryFloatAttribute("Roughness", &rough);
 			first->QueryFloatAttribute("Transparency", &trans);
 			first->QueryFloatAttribute("Refractive", &ri);
+			first->QueryIntAttribute("TextureID", &ti);
 
-			rMaterial mat = rMaterial(name, diff, ref, rough, trans, ri);
+			rMaterial mat = rMaterial(name, diff, ref, rough, trans, ri, ti);
 
 			materials.push_back(mat);
 

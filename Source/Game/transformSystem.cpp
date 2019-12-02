@@ -45,9 +45,9 @@ namespace Principia {
 	void TransformSystem::added(artemis::Entity & e)
 	{
 		NodeComponent* nc = nodeMapper.get(e);
-		if (nc->isParent) {
+		//if (nc->isParent) {
 			recursiveTransform(nc);
-		}
+		//}
 	}
 
 
@@ -98,7 +98,8 @@ namespace Principia {
 		}
 		else if (nc->flags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
-			c->pos = tc->global.position;// nodeTrans->position;
+			//c->pos = tc->global.position;// nodeTrans->position;
+			c->rotM = tc->world;
 			rs->updateCamera(c);
 		}
 		else if (nc->flags & COMPONENT_LIGHT) {
@@ -212,9 +213,7 @@ namespace Principia {
 
 		else if (nc->flags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
-			c->pos = tc->global.position;// nodeTrans->position;
-			c->pos = tc->world[3];
-			c->rotM = glm::mat3(tc->world);
+			c->rotM = tc->world;
 			rs->updateCamera(c);
 		}
 		else if (nc->flags & COMPONENT_LIGHT) {

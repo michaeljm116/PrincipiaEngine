@@ -101,7 +101,7 @@ namespace Principia {
 		int	  textureID;
 		ssMaterial() {};
 		//ssMaterial(glm::vec3 d, float m, float r) { diffuse = d, metallic = m; roughness = r; };
-		ssMaterial(glm::vec3 d, float rfl, float ruf, float trn, float rfr) { diffuse = d; reflective = rfl; transparency = trn; refractiveIndex = rfr; textureID = 0; };
+		ssMaterial(glm::vec3 d, float rfl, float ruf, float trn, float rfr, float ti) { diffuse = d; reflective = rfl; transparency = trn; refractiveIndex = rfr; textureID = ti; };
 		//ssMaterial(glm::vec3 d, float m, float r, bool t, int id) { diffuse = d; metallic = m; roughness = r; hasTexture = b; textureID = id; };
 	};	//32 bytes
 

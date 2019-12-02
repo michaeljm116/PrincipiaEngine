@@ -110,10 +110,11 @@ void ApplicationSystem::instantGameStart()
 	WINDOW.toggleMaximized();
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 	rs->removeUI();
-	game->findGoals();
+	//game->findGoals();
 	AppState& as = appMapper.get(*world->getSingleton())->state;// = AppState::Editor;
-	as = AppState::Editor;
-	toggleEditor(as);
+	as = AppState::Play;
+	world->getSingleton()->addComponent(new GameComponent());
+	//toggleEditor(as);
 }
 
 

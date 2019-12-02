@@ -200,6 +200,9 @@
     <ClCompile Include="Game\Gameplay\enemyController.cpp">
       <Filter>Source Files\Game\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Gameplay\characterRotationSystem.cpp">
+      <Filter>Source Files\Game\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -503,6 +506,12 @@
     </ClInclude>
     <ClInclude Include="Rendering\Components\renderComponents.hpp">
       <Filter>Source Files\Rendering\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\Components\chracterRotationComponent.h">
+      <Filter>Source Files\Game\Gameplay\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Gameplay\characterRotationSystem.h">
+      <Filter>Source Files\Game\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

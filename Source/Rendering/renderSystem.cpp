@@ -236,8 +236,8 @@ void RenderSystem::added(artemis::Entity & e)
 	if (t & RENDER_CAMERA) {
 		CameraComponent* cam = (CameraComponent*)e.getComponent<CameraComponent>();
 		TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
-		compute.ubo.lookat = cam->lookat;
-		compute.ubo.pos = transComp->global.position;
+		compute.ubo.aspectRatio = cam->aspectRatio;
+		compute.ubo.rotM = transComp->world;
 		compute.ubo.fov = cam->fov;
 	}
 
@@ -394,16 +394,16 @@ void RenderSystem::addCamera(artemis::Entity & e)
 	//so fo da cam cam wat u finta do is....
 	CameraComponent* comp = (CameraComponent*)e.getComponent<CameraComponent>();
 	comp->fov = compute.ubo.fov;
-	comp->lookat = compute.ubo.lookat;
+	comp->aspectRatio = compute.ubo.aspectRatio;
 	//comp->pos = &compute.ubo.pos;
-	comp->pos = m_Cam.position;
+	comp->rotM = compute.ubo.rotM;
 	
 	//compute.ubo.pos = (TransformComponent*)e.getComponent<TransformComponent>()
 }
 
 void RenderSystem::addMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri)
 {
-	ssMaterial mat = ssMaterial(diff, rfl, rough, trans, ri );
+	ssMaterial mat = ssMaterial(diff, rfl, rough, trans, ri, 0 );
 	materials.push_back(mat);
 	compute.storageBuffers.materials.UpdateAndExpandBuffers(vkDevice, materials, materials.size());
 	updateDescriptors();
@@ -499,8 +499,8 @@ void RenderSystem::addNode(NodeComponent* node) {
 	if (node->flags & COMPONENT_CAMERA) {
 		CameraComponent* cam = (CameraComponent*)node->data->getComponent<CameraComponent>();
 		TransformComponent* transComp = (TransformComponent*)node->data->getComponent<TransformComponent>();
-		compute.ubo.lookat = cam->lookat;
-		compute.ubo.pos = transComp->global.position;
+		compute.ubo.aspectRatio = cam->aspectRatio;
+		compute.ubo.rotM = transComp->world;
 		compute.ubo.fov = cam->fov;
 	}
 }
@@ -583,7 +583,6 @@ void RenderSystem::updateBuffers()
 		updateflags &= UPDATE_JOINT;
 	}
 	
-
 	updateflags |= UPDATE_NONE;
 	//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
 	//compute.storageBuffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
@@ -591,9 +590,8 @@ void RenderSystem::updateBuffers()
 }
 
 void RenderSystem::updateCamera(CameraComponent* c) {
-	compute.ubo.lookat = c->lookat;
-	compute.ubo.fov = c->fov;
-	compute.ubo.pos = c->pos;
+	compute.ubo.aspectRatio = c->aspectRatio;
+	compute.ubo.fov = glm::tan(c->fov * 0.03490658503);
 	compute.ubo.rotM = c->rotM;
 	compute.uniformBuffer.ApplyChanges(vkDevice, compute.ubo);
 
@@ -678,9 +676,10 @@ void RenderSystem::SetStuffUp()
 	m_Cam.movementSpeed = 7.5f;
 
 	compute.ubo.aspectRatio = m_Cam.aspect;
-	compute.ubo.lookat = glm::vec3(1.f, 1.f, 1.f);// testScript.vData[6];// m_Cam.rotation;
+	//compute.ubo.lookat = glm::vec3(1.f, 1.f, 1.f);// testScript.vData[6];// m_Cam.rotation;
 	//compute.ubo.pos = m_Cam.position * -1.0f;
 	compute.ubo.fov = glm::tan(m_Cam.fov * 0.03490658503); //0.03490658503 = pi / 180 / 2
+	compute.ubo.rotM = glm::mat4();
 }
 
 
@@ -704,7 +703,7 @@ void RenderSystem::preInit()
 	SetStuffUp();
 	std::vector<rMaterial> copy = RESOURCEMANAGER.getMaterials();
 	for (std::vector<rMaterial>::iterator itr = copy.begin(); itr != copy.end(); ++itr) {
-		materials.push_back(ssMaterial(itr->diffuse, itr->reflective, itr->roughness, itr->transparency, itr->refractiveIndex));
+		materials.push_back(ssMaterial(itr->diffuse, itr->reflective, itr->roughness, itr->transparency, itr->refractiveIndex, itr->textureID));
 		itr->renderedMat = &materials.back();// materials.end();
 	}
 	loadResources();

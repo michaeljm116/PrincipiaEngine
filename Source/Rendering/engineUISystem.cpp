@@ -873,6 +873,10 @@ void EngineUISystem::bottomSection(float w, float h)
 			editLight();
 			ImGui::NextColumn();
 		}
+		if (activeNode->flags & COMPONENT_CAMERA) {
+			editCamera();
+			ImGui::NextColumn();
+		}
 	}
 
 	ImGui::End();
@@ -1006,17 +1010,6 @@ void EngineUISystem::updateInput()
 	if (INPUT.pressed && controller->buttons[7].action == 1) {
 		visible = !visible;
 	}
-	if (INPUT.pressed && activeNode->flags & COMPONENT_CAMERA) {
-		CameraComponent* cc = (CameraComponent*)activeNode->data->getComponent<CameraComponent>();
-		float x = (INPUT.mouse.x - INPUT.mouse.prevX);// / WINDOW.getWidth();
-		float y = (INPUT.mouse.y - INPUT.mouse.prevY);// / WINDOW.getHeight();
-
-		glm::vec3 nla = cc->lookat;
-		nla.x += x * INPUT.deltaTime;
-		nla.y += y * INPUT.deltaTime;
-		nla.z = nla.x + nla.y;
-		cc->lookat = nla;
-	}
 }
 
 bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
@@ -1148,6 +1141,10 @@ void EngineUISystem::componentVerify()
 		numComponents++;
 		activeLight = (LightComponent*)activeNode->data->getComponent<LightComponent>();
 	}
+	if (activeNode->flags & COMPONENT_CAMERA) {
+		numComponents++;
+	}
+
 }
 
 void EngineUISystem::editNode()
@@ -1220,6 +1217,11 @@ void EngineUISystem::editLight()
 
 void EngineUISystem::editCamera()
 {
+	ImGui::SliderFloat("FOV", &activeCameraComp->fov, 0.f, 180.f, "%1.f", 1.f);
+
+	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+	rs->updateCamera(activeCameraComp);
+	rs->updateUniformBuffer();
 }
 
 void EngineUISystem::editController() {
@@ -1462,7 +1464,7 @@ void EngineUISystem::createMaterial(bool & p_create)
 		if (ImGui::Button("Create Material")) {
 			std::string s = str2;
 			glm::vec3 diffuse = glm::vec3(mdiff[0], mdiff[1], mdiff[2]);
-			RESOURCEMANAGER.addMaterial(s, diffuse, reflective, roughness, transparency, refractiveIndex);
+			RESOURCEMANAGER.addMaterial(s, diffuse, reflective, roughness, transparency, refractiveIndex, 0);
 			RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 			rs->addMaterial(diffuse, reflective, roughness, transparency, refractiveIndex);
 
@@ -1515,6 +1517,7 @@ void EngineUISystem::findActiveCamera()
 		CameraComponent* cam = (CameraComponent*)node->data->getComponent<CameraComponent>();
 		if (cam != nullptr) {
 			activeCamera = node;
+			activeCameraComp = cam;
 			return;
 		}
 	}

@@ -55,12 +55,10 @@ float lightDiffuse(vec3 normal, vec3 lightDir)
 
 float lightSpecular(vec3 normal, vec3 lightDir, float specularFactor)
 {
-	vec3 viewVec = normalize(ubo.pos);
+	vec3 viewVec = normalize(ubo.rotM[3].xyz);
 	vec3 halfVec = normalize(lightDir + viewVec);
 	return pow(clamp(dot(normal, halfVec), 0.0, 1.0), specularFactor);
 }
-	
-
 
 finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 {
@@ -202,14 +200,26 @@ void main()
 	if(txt.a > .99f)
 		imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);		
 	else{
+		/*
 		vec3 ps = vec3(-1);// * inverse(ubo.rotM);
 		ps.xy = (-1.0 + 2.0 * uv) * vec2(ubo.aspectRatio, 1.0);
 		Ray ray;
-		ray.d =  normalize(ps.xzy);
-		ray.o = ubo.pos;
-		vec3 normal = vec3(0.f, 0.f, 0.f);
+		ray.d =  normalize(ps.xzy);// - ubo.pos);
+		ray.o = ubo.pos;*/
 
-		
+		vec3 ps;
+		Ray ray;
+		ps.x = (2 * uv.x - 1) * ubo.aspectRatio * ubo.fov;
+		ps.y = (2 * uv.y - 1) * ubo.fov;
+		ps.z = -1;
+
+		ps = ps * mat3(ubo.rotM);
+	
+
+		ray.d = normalize(ps.xzy);
+		ray.o = ubo.rotM[3].xyz;// * inverse(ubo.rotM);
+
+		vec3 normal = vec3(0.f, 0.f, 0.f);		
 		// Basic color path
 		float refractiveIndex = 1.0; //assuming its air
 		finalmaterial finalColor = renderScene(ray, normal, refractiveIndex);

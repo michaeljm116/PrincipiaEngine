@@ -29,6 +29,8 @@ void GameSystem::initialize()
 	ec->initialize();
 	pms = (ProjectileMovementSystem*)sm->setSystem(new ProjectileMovementSystem());
 	pms->initialize();
+	crs = (CharacterRotationSystem*)sm->setSystem(new CharacterRotationSystem());
+	crs->initialize();
 	//button = (ButtonSystem*)sm->getSystem<ButtonSystem>();
 
 	//audio = (AudioSystem*)sm->setSystem(new AudioSystem());
@@ -56,7 +58,8 @@ void GameSystem::processEntity(artemis::Entity & e)
 {
 	pms->process();
 	cc->process();
-	ec->process();
+	//ec->process();
+	crs->process();
 	ts->process();
 	//audio->process();
 

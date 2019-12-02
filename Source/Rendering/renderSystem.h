@@ -140,13 +140,9 @@ namespace Principia {
 			VkPipelineLayout pipelineLayout;			// Layout of the compute pipeline
 			VkPipeline pipeline;						// Compute raytracing pipeline
 			struct UBOCompute {							// Compute shader uniform block object
-				glm::vec3 pos = glm::vec3(0.0f, 0.0f, 4.0f);
-				float aspectRatio;
-				glm::vec3 lookat = glm::vec3(0.0f, 0.5f, 0.0f);
+				glm::mat4 rotM = glm::mat4(1);
 				float fov = 10.0f;
-
-				glm::mat3 rotM = glm::mat3(1); 
-				glm::vec3 pad = glm::vec3(0);
+				float aspectRatio;
 			} ubo;
 			VBuffer<UBOCompute> uniformBuffer;			// Uniform buffer object containing scene data
 		} compute;
