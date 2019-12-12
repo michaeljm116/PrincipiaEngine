@@ -63,7 +63,7 @@ void GameSceneSystem::assignPlayer()
 	artemis::Entity* pe = player->data;
 
 	TransformComponent* t = (TransformComponent*)pe->getComponent<TransformComponent>();
-	pe->addComponent(new CollisionComponent(glm::vec3(t->world[3]), 1));
+	//pe->addComponent(new CollisionComponent(glm::vec3(t->world[3]), 1));
 	pe->addComponent(new CharacterComponent());
 	pe->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_PLAYER));
 	pe->addComponent(new CharacterComponent());
@@ -75,7 +75,7 @@ void GameSceneSystem::assignPlayer()
 void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, int matID)
 {
 	artemis::Entity* enemy = createModel("Low_poly_UFO", pos, rot, sca);
-	enemy->addComponent(new CollisionComponent(pos, sca.x));
+	//enemy->addComponent(new CollisionComponent(pos, sca.x));
 	enemy->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_ENEMY));
 	enemy->addComponent(new EnemyComponent());
 
@@ -93,7 +93,7 @@ void GameSceneSystem::createEnemy(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca, i
 void GameSceneSystem::createPlayer(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca)
 {
 	artemis::Entity* player = createModel("Low_poly_UFO", pos, rot, sca);
-	player->addComponent(new CollisionComponent(pos, sca.x));
+	//player->addComponent(new CollisionComponent(pos, sca.x));
 	player->addComponent(new GameObjectTypeComponent(GameObjectType::GAMEOBJECT_PLAYER));
 	player->addComponent(new CharacterComponent());
 	//player->addComponent(new ControllerComponent(1));

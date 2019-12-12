@@ -2,7 +2,7 @@
     <Scene Num="1"/>
     <Node Name="Camera" hasChildren="false" Flags="19" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="0" y="9" z="-4.5"/>
+            <Position x="8" y="12.440094" z="2.3800659"/>
             <Rotation x="-20" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -11,7 +11,7 @@
     </Node>
     <Node Name="Light" hasChildren="false" Flags="11" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="0" y="0" z="0"/>
+            <Position x="8" y="0" z="8"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -21,7 +21,7 @@
     </Node>
     <Node Name="Floor" hasChildren="false" Flags="40967" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="-6" z="0"/>
+            <Position x="8" y="-6" z="8"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="11" y="1" z="10"/>
         </Transform>
@@ -31,7 +31,7 @@
     </Node>
     <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="-6" y="-10" z="7"/>
+            <Position x="2" y="-10" z="15"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="4" y="10" z="1"/>
         </Transform>
@@ -41,7 +41,7 @@
     </Node>
     <Node Name="FrontWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="6" y="-10" z="7"/>
+            <Position x="14" y="-10" z="15"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="4" y="10" z="1"/>
         </Transform>
@@ -51,7 +51,7 @@
     </Node>
     <Node Name="BottomWall" hasChildren="false" Flags="106503" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="-10" z="-7"/>
+            <Position x="8" y="-10" z="1"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="9" y="10" z="1"/>
         </Transform>
@@ -59,54 +59,54 @@
         <Object ID="-2"/>
         <Rigid Rigid="true"/>
     </Node>
-    <Node Name="leftWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="leftWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="-9" y="-10" z="0"/>
+            <Position x="-1" y="-10" z="8"/>
             <Rotation x="0" y="0" z="9.9999997e-05"/>
             <Scale x="1" y="10" z="8"/>
         </Transform>
         <Material ID="588622944"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="9" y="-10" z="5"/>
+            <Position x="17" y="-10" z="13"/>
             <Rotation x="0" y="0" z="9.9999997e-05"/>
             <Scale x="1" y="10" z="3"/>
         </Transform>
         <Material ID="588622944"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="rightWall" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="9" y="-10" z="-5"/>
+            <Position x="17" y="-10" z="3"/>
             <Rotation x="0" y="0" z="9.9999997e-05"/>
             <Scale x="1" y="10" z="3"/>
         </Transform>
         <Material ID="588622944"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="AwningTop" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="AwningTop" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0" y="-1" z="7"/>
+            <Position x="8" y="-1" z="15"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="2" y="1" z="1"/>
         </Transform>
         <Material ID="588622944"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="AwningRight" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="AwningRight" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="9" y="-1" z="0"/>
+            <Position x="17" y="-1" z="8"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="1" y="1" z="2"/>
         </Transform>
         <Material ID="588622944"/>
         <Object ID="-2"/>
     </Node>
-    <Node Name="froku" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
+    <Node Name="froku" hasChildren="true" Flags="1059" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="0.16036987" y="-4" z="3.9409342"/>
+            <Position x="8" y="-4" z="12"/>
             <Rotation x="-90" y="9.9999997e-06" z="180"/>
             <Scale x="1.5" y="1.5" z="1.5"/>
         </Transform>
@@ -257,7 +257,7 @@
     </Node>
     <Node Name="New Model!" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="5" y="-4" z="3.5900879"/>
+            <Position x="13" y="-4" z="11.5"/>
             <Rotation x="-69" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -273,7 +273,7 @@
     </Node>
     <Node Name="New Model!" hasChildren="true" Flags="1059" Tags="1" Dynamic="true">
         <Transform>
-            <Position x="-5" y="-4" z="3.5900879"/>
+            <Position x="3" y="-4" z="11.5"/>
             <Rotation x="-69" y="0" z="0"/>
             <Scale x="1" y="1" z="1"/>
         </Transform>
@@ -287,15 +287,15 @@
             <Object ID="1216575066"/>
         </Node>
     </Node>
-    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="-8" y="-10" z="6"/>
+            <Position x="0" y="-10" z="14"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="10" z="1"/>
         </Transform>
         <Material ID="-951317523"/>
         <Object ID="-3"/>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>
@@ -304,7 +304,7 @@
             <Material ID="588622944"/>
             <Object ID="-3"/>
         </Node>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>
@@ -314,15 +314,15 @@
             <Object ID="-3"/>
         </Node>
     </Node>
-    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="8" y="-10" z="-6"/>
+            <Position x="16" y="-10" z="2"/>
             <Rotation x="0" y="0" z="0"/>
             <Scale x="1" y="10" z="1"/>
         </Transform>
         <Material ID="-951317523"/>
         <Object ID="-3"/>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>
@@ -331,7 +331,7 @@
             <Material ID="588622944"/>
             <Object ID="-3"/>
         </Node>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>
@@ -341,36 +341,9 @@
             <Object ID="-3"/>
         </Node>
     </Node>
-    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="true">
+    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="false">
         <Transform>
-            <Position x="8" y="-10" z="6"/>
-            <Rotation x="0" y="9.9999997e-05" z="0"/>
-            <Scale x="1" y="10" z="1"/>
-        </Transform>
-        <Material ID="-951317523"/>
-        <Object ID="-3"/>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
-            <Transform>
-                <Position x="0" y="0" z="0"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="1.5" y="0.95999998" z="1.5"/>
-            </Transform>
-            <Material ID="588622944"/>
-            <Object ID="-3"/>
-        </Node>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
-            <Transform>
-                <Position x="0" y="0" z="0"/>
-                <Rotation x="0" y="0" z="0"/>
-                <Scale x="2" y="0.95499998" z="2"/>
-            </Transform>
-            <Material ID="588622944"/>
-            <Object ID="-3"/>
-        </Node>
-    </Node>
-    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="true">
-        <Transform>
-            <Position x="-8" y="-10" z="-6"/>
+            <Position x="16" y="-10" z="14"/>
             <Rotation x="0" y="9.9999997e-05" z="0"/>
             <Scale x="1" y="10" z="1"/>
         </Transform>
@@ -385,7 +358,34 @@
             <Material ID="588622944"/>
             <Object ID="-3"/>
         </Node>
-        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="true">
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="2" y="0.95499998" z="2"/>
+            </Transform>
+            <Material ID="588622944"/>
+            <Object ID="-3"/>
+        </Node>
+    </Node>
+    <Node Name="pillar" hasChildren="true" Flags="32775" Tags="1" Dynamic="false">
+        <Transform>
+            <Position x="0" y="-10" z="2"/>
+            <Rotation x="0" y="9.9999997e-05" z="0"/>
+            <Scale x="1" y="10" z="1"/>
+        </Transform>
+        <Material ID="-951317523"/>
+        <Object ID="-3"/>
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
+            <Transform>
+                <Position x="0" y="0" z="0"/>
+                <Rotation x="0" y="0" z="0"/>
+                <Scale x="1.5" y="0.95999998" z="1.5"/>
+            </Transform>
+            <Material ID="588622944"/>
+            <Object ID="-3"/>
+        </Node>
+        <Node Name="New Cylinder!" hasChildren="false" Flags="32775" Tags="1" Dynamic="false">
             <Transform>
                 <Position x="0" y="0" z="0"/>
                 <Rotation x="0" y="0" z="0"/>

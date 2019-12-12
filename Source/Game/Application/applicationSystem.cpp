@@ -24,7 +24,11 @@ void ApplicationSystem::initialize()
 	ui = (EngineUISystem*)sm->getSystem<EngineUISystem>();
 	controllers = (ControllerSystem*)sm->getSystem<ControllerSystem>();// setSystem(new ControllerSystem());
 	bvh = (BvhSystem*)sm->getSystem<BvhSystem>();
+
+	//collision systems
+	sysGrid = (GridSystem*)sm->setSystem(new GridSystem());
 	col = (Principia::CollisionSystem*)sm->getSystem<Principia::CollisionSystem>();
+	cws = (CollidedWithSystem*)sm->setSystem(new CollidedWithSystem());
 
 	//next create references to new systems
 	game = (GameSystem*)sm->setSystem(new GameSystem());
@@ -43,6 +47,10 @@ void ApplicationSystem::initialize()
 	menu->initialize();
 	pause->initialize();
 	gss->initialize();
+
+	//col system initialize idk why colsys is in scene or whereever but ima do dis
+	sysGrid->initialize();
+	cws->initialize();
 }
 
 void ApplicationSystem::processEntity(artemis::Entity & e)
@@ -86,6 +94,7 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	//render
 	as->process();
 	col->process();
+	cws->process();
 
 	bvh->build();
 	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);

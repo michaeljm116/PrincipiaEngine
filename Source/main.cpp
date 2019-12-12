@@ -48,7 +48,7 @@ int main() {
 	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i)
 		controller->buttons[i].key = Resources::get().getConfig().controllerConfigs[0][i];
 	singletonEntity->addComponent(controller);
-
+	singletonEntity->addComponent(new GridComponent(16, 16));
 	singletonEntity->refresh();
 	appSys->change(*singletonEntity);
 

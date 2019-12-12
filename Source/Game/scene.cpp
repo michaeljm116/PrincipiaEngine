@@ -232,7 +232,11 @@ artemis::Entity* Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 s
 	artemis::Entity* e = &em->create();
 	NodeComponent*		parent = new NodeComponent(e, name, COMPONENT_MATERIAL | COMPONENT_TRANSFORM | COMPONENT_PRIMITIVE);
 	TransformComponent* trans  = new TransformComponent(pos, glm::vec3(0.f), scale);
-	
+	if(type == -1)
+		e->addComponent(new CollisionComponent(trans->local.position, trans->local.scale, CollisionType::Sphere));
+	if(type == -2)
+		e->addComponent(new CollisionComponent(trans->local.position, trans->local.scale, CollisionType::Box));
+
 	e->addComponent(new PrimitiveComponent(type));
 	e->addComponent(new MaterialComponent(matID));
 	e->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));

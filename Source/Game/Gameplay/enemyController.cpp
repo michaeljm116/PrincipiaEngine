@@ -34,10 +34,10 @@ void EnemyController::processEntity(artemis::Entity & e)
 
 
 	//destroy if hit something
-	if (colMapper.get(e)->state == Principia::CollisionState::Start) {
-		e.removeComponent<EnemyComponent>();
-		change(e);
-	}
+	//if (colMapper.get(e)->state == Principia::CollisionState::Enter) {
+	//	e.removeComponent<EnemyComponent>();
+	//	change(e);
+	//}
 }
 
 //Basically when you add an entityi you checkt o see if its the lft
