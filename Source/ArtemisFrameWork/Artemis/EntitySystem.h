@@ -42,6 +42,7 @@ namespace artemis {
   protected:
     EntitySystem() { this->world = NULL; };
     World * world;
+	Bag<Entity*>* getActives() { return &actives; };
     /**
      * Call this in the constructor of the derived system
      */

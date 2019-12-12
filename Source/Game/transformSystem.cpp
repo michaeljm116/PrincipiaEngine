@@ -54,10 +54,10 @@ namespace Principia {
 
 	void TransformSystem::processEntity(artemis::Entity & e)
 	{
-		//TransformComponent* tc = transformMapper.get(e);
+		TransformComponent* tc = transformMapper.get(e);
 		NodeComponent* nc = nodeMapper.get(e);
 		if (nc->isParent && nc->isDynamic)
-			recursiveTransform(nc);
+			SQTTransform(nc, tc->local);// recursiveTransform(nc);
 		//size_t numChildren = nc->children.size();
 		//for (int c = 0; c < numChildren; c++) {
 		//	SQTTransform(nc, tc->local);

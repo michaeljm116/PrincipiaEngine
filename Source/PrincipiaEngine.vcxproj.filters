@@ -71,9 +71,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Rendering\Texture.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
@@ -202,6 +199,15 @@
     </ClCompile>
     <ClCompile Include="Game\Gameplay\characterRotationSystem.cpp">
       <Filter>Source Files\Game\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\gridSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics\collidedWithSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -512,6 +518,24 @@
     </ClInclude>
     <ClInclude Include="Game\Gameplay\characterRotationSystem.h">
       <Filter>Source Files\Game\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Components\staticComponent.h">
+      <Filter>Source Files\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Components\dynamicComponent.h">
+      <Filter>Source Files\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Components\gridComponent.h">
+      <Filter>Source Files\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\gridSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\collidedWithSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\collisionTests.h">
+      <Filter>Source Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

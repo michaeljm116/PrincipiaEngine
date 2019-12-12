@@ -32,11 +32,11 @@ void ProjectileMovementSystem::processEntity(artemis::Entity & e)
 	t->local.position += p->dir * p->speed * world->getDelta();
 
 	//if you collide remove
-	if (colMapper.get(e)->state == Principia::CollisionState::Start) {
-		e.removeComponent<ProjectileComponent>();
-		e.refresh();
-		change(e);
-	}
+	//if (colMapper.get(e)->state == Principia::CollisionState::Start) {
+	//	e.removeComponent<ProjectileComponent>();
+	//	e.refresh();
+	//	change(e);
+	//}
 
 	//if you exist for more than 
 	if (t->local.position.z > p->maxHeight) {
