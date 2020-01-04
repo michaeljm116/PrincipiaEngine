@@ -76,6 +76,7 @@
     <ClCompile Include="Physics\collidedWithSystem.cpp" />
     <ClCompile Include="Physics\collisionSystem.cpp" />
     <ClCompile Include="Physics\gridSystem.cpp" />
+    <ClCompile Include="Physics\immovableSystem.cpp" />
     <ClCompile Include="Rendering\engineUISystem.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -181,6 +182,7 @@
     <ClInclude Include="Game\Gameplay\enemyController.h" />
     <ClInclude Include="Game\Gameplay\gameSceneSystem.h" />
     <ClInclude Include="Game\Gameplay\projectileMovementSystem.h" />
+    <ClInclude Include="Game\LevelDB.h" />
     <ClInclude Include="Game\scene.h" />
     <ClInclude Include="Game\transformComponent.hpp" />
     <ClInclude Include="Game\transformSystem.h" />
@@ -191,8 +193,10 @@
     <ClInclude Include="Physics\Components\collisionComponent.h" />
     <ClInclude Include="Physics\Components\dynamicComponent.h" />
     <ClInclude Include="Physics\Components\gridComponent.h" />
+    <ClInclude Include="Physics\Components\immovableComponent.h" />
     <ClInclude Include="Physics\Components\staticComponent.h" />
     <ClInclude Include="Physics\gridSystem.h" />
+    <ClInclude Include="Physics\immovableSystem.h" />
     <ClInclude Include="Rendering\cameraComponent.hpp" />
     <ClInclude Include="Rendering\Components\renderComponents.hpp" />
     <ClInclude Include="Rendering\constantbuffer.hpp" />
@@ -228,7 +232,9 @@
     <Text Include="TODO.h" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Assets\Levels\RayTracedInvaders\Arena.xml" />
+    <Xml Include="..\Assets\Levels\RayTracedInvaders\Arena.xml">
+      <SubType>Designer</SubType>
+    </Xml>
     <Xml Include="..\Assets\Levels\RayTracedInvaders\Materials.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -209,6 +209,9 @@
     <ClCompile Include="Physics\collidedWithSystem.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Physics\immovableSystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -536,6 +539,15 @@
     </ClInclude>
     <ClInclude Include="Physics\collisionTests.h">
       <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Components\immovableComponent.h">
+      <Filter>Source Files\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\immovableSystem.h">
+      <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\LevelDB.h">
+      <Filter>Source Files\Game\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

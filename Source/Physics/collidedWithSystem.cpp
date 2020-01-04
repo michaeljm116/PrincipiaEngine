@@ -35,7 +35,7 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 { 
 	std::vector<CollisionData>& cw = cwMapper.get(e)->collidedWith;
 	cw.erase(std::remove_if(cw.begin(), cw.end(), [](CollisionData& cd) {
-		cd.timer -= 2;
+		cd.timer -= 1;
 		std::cout << "COLLIDING";
 		return cd.timer < 1;
 	}), cw.end());

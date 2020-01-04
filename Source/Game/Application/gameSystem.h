@@ -10,6 +10,8 @@ use or not
 #include "../Audio/audioSystem.h"
 #include "../Gameplay/projectileMovementSystem.h"
 #include "../Gameplay/characterRotationSystem.h"
+#include "../Physics/immovableSystem.h"
+
 
 using namespace Principia;
 class GameSystem : public artemis::EntityProcessingSystem {
@@ -25,6 +27,7 @@ private:
 	EngineUISystem* ui;
 	AnimationSystem* as;
 
+	ImmovableSystem* sysImmovable;
 	CharacterController* cc;
 	CharacterRotationSystem* crs;
 	EnemyController* ec;

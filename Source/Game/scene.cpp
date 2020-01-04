@@ -3,6 +3,8 @@
 #include "scene.h"
 #include "../tinyxml2/tinyxml2.h"
 #include "../Rendering/Components/renderComponents.hpp"
+#include "../Physics/Components/dynamicComponent.h"
+#include "../Physics/Components/staticComponent.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
@@ -236,7 +238,7 @@ artemis::Entity* Scene::createShape(std::string name, glm::vec3 pos, glm::vec3 s
 		e->addComponent(new CollisionComponent(trans->local.position, trans->local.scale, CollisionType::Sphere));
 	if(type == -2)
 		e->addComponent(new CollisionComponent(trans->local.position, trans->local.scale, CollisionType::Box));
-
+	dynamic ? e->addComponent(new DynamicComponent()) : e->addComponent(new StaticComponent());
 	e->addComponent(new PrimitiveComponent(type));
 	e->addComponent(new MaterialComponent(matID));
 	e->addComponent(new RenderComponent(RenderType::RENDER_PRIMITIVE));
@@ -571,6 +573,15 @@ XMLError Scene::LoadScene(std::string name)
 	return eResult;
 }
 
+void Scene::deleteScene()
+{
+	for (auto p : parents) {
+		deleteAllChildren(p);
+		deleteNode(p);
+	}
+	parents.clear();
+}
+
 XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 {
 	//Save name
@@ -712,6 +723,25 @@ XMLElement* Scene::saveNode(NodeComponent * parent, XMLDocument* doc)
 		pController->SetAttribute("d3", cont->maxJumpHeight);
 		pNode->InsertEndChild(pController);
 	}
+	if (parent->flags & COMPONENT_COLIDER) { 
+		CollisionComponent* col = (CollisionComponent*)parent->data->getComponent<CollisionComponent>();
+
+		XMLElement* pCollision = doc->NewElement("Collider");
+		XMLElement* pLocal = doc->NewElement("Local");
+		XMLElement* pExtents = doc->NewElement("Extents");
+
+		pCollision->SetAttribute("Type", (int)col->type);
+		pExtents->SetAttribute("x", col->extents.x);
+		pExtents->SetAttribute("y", col->extents.y);
+		pExtents->SetAttribute("z", col->extents.z);
+		pLocal->SetAttribute("x", col->local.x);
+		pLocal->SetAttribute("y", col->local.y);
+		pLocal->SetAttribute("z", col->local.z);
+		
+		pCollision->InsertFirstChild(pLocal);
+		pCollision->InsertEndChild(pExtents);
+		pNode->InsertEndChild(pCollision);
+	}
 	//if it has children, do that recursion stuff
 	if (hasChildren) {
 		for each (NodeComponent* child in parent->children)
@@ -740,6 +770,8 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		start->QueryIntAttribute("Tags", &tags);
 		start->QueryBoolAttribute("Dynamic", &dynamic);
 
+		dynamic ? e->addComponent(new DynamicComponent) : e->addComponent(new StaticComponent);
+
 		NodeComponent* n = new NodeComponent(e, name, flags);
 		n->isDynamic = dynamic;
 		n->flags = flags;
@@ -750,7 +782,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 		if (tags == 4) {
 			//e->addComponent(new AudioComponent(dir + "RayTracedInvaders/Audio/wallcol.wav"));
 		}
-	
+		glm::vec3 transPos;
 		if (flags & COMPONENT_TRANSFORM) {
 			glm::vec3 pos;
 			glm::vec3 rot;
@@ -775,6 +807,7 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 
 			TransformComponent* trans = new TransformComponent(pos, rot, sca);
 
+			transPos = pos;
 			e->addComponent(trans);
 		}
 		else {
@@ -812,6 +845,30 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 				e->addComponent(guinumber);
 				e->addComponent(new AudioComponent(dir + "RayTracedInvaders/Audio/goal.wav"));
 			}
+		}
+		if (flags & COMPONENT_COLIDER) {
+			glm::vec3 local;
+			glm::vec3 extents;
+			int type;
+
+			XMLElement* c = start->FirstChildElement("Collider");
+			XMLElement* l = c->FirstChildElement("Local");
+			XMLElement* ex = c->FirstChildElement("Extents");
+
+			c->QueryIntAttribute("Type", &type);
+
+			l->QueryFloatAttribute("x", &local.x);
+			l->QueryFloatAttribute("y", &local.y);
+			l->QueryFloatAttribute("z", &local.z);
+
+			ex->QueryFloatAttribute("x", &extents.x);
+			ex->QueryFloatAttribute("y", &extents.y);
+			ex->QueryFloatAttribute("z", &extents.z);
+
+			flags & COMPONENT_TRANSFORM ? 
+				e->addComponent(new CollisionComponent(transPos, local, extents, CollisionType(type)))
+				:
+				e->addComponent(new CollisionComponent(local, extents,CollisionType(type)));
 		}
 		if (flags & COMPONENT_MATERIAL) {
 			int matID;
@@ -909,9 +966,6 @@ std::vector<NodeComponent*> Scene::loadNodes(tinyxml2::XMLElement* start, tinyxm
 			e->addComponent(new AudioComponent(audioFile));
 
 			//insertController(n);
-		}
-		if (flags & COMPONENT_COLIDER) {
-			//e->addComponent(new CollisionComponent());
 		}
 		//if (flags & COMPONENT_BUTTON) {
 		//	e->addComponent(new ButtonComponent());

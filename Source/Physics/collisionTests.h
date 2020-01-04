@@ -1,6 +1,7 @@
 #pragma once
 #include "Components/collisionComponent.h"
 #include <glm/gtx/norm.hpp>
+#include "../Utility/helpers.h"
 /*--------------------------------------------
 Basically you take two 2bit thingies and turn it into a 4bit thingy
 then use that 4bit thingy to select the collision test you want
@@ -30,48 +31,86 @@ namespace Principia {
 				result[i] = (result[i] < min[i]) ? min[i] : result[i];
 				result[i] = (result[i] > max[i]) ? max[i] : result[i];
 			}
+
+			/*
+			a = box
+			b = sphere
+			sphere.x = sphere.x < boxmin.x ? boxmin.x : sphere.x = sphere.x
+			spehre.x = sphere.x > boxmax.x ? boxmax.x : sphere.x = boxmax.x
+			sphere.y = sphere.y < boxmin.y ? boxmin.y : sphere.y = sphere.y
+			sphere.y = sphere.y > boxmax.y ? boxmax.y : sphere.y = sphere.y
+
+			closest point = boxmax.x, sphere.y
+			*/
 			return result;
 		}
 
-		typedef bool(*ct)(const CollisionComponent* const, const CollisionComponent* const, glm::vec3&);
-		inline bool SphereSphere(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {
-			float dist = sqrt(pow(a->position.x - b->position.x, 2) + pow(a->position.y - b->position.y, 2) + pow(a->position.z - b->position.z, 2));
-			if (dist < a->extents.x + b->extents.x)
+		typedef bool(*ct)(const CollisionComponent* const, const CollisionComponent* const, CollisionData&, CollisionData&);
+		bool SphereSphere(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {
+			float distsqrd = pow(a->position.x - b->position.x, 2) + pow(a->position.y - b->position.y, 2) + pow(a->position.z - b->position.z, 2);
+			if (distsqrd < pow(a->extents.x + b->extents.x, 2)) {
+				//A collision has occured, so return the normal and collision point
+				aD.normal = b->position - a->position;
+				aD.normal /= sqrt(aD.normal);
+				bD.normal = -aD.normal;
+
+				aD.colpoint = a->position + (a->extents.x * aD.normal);
+				bD.colpoint = aD.colpoint;
+
 				return true;
+			}
 			else return false;
 		}
-		bool SphereBox(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {
+		bool SphereBox(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {
 			glm::vec3 closestPoint = ClosestPoint(*b, *a);
 			float distSq = glm::distance2(a->position, closestPoint);
+			glm::vec3 dist = a->position - closestPoint;
+			//n = dist / sqrt(dist);
 			float radSq = a->extents.x * a->extents.x;
 			return distSq < radSq;
 		};
-		bool SphereCapsule(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
-		bool SphereOther(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
-		bool BoxSphere(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {
+		bool SphereCapsule(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
+		bool SphereOther(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
+		bool BoxSphere(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {
 			glm::vec3 closestPoint = ClosestPoint(*a, *b);
 			float distSq = glm::distance2(b->position, closestPoint);
+			glm::vec3 dist = b->position - closestPoint;
+			//n = dist / sqrt(dist);
 			float radSq = b->extents.x * b->extents.x;
 			return distSq < radSq;
 		};
-		bool BoxBox(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {
-			glm::vec3 amin = a->position - a->extents;
-			glm::vec3 amax = a->position + a->extents;
-			glm::vec3 bmin = b->position - b->extents;
-			glm::vec3 bmax = b->position + b->extents;
+		bool BoxBox(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {
+
+			glm::vec3 extents = a->extents + b->extents;
+			glm::vec3 distance = b->position - a->position;
+			//glm::vec3 absdist = abs(distance);
+			glm::vec3 res = extents - abs(distance);
 
 			for (int i = 0; i < 3; ++i) {
-				if ((amax[i] < bmin[i]) || (amin[i] > bmax[i]))
+				if (res[i] <= 0)
 					return false;
 			}
 
+			//A Collision has occured so find the normal and collision point
+			aD.normal = glm::vec3(0);
+			if ((b->position.x > (a->position.x - a->extents.x)) || (b->position.x <= (a->position.x + a->extents.x)))
+				aD.normal.z = sign(distance.z);
+			else
+				aD.normal.x = sign(distance.x);
+			//res.x < res.z ? aD.normal.x = sign(distance.x) : aD.normal.z = sign(distance.z);
+			bD.normal = -aD.normal;
+
+			//if two (aabb) boxes collide there is no real collision "point" so the axis of the normal is really all that matters
+			aD.colpoint = b->position + (bD.normal * b->extents);
+			bD.colpoint = a->position + (aD.normal * a->extents);
+
 			return true;
 		};
-		bool BoxCapsule(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
-		bool BoxOther(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
-		bool CapsuleSphere(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
-		bool CapsuleBox(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
-		bool CapsuleCapsule(const CollisionComponent* const a, const CollisionComponent* const b, glm::vec3& p) {return false;};
+		bool BoxCapsule(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
+		bool BoxOther(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
+		bool CapsuleSphere(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
+		bool CapsuleBox(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
+		bool CapsuleCapsule(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
 
 		inline int Convert(const CollisionType& a, const CollisionType& b) {
 			int res = (int)a;

@@ -84,6 +84,7 @@ public:
 	tinyxml2::XMLError SaveScene(std::string name);
 	tinyxml2::XMLError LoadScene(std::string name);
 	std::string currentScene;
+	void deleteScene();
 
 private:
 	tinyxml2::XMLElement* saveNode(NodeComponent* parent, tinyxml2::XMLDocument* doc);

@@ -7,6 +7,7 @@ namespace Principia {
 	{
 		addComponentType<CollisionComponent>();
 		addComponentType<TransformComponent>();
+		addComponentType<DynamicComponent>();
 		//addComponentType<GameObjectTypeComponent>();
 	}
 
@@ -19,16 +20,12 @@ namespace Principia {
 		colMapper.init(*world);
 		transMapper.init(*world);
 		//gotMapper.init(*world);
-		//grid = (GridComponent*)world->getSingleton()->getComponent<GridComponent>();
+		grid = (GridComponent*)world->getSingleton()->getComponent<GridComponent>();
 	}
 
 	void CollisionSystem::begin()
 	{
-		//for (auto enemy : enemies) {
-		//	for (auto player : players) {
-		//		checkCollision(world->getEntity(player), world->getEntity(enemy));// *player, *enemy);
-		//	}
-		//}
+		checkDynamicCollisions();
 	}
 
 	void CollisionSystem::end()
@@ -62,19 +59,33 @@ namespace Principia {
 		//col->extents = rotateBounds(tc->global.rotation, col->extents);
 
 		//This is for all static objects ///////////////do later right now u finna test spheres
-		//checkStaticCollision(e);		
+		checkStaticCollision(e);		
 
 		//This is for all dynamic objects
 		//auto a = getActives();
-		auto* a = getActives();
-		int c = a->getCount();
-		const int id = e.getId();
-		for (int i = 0; i < c; ++i) {
-			auto um = a->get(i);
-			if(id != um->getId())
-				checkCollision(e, *um);
-		}
+		//auto* a = getActives();
+		//int c = a->getCount();
+		//const int id = e.getId();
+		//for (int i = 0; i < c; ++i) {
+		//	auto um = a->get(i);
+		//	if(id != um->getId())
+		//		checkCollision(e, *um);
+		//}
 
+	}
+
+	void CollisionSystem::checkDynamicCollisions()
+	{
+		auto* actives = getActives();
+		int c = actives->getCount();
+
+		for (int i = 0; i < c - 1; ++i) {
+			auto a = actives->get(i);
+			for (int j = i + 1; j < c; ++j) {
+				auto b = actives->get(j);
+				checkCollision(*a, *b);
+			}
+		}
 	}
 
 	void CollisionSystem::checkStaticCollision(artemis::Entity & e)
@@ -84,30 +95,33 @@ namespace Principia {
 		GridBlock gb = GridBlock(cc->position, cc->extents);
 		if (!gb.verify(grid->size))
 			return;
-		for (int r = gb.leftx; r < gb.rightx; ++r) {
-			for (int c = gb.downy; c < gb.upy; ++c) {
-				if (std::find(collisions.begin(), collisions.end(), grid->grid[r][c]) == collisions.end())
-					collisions.push_back(grid->grid[r][c]);
+		for (int r = gb.leftx; r < gb.rightx; r += gb.itr) {
+			for (int c = gb.downy; c < gb.upy; c += gb.itr) {
+				if (grid->grid[r][c] != nullptr) {
+					if (std::find(collisions.begin(), collisions.end(), grid->grid[r][c]) == collisions.end())
+						collisions.push_back(grid->grid[r][c]);
+				}
 			}
 		}
 
 		//check collision list for collisions
-		for (auto& c : collisions)
-			checkCollision(e, *c);
+		if (collisions.size() > 0) {
+			for (auto& c : collisions)
+				checkCollision(e, *c);
+		}
 	}
 
 	void CollisionSystem::checkCollision(artemis::Entity & a, artemis::Entity & b)// const
 	{
 		CollisionComponent* ccA = colMapper.get(a);
 		CollisionComponent* ccB = colMapper.get(b);
-		glm::vec3 colpos = ccA->position;
+		CollisionData cda = CollisionData(b.getId());
+		CollisionData cdb = CollisionData(a.getId());
 		
-		if (CollisionTests::ColTests[CollisionTests::Convert(ccA->type, ccB->type)](ccA, ccB, colpos)) {
+		if (CollisionTests::ColTests[CollisionTests::Convert(ccA->type, ccB->type)](ccA, ccB, cda, cdb)) {
 			CollidedComponent* cwa = (CollidedComponent*)a.getComponent<CollidedComponent>();
 			CollidedComponent* cwb = (CollidedComponent*)b.getComponent<CollidedComponent>();
 
-			CollisionData cda = CollisionData(b.getId(), colpos);
-			CollisionData cdb = CollisionData(a.getId(), colpos);
 			
 			cwa == nullptr ?
 				a.addComponent(new CollidedComponent(cda))
