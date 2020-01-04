@@ -785,7 +785,8 @@ void EngineUISystem::topSection(float w, float h, bool* p_open)
 			if (ImGui::MenuItem("SaveScene")) SCENE.SaveScene("Level1/Scene1");//*p_open = false;
 			if (ImGui::MenuItem("LoadScene")) { 
 				//for(const auto & p fs::directory_iterator())
-				SCENE.LoadScene("Level1/Scene1");
+				SCENE.deleteScene();
+				//SCENE.LoadScene("Arena2");
 			};// *p_open = false;
 			if (ImGui::MenuItem("SaveMaterials")) RESOURCEMANAGER.SaveMaterials();
 			if (ImGui::MenuItem("Exit")) glfwSetWindowShouldClose(WINDOW.getWindow(), 1);
@@ -1015,6 +1016,7 @@ void EngineUISystem::updateInput()
 bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
 {
 	static bool b_MakeChild = false;
+	static bool b_Collider = false;
 	if (lvl >= parentIndexes.size()) {
 		parentIndexes.push_back(0);
 	}
@@ -1084,8 +1086,7 @@ bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
 				}
 				if (ImGui::Selectable("Add Collision")) {
 					//activeNode->data->addComponent(new CollisionComponent());
-					activeNode->flags |= COMPONENT_COLIDER;
-					activeNode->data->refresh();
+					b_Collider = true;
 				}
 				/*if (ImGui::Selectable("Make Spring")) {
 					activeNode->data->addComponent(new SpringComponent(glm::vec3(0.f, 1.f, 0.f), 10.f));
@@ -1106,6 +1107,14 @@ bool EngineUISystem::renderNodes(std::vector<NodeComponent*>& nodes, int lvl)
 					bs->change(*activeNode->data);
 
 				}*/
+
+
+				if (b_Collider) {
+					createCollider(b_Collider);
+					activeNode->flags |= COMPONENT_COLIDER;
+					activeNode->data->refresh();
+				}
+
 				ImGui::EndPopup();
 			}
 		}
@@ -1474,6 +1483,43 @@ void EngineUISystem::createMaterial(bool & p_create)
 		if (ImGui::Button("Close")) {
 			p_create = false;
 			ImGui::CloseCurrentPopup();
+		}
+		ImGui::EndPopup();
+	}
+}
+
+void EngineUISystem::createCollider(bool & p_create)
+{
+	ImGui::OpenPopup("Create Collider");
+	if (ImGui::BeginPopupModal("Create Collider"))
+	{
+		static char str[128] = "New Sphere!";
+		static float* local[3] = { &pos.x, &pos.y, &pos.z };
+		static float* extents[3] = { &sca.x, &sca.y, &sca.z };
+		static int coltype = 0;
+		ImGui::Text("Edit the Collider yo");
+
+		ImGui::Text("Local Position");
+		ImGui::DragFloat3("Position", *local, 0.01f);
+
+		ImGui::Text("Extents");
+		ImGui::DragFloat3("Extents", *extents, 0.01f);
+
+		ImGui::Text("Type: 0 = Sphere, 1 = Box, 2 = Cylinder");
+		ImGui::SliderInt("Type: ", &coltype, 0, 2);
+
+
+		if (ImGui::Button("Create Collider")) {
+			artemis::Entity *e = activeNode->data;
+			if (e->getComponent<CollisionComponent>() == nullptr)
+				activeNode->data->addComponent(new CollisionComponent(pos, sca, CollisionType(coltype)));
+			else
+				std::cout << "ERROR, ALREADY HAS A COLLIDER";
+			ImGui::CloseCurrentPopup();
+		}
+		if (ImGui::Button("Close")) {
+			ImGui::CloseCurrentPopup();
+			p_create = false;
 		}
 		ImGui::EndPopup();
 	}

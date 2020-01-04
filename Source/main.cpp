@@ -6,6 +6,7 @@
 #include "Rendering/engineUISystem.h"
 #include "ArtemisFrameWork/Artemis/Artemis.h"
 #include "Utility/resourceManager.h"
+#include "Game/LevelDB.h"
 #include "Game/scene.h"
 #include "Game/transformSystem.h"
 #include "Game/Application/applicationSystem.h"
@@ -38,11 +39,10 @@ int main() {
 	//Resources::get().LoadAnimations("../Assets/Levels/Level1/Animations/");
 
 
-
 	singletonEntity->addComponent(new ApplicationComponent());
 	singletonEntity->addComponent(new GUIComponent(glm::vec2(0.0f, 0.f), glm::vec2(1.f, 1.f), glm::vec2(0.f, 0.f), glm::vec2(1.f, 1.f), 0, 1, false));
 	singletonEntity->addComponent(new EditorComponent);
-	//singletonEntity->addComponent(new GameSceneComponent(0));
+	singletonEntity->addComponent(new GameSceneComponent(0));
 	//singletonEntity->addComponent(new TitleComponent());
 	GlobalController* controller = new GlobalController();
 	for (int i = 0; i < NUM_GLOBAL_BUTTONS; ++i)

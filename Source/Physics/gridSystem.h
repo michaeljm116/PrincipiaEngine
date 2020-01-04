@@ -19,6 +19,7 @@ namespace Principia {
 		void processEntity(artemis::Entity &e) override;
 		void added(artemis::Entity &e) override;
 		void removed(artemis::Entity &e) override;
+		void printGrid();
 
 	private:
 		artemis::ComponentMapper<StaticComponent> staticMapper;

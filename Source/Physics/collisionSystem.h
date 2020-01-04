@@ -1,5 +1,6 @@
 #pragma once
 #include "Components/collisionComponent.h"
+#include "Components/dynamicComponent.h"
 #include "Components/gridComponent.h"
 #include "Artemis/EntityProcessingSystem.h"
 #include "Artemis/ComponentMapper.h"
@@ -21,7 +22,7 @@ namespace Principia {
 		void removed(artemis::Entity &e) override;
 		void processEntity(artemis::Entity &e) override;
 
-
+		void checkDynamicCollisions();
 		void checkStaticCollision(artemis::Entity& e);
 		void checkCollision(artemis::Entity& a, artemis::Entity& b);
 		glm::vec3 rotateBounds(const glm::quat & m, const glm::vec3 & extents);
@@ -29,6 +30,7 @@ namespace Principia {
 	private:
 		artemis::ComponentMapper<CollisionComponent> colMapper;
 		artemis::ComponentMapper<TransformComponent> transMapper;
+		artemis::ComponentMapper<DynamicComponent> dynamicMapper;
 		//artemis::ComponentMapper<GameObjectTypeComponent> gotMapper;
 
 		GridComponent* grid;

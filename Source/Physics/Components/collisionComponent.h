@@ -21,17 +21,20 @@ namespace Principia {
 		CollisionType type;
 		glm::vec3 extents;
 		glm::vec3 position;
-		CollisionComponent(glm::vec3 pos, glm::vec3 e, CollisionType t) : position(pos), extents(e), type(t) {}
+		glm::vec3 local;
+		CollisionComponent(glm::vec3 p, glm::vec3 l, glm::vec3 e, CollisionType t) : position(p),local(l), extents(e), type(t) { }
+		CollisionComponent(glm::vec3 pos, glm::vec3 e, CollisionType t) : local(pos), extents(e), type(t){ }
 	};
 
 	//When you collide with an entity, this data is passed to it
 	struct CollisionData{
 		int id;
-		int timer = 0;
+		int timer = 1;
 		CollisionState state = CollisionState::None;
-		glm::vec3 position;
+		glm::vec3 colpoint;
+		glm::vec3 normal;
 		CollisionData() {};
-		CollisionData(int i, glm::vec3 p) : id(i), position(p) {};
+		CollisionData(int i) : id(i) {};
 	};
 
 	//This component is passed to an entity when it collides with it
@@ -44,7 +47,9 @@ namespace Principia {
 			bool found = false;
 			for (auto& cw : collidedWith) {
 				if (cw.id == cd.id) {
-					cw.position = cd.position;
+					//cw.position = cd.position;
+					cw.normal = cd.normal;
+					cw.colpoint = cd.colpoint;
 					cw.timer++;
 				}
 			}

@@ -203,6 +203,7 @@ public:
 	void createPlane(bool& p_create);
 	void createCylinder(bool& p_create);
 	void createMaterial(bool& p_create);
+	void createCollider(bool& p_create);
 
 	//void translate(glm::vec3 v);
 	void materialSelect();

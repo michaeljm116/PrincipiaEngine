@@ -31,6 +31,10 @@ void GameSystem::initialize()
 	pms->initialize();
 	crs = (CharacterRotationSystem*)sm->setSystem(new CharacterRotationSystem());
 	crs->initialize();
+
+
+	sysImmovable = (ImmovableSystem*)sm->setSystem(new ImmovableSystem());
+	sysImmovable->initialize();
 	//button = (ButtonSystem*)sm->getSystem<ButtonSystem>();
 
 	//audio = (AudioSystem*)sm->setSystem(new AudioSystem());
@@ -56,10 +60,12 @@ void GameSystem::removed(artemis::Entity & e)
 
 void GameSystem::processEntity(artemis::Entity & e)
 {
-	pms->process();
+	//pms->process();
 	cc->process();
 	//ec->process();
 	crs->process();
+
+	sysImmovable->process();
 	ts->process();
 	//audio->process();
 

@@ -90,11 +90,12 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	menu->process();
 	pause->process();
 
+	//physics
+	col->process();
+	cws->process();
 
 	//render
 	as->process();
-	col->process();
-	cws->process();
 
 	bvh->build();
 	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);

@@ -22,23 +22,42 @@ namespace Principia {
 		};
 	};
 
-	struct GridBlock {
-		int leftx;
-		int rightx;
-		int downy;
-		int upy;
+	/*
+	
+	0 1 2 3
+	1
+	2
+	3
 
+	  1 2 3
+	3
+	2
+	1
+	 
+	*/
+	struct GridBlock {
+		int leftx : 8;
+		int rightx : 8;
+		int downy : 8;
+		int upy : 8;
+
+		const int itr = 1;  //This makes it so you iterate by a certain factor
+							//since the extents goes from -1 to 1 its 2
 		GridBlock(const glm::vec3& position, const glm::vec3& extents) {
 			leftx = int(position.x - extents.x) >> 1;
 			rightx = int(round(position.x + extents.x) * 0.5f);
-			downy = int(position.z - extents.z) >> 1;
-			upy = int(round(position.z + extents.z) * 0.5f);
+			upy = 16 - (int(position.z - extents.z) >> 1);
+			downy = 16 - int(round(position.z + extents.z) * 0.5f);
 		}
 		bool verify(const GridComponent::GridSize& s) {
-			if ((leftx < 0) || (downy < 0) || (rightx > s.x) || (upy > s.y)) {
-				std::cout << "ERROR OUT OF BOUNDS";
-				return false;
-			}
+			//if ((leftx < 0) || (downy < 0) || (rightx > s.x) || (upy > s.y)) {
+			//	std::cout << "ERROR OUT OF BOUNDS";
+			//	return false;
+			//}
+			if (leftx < 0) leftx = 0;
+			if (downy < 0) downy = 0;
+			if (rightx > s.x) rightx = s.x;
+			if (upy > s.y) upy = s.y;
 			return true;
 		}
 	};

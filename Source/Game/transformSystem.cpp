@@ -57,7 +57,7 @@ namespace Principia {
 		TransformComponent* tc = transformMapper.get(e);
 		NodeComponent* nc = nodeMapper.get(e);
 		if (nc->isParent && nc->isDynamic)
-			SQTTransform(nc, tc->local);// recursiveTransform(nc);
+			 recursiveTransform(nc);
 		//size_t numChildren = nc->children.size();
 		//for (int c = 0; c < numChildren; c++) {
 		//	SQTTransform(nc, tc->local);

@@ -32,3 +32,10 @@ namespace tulip {
 	}
 }
 
+namespace Principia {
+	//template <typename T>
+	inline int sign(const float& a) {
+		return  1 | ((int)a >> (sizeof(int) * CHAR_BIT - 1));  // if v < 0 then -1, else +1
+	}
+}
+
