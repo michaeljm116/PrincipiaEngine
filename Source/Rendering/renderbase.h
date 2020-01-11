@@ -15,6 +15,17 @@ namespace Principia {
 		std::vector<VkPresentModeKHR> presentModes;
 	};
 
+	struct VkDeviceInfo {
+		VulkanDevice *device;
+		VkQueue copyQueue;
+		VkRenderPass renderPass;
+		std::vector<VkFramebuffer> framebuffers;
+		VkFormat colorFormat;
+		VkFormat depthFormat;
+		uint32_t width;
+		uint32_t height;
+	};
+
 	class RenderBase {
 	public:
 		RenderBase() {};
@@ -46,7 +57,7 @@ namespace Principia {
 		VkQueue graphicsQueue;
 		VkQueue presentQueue;
 		VkQueue computeQueue;
-
+		
 		VkRenderPass renderPass;
 		VkPipelineCache	pipelineCache;
 
@@ -62,7 +73,6 @@ namespace Principia {
 
 		VkSemaphore imageAvailableSemaphore;
 		VkSemaphore renderFinishedSemaphore;
-		VkSemaphore uiSemaphore;
 
 	private:
 		void createInstance();

@@ -11,6 +11,7 @@
 #include "../Utility/resourceManager.h"
 #include "../Utility/componentIncludes.h"
 #include "../Game/Application/applicationComponents.h"
+#include "../Rendering/renderSystem.h"
 
 using namespace Principia;
 
@@ -29,6 +30,17 @@ struct UIOverlayCreateInfo
 	uint32_t subpassCount = 1;
 	std::vector<VkClearValue> clearValues = {};
 	uint32_t attachmentCount = 1;
+
+	void init(const VkDeviceInfo* vkdi) {
+		device = vkdi->device;
+		copyQueue = vkdi->copyQueue;
+		framebuffers = vkdi->framebuffers;
+		colorformat = vkdi->colorFormat;
+		depthformat = vkdi->depthFormat;
+		width = vkdi->width;
+		height = vkdi->height;
+		renderPass = VK_NULL_HANDLE;
+	};
 };
 
 enum class EditState {
@@ -81,14 +93,14 @@ private:
 	artemis::ComponentMapper<GlobalController> gcMapper;
 
 public:
-	bool visible = false;
+	bool visible = true;
 	float scale = 1.0f;
 
 	std::vector<VkCommandBuffer> cmdBuffers;
 
 	EngineUISystem();
 	~EngineUISystem();
-	void init(UIOverlayCreateInfo createInfo);
+	void init(const VkDeviceInfo* devInfo);
 	void initialize();
 	void processEntity(artemis::Entity& e);
 	void added(artemis::Entity& e);
@@ -96,10 +108,10 @@ public:
 	
 	void CleanUp();
 	void update();
-	void resize(uint32_t width, uint32_t height, std::vector<VkFramebuffer> framebuffers);
+	void showUI(VkSubmitInfo* submitInfo, int imageIndex);
+	void toggleUI();
+	void resize(uint32_t width, uint32_t height , std::vector<VkFramebuffer> framebuffers);
 
-	void submit(VkQueue queue, uint32_t bufferindex, VkSubmitInfo submitInfo);
-	//void addParentEntity(artemis::Entity * e, std::string name);
 
 #pragma endregion
 
@@ -123,6 +135,8 @@ public:
 
 	
 private:
+
+	VkSemaphore uiSemaphore;
 
 	int32_t itemIndex;
 	int32_t modelIndex;

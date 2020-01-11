@@ -265,9 +265,11 @@ void RenderSystem::removed(artemis::Entity & e)
 void RenderSystem::end()
 {
 	updateBuffers();
-	updateDescriptors();
-	mainLoop();
-	//updateBuffers();
+	updateDescriptors();	
+	if (glfwWindowShouldClose(WINDOW.getWindow())) {
+		world->setShutdown();
+		vkDeviceWaitIdle(vkDevice.logicalDevice); //so it can destroy properly
+	}
 }
 
 void RenderSystem::loadResources()
@@ -697,8 +699,6 @@ RenderSystem::~RenderSystem()
 
 void RenderSystem::preInit()
 {
-
-
 	initVulkan();
 	SetStuffUp();
 	std::vector<rMaterial> copy = RESOURCEMANAGER.getMaterials();
@@ -723,54 +723,38 @@ void RenderSystem::initialize() {
 	createCommandBuffers(0.6666666666666f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
 	updateDescriptors();
 
-	setupUI();
+	//setupUI();
 	prepared = true;
 	
 	//glfwMaximizeWindow(WINDOW.getWindow());
 }
-void RenderSystem::mainLoop() {
-	//Keeps the app running until an error occurs
-	//Or the window is closed
-	//while (!glfwWindowShouldClose(WINDOW.getWindow())) {
-	//	glfwPollEvents();
-		//updateBuffers();
-		//INPUT.update();
-		if (!prepared)
-			return;
-		drawFrame();
-		//updateUniformBuffer();
-		//if (INPUT.playToggled)
-		//	togglePlayMode();
-		if(ui->visible)
-			ui->updateOverlay();
-	//}
-	if(glfwWindowShouldClose(WINDOW.getWindow())){
-		world->setShutdown();
-		vkDeviceWaitIdle(vkDevice.logicalDevice); //so it can destroy properly
-	}
-}
-void RenderSystem::drawFrame() {//1.get img frm swapc 2.do da cmdbuf wit da image 3.put it back in da swapc
+
+void RenderSystem::startFrame(uint32_t& imageIndex)
+{
 	//Timer timer("Rendering: ");
 	//Timer timer("Render time: ");
 
+
+
+	//VkSubmitInfo submitInfo = {};
+
 	m_RenderTime.Start();
-	uint32_t imageIndex;
 	VkResult result = vkAcquireNextImageKHR(vkDevice.logicalDevice, swapChain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 	if (result == VK_ERROR_OUT_OF_DATE_KHR) {
 		recreateSwapChain();
+		//return &submitInfo;
 		return;
 	}
 	else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
 		throw std::runtime_error("failed to acquire swap chain image!");
 	}
-	
-	VkSubmitInfo submitInfo = {};
+
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &commandBuffers[imageIndex];
 	//VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE), "GRAPHICS QUEUE SUBMIT");
-	
+
 	//VkSemaphore waitSemaphores[] = { imageAvailableSemaphore };
 	VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 	submitInfo.waitSemaphoreCount = 1;
@@ -781,33 +765,23 @@ void RenderSystem::drawFrame() {//1.get img frm swapc 2.do da cmdbuf wit da imag
 	submitInfo.pSignalSemaphores = &renderFinishedSemaphore;
 
 	VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE), "GRAPHICS QUEUE SUBMIT");
-
-	if (ui->visible) {
-		submitInfo.waitSemaphoreCount = 1;
-		submitInfo.pWaitSemaphores = &renderFinishedSemaphore;
-		// Signal ready with UI overlay complete semaphpre
-		submitInfo.signalSemaphoreCount = 1;
-		submitInfo.pSignalSemaphores = &uiSemaphore;
-
-		// Submit current UI overlay command buffer
-		submitInfo.commandBufferCount = 1;
-		submitInfo.pCommandBuffers = &ui->cmdBuffers[imageIndex];
-		VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE), "SUBMIT UI STUFF");
-	}
-
-	//submitUI(submitInfo, imageIndex);
+	
+	//return &submitInfo;
+}
+void RenderSystem::endFrame(const uint32_t& imageIndex)
+{
 	VkPresentInfoKHR presentInfo = {};
 	presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
-	presentInfo.waitSemaphoreCount = 1;
-	presentInfo.pWaitSemaphores = ui->visible ? &uiSemaphore : &renderFinishedSemaphore;// signalSemaphores;
-	presentInfo.pResults = nullptr; //optional
+	presentInfo.waitSemaphoreCount = submitInfo.signalSemaphoreCount;
+	presentInfo.pWaitSemaphores = submitInfo.pSignalSemaphores;//ui->visible ? &uiSemaphore : &renderFinishedSemaphore;// signalSemaphores;
+		presentInfo.pResults = nullptr; //optional
 
 	VkSwapchainKHR swapChains[] = { swapChain };
 	presentInfo.swapchainCount = 1;
 	presentInfo.pSwapchains = swapChains;
 	presentInfo.pImageIndices = &imageIndex;
 
-	result = vkQueuePresentKHR(presentQueue, &presentInfo);
+	VkResult result = vkQueuePresentKHR(presentQueue, &presentInfo);
 	if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
 		recreateSwapChain();
 	}
@@ -830,17 +804,10 @@ void RenderSystem::drawFrame() {//1.get img frm swapc 2.do da cmdbuf wit da imag
 	m_RenderTime.End();
 	INPUT.renderTime = m_RenderTime.ms;
 }
-void RenderSystem::startFrame()
-{
-}
-void RenderSystem::endFrame()
-{
-}
 void RenderSystem::cleanup() {
 	vkDeviceWaitIdle(vkDevice.logicalDevice);
 	cleanupSwapChain();
 
-	ui->CleanUp();
 	destroyCompute();
 
 	vkDestroyDescriptorPool(vkDevice.logicalDevice, descriptorPool, nullptr);
@@ -860,13 +827,15 @@ void RenderSystem::cleanupSwapChain() {
 }
 void RenderSystem::recreateSwapChain()
 {
-	WINDOW.resize();
+	//WINDOW.resize();
 	RenderBase::recreateSwapChain();
 	createDescriptorSetLayout();
 	createGraphicsPipeline();
 	createCommandBuffers(0.6666666666666f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
-	ui->visible = false;
-	ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
+	swapChainFramebuffers;
+	//return swapChainFramebuffers;
+	//ui->visible = false;
+	//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
 }
 
 #pragma endregion
@@ -1458,29 +1427,18 @@ VkDescriptorSetLayoutBinding RenderSystem::descriptorSetLayoutBinding(uint32_t b
 	return bob;
 }
 
-void RenderSystem::setupUI()
+VkDeviceInfo RenderSystem::getDeviceInfo()
 {
-	ui = (EngineUISystem*)world->getSystemManager()->getSystem<EngineUISystem>();
+	VkDeviceInfo devInfo = {};
+	devInfo.device = &vkDevice;
+	devInfo.copyQueue = graphicsQueue;
+	devInfo.framebuffers = swapChainFramebuffers;
+	devInfo.colorFormat = swapChainImageFormat;
+	devInfo.depthFormat = findDepthFormat();
+	devInfo.width = WINDOW.getWidth();
+	devInfo.height = WINDOW.getHeight();
 
-	UIOverlayCreateInfo createInfo = {};
-	createInfo.device = &vkDevice;
-	createInfo.copyQueue = graphicsQueue;
-	createInfo.framebuffers = swapChainFramebuffers;
-	createInfo.colorformat = swapChainImageFormat;
-	createInfo.depthformat = findDepthFormat();
-	createInfo.width = WINDOW.getWidth();
-	createInfo.height = WINDOW.getHeight();
-	createInfo.shaders = { 
-		vkDevice.createShader("Rendering/Shaders/uioverlay.vert.spv", VK_SHADER_STAGE_VERTEX_BIT),
-		vkDevice.createShader("Rendering/Shaders/uioverlay.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT) 
-	};
-	//ui = new EngineUI(createInfo);
-	ui->init(createInfo);
-	//updateOverlay();
-
-	vkDestroyShaderModule(vkDevice.logicalDevice, createInfo.shaders[0].module, nullptr);
-	vkDestroyShaderModule(vkDevice.logicalDevice, createInfo.shaders[1].module, nullptr);
-
+	return devInfo;
 }
 
 void RenderSystem::swapRatio(float f)
@@ -1509,19 +1467,19 @@ void RenderSystem::updateMaterial(int id)
 	updateMaterials();
 }
 
-void RenderSystem::showUI()
-{
-	ui->visible = true;
-	recreateSwapChain();
-}
-void RenderSystem::removeUI()
-{
-	WINDOW.resize();
-	RenderBase::recreateSwapChain();
-	createDescriptorSetLayout();
-	createGraphicsPipeline();
-	createCommandBuffers(1.f, 0, 0);
-	ui->visible = false;
-}
+//void RenderSystem::showUI()
+//{
+//	ui->visible = true;
+//	recreateSwapChain();
+//}
+//void RenderSystem::removeUI()
+//{
+//	WINDOW.resize();
+//	RenderBase::recreateSwapChain();
+//	createDescriptorSetLayout();
+//	createGraphicsPipeline();
+//	createCommandBuffers(1.f, 0, 0);
+//	ui->visible = false;
+//}
 }
 #pragma endregion

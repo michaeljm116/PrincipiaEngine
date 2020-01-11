@@ -24,10 +24,16 @@ namespace Principia {
 		~RenderSystem();
 		void preInit();
 		void initialize();
-		void mainLoop();
-		void drawFrame();
-		void startFrame();
-		void endFrame();
+		std::vector<VkFramebuffer>& getFrameBuffers() {
+			return swapChainFramebuffers;
+		};
+		VkExtent2D& getSwapChainExtent() {
+			return swapChainExtent;
+		}
+		VkDeviceInfo getDeviceInfo();
+		VkSubmitInfo submitInfo = {};
+		void startFrame(uint32_t& imageIndex);
+		void endFrame(const uint32_t& imageIndex);
 		void updateUniformBuffer();
 		void processEntity(artemis::Entity &e);
 
@@ -78,17 +84,12 @@ namespace Principia {
 		void updateCamera(CameraComponent* c);
 		void updateBVH(std::vector<artemis::Entity*>& ordredPrims, std::shared_ptr<BVHNode> root, int numNodes);
 		int flattenBVH(std::shared_ptr<BVHNode> node, int* offset, std::vector<ssBVHNode>& bvh);
-		//void updateLight(LightComponent* l);
 
 		virtual void cleanup();
 		virtual void cleanupSwapChain();
 		virtual void recreateSwapChain();
 
-		//std::vector<ssVert>& getVertices() { return verts; };
-		//std::vector<ssMesh>& getMeshes() { return meshes; };
-		//ssMesh& getMesh(int i) { return meshes[i]; };
 		ssJoint& getJoint(int i) { return joints[i]; };
-		//ssPrimitive& getObject(int i) { return objects[i]; };
 		ssLight& getLight(int i) { return lights[i]; };
 
 	private:
@@ -185,15 +186,11 @@ namespace Principia {
 		std::vector<VkWriteDescriptorSet> computeWriteDescriptorSets;
 		//UI
 		//EngineUI *ui = nullptr;
-		EngineUISystem* ui;
-		void setupUI();
 		VkExtent2D scaledSwap;
 		void swapRatio(float f);
 	public:
 		void updateMaterials();
 		void updateMaterial(int id);
-		void showUI();
-		void removeUI();
 
 		std::vector<int> intToArrayOfInts(const int &a) {
 			if (a == 0) {

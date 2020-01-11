@@ -33,8 +33,8 @@ namespace Principia {
 
 
 		GLFWwindow*		getWindow() { return window; }
-		uint16_t		getHeight() { return height; }
-		uint16_t		getWidth() { return width; }
+		int				getHeight() { return height; }
+		int				getWidth() { return width; }
 
 
 		Window(Window const&) = delete;
@@ -46,8 +46,8 @@ namespace Principia {
 	private:
 		GLFWwindow* window;
 		GLFWmonitor* primary;
-		uint16_t	height;
-		uint16_t	width;
+		int			height;
+		int			width;
 		bool		maximized;
 		const GLFWvidmode* mode;
 	};

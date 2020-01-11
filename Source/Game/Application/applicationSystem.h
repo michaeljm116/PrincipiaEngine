@@ -26,10 +26,7 @@ private:
 	TitleSystem* title;
 	MenuSystem* menu;
 	PauseSystem* pause;
-
-	RenderSystem* rs;
 	AnimationSystem* as;
-	EngineUISystem* ui;
 	ControllerSystem* controllers;
 	BvhSystem* bvh;
 	GridSystem* sysGrid;
@@ -38,6 +35,11 @@ private:
 	GameSceneSystem* gss;
 
 public:
+
+	RenderSystem* rs;
+	EngineUISystem* ui;
+
+
 	ApplicationSystem();
 	~ApplicationSystem();
 	void initialize();
@@ -47,4 +49,14 @@ public:
 	void toggleEditor(AppState& s);
 	void toggleAppState(AppState& s);
 	void togglePause(AppState& s);
+
+	static void onWindowResized(GLFWwindow* window, int width, int height) {
+		if (width == 0 || height == 0) return;
+		WINDOW.resize();
+		ApplicationSystem* app = reinterpret_cast<ApplicationSystem*>(glfwGetWindowUserPointer(window));
+		auto& renderer = app->rs;
+		auto& sce = renderer->getSwapChainExtent();
+		renderer->recreateSwapChain();
+		app->ui->resize(sce.width, sce.height, app->rs->getFrameBuffers());
+	}
 };

@@ -110,6 +110,7 @@ int main() {
 		world.setShutdown();
 		vkDeviceWaitIdle(renderSys->vkDevice.logicalDevice); //so it can destroy properly
 	//	world.~World();
+		engineUISys->CleanUp();
 		renderSys->cleanup();
 	}
 	catch (const std::runtime_error& e) {
