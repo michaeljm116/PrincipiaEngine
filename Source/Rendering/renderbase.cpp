@@ -7,7 +7,7 @@ namespace Principia {
 		glfwSetWindowSizeCallback(WINDOW.getWindow(), RenderBase::onWindowResized);
 	}
 	void RenderBase::initVulkan() {
-		initWindow();
+		//initWindow();
 		createInstance();
 		vkDevice.setupDebugCallback();
 		createSurface();
@@ -27,7 +27,6 @@ namespace Principia {
 
 		vkDestroySemaphore(vkDevice.logicalDevice, renderFinishedSemaphore, nullptr);
 		vkDestroySemaphore(vkDevice.logicalDevice, imageAvailableSemaphore, nullptr);
-		vkDestroySemaphore(vkDevice.logicalDevice, uiSemaphore, nullptr);
 		vkDestroySurfaceKHR(vkDevice.instance, surface, nullptr);
 
 		vkDevice.Destroy();
@@ -348,7 +347,6 @@ namespace Principia {
 
 		VK_CHECKRESULT(vkCreateSemaphore(vkDevice.logicalDevice, &semaphoreInfo, nullptr, &imageAvailableSemaphore), " FAILED TO CREATE SEMAPHORE");
 		VK_CHECKRESULT(vkCreateSemaphore(vkDevice.logicalDevice, &semaphoreInfo, nullptr, &renderFinishedSemaphore), " FAILED TO CREATE SEMAPHORE");
-		VK_CHECKRESULT(vkCreateSemaphore(vkDevice.logicalDevice, &semaphoreInfo, nullptr, &uiSemaphore), " FAILED TO CREATE SEMAPHORE");
 
 	}
 

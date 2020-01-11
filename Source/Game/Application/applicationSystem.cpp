@@ -11,6 +11,10 @@ ApplicationSystem::~ApplicationSystem()
 
 void ApplicationSystem::initialize()
 {
+	//Initialize the window
+	glfwSetWindowUserPointer(WINDOW.getWindow(), this);
+	glfwSetWindowSizeCallback(WINDOW.getWindow(), ApplicationSystem::onWindowResized);
+
 	//Initialize the mappers
 	appMapper.init(*world);
 
@@ -39,6 +43,7 @@ void ApplicationSystem::initialize()
 
 	//next initialize the old systems
 	ui->initialize();
+	ui->init(&rs->getDeviceInfo());
 	controllers->initialize();
 
 	//Next initialize the new systems;
@@ -97,20 +102,22 @@ void ApplicationSystem::processEntity(artemis::Entity & e)
 	//render
 	as->process();
 
-	bvh->build();
-	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
-	rs->process();// mainLoop();
-
-	//build the bvh
-	//bvh->rebuild = true;
-	//bvh->build();
-	//rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
-
 	//get the input, if in editor use editor controller, else regular controllers
 	if (ac->state == AppState::Editor)
 		ui->process();
 	else
 		controllers->process();
+
+	bvh->build();
+	rs->updateBVH(bvh->prims, bvh->root, bvh->totalNodes);
+	rs->process();// mainLoop();
+
+	uint32_t ii;
+	rs->startFrame(ii);
+	
+	if(ui->visible)
+		ui->showUI(&rs->submitInfo, ii);
+	rs->endFrame(ii);
 
 }
 
@@ -119,7 +126,7 @@ void ApplicationSystem::instantGameStart()
 	//WINDOW.toggleMaximized();
 	WINDOW.toggleMaximized();
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	rs->removeUI();
+	//rs->removeUI();
 	//game->findGoals();
 	AppState& as = appMapper.get(*world->getSingleton())->state;// = AppState::Editor;
 	as = AppState::Play;
@@ -132,6 +139,7 @@ void ApplicationSystem::instantGameStart()
 void ApplicationSystem::toggleEditor(AppState& s)
 {
 	//toggles the editor by passing or removing the editor component 
+	//Problem: this is too couplely and syou should be able to take off editor w/o gaming
 	artemis::Entity* singleton = world->getSingleton();
 	switch (s)
 	{

@@ -25,7 +25,7 @@ EngineUISystem::~EngineUISystem()
 	if(!cleaned)
 	CleanUp();
 }
-void EngineUISystem::init(UIOverlayCreateInfo createInfo)
+void EngineUISystem::init(const VkDeviceInfo* devInfo)
 {
 	//idk
 	//itemIndex = 0;
@@ -37,10 +37,20 @@ void EngineUISystem::init(UIOverlayCreateInfo createInfo)
 
 	//idk
 	
-	this->createInfo = createInfo;
-	this->renderPass = createInfo.renderPass;
+	createInfo.init(devInfo);// = UIOverlayCreateInfo(devInfo);
+	createInfo.shaders = {
+		createInfo.device->createShader("Rendering/Shaders/uioverlay.vert.spv", VK_SHADER_STAGE_VERTEX_BIT),
+		createInfo.device->createShader("Rendering/Shaders/uioverlay.frag.spv", VK_SHADER_STAGE_FRAGMENT_BIT),
+	};
+
 	vertexBuffer.device = createInfo.device->logicalDevice;
 	indexBuffer.device = createInfo.device->logicalDevice;
+
+
+	VkSemaphoreCreateInfo semaphoreInfo = {};
+	semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+	VK_CHECKRESULT(vkCreateSemaphore(this->createInfo.device->logicalDevice, &semaphoreInfo, nullptr, &uiSemaphore), " FAILED TO CREATE SEMAPHORE");
+
 
 #if defined(__ANDROID__)		
 	if (vks::android::screenDensity >= ACONFIGURATION_DENSITY_XXHIGH) {
@@ -71,8 +81,6 @@ void EngineUISystem::init(UIOverlayCreateInfo createInfo)
 	io.DisplaySize = ImVec2((float)(createInfo.width), (float)(createInfo.height));
 	io.FontGlobalScale = scale;
 
-
-
 	cmdBuffers.resize(createInfo.framebuffers.size());
 	prepareResources();
 	if (createInfo.renderPass == VK_NULL_HANDLE) {
@@ -83,12 +91,15 @@ void EngineUISystem::init(UIOverlayCreateInfo createInfo)
 	updateOverlay();
 
 	findActiveCamera();
+
+	vkDestroyShaderModule(this->createInfo.device->logicalDevice, this->createInfo.shaders[0].module, nullptr);
+	vkDestroyShaderModule(this->createInfo.device->logicalDevice, this->createInfo.shaders[1].module, nullptr);
+
 }
 void EngineUISystem::initialize()
 {
 	editorMapper.init(*world);
 	gcMapper.init(*world);
-
 }
 void EngineUISystem::processEntity(artemis::Entity & e)
 {
@@ -100,7 +111,8 @@ void EngineUISystem::processEntity(artemis::Entity & e)
 		if (action == GLFW_PRESS) {
 			if (i == 6) { e.removeComponent<EditorComponent>(); 
 			RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-			rs->removeUI();
+			//rs->removeUI();
+			visible = false;
 			ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
 			ac->state = AppState::Play;
 			e.addComponent(new GameComponent());
@@ -108,8 +120,9 @@ void EngineUISystem::processEntity(artemis::Entity & e)
 			}
 			if (i == 7) WINDOW.toggleMaximized();
 			if (i == 8) {
-				RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-				visible ? rs->removeUI() : rs->showUI();
+				//RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
+				//visible ? rs->removeUI() : rs->showUI();
+				visible = !visible;
 			}
 				
 			if (i == 9) 
@@ -132,7 +145,7 @@ void EngineUISystem::processEntity(artemis::Entity & e)
 void EngineUISystem::added(artemis::Entity & e)
 {
 	RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-	rs->showUI();
+	//rs->showUI();
 	ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
 	ac->state = AppState::Editor;
 }
@@ -140,7 +153,7 @@ void EngineUISystem::removed(artemis::Entity & e)
 {
 	if (!world->getShutdown()) {
 		RenderSystem* rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
-		rs->removeUI();
+		//rs->removeUI();
 		ApplicationComponent* ac = (ApplicationComponent*)world->getSingleton()->getComponent<ApplicationComponent>();
 		ac->state = AppState::Play;
 		ac->transition = true;
@@ -148,6 +161,8 @@ void EngineUISystem::removed(artemis::Entity & e)
 }
 
 void EngineUISystem::CleanUp() {
+	vkDestroySemaphore(createInfo.device->logicalDevice, uiSemaphore, nullptr);
+
 	vertexBuffer.destroy();
 	indexBuffer.destroy();
 	vkDestroyImageView(createInfo.device->logicalDevice, fontView, nullptr);
@@ -542,7 +557,7 @@ void EngineUISystem::updateCommandBuffers()
 		}*/
 
 		VK_CHECKRESULT(vkEndCommandBuffer(cmdBuffers[i]), "END UI COMMAND BUFFER");
-		visible = true;
+		//visible = true;
 	}
 }
 
@@ -605,6 +620,26 @@ void EngineUISystem::update()
 	}
 }
 
+void EngineUISystem::showUI(VkSubmitInfo * submitInfo, int imageIndex)
+{
+	//if (!visible) return;
+	updateOverlay();
+
+	submitInfo->waitSemaphoreCount = 1;
+	submitInfo->pWaitSemaphores = submitInfo->pSignalSemaphores;
+	submitInfo->signalSemaphoreCount = 1;
+	submitInfo->pSignalSemaphores = &uiSemaphore;
+	submitInfo->commandBufferCount = 1;
+	submitInfo->pCommandBuffers = &cmdBuffers[imageIndex];
+	VK_CHECKRESULT(vkQueueSubmit(createInfo.copyQueue, 1, submitInfo, VK_NULL_HANDLE), "SUBMIT UI GRAPHICS QUEU");
+
+}
+
+void EngineUISystem::toggleUI()
+{
+	visible = !visible;
+}
+
 void EngineUISystem::resize(uint32_t width, uint32_t height, std::vector<VkFramebuffer> framebuffers)
 {
 	ImGuiIO& io = ImGui::GetIO();
@@ -614,33 +649,6 @@ void EngineUISystem::resize(uint32_t width, uint32_t height, std::vector<VkFrame
 	createInfo.framebuffers = framebuffers;
 	updateCommandBuffers();
 }
-
-/** Submit the overlay command buffers to a queue */
-void EngineUISystem::submit(VkQueue queue, uint32_t bufferindex, VkSubmitInfo submitInfo)
-{
-	if (!visible) {
-		return;
-	}
-
-
-	submitInfo.pCommandBuffers = &cmdBuffers[bufferindex];
-	submitInfo.commandBufferCount = 1;
-
-	VK_CHECKRESULT(vkQueueSubmit(queue, 1, &submitInfo, fence),"SUBMIT UI QUEUE");
-
-	
-
-	VK_CHECKRESULT(vkWaitForFences(createInfo.device->logicalDevice, 1, &fence, VK_TRUE, UINT64_MAX), "WAIT FOR UI FENCES");
-	VK_CHECKRESULT(vkResetFences(createInfo.device->logicalDevice, 1, &fence), "RESET UI FENCES");
-}
-
-//void EngineUISystem::addParentEntity(artemis::Entity * e, std::string name)
-//{
-//	parents.push_back((NodeComponent*)e->getComponent<NodeComponent>());
-//	if (activeNode == nullptr)
-//		activeNode = parents[0];
-//	//parentNames.push_back(name);
-//}
 
 #pragma endregion
 

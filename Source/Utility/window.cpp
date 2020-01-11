@@ -51,13 +51,11 @@ namespace Principia {
 			maximized = true;
 			glfwMaximizeWindow(window);
 		}
+		resize();
 	}
 
 	void Window::resize() {
-		int _width, _height;
-		glfwGetWindowSize(window, &_width, &_height);
-		width = _width;
-		height = _height;
+		glfwGetWindowSize(window, &width, &height);
 
 	}
 }
