@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>..\..\PrincipiaEngine\Lib\glfw\include;..\..\PrincipiaEngine\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\PrincipiaEngine\Lib\glfw\lib-vc2015;..\..\PrincipiaEngine\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\VulkanSDK\1.1.101.0\Include;..\..\PrincipiaEngine\Lib\gli;..\..\PrincipiaEngine\Lib\glm;..\..\PrincipiaEngine\Lib\stb;..\..\PrincipiaEngine\Lib\glfw\lib-vc2015;..\..\PrincipiaEngine\Source\ArtemisFrameWork;..\..\PrincipiaEngine\Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

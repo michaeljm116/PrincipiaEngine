@@ -175,19 +175,19 @@ namespace Principia {
 		return ret;
 	}
 
-	glm::mat4 AnimationSystem::BoneTransform(const Skeleton & skeleton, const rJointData & joints)
-	{
-		//glm::mat4 boneTrans = glm::mat4(0);
-		//for (int i = 0; i < 4; ++i) {
-		//	float weight = joints.weights[i];
-		//	if (weight > BONE_EPSILON) {
-		//		boneTrans += skeleton.joints[joints.id[i]].final_Transform * weight;
-		//	}
-		//}
-		////boneTrans = skeleton.joints[joints.id[0]].final_Transform;
-		//return boneTrans;
-		return glm::mat4();
-	}
+	//glm::mat4 AnimationSystem::BoneTransform(const Skeleton & skeleton, const rJointData & joints)
+	//{
+	//	//glm::mat4 boneTrans = glm::mat4(0);
+	//	//for (int i = 0; i < 4; ++i) {
+	//	//	float weight = joints.weights[i];
+	//	//	if (weight > BONE_EPSILON) {
+	//	//		boneTrans += skeleton.joints[joints.id[i]].final_Transform * weight;
+	//	//	}
+	//	//}
+	//	////boneTrans = skeleton.joints[joints.id[0]].final_Transform;
+	//	//return boneTrans;
+	//	return glm::mat4();
+	//}
 
 	glm::vec3 AnimationSystem::rotateAABB(const glm::quat & m, const glm::vec3 & extents)
 	{

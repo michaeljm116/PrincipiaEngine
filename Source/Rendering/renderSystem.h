@@ -8,11 +8,13 @@ much rework but brotha aint got time fo dat
 #include "rendermanagers.h"
 #include "renderbase.h"
 #include "shaderStructures.hpp"
-#include "engineUISystem.h"
 #include "../Game/script.hpp"
 #include "../Utility/window.h"
 #include "../Utility/bvhComponent.hpp"
 #include "../Utility/timer.hpp"
+
+#include "../Utility/componentIncludes.h"
+#include <unordered_map>
 
 namespace Principia {
 	static const int MAXTEXTURES = 5;

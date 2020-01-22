@@ -5,8 +5,8 @@
 #include "Artemis/EntityProcessingSystem.h"
 #include "Artemis/ComponentMapper.h"
 #include "Artemis/Entity.h"
-#include "../Game/Gameplay/Components/gameObjectTypeComponent.h"
-#include "../Game/transformComponent.hpp"
+//#include "../Game/Gameplay/Components/gameObjectTypeComponent.h"
+#include "../Utility/transformComponent.hpp"
 #include <set>
 
 namespace Principia {

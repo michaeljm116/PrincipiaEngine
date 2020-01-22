@@ -44,29 +44,6 @@
     <ClCompile Include="ArtemisFrameWork\TagManager.cpp" />
     <ClCompile Include="ArtemisFrameWork\World.cpp" />
     <ClCompile Include="Audio\audioSystem.cpp" />
-    <ClCompile Include="Game\Application\applicationSystem.cpp" />
-    <ClCompile Include="Game\Application\controllerSystem.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Game\Application\gameSystem.cpp" />
-    <ClCompile Include="Game\Application\menuSystem.cpp" />
-    <ClCompile Include="Game\Application\pauseSystem.cpp" />
-    <ClCompile Include="Game\Application\titleSystem.cpp" />
-    <ClCompile Include="Game\Gameplay\characterController.cpp" />
-    <ClCompile Include="Game\Gameplay\characterRotationSystem.cpp" />
-    <ClCompile Include="Game\Gameplay\enemyController.cpp" />
-    <ClCompile Include="Game\Gameplay\gameSceneSystem.cpp" />
-    <ClCompile Include="Game\Gameplay\projectileMovementSystem.cpp" />
-    <ClCompile Include="Game\scene.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
-    <ClCompile Include="Game\transformSystem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -77,7 +54,6 @@
     <ClCompile Include="Physics\collisionSystem.cpp" />
     <ClCompile Include="Physics\gridSystem.cpp" />
     <ClCompile Include="Physics\immovableSystem.cpp" />
-    <ClCompile Include="Rendering\engineUISystem.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
@@ -98,11 +74,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Utility\Input.cpp" />
+    <ClCompile Include="Utility\transformSystem.cpp" />
     <ClCompile Include="Utility\window.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
@@ -130,8 +103,6 @@
     <None Include="Rendering\Shaders\rt\structs.glsl" />
     <None Include="Rendering\Shaders\texture.frag" />
     <None Include="Rendering\Shaders\texture.vert" />
-    <None Include="Rendering\Shaders\uioverlay.frag" />
-    <None Include="Rendering\Shaders\uioverlay.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Lib\imgui\imconfig.h" />
@@ -164,28 +135,6 @@
     <ClInclude Include="ArtemisFrameWork\Artemis\World.h" />
     <ClInclude Include="Audio\audioComponents.h" />
     <ClInclude Include="Audio\audioSystem.h" />
-    <ClInclude Include="Game\Application\applicationComponents.h" />
-    <ClInclude Include="Game\Application\applicationSystem.h" />
-    <ClInclude Include="Game\Application\controllerComponent.hpp" />
-    <ClInclude Include="Game\Application\controllerSystem.h" />
-    <ClInclude Include="Game\Application\gameSystem.h" />
-    <ClInclude Include="Game\Application\menuSystem.h" />
-    <ClInclude Include="Game\Application\pauseSystem.h" />
-    <ClInclude Include="Game\Application\titleSystem.h" />
-    <ClInclude Include="Game\Gameplay\characterController.h" />
-    <ClInclude Include="Game\Gameplay\characterRotationSystem.h" />
-    <ClInclude Include="Game\Gameplay\Components\chracterRotationComponent.h" />
-    <ClInclude Include="Game\Gameplay\Components\enemyComponent.h" />
-    <ClInclude Include="Game\Gameplay\Components\gameObjectTypeComponent.h" />
-    <ClInclude Include="Game\Gameplay\Components\gameSceneComponent.h" />
-    <ClInclude Include="Game\Gameplay\Components\projectileComponent.h" />
-    <ClInclude Include="Game\Gameplay\enemyController.h" />
-    <ClInclude Include="Game\Gameplay\gameSceneSystem.h" />
-    <ClInclude Include="Game\Gameplay\projectileMovementSystem.h" />
-    <ClInclude Include="Game\LevelDB.h" />
-    <ClInclude Include="Game\scene.h" />
-    <ClInclude Include="Game\transformComponent.hpp" />
-    <ClInclude Include="Game\transformSystem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\collidedWithSystem.h" />
     <ClInclude Include="Physics\collisionSystem.h" />
@@ -200,7 +149,6 @@
     <ClInclude Include="Rendering\cameraComponent.hpp" />
     <ClInclude Include="Rendering\Components\renderComponents.hpp" />
     <ClInclude Include="Rendering\constantbuffer.hpp" />
-    <ClInclude Include="Rendering\engineUISystem.h" />
     <ClInclude Include="Rendering\lightComponent.hpp" />
     <ClInclude Include="Rendering\materialComponent.hpp" />
     <ClInclude Include="Rendering\renderSystem.h" />
@@ -223,6 +171,8 @@
     <ClInclude Include="Utility\resourceStructs.h" />
     <ClInclude Include="Utility\Input.h" />
     <ClInclude Include="Utility\timer.hpp" />
+    <ClInclude Include="Utility\transformComponent.hpp" />
+    <ClInclude Include="Utility\transformSystem.h" />
     <ClInclude Include="Utility\window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -246,26 +196,26 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -290,21 +240,21 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2015;..\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2015;..\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\openal\libs\Win32;..\Lib\glfw\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\bullet3;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\openal\include;..\Lib\glfw\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\openal\libs\Win32;..\Lib\glfw\lib-vc2015;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

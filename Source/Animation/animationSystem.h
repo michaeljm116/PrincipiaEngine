@@ -33,7 +33,7 @@ namespace Principia {
 
 
 		glm::quat Interpolate(glm::quat start, glm::quat end, float delta);
-		glm::mat4 BoneTransform(const Skeleton& skeleton, const rJointData& joints);
+		//glm::mat4 BoneTransform(const Skeleton& skeleton, const rJointData& joints);
 		glm::vec3 rotateAABB(const glm::quat & m, const glm::vec3 & extents);
 	private:
 

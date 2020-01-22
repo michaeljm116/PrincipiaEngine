@@ -16,7 +16,7 @@ has a list of all the resources
 namespace Principia {
 #define RESOURCEMANAGER Resources::get()
 
-	namespace fs = std::filesystem;
+	//namespace fs = std::filesystem;
 
 	class Resources
 	{
@@ -51,11 +51,11 @@ namespace Principia {
 #pragma region Models
 		inline rModel&		getModel(int i) { return models[i]; };
 		inline rModel&		getModel(std::string n) {
-			for (std::vector<rModel>::iterator itr = models.begin(); itr != models.end(); ++itr) {
-				if (itr->name == n)
-					return *itr;
+			for (auto& m : models) {
+				if (m.name == n)
+					return m;
 			}
-			return rModel();
+			return models[0];
 		}
 		inline rModel&		getModelU(int i) {
 			for (std::vector<rModel>::iterator itr = models.begin(); itr != models.end(); ++itr) {
