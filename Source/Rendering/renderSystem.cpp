@@ -1,7 +1,6 @@
 ﻿#include "../pch.h"
 #include "renderSystem.h"
 #include <set>
-#include "../Utility/componentIncludes.h"
 #include "../Utility/resourceManager.h"
 #include "../Utility/Input.h"
 //#include "../Utility/octree.hpp"
@@ -889,9 +888,8 @@ void RenderSystem::createGraphicsPipeline() {
 			dynamicStateEnables.data(),
 			dynamicStateEnables.size(),
 			0);
-
-	auto vertShaderCode = readFile("Rendering/Shaders/texture.vert.spv");
-	auto fragShaderCode = readFile("Rendering/Shaders/texture.frag.spv");
+	auto vertShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.vert.spv");
+	auto fragShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.frag.spv");
 
 	auto bindingDescription = Vertex::getBindingDescription();
 	auto attributeDescriptions = Vertex::getAttributeDescriptions();
@@ -1360,7 +1358,7 @@ void RenderSystem::prepareCompute()
 			compute.pipelineLayout,
 			0);
 
-	computePipelineCreateInfo.stage = vkDevice.createShader("Rendering/Shaders/raytracing.comp.spv", VK_SHADER_STAGE_COMPUTE_BIT);
+	computePipelineCreateInfo.stage = vkDevice.createShader("../../PrincipiaEngine/Source/Rendering/Shaders/raytracing.comp.spv", VK_SHADER_STAGE_COMPUTE_BIT);
 	VK_CHECKRESULT(vkCreateComputePipelines(vkDevice.logicalDevice, pipelineCache, 1, &computePipelineCreateInfo, nullptr, &compute.pipeline), "CREATE COMPUTE PIPELINE");
 
 	// Separate command pool as queue family for compute may be different than graphics

@@ -1,7 +1,7 @@
 #pragma once
 #include "Components/immovableComponent.h"
 #include "Components/collisionComponent.h"
-#include "../Game/transformComponent.hpp"
+#include "../Utility/transformComponent.hpp"
 #include "Artemis/Artemis.h"
 
 namespace Principia {

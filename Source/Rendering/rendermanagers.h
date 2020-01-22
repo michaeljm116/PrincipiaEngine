@@ -10,7 +10,7 @@ if i ever decide to add textures to the game
 
 #include "Texture.h"
 #include "constantbuffer.hpp"
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 //#include "../pch.h"
 
 /*

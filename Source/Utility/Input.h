@@ -36,7 +36,7 @@ namespace Principia {
 
 		void KeyDirection(int key, bool pressed);
 
-		static void Input::key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
+		static void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 		{
 			/*if (action == GLFW_PRESS || action == GLFW_REPEAT) {
 				Input::get().pressed = true;
@@ -99,12 +99,12 @@ namespace Principia {
 #endif // UIIZON
 		}
 
-		static void Input::cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+		static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
 			INPUT.mouse.updatePosition((int)xpos, (int)ypos);
 		}
 
 
-		static void Input::mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
 			/*if (action == GLFW_PRESS || action == GLFW_REPEAT)
 				INPUT.mouse.updateButton(button, true);
 			else
@@ -112,11 +112,11 @@ namespace Principia {
 			INPUT.mouse.buttons[button] = action;
 		}
 
-		static void Input::scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 			INPUT.mouse.updateScroll(yoffset);
 		}
 
-		static void Input::joystick_callback(int jid, int event) {
+		static void joystick_callback(int jid, int event) {
 
 		}
 

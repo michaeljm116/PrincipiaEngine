@@ -65,7 +65,7 @@ namespace Principia {
 
 	bool Resources::LoadDirectory(std::string directory)
 	{
-		for (const auto & p : fs::directory_iterator(directory)) {
+		for (const auto & p : std::filesystem::directory_iterator(directory)) {
 			//std::cout << p << std::endl;
 			if (!LoadPModel(p.path().string()))
 				break;
@@ -74,7 +74,7 @@ namespace Principia {
 	}
 	bool Resources::LoadAnimations(std::string directory)
 	{
-		for (const auto & p : fs::directory_iterator(directory)) {
+		for (const auto & p : std::filesystem::directory_iterator(directory)) {
 			if (!LoadSkeleton(p.path().string()))
 				break;
 		}

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Utility/componentIncludes.h"
-#include "../Game/Gameplay/characterComponent.hpp"
 #include "audioComponents.h"
 //#include <alc.h>
 

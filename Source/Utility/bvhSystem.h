@@ -1,6 +1,6 @@
 #pragma once
 #include "bvhComponent.hpp"
-//#include "../Game/transformComponent.hpp"
+//#include "../Utility/transformComponent.hpp"
 //#include "../Rendering/Components/renderComponents.hpp"
 #include "componentIncludes.h"
 

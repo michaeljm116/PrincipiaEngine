@@ -1,5 +1,4 @@
 #pragma once
-
 namespace Principia {
 	struct Joint
 	{
