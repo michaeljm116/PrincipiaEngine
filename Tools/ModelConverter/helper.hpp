@@ -1,5 +1,8 @@
 #pragma once
 #include "includes.h"
+#include "../../Lib/xxhash.hpp"
+
+static inline xxh::hash32_t xxhasher(std::string s) { return xxh::xxhash<32, char>(s.c_str(), 0); }
 
 
 #ifndef maxVal
@@ -13,11 +16,15 @@
 #define CCAST reinterpret_cast<char*>
 
 
-int UID = 0;
-int newUniqueID() {
+uint32_t UID = 0;
+uint32_t newUniqueID(std::string s) {
 	UID++;
-	int time = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
-	return time + UID;
+	uint32_t hash = (xxhasher(s) >> 1);
+	return hash + UID;
+	//int time = static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count());
+	//int hash = xxh
+	//return time + UID;
+	
 };
 auto cmp = [](std::pair<std::string, int> const & a, std::pair<std::string, int> const & b)
 {

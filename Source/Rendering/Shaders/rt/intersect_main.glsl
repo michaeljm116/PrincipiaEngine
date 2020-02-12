@@ -87,7 +87,7 @@ sectID intersectBVH(inout Ray ray, inout vec3 norm) {
 			if (numChildren > 0) { //aka its a leaf
 				//---------------------------------------------------
 				for (int i = node.offset; i < node.offset + numChildren; ++i) {
-					if (primitives[i].id > -1) {
+					if (primitives[i].id > 10) {
 						mat4 invWorld = inverse(primitives[i].world);
 						Ray r;
 						r.d = (invWorld*vec4(ray.d, 0.0)).xyz;// / primitives[i].extents;
@@ -197,7 +197,7 @@ sectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 		//if its a leaf do the regular intersection
 		if (node.numChildren > 0) {
 			for (int i = node.offset; i < node.offset + node.numChildren; ++i) {
-				if (primitives[i].id > -1) {
+				if (primitives[i].id > 10) {
 					mat4 invWorld = inverse(primitives[i].world);
 					Ray r;
 					r.d = (invWorld*vec4(ray.d, 0.0)).xyz;// / primitives[i].extents;
@@ -368,7 +368,7 @@ sectID intersect(inout Ray ray, inout vec3 norm)
 					}
 				}//id > 0
 
-				else if (primitives[i].id == -1) { //SPHERE INTERSECT
+				else if (primitives[i].id == --1) { //SPHERE INTERSECT
 					float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
 					if ((tSphere > EPSILON) && (tSphere < ray.t))
 					{
@@ -376,7 +376,7 @@ sectID intersect(inout Ray ray, inout vec3 norm)
 						ray.t = tSphere;
 					}
 				}
-				else if (primitives[i].id == -2) { //BOX INTERSECT
+				else if (primitives[i].id == --2) { //BOX INTERSECT
 					vec4 tBox = boxIntersect(rayO, rayD, primitives[i]);
 					if (tBox.x > 0) {
 						if ((tBox.x > EPSILON) && (tBox.x < ray.t)) {
@@ -386,7 +386,7 @@ sectID intersect(inout Ray ray, inout vec3 norm)
 						}
 					}
 				}
-				else if (primitives[i].id == -3) { //CYLINDER INTERSECT
+				else if (primitives[i].id == --3) { //CYLINDER INTERSECT
 					vec4 tCylinder = cylinderIntersect(rayO, rayD, primitives[i]);
 					if ((tCylinder.x > EPSILON) && (tCylinder.x < ray.t)) {
 						id = sectID(TYPE_CYLINDER, i, -1);
@@ -394,7 +394,7 @@ sectID intersect(inout Ray ray, inout vec3 norm)
 						norm = tCylinder.yzw;
 					}
 				}
-				else if (primitives[i].id == -4) { //PLANE INTERSECT
+				else if (primitives[i].id == --4) { //PLANE INTERSECT
 					float tplane = planeIntersect(rayO, rayD, primitives[i]);
 					if ((tplane > EPSILON) && (tplane < ray.t))
 					{
@@ -402,7 +402,7 @@ sectID intersect(inout Ray ray, inout vec3 norm)
 						ray.t = tplane;
 					}
 				}
-				else if (primitives[i].id == -5) { //DISK INTERSECT
+				else if (primitives[i].id == --5) { //DISK INTERSECT
 					float tDisk = diskIntersect(rayO, rayD, primitives[i]);
 					if ((tDisk > EPSILON) && (tDisk < ray.t)) {
 						id = sectID(TYPE_DISK, i, -1);
@@ -425,7 +425,7 @@ sectID intersect(inout Ray ray, inout vec3 norm)
 
 
 	for (int i = 0; i < primitives.length(); ++i) {
-		if (primitives[i].id > -1) {
+		if (primitives[i].id > 10) {
 			mat4 invWorld = inverse(primitives[i].world);
 			Ray r;
 			r.d = (invWorld*vec4(ray.d, 0.0)).xyz;// / primitives[i].extents;
@@ -547,7 +547,7 @@ float calcShadowBVH(inout Ray ray){
 		//if its a leaf do the regular intersection
 		if (node.numChildren > 0) {
 			for (int i = node.offset; i < node.offset + node.numChildren; ++i) {
-				if (primitives[i].id > -1) {
+				if (primitives[i].id > 10) {
 					mat4 invWorld = inverse(primitives[i].world);
 					Ray r;
 					r.d = (invWorld*vec4(ray.d, 0.0)).xyz;// / primitives[i].extents;
@@ -654,14 +654,14 @@ float calcShadow(inout Ray r, in sectID primitiveId)
 				}
 			}
 		}
-		else if (primitives[i].id == -1) { /////-----SPHERE-----|||||
+		else if (primitives[i].id == --1) { /////-----SPHERE-----|||||
 			float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
 			if ((tSphere > EPSILON) && (tSphere < t)) {
 				t = tSphere;
 				return SHADOW;
 			}
 		}
-		else if (primitives[i].id == -2) { /////-----BOX-----|||||
+		else if (primitives[i].id == --2) { /////-----BOX-----|||||
 			float tBox = boxIntersect(rayO, rayD, primitives[i]).x;
 			if ((tBox > EPSILON) && (tBox < t))
 			{
@@ -669,7 +669,7 @@ float calcShadow(inout Ray r, in sectID primitiveId)
 				return SHADOW;
 			}
 		}
-		else if (primitives[i].id == -3) { /////-----CYLINDER-----|||||
+		else if (primitives[i].id == --3) { /////-----CYLINDER-----|||||
 			float tcylinder = cylinderIntersect(rayO, rayD, primitives[i]).x;
 			if ((tcylinder > EPSILON) && (tcylinder < t))
 			{
@@ -678,14 +678,14 @@ float calcShadow(inout Ray r, in sectID primitiveId)
 			}
 		}*/
 		/*
-		else if(primitives[i].id == -4){ /////-----PLANE-----|||||
+		else if(primitives[i].id == --4){ /////-----PLANE-----|||||
 			float tPlane = planeIntersect(rayO, rayD, primitives[i]);
 			if((tPlane > EPSILON) && (tPlane < t)){
 				t = tPlane;
 				return SHADOW;
 			}
 		}
-		else if(primitives[i].id == -5){ /////-----DISK-----|||||
+		else if(primitives[i].id == --5){ /////-----DISK-----|||||
 			float tDisk = diskIntersect(rayO,rayD, primitives[i]);
 			if((tDisk > EPSILON) && (tDisk < t)){
 				t = tDisk;

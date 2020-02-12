@@ -149,7 +149,7 @@ struct Mesh {
 	glm::vec3 extent;
 	glm::vec3 center;
 	glm::mat4 transform;
-	int id;
+	uint32_t id;
 };
 
 struct Shape : public kBounds {
@@ -200,7 +200,7 @@ struct AnimChannel {
 };
 
 struct PrincipiaAnimation {
-	int skeletonID;
+	uint32_t skeletonID;
 	int numChannels;
 	std::string name;
 	std::vector<AnimChannel> channels;
@@ -210,7 +210,7 @@ struct PrincipiaAnimation {
 
 struct  PrincipiaSkeleton
 {
-	int uniqueID;
+	uint32_t uniqueID;
 	int numJoints;
 	std::vector<Joint> joints;
 	std::string name;
@@ -227,8 +227,8 @@ struct PrincipiaModel {
 	std::string name;
 	std::vector<Mesh> meshes;
 	std::vector<Shape> shapes;
-	int uniqueID;
-	int skeletonID;
+	uint32_t uniqueID;
+	uint32_t skeletonID;
 	glm::vec3 center;
 	glm::vec3 extents;
 };

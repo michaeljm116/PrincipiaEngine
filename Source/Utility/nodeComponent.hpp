@@ -39,9 +39,9 @@ namespace Principia {
 	};
 
 	enum class ObjectType {
-		SPHERE = -1,
-		BOX = -2,
-		CYLINDER = -3,
+		SPHERE = 1,
+		BOX = 2,
+		CYLINDER = 3,
 		PLANE = 4
 	};
 
@@ -62,8 +62,15 @@ namespace Principia {
 		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent* child) : data(d), parent(p) { children.push_back(child); };
 		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent copy) : parent(p), data(d), name(copy.name) { flags = copy.flags; };
 		NodeComponent(artemis::Entity* d, std::string n, unsigned int f) : data(d), name(n) { flags |= f; parent = nullptr; };
+	};
 
-
+	// I wish i thought of this a loooong time ago
+	// Adam Component: A Head Component in a node heirarchy
+	// I chose the naem adam instead of parent since 
+	// parents can technically be children but not adam
+	struct AdamComponent : artemis::Component {
+		size_t numChildren = 0;
+		AdamComponent(size_t n) { numChildren = n; };
 	};
 
 }

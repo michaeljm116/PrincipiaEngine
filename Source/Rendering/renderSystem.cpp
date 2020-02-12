@@ -177,10 +177,10 @@ void RenderSystem::added(artemis::Entity & e)
 {
 	RenderType t = renderMapper.get(e)->type;
 
-	if (t & RENDER_MATERIAL) {
+	if (t == RENDER_MATERIAL) {
 
 	}
-	if (t & RENDER_PRIMITIVE) {
+	if (t == RENDER_PRIMITIVE) {
 		PrimitiveComponent* primComp = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
 		//AABBComponent* aabb = (AABBComponent*)e.getComponent<AABBComponent>();
 		MaterialComponent* mat = (MaterialComponent*)e.getComponent<MaterialComponent>();
@@ -198,7 +198,7 @@ void RenderSystem::added(artemis::Entity & e)
 		//updateObjectMemory();
 		setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
 	}
-	if (t & RENDER_LIGHT) {
+	if (t == RENDER_LIGHT) {
 
 		LightComponent* lightComp = (LightComponent*)e.getComponent<LightComponent>();
 		TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
@@ -206,7 +206,7 @@ void RenderSystem::added(artemis::Entity & e)
 		light.pos = transComp->global.position;
 		light.color = lightComp->color;
 		light.intensity = lightComp->intensity;
-		light.id = lightComp->id;
+		light.id = e.getUniqueId();// lightComp->id;
 
 		lights.push_back(light);
 		lightComps.push_back(lightComp);
@@ -217,10 +217,10 @@ void RenderSystem::added(artemis::Entity & e)
 		compute.storageBuffers.lights.UpdateAndExpandBuffers(vkDevice, lights, lights.size());
 		updateDescriptors();
 	}
-	if (t & RENDER_GUI) {
+	if (t == RENDER_GUI) {
 
 	}
-	if (t & RENDER_GUINUM) {
+	if (t == RENDER_GUINUM) {
 		GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
 		std::vector<int> nums = intToArrayOfInts(gnc->number);
 		for (int i = 0; i < nums.size(); ++i) {
@@ -232,7 +232,7 @@ void RenderSystem::added(artemis::Entity & e)
 		gnc->ref = gnc->shaderReferences[0];
 		setRenderUpdate(UPDATE_GUI);
 	}
-	if (t & RENDER_CAMERA) {
+	if (t == RENDER_CAMERA) {
 		CameraComponent* cam = (CameraComponent*)e.getComponent<CameraComponent>();
 		TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
 		compute.ubo.aspectRatio = cam->aspectRatio;
@@ -244,21 +244,28 @@ void RenderSystem::added(artemis::Entity & e)
 
 void RenderSystem::removed(artemis::Entity & e)
 {
-	//if (!world->getShutdown()) {
-	//	RenderType t = renderMapper.get(e)->type;
-	//	if (t && RenderType::RENDER_PRIMITIVE) {
-	//		PrimitiveComponent* o = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
-	//		if (o != nullptr) {
-	//			objects.erase(objects.begin() + o->objIndex);
-	//			objectComps.erase(objectComps.begin() + o->objIndex);
-	//			for (int i = o->objIndex; i < objectComps.size(); ++i)
-	//				objectComps[i]->objIndex--;
-	//			//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
-	//			//updateDescriptors();
-	//			setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
-	//		}
-	//	}
-	//}
+	
+	if (!world->getShutdown()) {
+		RenderType t = renderMapper.get(e)->type;
+		//if (t && RenderType::RENDER_PRIMITIVE) {
+		//	PrimitiveComponent* o = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
+		//	if (o != nullptr) {
+		//		objects.erase(objects.begin() + o->objIndex);
+		//		objectComps.erase(objectComps.begin() + o->objIndex);
+		//		for (int i = o->objIndex; i < objectComps.size(); ++i)
+		//			objectComps[i]->objIndex--;
+		//		//compute.storageBuffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+		//		//updateDescriptors();
+		//		setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
+		//	}
+		//}
+		if (t == RenderType::RENDER_LIGHT) {
+			auto pend = std::remove_if(lights.begin(), lights.end(), [&](ssLight l) {
+				return e.getUniqueId() == l.id;
+			});
+			lights.erase(pend);
+		}
+	}
 }
 
 void RenderSystem::end()
@@ -358,7 +365,7 @@ void RenderSystem::loadResources()
 		}
 	}
 
-	shapes.push_back(ssShape(glm::vec3(0.f), glm::vec3(1.f), -1));
+	shapes.push_back(ssShape(glm::vec3(0.f), glm::vec3(1.f), 1));
 	compute.storageBuffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
 	compute.storageBuffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
 	compute.storageBuffers.blas.InitStorageBufferWithStaging(vkDevice, blas, blas.size());
@@ -368,15 +375,15 @@ void RenderSystem::loadResources()
 	//compute.storageBuffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
 	//compute.storageBuffers.meshes.InitStorageBufferCustomSize(vkDevice, meshes, meshes.size(), MAXMESHES);
 
-	guiTextures[0].path = "../Assets/Levels/RayTracedInvaders/Textures/numbers.png";
+	guiTextures[0].path = "../Assets/Levels/Test/Textures/numbers.png";
 	guiTextures[0].CreateTexture(vkDevice);
-	guiTextures[1].path = "../Assets/Levels/RayTracedInvaders/Textures/title.png";
+	guiTextures[1].path = "../Assets/Levels/Test/Textures/title.png";
 	guiTextures[1].CreateTexture(vkDevice);
-	guiTextures[2].path = "../Assets/Levels/RayTracedInvaders/Textures/menu.png";
+	guiTextures[2].path = "../Assets/Levels/Test/Textures/menu.png";
 	guiTextures[2].CreateTexture(vkDevice);
-	guiTextures[3].path = "../Assets/Levels/RayTracedInvaders/Textures/ARROW.png";
+	guiTextures[3].path = "../Assets/Levels/Test/Textures/ARROW.png";
 	guiTextures[3].CreateTexture(vkDevice);
-	guiTextures[4].path = "../Assets/Levels/RayTracedInvaders/Textures/circuit.jpg";
+	guiTextures[4].path = "../Assets/Levels/Test/Textures/circuit.jpg";
 	guiTextures[4].CreateTexture(vkDevice);
 
 }
