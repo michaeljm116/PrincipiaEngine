@@ -1,9 +1,11 @@
 ﻿  main.cpp
-c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(213): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\bvh.hpp(254): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(158): warning C4101: 'numNodes': unreferenced local variable
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(505): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(506): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\modelconverter\main.cpp(523): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  ModelConverter.vcxproj -> C:\Users\Mike\PrincipiaEngine\Tools\ModelConverter\Debug\ModelConverter.exe
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\bvh.hpp(213): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\bvh.hpp(245): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\bvh.hpp(254): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\lib\xxhash.hpp(665): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\lib\xxhash.hpp(671): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\main.cpp(158): warning C4101: 'numNodes': unreferenced local variable
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\main.cpp(505): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\main.cpp(506): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\mike\desktop\principiumgames\principiaengine\tools\modelconverter\main.cpp(523): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  ModelConverter.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\Debug\ModelConverter.exe

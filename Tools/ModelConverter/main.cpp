@@ -59,7 +59,7 @@ bool WritePEModel(PrincipiaModel& m, std::string fn) {
 	binaryio.write(m.name.c_str(), modelNameLength);
 	
 	//Insert UniqueID;
-	binaryio.write(CCAST(&m.uniqueID), sizeof(int));
+	binaryio.write(CCAST(&m.uniqueID), sizeof(uint32_t));
 		
 
 	//Find numder of meshes
@@ -136,7 +136,7 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 	binaryio.write(s.name.c_str(), modelNameLength);
 
 	//Insert UniqueID;
-	binaryio.write(CCAST(&s.uniqueID), sizeof(int));
+	binaryio.write(CCAST(&s.uniqueID), sizeof(uint32_t));
 
 	//Insert Number of joints
 	binaryio.write(CCAST(&s.numJoints), sizeof(int));
@@ -169,7 +169,7 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 		for (auto f : sj.faces)
 			binaryio.write(CCAST(&f), sizeof(Face));
 		for (auto m : sj.meshIds)
-			binaryio.write(CCAST(&m), sizeof(int));
+			binaryio.write(CCAST(&m), sizeof(uint32_t));
 		for (auto s : sj.shapes) {
 			int shapeNameLength = s.name.length();
 			binaryio.write(CCAST(&shapeNameLength), sizeof(int));
@@ -192,7 +192,7 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 	binaryio.write(CCAST(&numAnim), sizeof(int));
 	for (int a = 0; a < numAnim; ++a) {
 		//Save skeleton id
-		binaryio.write(CCAST(&s.uniqueID), sizeof(int));
+		binaryio.write(CCAST(&s.uniqueID), sizeof(uint32_t));
 		//Save name
 		int animNameLength = s.animations[a].name.length();
 		binaryio.write(CCAST(&animNameLength), sizeof(int));
@@ -554,8 +554,8 @@ bool LoadDirectory(std::string directory)
 		UID++;
 		PrincipiaModel mod;
 		PrincipiaSkeleton skeleton;
-		mod.uniqueID = newUniqueID();
-		skeleton.uniqueID = newUniqueID();
+		mod.uniqueID = newUniqueID(p.path().stem().string());
+		skeleton.uniqueID = newUniqueID(p.path().stem().string() + "_skel");
 		mod.skeletonID = skeleton.uniqueID;
 		bool triangulate = false;
 		if (DoTheImportThing(p.path().string(), mod, skeleton, triangulate)) {
@@ -576,9 +576,9 @@ bool LoadDirectory(std::string directory)
 
 			if (triangulate)
 				mod.name += "_t";
-			WritePEModel(mod,"../../Assets/Levels/RayTracedInvaders/Models/"+ mod.name + ".pm");
+			WritePEModel(mod,"Output/"+ mod.name + ".pm");
 			if(hasAnim) 
-				WriteSkeleton(skeleton, "../../Assets/Levels/RayTracedInvaders/Animations/" + mod.name + ".pa");
+				WriteSkeleton(skeleton, "Output/" + mod.name + ".pa");
 		}
 	}
 	return false;

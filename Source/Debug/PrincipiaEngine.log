@@ -1,2 +1,10 @@
-﻿  renderSystem.cpp
+﻿  animationSystem.cpp
+  audioSystem.cpp
+  transformSystem.cpp
+  Generating Code...
+  renderSystem.cpp
+  bvhSystem.cpp
+  resourceManager.cpp
+  window.cpp
+  Generating Code...
   PrincipiaEngine.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.exe

@@ -94,6 +94,9 @@ namespace Principia {
 		{
 #ifdef UIIZON
 			ImGuiIO& io = ImGui::GetIO();
+			io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
+			io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
+			io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
 			if (c > 0 && c < 0x10000)
 				io.AddInputCharacter((unsigned short)c);
 #endif // UIIZON
