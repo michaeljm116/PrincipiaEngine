@@ -152,6 +152,9 @@
     <ClCompile Include="Utility\transformSystem.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\prefabSystem.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -418,6 +421,12 @@
       <Filter>Source Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Utility\transformSystem.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\prefabComponent.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\prefabSystem.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>

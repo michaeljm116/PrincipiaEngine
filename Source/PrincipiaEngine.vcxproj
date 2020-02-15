@@ -68,6 +68,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Utility\prefabSystem.cpp" />
     <ClCompile Include="Utility\resourceManager.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
@@ -167,6 +168,8 @@
     <ClInclude Include="Utility\key.h" />
     <ClInclude Include="Utility\mouse.h" />
     <ClInclude Include="Utility\nodeComponent.hpp" />
+    <ClInclude Include="Utility\prefabComponent.h" />
+    <ClInclude Include="Utility\prefabSystem.h" />
     <ClInclude Include="Utility\resourceManager.h" />
     <ClInclude Include="Utility\resourceStructs.h" />
     <ClInclude Include="Utility\Input.h" />
