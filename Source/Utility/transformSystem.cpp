@@ -80,10 +80,10 @@ namespace Principia {
 		tc->world[3] = glm::vec4(tc->global.position, 1.f);
 
 		//pass in the transform info as well as the components to mult
-		if (nc->flags & COMPONENT_MODEL)
+		if (nc->engineFlags & COMPONENT_MODEL)
 		{
 		}
-		if (nc->flags & COMPONENT_PRIMITIVE) {
+		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
 
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			//ssPrimitive& obj = rs->getObject(objComp->objIndex);
@@ -96,13 +96,13 @@ namespace Principia {
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 		}
-		else if (nc->flags & COMPONENT_CAMERA) {
+		else if (nc->engineFlags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
 			//c->pos = tc->global.position;// nodeTrans->position;
 			c->rotM = tc->world;
 			rs->updateCamera(c);
 		}
-		else if (nc->flags & COMPONENT_LIGHT) {
+		else if (nc->engineFlags & COMPONENT_LIGHT) {
 			LightComponent* l = (LightComponent*)nc->data->getComponent<LightComponent>();
 			ssLight& light = rs->getLight(l->id);
 			light.color = l->color;
@@ -143,7 +143,7 @@ namespace Principia {
 
 	}
 	void TransformSystem::recursiveTransform(NodeComponent* nc) {
-		if (nc->flags & COMPONENT_JOINT)
+		if (nc->engineFlags & COMPONENT_JOINT)
 			return;
 		bool hasParent = nc->parent == nullptr ? false : true;
 		TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
@@ -183,7 +183,7 @@ namespace Principia {
 		local = local * scaleM;
 		hasParent ? tc->world = ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->world * local : tc->world = local;
 
-		if (nc->flags & COMPONENT_PRIMITIVE) {
+		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
 			//GET THE OBJ
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			//ssPrimitive& obj = rs->getObject(objComp->objIndex);
@@ -211,12 +211,12 @@ namespace Principia {
 			//rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 		}
 
-		else if (nc->flags & COMPONENT_CAMERA) {
+		else if (nc->engineFlags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
 			c->rotM = tc->world;
 			rs->updateCamera(c);
 		}
-		else if (nc->flags & COMPONENT_LIGHT) {
+		else if (nc->engineFlags & COMPONENT_LIGHT) {
 			LightComponent* l = (LightComponent*)nc->data->getComponent<LightComponent>();
 			ssLight& light = rs->getLight(l->id);
 			light.color = l->color;
@@ -268,14 +268,14 @@ namespace Principia {
 
 	void TransformSystem::geometryTransformConverter(NodeComponent * nc)
 	{
-		if (nc->flags & COMPONENT_MESH | COMPONENT_MODEL | COMPONENT_BOX)
+		if (nc->engineFlags & COMPONENT_MESH | COMPONENT_MODEL | COMPONENT_BOX)
 			return;
 		TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
-		if (nc->flags & COMPONENT_SPHERE) {
+		if (nc->engineFlags & COMPONENT_SPHERE) {
 			tc->global.scale.y = tc->global.scale.x;
 			tc->global.scale.z = tc->global.scale.x;
 		}
-		if (nc->flags & COMPONENT_CYLINDER) {
+		if (nc->engineFlags & COMPONENT_CYLINDER) {
 			tc->global.scale.z = tc->global.scale.x;
 		}
 	}

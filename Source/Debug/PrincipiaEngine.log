@@ -1,7 +1,4 @@
-﻿  animationSystem.cpp
-  audioSystem.cpp
-  transformSystem.cpp
-  Generating Code...
+﻿  transformSystem.cpp
   renderSystem.cpp
   bvhSystem.cpp
   resourceManager.cpp

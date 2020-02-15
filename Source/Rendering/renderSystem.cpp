@@ -431,10 +431,10 @@ void RenderSystem::addNodes(std::vector<NodeComponent*> nodes) {
 }
 
 void RenderSystem::addNode(NodeComponent* node) {
-	if (node->flags & COMPONENT_MODEL) {
+	if (node->engineFlags & COMPONENT_MODEL) {
 		return;
 	}
-	if (node->flags & COMPONENT_PRIMITIVE) {
+	if (node->engineFlags & COMPONENT_PRIMITIVE) {
 		//start constructing the object;
 		//ssPrimitive object;
 		//PrimitiveComponent* objComp = (PrimitiveComponent*)node->data->getComponent<PrimitiveComponent>();
@@ -469,7 +469,7 @@ void RenderSystem::addNode(NodeComponent* node) {
 		//setRenderUpdate(RenderUpdate::UPDATE_OBJECT);
 	}
 
-	if (node->flags & COMPONENT_JOINT) {
+	if (node->engineFlags & COMPONENT_JOINT) {
 		ssJoint joint;
 		JointComponent* jointComp = (JointComponent*)node->data->getComponent<JointComponent>();
 		joint.world = jointComp->bindPose;
@@ -492,7 +492,7 @@ void RenderSystem::addNode(NodeComponent* node) {
 
 	}
 
-	if (node->flags & COMPONENT_LIGHT) {
+	if (node->engineFlags & COMPONENT_LIGHT) {
 		LightComponent* lightComp = (LightComponent*)node->data->getComponent<LightComponent>();
 		TransformComponent* transComp = (TransformComponent*)node->data->getComponent<TransformComponent>();
 		ssLight light;
@@ -504,7 +504,7 @@ void RenderSystem::addNode(NodeComponent* node) {
 		lights.push_back(light);
 		lightComps.push_back(lightComp);
 	}
-	if (node->flags & COMPONENT_CAMERA) {
+	if (node->engineFlags & COMPONENT_CAMERA) {
 		CameraComponent* cam = (CameraComponent*)node->data->getComponent<CameraComponent>();
 		TransformComponent* transComp = (TransformComponent*)node->data->getComponent<TransformComponent>();
 		compute.ubo.aspectRatio = cam->aspectRatio;

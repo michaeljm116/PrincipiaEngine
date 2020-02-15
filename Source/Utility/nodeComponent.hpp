@@ -54,14 +54,14 @@ namespace Principia {
 		bool clicked = false;
 		bool isDynamic = false;
 		bool isParent = false;
-		unsigned int flags = COMPONENT_NODE;
-		unsigned int tags = TAG_NONE;
+		int64_t engineFlags = COMPONENT_NODE;
+		int64_t gameFlags = TAG_NONE;
 
 		NodeComponent(artemis::Entity* d) : data(d) { parent = this; };
 		NodeComponent(artemis::Entity* d, NodeComponent* p) : data(d), parent(p) {};
 		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent* child) : data(d), parent(p) { children.push_back(child); };
-		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent copy) : parent(p), data(d), name(copy.name) { flags = copy.flags; };
-		NodeComponent(artemis::Entity* d, std::string n, unsigned int f) : data(d), name(n) { flags |= f; parent = nullptr; };
+		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent copy) : parent(p), data(d), name(copy.name) { engineFlags = copy.engineFlags; };
+		NodeComponent(artemis::Entity* d, std::string n, int64_t f) : data(d), name(n) { engineFlags |= f; parent = nullptr; };
 	};
 
 	// I wish i thought of this a loooong time ago
