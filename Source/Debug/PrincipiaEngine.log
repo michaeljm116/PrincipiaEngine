@@ -1,7 +1,2 @@
-﻿  transformSystem.cpp
-  renderSystem.cpp
-  bvhSystem.cpp
-  resourceManager.cpp
-  window.cpp
-  Generating Code...
+﻿  serialize-node.cpp
   PrincipiaEngine.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.exe
