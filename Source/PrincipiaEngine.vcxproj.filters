@@ -155,6 +155,9 @@
     <ClCompile Include="Utility\prefabSystem.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\serialize-node.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -427,6 +430,9 @@
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Utility\prefabSystem.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\serialize-node.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
