@@ -4,7 +4,7 @@
 
 #include <Artemis/Artemis.h>
 #include <vector>
-
+#include <queue>
 namespace Principia {
 
 	enum ComponentFlag {
@@ -31,12 +31,13 @@ namespace Principia {
 		COMPONENT_JOINT = 0x100000
 	};
 
-	enum Tagflags {
-		TAG_NONE = 0x01,
-		TAG_PLAYER = 0x02,
-		TAG_WALL = 0x04,
-		TAG_GOAL = 0x08
-	};
+	//enum Tagflags {
+	//	TAG_NONE = 0x01,
+	//	TAG_PLAYER = 0x02,
+	//	TAG_WALL = 0x04,
+	//	TAG_GOAL = 0x08,
+	//	COMPONENT_SCENETRIGGER = 0x10
+	//};
 
 	enum class ObjectType {
 		SPHERE = 1,
@@ -55,13 +56,33 @@ namespace Principia {
 		bool isDynamic = false;
 		bool isParent = false;
 		int64_t engineFlags = COMPONENT_NODE;
-		int64_t gameFlags = TAG_NONE;
+		int64_t gameFlags = 0;
 
 		NodeComponent(artemis::Entity* d) : data(d) { parent = this; };
 		NodeComponent(artemis::Entity* d, NodeComponent* p) : data(d), parent(p) {};
 		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent* child) : data(d), parent(p) { children.push_back(child); };
 		NodeComponent(artemis::Entity* d, NodeComponent* p, NodeComponent copy) : parent(p), data(d), name(copy.name) { engineFlags = copy.engineFlags; };
 		NodeComponent(artemis::Entity* d, std::string n, int64_t f) : data(d), name(n) { engineFlags |= f; parent = nullptr; };
+	};
+	
+	//Returns a Breadth-First Vector of the nodes;
+	inline void flatten(std::vector<NodeComponent*>& vec, NodeComponent* nc) {
+		std::queue<NodeComponent*> q;
+		q.push(nc);
+		while (!q.empty()) {
+			auto f = q.front();
+			q.pop();
+			for (auto child : f->children) {
+				q.push(child);
+				vec.push_back(child);
+			}
+		}
+	}
+
+	//Breadth First Graph Component
+	//An array of node pointers layed out in BFS order
+	struct BFGraphComponent : artemis::Component {
+		std::vector<NodeComponent*> nodes;
 	};
 
 	// I wish i thought of this a loooong time ago

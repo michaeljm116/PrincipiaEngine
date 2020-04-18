@@ -17,9 +17,6 @@ namespace Principia {
 
 		void initialize();
 		void begin();
-		void end();
-		void added(artemis::Entity &e) override;
-		void removed(artemis::Entity &e) override;
 		void processEntity(artemis::Entity &e) override;
 
 		void checkDynamicCollisions();

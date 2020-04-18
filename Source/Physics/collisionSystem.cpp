@@ -8,7 +8,6 @@ namespace Principia {
 		addComponentType<CollisionComponent>();
 		addComponentType<TransformComponent>();
 		addComponentType<DynamicComponent>();
-		//addComponentType<GameObjectTypeComponent>();
 	}
 
 	CollisionSystem::~CollisionSystem()
@@ -19,7 +18,6 @@ namespace Principia {
 	{
 		colMapper.init(*world);
 		transMapper.init(*world);
-		//gotMapper.init(*world);
 		grid = (GridComponent*)world->getSingleton()->getComponent<GridComponent>();
 	}
 
@@ -28,27 +26,6 @@ namespace Principia {
 		checkDynamicCollisions();
 	}
 
-	void CollisionSystem::end()
-	{
-	}
-
-	void CollisionSystem::added(artemis::Entity & e)
-	{
-		//GameObjectType t = gotMapper.get(e)->type;
-		//if (t & GameObjectType::GAMEOBJECT_ENEMY)
-		//	enemies.insert(e.getId());
-		//else if (t & GameObjectType::GAMEOBJECT_PLAYER)
-		//	players.insert(e.getId());
-	}
-
-	void CollisionSystem::removed(artemis::Entity & e)
-	{
-		//GameObjectType t = gotMapper.get(e)->type;
-		//if (t & GameObjectType::GAMEOBJECT_ENEMY)
-		//	enemies.erase(e.getId());
-		//else if (t & GameObjectType::GAMEOBJECT_PLAYER)
-		//	players.erase(e.getId());
-	}
 
 	void CollisionSystem::processEntity(artemis::Entity & e)
 	{
@@ -61,16 +38,7 @@ namespace Principia {
 		//This is for all static objects ///////////////do later right now u finna test spheres
 		checkStaticCollision(e);		
 
-		//This is for all dynamic objects
-		//auto a = getActives();
-		//auto* a = getActives();
-		//int c = a->getCount();
-		//const int id = e.getId();
-		//for (int i = 0; i < c; ++i) {
-		//	auto um = a->get(i);
-		//	if(id != um->getId())
-		//		checkCollision(e, *um);
-		//}
+
 
 	}
 
@@ -137,6 +105,7 @@ namespace Principia {
 			b.refresh();
 		}
 	}
+
 	glm::vec3 CollisionSystem::rotateBounds(const glm::quat & m, const glm::vec3 & extents)
 	{
 		//set up cube

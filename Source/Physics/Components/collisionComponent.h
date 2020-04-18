@@ -53,7 +53,7 @@ namespace Principia {
 					cw.timer++;
 				}
 			}
-			if (!found)
+			if (!found) //This is a unique collision there should be an alert
 				collidedWith.push_back(cd);
 		}
 	};

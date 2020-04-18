@@ -58,7 +58,7 @@ namespace Principia {
 			textureID = ti;
 
 			uniqueID = name[0];
-			for (int i = 1; i < name.size(); ++i) {
+			for (size_t i = 1; i < name.size(); ++i) {
 				uniqueID *= name[i] + name[i - 1];
 			}
 		}
@@ -101,90 +101,14 @@ namespace Principia {
 		int skeletonID;
 		bool skinned = false;
 	};
-
-	struct JointObject {
-		int objID;
-		int faceID;
-		JointObject(int o, int f) : objID(o), faceID(f) {};
-		JointObject() {};
-	};
-
-	struct rJoint {
+	struct rPose {
 		std::string name;
-		int parentIndex;
-		//glm::mat4 local_invBindPose;
-		glm::mat4 invBindPose;
-		glm::mat4 transform;
-		glm::vec3 center;
-		glm::vec3 extents;
-
-		std::vector<rVertex> verts;
-		std::vector<glm::ivec4> faces;
-		std::vector<int> meshIDs;
-		std::vector<rShape> shapes;
-
-		rJoint() {};
+		std::vector<std::pair<sqt, int>> pose;	
+		int hashVal;
 	};
-
-
-	struct rAnimKey {
-		float time;
-		glm::vec3 pos;
-		glm::quat rot;
-		glm::vec3 sca;
-	};
-
-	struct rAnimChannel {
-		std::vector<rAnimKey> keys;
-	};
-
-	struct rAnimation {
-		int skeletonID;
-		int numChannels;
-		float duration;
-		float sps; //Samples per second
+	struct rPoseList {
 		std::string name;
-		std::vector<rAnimChannel> channels;
-	};
-
-	struct rSkeleton {
-		int id;
-		std::vector<rJoint> joints;
-		std::string name;
-		std::vector<rAnimation> animations;
-		glm::mat4 globalInverseTransform;
-
-		//Joint 
-		void buildGlobalBinds() {
-			for (int j = 0; j < joints.size(); ++j) {
-				//First build the joints
-				int pi = joints[j].parentIndex;
-				if (pi > 0) {
-					//joints[j].global_invBindPose = joints[j].globlocalal_invBindPose;
-					joints[j].invBindPose = joints[pi].invBindPose * joints[j].invBindPose;
-				}
-				/*
-				else {
-					//first build the joints
-					//joints[j].global_invBindPose = joints[pi].global_invBindPose * joints[j].globasdfal_invBindPose;
-
-					//then build the channels
-					for (int a = 0; a < animations.size(); ++a) {
-						rAnimChannel chan = animations[a].channels[j];
-						for (int k = 0; k < chan.keys.size(); ++k) {
-							//glm::vec3 position = chan.keys[k].pos;
-							//glm::quat rotation = chan.keys[k].rot;
-							//glm::vec3 scale = chan.keys[k].sca;
-
-							chan.keys[k].pos = chan.keys[pi].pos + chan.keys[k].pos;
-							chan.keys[k].rot = chan.keys[pi].rot * chan.keys[k].rot;
-							chan.keys[k].sca = chan.keys[pi].sca * chan.keys[k].sca;
-						}
-					}
-				}*/
-
-			}
-		};
-
+		std::vector<rPose> poses;
+		int hashVal;
 	};
 }

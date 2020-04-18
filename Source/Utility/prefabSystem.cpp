@@ -1,5 +1,5 @@
 #include "prefabSystem.h"
-#include "serialize-node.h"
+//#include "serialize-node.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }
@@ -12,7 +12,6 @@ namespace Principia {
 	PrefabSystem::PrefabSystem()
 	{
 		addComponentType<PrefabComponent>();
-		addComponentType<NodeComponent>();
 	}
 
 	PrefabSystem::~PrefabSystem()
@@ -21,22 +20,25 @@ namespace Principia {
 
 	void PrefabSystem::initialize()
 	{
-		nodeMapper.init(*world);
 		prefabMapper.init(*world);
 	}
 
 	void PrefabSystem::added(artemis::Entity & e)
 	{
 		PrefabComponent* pc = prefabMapper.get(e);
-		NodeComponent* nc = nodeMapper.get(e);
+		tinyxml2::XMLError eR;
 		if (pc->save)
 		{
-
+			NodeComponent* nc = (NodeComponent*)e.getComponent<NodeComponent>();
+			assert(nc != nullptr);
+			eR = SavePrefab(pc->dir + pc->name, nc);
 		}
 		else
 		{
-
+			eR = LoadPrefab(pc->dir + pc->name, &e);
 		}
+		
+		e.removeComponent<PrefabComponent>();
 	}
 
 	void PrefabSystem::processEntity(artemis::Entity & e)
@@ -64,10 +66,15 @@ namespace Principia {
 		return eResult;
 	}
 
-	tinyxml2::XMLError PrefabSystem::LoadPrefab(std::string prefab, NodeComponent * node)
+	tinyxml2::XMLError PrefabSystem::LoadPrefab(std::string prefab, artemis::Entity* e)
 	{
 		XMLDocument doc;
-		XMLError eResult = doc.LoadFile((prefab).c_str());
+		XMLError eResult = doc.LoadFile((prefab + ".prefab").c_str());
+		XMLCheckResult(eResult);
+		XMLNode * pNode = doc.FirstChild();
+		XMLElement* pRoot = doc.FirstChildElement("Root");
+
+		SERIALIZENODE.loadNode(pRoot->FirstChildElement("Node"), e);
 
 		return eResult;
 	}

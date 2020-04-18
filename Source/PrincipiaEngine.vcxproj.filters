@@ -158,6 +158,12 @@
     <ClCompile Include="Utility\serialize-node.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="Animation\poseSystem.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\animateSystem.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -434,6 +440,15 @@
     </ClInclude>
     <ClInclude Include="Utility\serialize-node.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\xxhash.hpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\poseSystem.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\animateSystem.h">
+      <Filter>Source Files\Animation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

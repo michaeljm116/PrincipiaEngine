@@ -287,7 +287,6 @@ void RenderSystem::loadResources()
 	std::vector<ssBVHNode> blas;
 
 	std::vector<rModel>& models = RESOURCEMANAGER.getModels();
-	std::vector<rSkeleton>& skeletons = RESOURCEMANAGER.getSkeletons();
 	for each (rModel mod in models)
 	{
 		for (size_t i = 0; i < mod.meshes.size(); ++i) {
@@ -325,44 +324,6 @@ void RenderSystem::loadResources()
 			meshAssigner[mod.uniqueID + i] = std::pair<int, int>(prevIndSize, faces.size());
 		}
 		
-	}
-	for (auto skel : skeletons) {
-		int index = 0;
-		for (auto joint : skel.joints) {
-
-			//Initialize the start of the list's in the GPU
-			int prevVertSize = verts.size();
-			int prevFaceSize = faces.size();
-			int prevShapeSize = shapes.size();
-
-			//Push in the verts
-			verts.reserve(prevVertSize + joint.verts.size());
-			for (auto vert : joint.verts) {
-				verts.emplace_back(ssVert(vert.pos / joint.extents, vert.norm, vert.uv.x, vert.uv.y));
-			}
-			
-			//Push in the faces
-			faces.reserve(prevFaceSize + joint.faces.size());
-			for (auto face : joint.faces) {
-				faces.emplace_back(ssIndex(face + prevVertSize));
-			}
-
-			//Since shapes will probably be much less frequent, we add this check in
-			size_t numShapes = joint.shapes.size();
-			if (numShapes > 0) {
-				shapes.reserve(prevShapeSize + joint.shapes.size());
-				for (auto shape : joint.shapes) {
-					shapes.push_back(ssShape(shape.center, shape.extents, shape.type));
-				}
-
-				//This helps you keep track of the start and end indexes
-				shapeAssigner[skel.id + index] = std::pair<int, int>(prevShapeSize, shapes.size());
-			}
-
-			//This helps you keep track of the start and end indexes
-			jointAssigner[skel.id + index] = std::pair<int, int>(prevFaceSize, faces.size());
-			index++;
-		}
 	}
 
 	shapes.push_back(ssShape(glm::vec3(0.f), glm::vec3(1.f), 1));
@@ -470,25 +431,25 @@ void RenderSystem::addNode(NodeComponent* node) {
 	}
 
 	if (node->engineFlags & COMPONENT_JOINT) {
-		ssJoint joint;
-		JointComponent* jointComp = (JointComponent*)node->data->getComponent<JointComponent>();
-		joint.world = jointComp->bindPose;
-		joint.extents = jointComp->extents;
-		
-		std::pair<int, int> temp = jointAssigner[jointComp->uniqueID];
-		joint.startIndex = temp.first;
-		joint.endIndex = temp.second;
-		if (jointComp->numShapes > 0) {
-			std::pair<int, int> tempShape = shapeAssigner[jointComp->uniqueID];
-			joint.startShape = tempShape.first;
-			joint.endShape = tempShape.second;
-		}
-		joint.id = jointComp->uniqueID;
+		//ssJoint joint;
+		//JointComponent* jointComp = (JointComponent*)node->data->getComponent<JointComponent>();
+		//joint.world = jointComp->bindPose;
+		//joint.extents = jointComp->extents;
+		//
+		//std::pair<int, int> temp = jointAssigner[jointComp->uniqueID];
+		//joint.startIndex = temp.first;
+		//joint.endIndex = temp.second;
+		//if (jointComp->numShapes > 0) {
+		//	std::pair<int, int> tempShape = shapeAssigner[jointComp->uniqueID];
+		//	joint.startShape = tempShape.first;
+		//	joint.endShape = tempShape.second;
+		//}
+		//joint.id = jointComp->uniqueID;
 
-		joints.push_back(joint);
+		//joints.push_back(joint);
 
-		jointComp->renderIndex = joints.size() - 1;
-		jointComps.push_back(jointComp);
+		//jointComp->renderIndex = joints.size() - 1;
+		//jointComps.push_back(jointComp);
 
 	}
 
@@ -726,7 +687,7 @@ void RenderSystem::initialize() {
 	createDescriptorPool();
 	createDescriptorSets();
 	prepareCompute();
-	createCommandBuffers(0.6666666666666f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+	createCommandBuffers(0.733333333333f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
 	updateDescriptors();
 
 	//setupUI();
@@ -837,12 +798,32 @@ void RenderSystem::recreateSwapChain()
 	RenderBase::recreateSwapChain();
 	createDescriptorSetLayout();
 	createGraphicsPipeline();
-	createCommandBuffers(0.6666666666666f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+	//editor ?
+	createCommandBuffers(0.7333333333f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+	//	createCommandBuffers(0.6666666666666f, 0, 0);
 	swapChainFramebuffers;
 	//return swapChainFramebuffers;
 	//ui->visible = false;
 	//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
 }
+
+void RenderSystem::togglePlayMode(bool playMode)
+{
+	//INPUT.playToggled = !INPUT.playToggled;
+	//playMode = !playMode;
+	if (playMode) {
+		WINDOW.resize();
+		RenderBase::recreateSwapChain();
+		createDescriptorSetLayout();
+		createGraphicsPipeline();
+		createCommandBuffers(1.f, 0, 0);
+		//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
+	}
+	else {
+		recreateSwapChain();
+	}
+}
+
 
 #pragma endregion
 
