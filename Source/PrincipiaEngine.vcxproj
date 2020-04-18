@@ -23,12 +23,14 @@
     <ClCompile Include="..\Lib\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_draw.cpp" />
     <ClCompile Include="..\Lib\tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="Animation\animateSystem.cpp" />
     <ClCompile Include="Animation\animationSystem.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Animation\poseSystem.cpp" />
     <ClCompile Include="ArtemisFrameWork\Component.cpp" />
     <ClCompile Include="ArtemisFrameWork\ComponentType.cpp" />
     <ClCompile Include="ArtemisFrameWork\ComponentTypeManager.cpp" />
@@ -114,8 +116,10 @@
     <ClInclude Include="..\Lib\imgui\stb_textedit.h" />
     <ClInclude Include="..\Lib\imgui\stb_truetype.h" />
     <ClInclude Include="..\Lib\tinyxml2\tinyxml2.h" />
+    <ClInclude Include="Animation\animateSystem.h" />
     <ClInclude Include="Animation\animationComponent.hpp" />
     <ClInclude Include="Animation\animationSystem.h" />
+    <ClInclude Include="Animation\poseSystem.h" />
     <ClInclude Include="ArtemisFrameWork\Artemis\Artemis.h" />
     <ClInclude Include="ArtemisFrameWork\Artemis\BitSize.h" />
     <ClInclude Include="ArtemisFrameWork\Artemis\Component.h" />
@@ -179,6 +183,7 @@
     <ClInclude Include="Utility\transformComponent.hpp" />
     <ClInclude Include="Utility\transformSystem.h" />
     <ClInclude Include="Utility\window.h" />
+    <ClInclude Include="Utility\xxhash.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Lib\imgui\CHANGELOG.txt" />

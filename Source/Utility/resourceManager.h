@@ -7,6 +7,7 @@ has a list of all the resources
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
+//#include <xxhash.hpp>
 #include "../tinyxml2/tinyxml2.h"
 #include "../Utility/componentIncludes.h"
 #include <filesystem>
@@ -28,7 +29,7 @@ namespace Principia {
 		std::vector<std::string> fileNames;
 		std::vector<rModel>		 models;
 		std::vector<rMaterial>	 materials;
-		std::vector<rSkeleton>	 skeletons;
+		std::vector<rPoseList>	 poses;
 
 	public:
 		~Resources() {};
@@ -41,7 +42,7 @@ namespace Principia {
 		bool LoadAnimations(std::string directory);
 		bool LoadResources(std::string fileName);
 		bool LoadPModel(std::string fileName);
-		bool LoadSkeleton(std::string fileName);
+		bool LoadPose(std::string fileName, std::string prefabName);
 
 		tinyxml2::XMLError  SaveMaterials();
 		tinyxml2::XMLError LoadMaterials(const char* file);
@@ -65,14 +66,14 @@ namespace Principia {
 			}
 		}
 		inline int			getModelIndex(std::string n) {
-			for (int i = 0; i < models.size(); ++i) {
+			for (size_t i = 0; i < models.size(); ++i) {
 				if (models[i].name == n)
 					return i;
 			}
 			return 0;
 		}
 		inline int			getModelIndex(int n) {
-			for (int i = 0; i < models.size(); ++i) {
+			for (size_t i = 0; i < models.size(); ++i) {
 				if (models[i].uniqueID == n)
 					return i;
 			}
@@ -82,22 +83,8 @@ namespace Principia {
 		inline std::vector<rModel> getModels() { return models; };
 
 #pragma endregion
-		inline std::vector<rSkeleton> getSkeletons() { return skeletons; };
-		inline rSkeleton& getSkeleton(int i) {
-			return skeletons[i];
-		}
-		inline rSkeleton& getSkeletonID(int id) {
-			for (std::vector<rSkeleton>::iterator itr = skeletons.begin(); itr != skeletons.end(); ++itr) {
-				if (itr->id == id) {
-					return *itr;
-				}
-			}
-		}
-		inline int getSkeletonIndex(int id) {
-			for (int i = 0; i < skeletons.size(); ++i)
-				if (skeletons[i].id == id)
-					return i;
-		}
+
+		const rPose& getPose(const std::string& prefabName, const std::string& poseName);
 
 #pragma region materials
 		inline rMaterial& getMaterial(int i) { return materials[i]; };
@@ -109,7 +96,7 @@ namespace Principia {
 			return rMaterial();
 		}
 		inline int		  getMaterialIndex(std::string n) {
-			for (int i = 0; i < materials.size(); ++i) {
+			for (size_t i = 0; i < materials.size(); ++i) {
 				if (materials[i].name == n)
 					return i;
 			}

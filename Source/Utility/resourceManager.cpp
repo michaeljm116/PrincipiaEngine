@@ -1,6 +1,7 @@
 #include "../pch.h"
 #include "resourceManager.h"
 #include "window.h"
+#include "xxhash.hpp"
 
 namespace Principia {
 #ifndef XMLCheckResult
@@ -31,6 +32,7 @@ namespace Principia {
 		global[7] = GLFW_KEY_F11;
 		global[8] = GLFW_KEY_RIGHT_BRACKET;
 		global[9] = GLFW_KEY_ESCAPE;
+		global[10] = GLFW_KEY_BACKSLASH;
 
 		controller1[0] = GLFW_KEY_D;
 		controller1[1] = GLFW_KEY_W;
@@ -75,7 +77,7 @@ namespace Principia {
 	bool Resources::LoadAnimations(std::string directory)
 	{
 		for (const auto & p : std::filesystem::directory_iterator(directory)) {
-			if (!LoadSkeleton(p.path().string()))
+			if (!LoadPose(p.path().string(), p.path().stem().string()))
 				break;
 		}
 		return false;
@@ -219,148 +221,68 @@ namespace Principia {
 		return true;
 	}
 
-	bool Resources::LoadSkeleton(std::string fileName)
+	bool Resources::LoadPose(std::string fileName, std::string prefabName)
 	{
-		rSkeleton skelly;
+		// Initialize variables
+		tinyxml2::XMLDocument doc;
+		tinyxml2::XMLElement* pRoot;
+		tinyxml2::XMLNode* pNode;
+		tinyxml2::XMLError eResult = doc.LoadFile(fileName.c_str());
 
-		std::fstream binaryio;
-		binaryio.open(fileName.c_str(), std::ios::in | std::ios::binary);
+		// Confirm if the thing exist
+		if (eResult == tinyxml2::XML_ERROR_FILE_NOT_FOUND) return eResult;
 
-		//get the skeleton name
-		int nameLength;
-		char c;
+		// Do the things
+		pNode = doc.FirstChild();
+		pRoot = doc.FirstChildElement("Root");
 
-		binaryio.read(reinterpret_cast<char*>(&nameLength), sizeof(int));
-		skelly.name.reserve(nameLength);
-		for (int i = 0; i < nameLength; ++i) {
-			binaryio.read(&c, sizeof(c));
-			skelly.name.push_back(c);
-		}
+		//Iterate through the poses
+		rPoseList pl; pl.name = prefabName; pl.hashVal = xxh::xxhash<32, char>(prefabName.c_str(), 0);
+		tinyxml2::XMLElement* poseElement = pRoot->FirstChildElement("Pose");
 
-		//Read the UniqueID
-		binaryio.read(reinterpret_cast<char*>(&skelly.id), sizeof(int));
-
-		//Get numberofJoints
-		int numJoints;
-		binaryio.read(reinterpret_cast<char*>(&numJoints), sizeof(int));
-		skelly.joints.reserve(numJoints);
-
-		//Read the joints
-		for (int j = 0; j < numJoints; ++j) {
-			rJoint joint;
+		while (poseElement != nullptr) {
 			//Get the name
-			int jointNameLength;
-			binaryio.read(reinterpret_cast<char*>(&jointNameLength), sizeof(int));
-			for (int i = 0; i < jointNameLength; ++i) {
-				binaryio.read(&c, sizeof(c));
-				joint.name.push_back(c);
-			}
-			//get the parent index and bind pose
-			binaryio.read(reinterpret_cast<char*>(&joint.parentIndex), sizeof(int));
-			binaryio.read(reinterpret_cast<char*>(&joint.invBindPose), sizeof(glm::mat4));
-			binaryio.read(reinterpret_cast<char*>(&joint.transform), sizeof(glm::mat4));
+			rPose pose;
+			const char* name;
+			poseElement->QueryStringAttribute("Name", &name);
+			pose.name = name;
+			pose.hashVal = xxh::xxhash<32, char>(name);
 
-			//GET THE bone extents
-			binaryio.read(reinterpret_cast<char*>(&joint.center), sizeof(glm::vec3));
-			binaryio.read(reinterpret_cast<char*>(&joint.extents), sizeof(glm::vec3));
+			//Iterate through the transforms
+			tinyxml2::XMLElement* transElement = poseElement->FirstChildElement("Tran");
 
-			//Get the numbers;
-			int numVerts, numFaces, numShapes;
-			binaryio.read(reinterpret_cast<char*>(&numVerts), sizeof(int));
-			binaryio.read(reinterpret_cast<char*>(&numFaces), sizeof(int));
-			binaryio.read(reinterpret_cast<char*>(&numShapes), sizeof(int));
+			while (transElement != nullptr) {
+				int i;
+				sqt t;
+				transElement->QueryIntAttribute("CN", &i);
 
-			//get the verts
-			joint.verts.reserve(numVerts);
-			for (int v = 0; v < numVerts; ++v) {
-				rVertex vert;
-				binaryio.read(reinterpret_cast<char*>(&vert), sizeof(rVertex));
-				joint.verts.emplace_back(vert);
-			}
+				tinyxml2::XMLElement* pos = transElement->FirstChildElement("Pos");
+				tinyxml2::XMLElement* rot = transElement->FirstChildElement("Rot");
+				tinyxml2::XMLElement* sca = transElement->FirstChildElement("Sca");
 
-			//get the faces
-			joint.faces.reserve(numFaces);
-			for (int f = 0; f < numFaces; ++f) {
-				glm::ivec4 face;
-				binaryio.read(reinterpret_cast<char*>(&face), sizeof(glm::ivec4));
-				joint.faces.emplace_back(face);
-			}
+				pos->QueryFloatAttribute("x", &t.position.x);
+				pos->QueryFloatAttribute("y", &t.position.y);
+				pos->QueryFloatAttribute("z", &t.position.z);
 
-			//get the meshids
-			joint.meshIDs.reserve(numFaces);
-			for (int m = 0; m < numFaces; ++m) {
-				int meshID;
-				binaryio.read(reinterpret_cast<char*>(&meshID), sizeof(int));
-				joint.meshIDs.emplace_back(meshID);
-			}
+				rot->QueryFloatAttribute("x", &t.rotation.x);
+				rot->QueryFloatAttribute("y", &t.rotation.y);
+				rot->QueryFloatAttribute("z", &t.rotation.z);
+				rot->QueryFloatAttribute("w", &t.rotation.w);
 
-			//get shapes
-			joint.shapes.reserve(numShapes);
-			for (int i = 0; i < numShapes; ++i) {
-				int shapeNameLength;
-				rShape shape;
-				binaryio.read(reinterpret_cast<char*>(&shapeNameLength), sizeof(int));
-				for (int n = 0; n < shapeNameLength; ++n) {
-					binaryio.read(&c, sizeof(char));
-					shape.name.push_back(c);
-				}
-				binaryio.read(reinterpret_cast<char*>(&shape.type), sizeof(int));
-				binaryio.read(reinterpret_cast<char*>(&shape.center), sizeof(glm::vec3));
-				binaryio.read(reinterpret_cast<char*>(&shape.extents), sizeof(glm::vec3));
+				sca->QueryFloatAttribute("x", &t.scale.x);
+				sca->QueryFloatAttribute("y", &t.scale.y);
+				sca->QueryFloatAttribute("z", &t.scale.z);
 
-				joint.shapes.push_back(shape);
-			}
+				pose.pose.push_back(std::make_pair(t, i));
+				transElement = transElement->NextSiblingElement("Tran");
+			}	
 
-			skelly.joints.emplace_back(joint);
+			pl.poses.push_back(pose);
+			poseElement = poseElement->NextSiblingElement("Pose");
 		}
-
-		binaryio.read(reinterpret_cast<char*>(&skelly.globalInverseTransform), sizeof(glm::mat4));
-
-		//Get number of animations
-		int numAnims;
-		binaryio.read(reinterpret_cast<char*>(&numAnims), sizeof(int));
-
-		for (int a = 0; a < numAnims; ++a) {
-			rAnimation anim;
-			//idk why i saved the skeleton id for each anim but whatever
-			binaryio.read(reinterpret_cast<char*>(&anim.skeletonID), sizeof(int));
-			//get the name
-			int animNameLength;
-			binaryio.read(reinterpret_cast<char*>(&animNameLength), sizeof(int));
-			for (int i = 0; i < animNameLength; ++i) {
-				binaryio.read(&c, sizeof(c));
-				anim.name.push_back(c);
-			}
-
-			//get the duration and the samples per second
-			binaryio.read(reinterpret_cast<char*>(&anim.duration), sizeof(float));
-			binaryio.read(reinterpret_cast<char*>(&anim.sps), sizeof(float));
-
-			//NOW FOR THE CHANNELS DUN DUN DUN
-			int numchannels;
-			binaryio.read(reinterpret_cast<char*>(&numchannels), sizeof(int));
-			for (int i = 0; i < numchannels; ++i) {
-				rAnimChannel channel;
-				int numKeys;
-				binaryio.read(reinterpret_cast<char*>(&numKeys), sizeof(int));
-				for (int k = 0; k < numKeys; k++) {
-					rAnimKey key;
-					binaryio.read(reinterpret_cast<char*>(&key.time), sizeof(float));
-					binaryio.read(reinterpret_cast<char*>(&key.pos), sizeof(glm::vec3));
-					binaryio.read(reinterpret_cast<char*>(&key.rot), sizeof(glm::quat));
-					binaryio.read(reinterpret_cast<char*>(&key.sca), sizeof(glm::vec3));
-					channel.keys.push_back(key);
-				}
-				anim.channels.push_back(channel);
-				anim.numChannels = numchannels;
-			}
-			skelly.animations.push_back(anim);
-		}
-
-		binaryio.close();
-		//skelly.buildGlobalBinds();
-		skeletons.push_back(skelly);
-		return true;
+		
+		poses.push_back(pl);
+		return eResult;
 	}
 
 	tinyxml2::XMLError Resources::SaveMaterials()
@@ -428,6 +350,24 @@ namespace Principia {
 				lastOne = true;
 		}
 		XMLCheckResult(eResult);
+	}
+
+	const rPose & Resources::getPose(const std::string& prefabName, const std::string& poseName)
+	{
+		//Get da hashes
+		int prefN = xxh::xxhash<32, char>(prefabName);
+		int poseN = xxh::xxhash<32, char>(poseName);
+
+		//compare and find;
+		for (auto& pr : poses) {
+			if (pr.hashVal == prefN) {
+				for (auto& po : pr.poses) {
+					if (po.hashVal == poseN)
+						return po;
+				}
+			}
+		}
+		return rPose();
 	}
 
 	tinyxml2::XMLError Resources::loadScript(const char* file) {

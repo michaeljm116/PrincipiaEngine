@@ -10,8 +10,8 @@ namespace Principia {
 
 	class SerializeGameNode {
 	public:
-		virtual void LoadGameData(tinyxml2::XMLElement* node) {};
-		virtual void SaveGameData(NodeComponent* node, tinyxml2::XMLDocument* doc) {};
+		virtual void LoadGameData(NodeComponent* node, tinyxml2::XMLElement* xNode) {};
+		virtual void SaveGameData(NodeComponent* node, tinyxml2::XMLElement* xNode, tinyxml2::XMLDocument* doc) {};
 	};
 
 	//extern SerializeGameNode* sgn;
@@ -19,6 +19,7 @@ namespace Principia {
 	private:
 		SerializeNode() {};
 		artemis::EntityManager* em;
+		SerializeGameNode* gameData;
 
 	public:
 		~SerializeNode() {};
@@ -29,9 +30,11 @@ namespace Principia {
 		SerializeNode(SerializeNode const&) = delete;
 		void operator=(SerializeNode const&) = delete;
 		void SetEntityManager(artemis::EntityManager* e) { em = e; }
+		void SetGameData(SerializeGameNode* gd) { gameData = gd; }
 		tinyxml2::XMLElement* saveNode(NodeComponent* parent, tinyxml2::XMLDocument* doc);
 		NodeComponent* loadNode(tinyxml2::XMLElement* node);
-		std::vector<NodeComponent*> loadNodes(tinyxml2::XMLElement* start, tinyxml2::XMLElement* finish, NodeComponent* p);
+		void loadNode(tinyxml2::XMLElement* node, artemis::Entity* e);
+		std::vector<NodeComponent*> loadNodes(tinyxml2::XMLElement* start, NodeComponent* p);
 
 	};
 }

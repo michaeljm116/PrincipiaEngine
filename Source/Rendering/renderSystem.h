@@ -4,7 +4,6 @@ everything here is so convoluted and rushed it needs
 much rework but brotha aint got time fo dat
 */
 
-
 #include "rendermanagers.h"
 #include "renderbase.h"
 #include "shaderStructures.hpp"
@@ -90,7 +89,8 @@ namespace Principia {
 		virtual void cleanup();
 		virtual void cleanupSwapChain();
 		virtual void recreateSwapChain();
-
+		bool editor = true;
+		void togglePlayMode(bool b);
 		ssJoint& getJoint(int i) { return joints[i]; };
 		ssLight& getLight(int i) { return lights[i]; };
 
@@ -160,7 +160,7 @@ namespace Principia {
 
 		std::vector<MeshComponent*> meshComps;
 		//std::vector<PrimitiveComponent*> objectComps;
-		std::vector<JointComponent*> jointComps;
+		//std::vector<JointComponent*> jointComps;
 		std::vector<LightComponent*> lightComps;
 
 		std::unordered_map<int32_t, std::pair<int, int>> meshAssigner;

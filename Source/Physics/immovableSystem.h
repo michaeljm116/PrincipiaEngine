@@ -22,7 +22,7 @@ namespace Principia {
 	private:
 		artemis::ComponentMapper<ImmovableComponent> imvMapper;
 		artemis::ComponentMapper<CollisionComponent> collMapper;
-		artemis::ComponentMapper<CollidedComponent> coldMapper;
+		artemis::ComponentMapper<CollidedComponent > coldMapper;
 		artemis::ComponentMapper<TransformComponent> transMapper;
 	};
 }

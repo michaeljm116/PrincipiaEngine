@@ -77,7 +77,7 @@ namespace Principia {
 		tc->global.scale = parent.scale * tc->local.scale;
 
 		tc->world = glm::toMat4(tc->global.rotation);
-		tc->world[3] = glm::vec4(tc->global.position, 1.f);
+		tc->world[3] = tc->global.position;
 
 		//pass in the transform info as well as the components to mult
 		if (nc->engineFlags & COMPONENT_MODEL)
@@ -91,7 +91,7 @@ namespace Principia {
 
 			//scale the aabb
 			//obj.center = tc->global.position;
-			objComp->extents = tc->global.scale;// rotateAABB(tc->global.rotation, obj.extents * tc->global.scale);
+			objComp->extents = glm::vec3(tc->global.scale);// rotateAABB(tc->global.rotation, obj.extents * tc->global.scale);
 			objComp->world = tc->world;
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
@@ -107,7 +107,7 @@ namespace Principia {
 			ssLight& light = rs->getLight(l->id);
 			light.color = l->color;
 			light.intensity = l->intensity;
-			light.pos = tc->global.position;
+			light.pos = glm::vec3(tc->global.position);
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
 		}
@@ -133,13 +133,12 @@ namespace Principia {
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		//build position and scale matrix;
-		positionM = glm::translate(tc->local.position);
-		scaleM = glm::scale(tc->local.scale);
+		positionM = glm::translate(glm::vec3(tc->local.position));
+		scaleM = glm::scale(glm::vec3(tc->local.scale));
 
 		//combine them into 1 and multiply by parent if u haz parent;
 		glm::mat4 local = positionM * rotationM * scaleM;
 		hasParent ? tc->world = local : tc->world = local * parent->world;
-
 
 	}
 	void TransformSystem::recursiveTransform(NodeComponent* nc) {
@@ -159,8 +158,8 @@ namespace Principia {
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		//build position and scale matrix;
-		positionM = glm::translate(tc->local.position);
-		scaleM = glm::scale(tc->local.scale);
+		positionM = glm::translate(glm::vec3(tc->local.position));
+		scaleM = glm::scale(glm::vec3(tc->local.scale));
 		glm::mat4 local = positionM * rotationM;// *scaleM;
 
 		//if (hasParent) {
@@ -202,7 +201,7 @@ namespace Principia {
 			//	glm::vec3 center = objComp->center * tc->global.rotation + tc->global.position;
 			//	tc->world[3] = glm::vec4(center, 1.f);
 			//}
-			objComp->extents = tc->global.scale;
+			objComp->extents = glm::vec3(tc->global.scale);
 			//obj.invWorld = glm::inverse(tc->TRM);
 			//obj.world = tc->world;
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
@@ -221,7 +220,7 @@ namespace Principia {
 			ssLight& light = rs->getLight(l->id);
 			light.color = l->color;
 			light.intensity = l->intensity;
-			light.pos = tc->global.position;
+			light.pos = glm::vec3(tc->global.position);
 			light.pos = tc->world[3];
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
