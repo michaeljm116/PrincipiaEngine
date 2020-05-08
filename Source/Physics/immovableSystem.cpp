@@ -29,10 +29,6 @@ void Principia::ImmovableSystem::added(artemis::Entity & e)
 		tc->local.position = glm::vec4(cw.colpoint + (EPSILON * cw.normal), 0.f);
 	}
 	//e.removeComponent<CollidedComponent>();
-
-
-
-
 }
 
 void Principia::ImmovableSystem::processEntity(artemis::Entity & e)

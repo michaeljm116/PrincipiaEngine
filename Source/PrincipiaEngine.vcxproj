@@ -54,6 +54,7 @@
     </ClCompile>
     <ClCompile Include="Physics\collidedWithSystem.cpp" />
     <ClCompile Include="Physics\collisionSystem.cpp" />
+    <ClCompile Include="Physics\gravitySystem.cpp" />
     <ClCompile Include="Physics\gridSystem.cpp" />
     <ClCompile Include="Physics\immovableSystem.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp">
@@ -147,9 +148,11 @@
     <ClInclude Include="Physics\collisionTests.h" />
     <ClInclude Include="Physics\Components\collisionComponent.h" />
     <ClInclude Include="Physics\Components\dynamicComponent.h" />
+    <ClInclude Include="Physics\Components\gravityComponent.h" />
     <ClInclude Include="Physics\Components\gridComponent.h" />
     <ClInclude Include="Physics\Components\immovableComponent.h" />
     <ClInclude Include="Physics\Components\staticComponent.h" />
+    <ClInclude Include="Physics\gravitySystem.h" />
     <ClInclude Include="Physics\gridSystem.h" />
     <ClInclude Include="Physics\immovableSystem.h" />
     <ClInclude Include="Rendering\cameraComponent.hpp" />

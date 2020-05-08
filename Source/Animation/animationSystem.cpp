@@ -64,22 +64,24 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 		}
 
 		// For the endFirst make sure there's no duplicates, then insert
-		for (auto p : endPose.pose) {
-			auto a = comps.find(p.second);
-			if(a != comps.end())
+		for (auto& p : endPose.pose) {
+			auto& a = comps.find(p.second);
+			if (a != comps.end()) {
 				a->second->end = p.first;
+				a->second->flags.endSet = 1;
+			}
 			else {
 				AnimateComponent* an = new AnimateComponent();
 				an->flags = ac->flags;
 				an->flags.endSet = 1;
 				an->time = ac->time;
-				an->start = p.first;
+				an->end = p.first;
 				comps.insert(std::make_pair(p.second, an));
 			}
 		}
 
 		// Now dispatch the components
-		for (auto c : comps) {
+		for (auto& c : comps) {
 			auto* ent = bfg->nodes[c.first]->data;
 			auto* tc = (TransformComponent*)ent->getComponent<TransformComponent>();
 			

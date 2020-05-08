@@ -57,7 +57,7 @@ namespace Principia {
 		TransformComponent* tc = transformMapper.get(e);
 		NodeComponent* nc = nodeMapper.get(e);
 		if (nc->isParent && nc->isDynamic)
-			 recursiveTransform(nc);
+			SQTTransform(nc);// recursiveTransform(nc);
 		//size_t numChildren = nc->children.size();
 		//for (int c = 0; c < numChildren; c++) {
 		//	SQTTransform(nc, tc->local);
@@ -67,38 +67,43 @@ namespace Principia {
 		//}
 	}
 
-	void TransformSystem::SQTTransform(NodeComponent * nc, sqt parent)
+	void TransformSystem::SQTTransform(NodeComponent * nc)
 	{
 		//Transform errthang...
 		TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
+		NodeComponent* pc = nc->parent;
+		bool hasParent = (pc != nullptr);
 
-		tc->global.position = parent.position + tc->local.position;
-		tc->global.rotation = parent.rotation * tc->local.rotation;
-		tc->global.scale = parent.scale * tc->local.scale;
+		//Transform matrices
+		auto local = glm::translate(glm::vec3(tc->local.position)) *  glm::toMat4(tc->local.rotation);
+		auto scaleM = glm::scale(glm::vec3(tc->local.scale));
+		
+		//combine them into 1 and multiply by parent if u haz parent;
+		if (hasParent) {
+			auto pt = (TransformComponent*)pc->data->getComponent<TransformComponent>();
+			tc->global.scale = tc->local.scale * pt->global.scale;
+			tc->TRM = pt->world * local;
+			local = local * scaleM;
+			tc->world = pt->world * local;
 
-		tc->world = glm::toMat4(tc->global.rotation);
-		tc->world[3] = tc->global.position;
-
-		//pass in the transform info as well as the components to mult
-		if (nc->engineFlags & COMPONENT_MODEL)
-		{
 		}
+		else {
+			tc->global.scale = tc->local.scale;
+			tc->TRM = local;
+			local = local * scaleM;
+			tc->world = local;
+		}
+
+
 		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
 
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
-			//ssPrimitive& obj = rs->getObject(objComp->objIndex);
-			//so what im looking for is the resource manager's
+			objComp->extents = glm::vec3(tc->global.scale);
+			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
 
-			//scale the aabb
-			//obj.center = tc->global.position;
-			objComp->extents = glm::vec3(tc->global.scale);// rotateAABB(tc->global.rotation, obj.extents * tc->global.scale);
-			objComp->world = tc->world;
-
-			rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 		}
 		else if (nc->engineFlags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
-			//c->pos = tc->global.position;// nodeTrans->position;
 			c->rotM = tc->world;
 			rs->updateCamera(c);
 		}
@@ -108,13 +113,14 @@ namespace Principia {
 			light.color = l->color;
 			light.intensity = l->intensity;
 			light.pos = glm::vec3(tc->global.position);
+			light.pos = tc->world[3];
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
 		}
 		if (nc->children.size() > 0) {
 			for each (NodeComponent* child in nc->children)
 			{
-				SQTTransform(child, tc->global);// &tc, rotM, transM, scaleM, false);
+				SQTTransform(child);// &tc, rotM, transM, scaleM, false);
 			}
 		}
 	}
@@ -156,31 +162,27 @@ namespace Principia {
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
+		tc->local.rotation = rotationM;
 		//build position and scale matrix;
 		positionM = glm::translate(glm::vec3(tc->local.position));
 		scaleM = glm::scale(glm::vec3(tc->local.scale));
 		glm::mat4 local = positionM * rotationM;// *scaleM;
 
-		//if (hasParent) {
-		//	TransformComponent* pt = (TransformComponent*)nc->parent->data->getComponent<TransformComponent>();
-		//	tc->global.scale = tc->local.scale * pt->global.scale;
-		//	tc->TRM = tc->world * local;
-		//	local = local * scaleM;
-		//	tc->world = pt->world * local;
-		//}
-		//else {
-		//	tc->global.scale = tc->local.scale;
-		//	tc->TRM = local;
-		//	local = local * scaleM;
-		//	tc->world = local;
-		//}
-		hasParent ? tc->global.scale = tc->local.scale * ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->global.scale : tc->global.scale = tc->local.scale;
-
 		//combine them into 1 and multiply by parent if u haz parent;
-		hasParent ? tc->TRM = ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->world * local : tc->TRM = local;
-		local = local * scaleM;
-		hasParent ? tc->world = ((TransformComponent*)nc->parent->data->getComponent<TransformComponent>())->world * local : tc->world = local;
+		if (hasParent) {
+			auto* parent = (TransformComponent*)nc->parent->data->getComponent<TransformComponent>();
+			tc->global.scale = tc->local.scale * parent->global.scale;
+			tc->TRM = parent->world * local;
+			local = local * scaleM;
+			tc->world = parent->world * local;
+		}
+		else {
+			tc->global.scale = tc->local.scale;
+			tc->TRM = local;
+			local = local * scaleM;
+			tc->world = local;
+		}
+
 
 		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
 			//GET THE OBJ

@@ -164,6 +164,9 @@
     <ClCompile Include="Animation\animateSystem.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Physics\gravitySystem.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -449,6 +452,12 @@
     </ClInclude>
     <ClInclude Include="Animation\animateSystem.h">
       <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\Components\gravityComponent.h">
+      <Filter>Source Files\Physics\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics\gravitySystem.h">
+      <Filter>Source Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

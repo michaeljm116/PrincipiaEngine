@@ -49,7 +49,7 @@ namespace Principia {
 	struct AnimationComponent : artemis::Component {
 		int num;
 		AnimFlags flags;
-		float time = 0.5f;
+		float time = .25f;
 		std::string start;
 		std::string end;
 		std::string prefabName;

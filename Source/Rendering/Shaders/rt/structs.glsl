@@ -85,6 +85,8 @@ struct Light{
 	float intensity;
 	vec3 color;
 	int id;
+	//vec3 scale;
+	//int type;
 };
 
 struct Gui {

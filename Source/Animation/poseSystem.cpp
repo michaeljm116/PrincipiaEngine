@@ -66,9 +66,9 @@ void Principia::PoseSystem::added(artemis::Entity & e)
 
 		XMLElement* pRotation = doc.NewElement("Rot");
 		pRotation->SetAttribute("x", t.rotation.x);
-		pRotation->SetAttribute("y", t.rotation.x);
-		pRotation->SetAttribute("z", t.rotation.x);
-		pRotation->SetAttribute("w", t.rotation.x);
+		pRotation->SetAttribute("y", t.rotation.y);
+		pRotation->SetAttribute("z", t.rotation.z);
+		pRotation->SetAttribute("w", t.rotation.w);
 
 		XMLElement* pScale = doc.NewElement("Sca");
 		pScale->SetAttribute("x", t.scale.x);
