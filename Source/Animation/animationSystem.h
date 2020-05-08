@@ -13,10 +13,10 @@ namespace Principia {
 		AnimationSystem();
 		~AnimationSystem();
 
-		void initialize();
-		void processEntity(artemis::Entity& e);
-		void added(artemis::Entity& e);
-		void removed(artemis::Entity& e);
+		void initialize() override;
+		void processEntity(artemis::Entity& e) override;
+		void added(artemis::Entity& e) override;
+		void removed(artemis::Entity& e) override;
 
 	private:
 		artemis::ComponentMapper<AnimationComponent> animMapper;

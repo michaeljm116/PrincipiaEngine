@@ -19,9 +19,9 @@
 
 namespace Principia {
 	struct sqt {
-		glm::quat rotation;
-		glm::vec4 position;
-		glm::vec4 scale;
+		glm::quat rotation = glm::quat();
+		glm::vec4 position = glm::vec4(0);
+		glm::vec4 scale = glm::vec4(1);
 
 	}; //48bytes //can be 40 if necessary
 

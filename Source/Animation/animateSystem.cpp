@@ -26,7 +26,8 @@ void Principia::AnimateSystem::added(artemis::Entity & e)
 	TransformComponent* tc = transMapper.get(e);
 
 	//This forces the animation to go to the start position
-	if (ac->flags.forceStart == 1) tc->local = ac->start;
+	if (ac->flags.forceStart == 1) 
+		tc->local = ac->start;
 
 	//Initial check (so you dont have to process unused data)
 	CheckIfFinished(tc->local, ac);
@@ -36,7 +37,9 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 {	
 	AnimateComponent* ac = animMapper.get(e);
 	TransformComponent* tc = transMapper.get(e);
-	auto dt = glm::vec4(world->getDelta()/ac->time);
+	auto delta =  world->getDelta();
+	if (delta > 1) delta = 0.1f;
+	auto dt = glm::vec4(delta/ac->time);
 	ac->currTime += world->getDelta();
 
 	//Interpolate dat ish
@@ -54,7 +57,8 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	}*/
 	if (ac->currTime >= ac->time) {
 		ac->currTime = 0.f;
-		//tc->local = ac->end;
+		if(ac->flags.forceEnd == 1)
+			tc->local = ac->end;
 		if (ac->flags.loop == 1)
 			std::swap(ac->end, ac->start);
 		else

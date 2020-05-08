@@ -282,7 +282,7 @@ namespace Principia {
 		}
 		
 		poses.push_back(pl);
-		return eResult;
+		return eResult == tinyxml2::XML_SUCCESS;
 	}
 
 	tinyxml2::XMLError Resources::SaveMaterials()

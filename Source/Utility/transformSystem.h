@@ -35,7 +35,7 @@ namespace Principia {
 		//void Translate(NodeComponent* nc, glm::mat4 pt);
 
 		void processEntity(artemis::Entity &e);
-		void SQTTransform(NodeComponent* nc, sqt parent);// glm::vec3 sca, glm::quat rot, glm::vec3 pos);
+		void SQTTransform(NodeComponent* nc);// glm::vec3 sca, glm::quat rot, glm::vec3 pos);
 		void regularTransform(NodeComponent* nc, TransformComponent* parent);
 		void recursiveTransform(NodeComponent* nc);// , TransformComponent global = TransformComponent());
 		glm::vec3 rotateAABB(const glm::quat& m, const glm::vec3& extents);
