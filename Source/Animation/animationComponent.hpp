@@ -1,6 +1,7 @@
 #pragma once
 #include "../Utility/transformComponent.hpp"
 #include "../Utility/nodeComponent.hpp"
+#include "../Utility/xxhash.hpp"
 
 #define ANIM_FLAG_RESET 0b11111111111000000000000000000000
 namespace Principia {
@@ -50,15 +51,28 @@ namespace Principia {
 		int num;
 		AnimFlags flags;
 		float time = .25f;
-		std::string start;
-		std::string end;
-		std::string prefabName;
+		int start;
+		int end;
+		int prefabName;
 
 		AnimationComponent(int n, std::string&& p, std::string&& s, std::string&& e, AnimFlags f) :
-			num(n), prefabName(p), start(s), end(e), flags(f) {};
+			num(n), flags(f) {
+			prefabName = xxh::xxhash<32, char>(p.c_str());
+			start = xxh::xxhash<32, char>(s.c_str());
+			end = xxh::xxhash<32, char>(e.c_str());
+		};
 		AnimationComponent(int n, std::string&& p, std::string&& e, AnimFlags f) :
-			num(n), prefabName(p), end(e), flags(f) {
-			start = "";
+			num(n), flags(f) {
+			prefabName = xxh::xxhash<32, char>(p.c_str());
+			start = 0;
+			end = xxh::xxhash<32, char>(e.c_str());
 		}
+		AnimationComponent(int n, const int p, const int e, AnimFlags f) :
+			num(n), prefabName(p), end(e), flags(f) {};
+		AnimationComponent(int n, const int p, const int s, const int e, AnimFlags f) :
+			flags(f) {
+			num = n; prefabName = p; start = s; end = e;
+		};
+
 	};
 }

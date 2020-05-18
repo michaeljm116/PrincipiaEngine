@@ -229,7 +229,7 @@ void main()
 				if(reflectionStrength > 0.05F){
 					finalmaterial reflectionColor = renderScene(ray, normal, finalColor.refraction);
 					finalColor.color = (1.0 - reflectionStrength) * finalColor.color + reflectionStrength * mix(reflectionColor.color, finalColor.color, 1.0 - reflectionStrength);			
-					reflectionStrength *= (REFLECTIONFALLOFF / fallmul);
+					reflectionStrength *= (REFLECTIONFALLOFF / fallmul) * reflectionColor.reflection;
 				}
 			}
 		}

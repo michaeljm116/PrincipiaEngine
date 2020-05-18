@@ -44,6 +44,14 @@ namespace artemis {
 		e.removeSystemBit(systemBit);
 		removed(e);
 	};
+	
+	void EntitySystem::preRemove(Entity &e) {
+		bool contains = (systemBit & e.getSystemBits()) == systemBit;
+		bool interest = (typeFlags & e.getTypeBits()) == typeFlags;
+		if (contains && interest)
+			this->preRemoved(e);
+
+	}
   
 	void  EntitySystem::setSystemBit(bitset<BITSIZE> bit) {
 		systemBit = bit;

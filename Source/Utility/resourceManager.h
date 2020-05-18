@@ -84,7 +84,8 @@ namespace Principia {
 
 #pragma endregion
 
-		const rPose& getPose(const std::string& prefabName, const std::string& poseName);
+		//const rPose& getPose(const std::string& prefabName, const std::string& poseName);
+		const rPose& getPose(const int prefabName, const int poseName);
 
 #pragma region materials
 		inline rMaterial& getMaterial(int i) { return materials[i]; };

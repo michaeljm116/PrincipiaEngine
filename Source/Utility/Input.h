@@ -38,29 +38,6 @@ namespace Principia {
 
 		static void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 		{
-			/*if (action == GLFW_PRESS || action == GLFW_REPEAT) {
-				Input::get().pressed = true;
-				Input::get().updateAxis(key, true);
-				//Input::get().Keys[7].update(key == GLFW_KEY_SPACE);
-
-			}
-			else {
-				Input::get().pressed = false;
-				Input::get().updateAxis(key, false);
-			}
-			if (action == GLFW_RELEASE) {
-				//Input::get().Keys[7].update(key == GLFW_KEY_SPACE);
-				if (key == GLFW_KEY_P) {
-					Input::get().playToggled = true;
-					Input::get().playMode = !Input::get().playMode;
-				}
-			}
-			if (key == GLFW_KEY_ESCAPE) {
-				glfwSetWindowShouldClose(WINDOW.getWindow(), 1);
-			}
-			if (key == GLFW_KEY_F11) {
-				WINDOW.toggleMaximized();
-			}*/
 			INPUT.keys[key] = action;
 			switch (action)
 			{

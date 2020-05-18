@@ -303,6 +303,7 @@ namespace Principia {
 			saveMat->SetAttribute("Roughness", mat.roughness);
 			saveMat->SetAttribute("Transparency", mat.transparency);
 			saveMat->SetAttribute("Refractive", mat.refractiveIndex);
+			saveMat->SetAttribute("TextureID", mat.textureID);
 			pRoot->InsertEndChild(saveMat);
 		}
 
@@ -352,12 +353,25 @@ namespace Principia {
 		XMLCheckResult(eResult);
 	}
 
-	const rPose & Resources::getPose(const std::string& prefabName, const std::string& poseName)
-	{
-		//Get da hashes
-		int prefN = xxh::xxhash<32, char>(prefabName);
-		int poseN = xxh::xxhash<32, char>(poseName);
+	//const rPose & Resources::getPose(const std::string& prefabName, const std::string& poseName)
+	//{      
+	//	//Get da hashes
+	//	int prefN = xxh::xxhash<32, char>(prefabName);
+	//	int poseN = xxh::xxhash<32, char>(poseName);
 
+	//	//compare and find;
+	//	for (auto& pr : poses) {
+	//		if (pr.hashVal == prefN) {
+	//			for (auto& po : pr.poses) {
+	//				if (po.hashVal == poseN)
+	//					return po;
+	//			}
+	//		}
+	//	}
+	//	return rPose();
+	//}
+	const rPose & Resources::getPose(const int prefN, const int poseN)
+	{
 		//compare and find;
 		for (auto& pr : poses) {
 			if (pr.hashVal == prefN) {

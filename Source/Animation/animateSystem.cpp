@@ -36,6 +36,8 @@ void Principia::AnimateSystem::added(artemis::Entity & e)
 void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 {	
 	AnimateComponent* ac = animMapper.get(e);
+	//if (!ac) 
+	//	return;
 	TransformComponent* tc = transMapper.get(e);
 	auto delta =  world->getDelta();
 	if (delta > 1) delta = 0.1f;
@@ -62,15 +64,18 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 		if (ac->flags.loop == 1)
 			std::swap(ac->end, ac->start);
 		else
-			e.removeComponent<AnimateComponent>();
+			e.preRemoveComponent<AnimateComponent>();
 	}
 
 }
 
-void Principia::AnimateSystem::removed(artemis::Entity & e)
+void Principia::AnimateSystem::preRemoved(artemis::Entity & e)
 {
 	AnimateComponent* ac = animMapper.get(e);
 	if(ac->flags.forceEnd == 1) transMapper.get(e)->local = ac->start;
+	e.removeComponent<AnimateComponent>();
+	e.refresh();
+	change(e);
 }
 
 //This sets the finish flags and returns true if they've all finished transforming

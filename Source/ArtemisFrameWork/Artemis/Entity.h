@@ -64,6 +64,11 @@ namespace artemis {
     void removeComponent() {
       entityManager->removeComponent(*this,ComponentTypeManager::getTypeFor<c>());
     }
+
+	template<typename c>
+	void preRemoveComponent() {
+		entityManager->preRemoveComponent(*this, ComponentTypeManager::getTypeFor<c>());
+	}
     
     void removeComponent(ComponentType & type);
     
