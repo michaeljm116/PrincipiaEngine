@@ -145,6 +145,15 @@ namespace artemis {
     e.removeTypeBit(type.getBit());
     components = NULL;
   };
+
+  void EntityManager::preRemoveComponent(Entity &e, ComponentType & type) {
+	  SystemManager * systemManager = world->getSystemManager();
+	  Bag<EntitySystem*> & systems = systemManager->getSystems();
+
+	  for (int i = 0; i < systems.getCount(); i++) {
+		  systems.get(i)->preRemove(e);
+	  }
+  }
   
   void EntityManager::removeComponentsOfEntity(Entity& e) {
     for(int i=0; i<componentsByType.getCapacity(); i++) {

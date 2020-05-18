@@ -39,6 +39,7 @@ namespace artemis {
     void change(Entity &e);
     void process();
     int getEntityCount();
+	void preRemove(Entity &e);
   protected:
     EntitySystem() { this->world = NULL; };
     World * world;
@@ -54,6 +55,7 @@ namespace artemis {
     /*override these functions*/
     virtual void begin() {};
     virtual void end() {};
+	virtual void preRemoved(Entity &e) {};
     virtual void removed(Entity &e) {};
     virtual void added(Entity &e) {};
     //Abstracts

@@ -5,6 +5,7 @@
 #include "../Utility/nodeComponent.hpp"
 #include "animationComponent.hpp"
 #include <Artemis/ComponentMapper.h>
+#include "animateSystem.h"
 
 namespace Principia {
 	class AnimationSystem : public artemis::EntityProcessingSystem
@@ -16,11 +17,13 @@ namespace Principia {
 		void initialize() override;
 		void processEntity(artemis::Entity& e) override;
 		void added(artemis::Entity& e) override;
-		void removed(artemis::Entity& e) override;
+		void preRemoved(artemis::Entity& e) override;
 
 	private:
 		artemis::ComponentMapper<AnimationComponent> animMapper;
 		artemis::ComponentMapper<BFGraphComponent> bfgMapper;
+
+		AnimateSystem* sys_Animate;
 	};
 
 }

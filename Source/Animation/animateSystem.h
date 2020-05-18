@@ -17,7 +17,7 @@ namespace Principia {
 		void initialize() override;
 		void added(artemis::Entity &e) override;
 		void processEntity(artemis::Entity &e) override;
-		void removed(artemis::Entity &e) override;
+		void preRemoved(artemis::Entity &e) override;
 
 	private:
 		artemis::ComponentMapper<TransformComponent> transMapper;

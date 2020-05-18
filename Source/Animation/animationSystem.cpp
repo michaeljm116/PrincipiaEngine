@@ -1,5 +1,6 @@
 
 //#include "../pch.h"
+#include <unordered_set>
 #include <unordered_map>
 #include "animationSystem.h"
 #include "../Utility/resourceManager.h"
@@ -19,6 +20,7 @@ void Principia::AnimationSystem::initialize()
 {
 	animMapper.init(*world);
 	bfgMapper.init(*world);
+	sys_Animate = (AnimateSystem*)world->getSystemManager()->getSystem<AnimateSystem>();
 }
 
 void Principia::AnimationSystem::processEntity(artemis::Entity & e)
@@ -51,6 +53,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 	 */
 	else {
 		std::unordered_map<int, AnimateComponent*> comps;
+		// breakpoint check for walk: ac->start == -1164222069 && ac->end == -1142104506
 		auto& startPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->start);
 
 		// Just straight up insert all the starts
@@ -96,6 +99,36 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 	}
 }
 
-void Principia::AnimationSystem::removed(artemis::Entity & e)
+//On remove, it makes sure all the animate components are also removed
+void Principia::AnimationSystem::preRemoved(artemis::Entity & e)
 {
+	AnimationComponent* ac = animMapper.get(e);
+	BFGraphComponent* bfg = bfgMapper.get(e);
+
+	//First remove the endpose
+	auto& endPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->end);
+	std::unordered_set<int> comp;
+	for (const auto& p : endPose.pose) {
+		bfg->nodes[p.second]->data->preRemoveComponent<AnimateComponent>();
+		//bfg->nodes[p.second]->data->removeComponent<AnimateComponent>();
+		//bfg->nodes[p.second]->data->refresh();
+		//sys_Animate->change(*bfg->nodes[p.second]->data);
+		comp.insert(p.second);
+	}
+	//Then if there's a start pose remove that too
+	if (ac->num > 1) {
+		auto& startPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->start);
+		for (const auto& p : startPose.pose) {
+			if (comp.find(p.second) != comp.end()) {
+				bfg->nodes[p.second]->data->preRemoveComponent<AnimateComponent>();
+				//bfg->nodes[p.second]->data->removeComponent<AnimateComponent>();
+				//bfg->nodes[p.second]->data->refresh();
+				//sys_Animate->change(*bfg->nodes[p.second]->data);
+			}
+		}
+	}
+
+	e.removeComponent<AnimationComponent>();
+	e.refresh();
+	change(e);
 }
