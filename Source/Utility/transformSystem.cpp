@@ -82,6 +82,7 @@ namespace Principia {
 		if (hasParent) {
 			auto pt = (TransformComponent*)pc->data->getComponent<TransformComponent>();
 			tc->global.scale = tc->local.scale * pt->global.scale;
+			tc->global.rotation = tc->local.rotation * pt->global.rotation;
 			tc->TRM = pt->world * local;
 			local = local * scaleM;
 			tc->world = pt->world * local;
@@ -89,6 +90,7 @@ namespace Principia {
 		}
 		else {
 			tc->global.scale = tc->local.scale;
+			tc->global.rotation = tc->local.rotation;
 			tc->TRM = local;
 			local = local * scaleM;
 			tc->world = local;
@@ -99,6 +101,7 @@ namespace Principia {
 
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			objComp->extents = glm::vec3(tc->global.scale);
+			//objComp->extents = rotateAABB(tc->global.rotation, tc->global.scale);
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
 
 		}
@@ -163,6 +166,7 @@ namespace Principia {
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		tc->local.rotation = rotationM;
+		tc->global.rotation *= tc->local.rotation;
 		//build position and scale matrix;
 		positionM = glm::translate(glm::vec3(tc->local.position));
 		scaleM = glm::scale(glm::vec3(tc->local.scale));
@@ -203,7 +207,8 @@ namespace Principia {
 			//	glm::vec3 center = objComp->center * tc->global.rotation + tc->global.position;
 			//	tc->world[3] = glm::vec4(center, 1.f);
 			//}
-			objComp->extents = glm::vec3(tc->global.scale);
+			objComp->extents = glm::vec3(tc->global.scale); 
+			objComp->extents = rotateAABB(tc->global.rotation, tc->global.scale);
 			//obj.invWorld = glm::inverse(tc->TRM);
 			//obj.world = tc->world;
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;

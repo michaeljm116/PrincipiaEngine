@@ -50,7 +50,7 @@ namespace Principia {
 	struct AnimationComponent : artemis::Component {
 		int num;
 		AnimFlags flags;
-		float time = .25f;
+		float time = 1.005f;
 		int start;
 		int end;
 		int prefabName;
@@ -74,5 +74,12 @@ namespace Principia {
 			num = n; prefabName = p; start = s; end = e;
 		};
 
+		///as dfas dfa jsdfa dsf;l 
+		//asdfasdf ads
+		AnimationComponent(float t, const int p, const int s, const int e, AnimFlags f) :
+			flags(f) {
+			num = 2; prefabName = p; start = s; end = e; time = t;
+		};
+		//asfas dfas dfa sdf asd f
 	};
 }
