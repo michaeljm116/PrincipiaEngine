@@ -61,8 +61,11 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 		ac->currTime = 0.f;
 		if(ac->flags.forceEnd == 1)
 			tc->local = ac->end;
-		if (ac->flags.loop == 1)
+		if (ac->flags.loop == 1) {
 			std::swap(ac->end, ac->start);
+			auto n = (NodeComponent*)e.getComponent<NodeComponent>();
+			std::cout << "\nLooped: " << n->name;
+		}
 		else
 			e.preRemoveComponent<AnimateComponent>();
 	}

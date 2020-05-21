@@ -89,10 +89,10 @@ namespace Principia {
 	// Adam Component: A Head Component in a node heirarchy
 	// I chose the naem adam instead of parent since 
 	// parents can technically be children but not adam
-	struct AdamComponent : artemis::Component {
-		size_t numChildren = 0;
-		AdamComponent(size_t n) { numChildren = n; };
-	};
+	//struct AdamComponent : artemis::Component {
+	//	size_t numChildren = 0;
+	//	AdamComponent(size_t n) { numChildren = n; };
+	//};
 
 }
 

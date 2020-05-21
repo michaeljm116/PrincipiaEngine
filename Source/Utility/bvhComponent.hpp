@@ -57,6 +57,37 @@ namespace Principia {
 			glm::vec3 te = extents * 2.f;
 			return 2 * (te.x * te.y + te.x * te.z + te.y * te.z);
 		}
+
+		//This returns the AABB of a rotated object
+		glm::vec3 rotateAABB(const glm::quat & m, const glm::vec3 & extents)
+		{
+			//set up cube
+			glm::vec3 v[8];
+			v[0] = extents;
+			v[1] = glm::vec3(extents.x, extents.y, -extents.z);
+			v[2] = glm::vec3(extents.x, -extents.y, -extents.z);
+			v[3] = glm::vec3(extents.x, -extents.y, extents.z);
+			v[4] = glm::vec3(-extents);
+			v[5] = glm::vec3(-extents.x, -extents.y, extents.z);
+			v[6] = glm::vec3(-extents.x, extents.y, -extents.z);
+			v[7] = glm::vec3(-extents.x, extents.y, extents.z);
+
+			//transform them
+#pragma omp parallel for
+			for (int i = 0; i < 8; ++i) {
+				v[i] = abs(m * v[i]);// glm::vec4(v[i], 1.f));
+			}
+
+			//compare them
+			glm::vec3 vmax = glm::vec3(FLT_MIN);
+			for (int i = 0; i < 8; ++i) {
+				vmax.x = tulip::max(vmax.x, v[i].x);
+				vmax.y = tulip::max(vmax.y, v[i].y);
+				vmax.z = tulip::max(vmax.z, v[i].z);
+			}
+
+			return vmax;
+		}
 	};
 
 	struct BVHBucket {
