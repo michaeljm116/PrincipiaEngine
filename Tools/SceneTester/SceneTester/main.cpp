@@ -1,9 +1,20 @@
 //#include "sceneLoader.hpp"
-#include "bvh.hpp"
+//#include "bvh.hpp"
 //../../../Assets/Levels/
-
+#include "sceneLoader.hpp"
+#include <iostream>
 #include <vector>
 #include <unordered_map>
+
+#include <bvh/bvh.hpp>
+#include <bvh/vector.hpp>
+#include <bvh/triangle.hpp>
+#include <bvh/ray.hpp>
+#include <bvh/locally_ordered_clustering_builder.hpp>
+#include <bvh/sweep_sah_builder.hpp>
+#include <bvh/single_ray_traverser.hpp>
+#include <bvh/intersectors.hpp>
+
 void reverseString(std::vector<char>& s) {
 	int half = s.size() >> 1;
 	int j = s.size() - 1;
@@ -12,72 +23,55 @@ void reverseString(std::vector<char>& s) {
 	}
 }
 
-//int a = 2;
-//int b = 55;
-//int m = INT32_MAX;
-//m = m >> 3;
-//std::cout << "M: " << m << std::endl;
-
-//int bo3m = 268435455;
-//a = a << 29;
-//b = b | a;
-//std::cout << b;
-//int c = b >> 29;
-//int d = b << 3;
-//int e = d >> 3;
-//e = b & m;
-
-//c = 0;
-//c |= 3 << 29;
-//c = c & bo3m;
-//d = 2; 
-//d |= 2 << 29;
-//d = d & bo3m;
-//e = 1;
-//e |= a;
-//e = e & bo3m;
-//
-
-//std::cout << "\n THE RESULTS AREEEEE: " << c << " " << d << " " << e << std::endl;
-
-//int sign;
-//int v = -2;
-
-//sign = 1 ^ ((unsigned int)v >> 31);
-//std::cout << "\n some mo results areeee: " << sign;
-
-//v = 3;
-//sign = 1 ^ ((unsigned int)v >> 31);
-//std::cout << "\n some mo results areeee: " << sign;
-
-
-
-////if the first bit is 1 its negative
-//glm::ivec3 dneg = glm::ivec3(-1 < 0, 2 < 0, 0 < 0);
-//std::cout << "\n the other results are::: " << dneg.x << dneg.y << dneg.z;
-//std::vector<char> cho;
-//cho.end();
-
-//std::vector<char> bob = { 'h', 'e', 'l', 'l', 'o' };
-//reverseString(bob);
-//for (int i = 0; i < bob.size(); ++i) {
-//	std::cout << bob[i];
-//}
+using Scalar = float;
+using Vector3 = bvh::Vector3<Scalar>;
+using Triangle = bvh::Triangle<Scalar>;
+using Bvh = bvh::Bvh<Scalar>;
+using Ray = bvh::Ray<Scalar>;
 
 int main() {
-	
-	int bm= 0;
-	bm = 1 << 0;
-	bm = 1 << 1;
-	bm = 1 << 2;
-	bm = 1 << 3;
-	bm = 1 << 4;
-	bm = 3 << 1;
-	bm = 3 << 2;
-	bm = 3 << 4;
+	Bvh bvh;
 
+	std::vector<Triangle> triangles;
+	triangles.emplace_back(
+		Vector3(1.0, -1.0, 1.0),
+		Vector3(1.0, 1.0, 1.0),
+		Vector3(-1.0, 1.0, 1.0)
+	);
+	triangles.emplace_back(
+		Vector3(1.0, -1.0, 1.0),
+		Vector3(-1.0, -1.0, 1.0),
+		Vector3(-1.0, 1.0, 1.0)
+	);
 
-	
+	bvh::SweepSahBuilder<Bvh> builder(bvh);
+	auto [bboxes, centers] = bvh::compute_bounding_boxes_and_centers(triangles.data(), triangles.size());
+	auto global_bbox = bvh::compute_bounding_boxes_union(bboxes.get(), triangles.size());
+	builder.build(global_bbox, bboxes.get(), centers.get(), triangles.size());
+
+	// Intersect a ray with the data structure
+	Ray ray(
+		Vector3(0.0, 0.0, 0.0), // origin
+		Vector3(0.0, 0.0, 1.0), // direction
+		0.0,                    // minimum distance
+		100.0                   // maximum distance
+	);
+	bvh::ClosestIntersector<false, Bvh, Triangle> intersector(bvh, triangles.data());
+	bvh::SingleRayTraverser<Bvh> traverser(bvh);
+
+	auto hit = traverser.traverse(ray, intersector);
+	if (hit) {
+		auto triangle_index = hit->primitive_index;
+		auto intersection = hit->intersection;
+		std::cout << "Hit triangle " << triangle_index << "\n"
+			<< "distance: " << intersection.t << "\n"
+			<< "u: " << intersection.u << "\n"
+			<< "v: " << intersection.v << std::endl;
+		return 0;
+	}
+	return 1;
+	//THE OLD WAY O LYFE
+	/* 
 	std::string dir = "../../../Assets/Levels/";
 	glm::vec3 bob = glm::vec3(1);
 	std::vector<Bounds> transforms = SceneLoader::LoadScene(dir, "Pong/Arena");
@@ -87,6 +81,8 @@ int main() {
 	BVHTree Bill;
 	Bill.build(SplitMethod::SAH, TreeType::Recursive, transforms);
 	Bill.flattenBVH();
+
+
 	///_______________________________________________________________________________________________________________________________________________________________________
 	//float tester = 0.f;
 	//Bounds *midPtr = std::partition(&transforms[0], &transforms[transforms.size()-1] + 1, [tester](const Bounds& b) {
@@ -99,7 +95,8 @@ int main() {
 	std::nth_element(&transforms[0], &transforms[mid], &transforms[size - 1] + 1, [dim](const Bounds& a, const Bounds& b) {
 		return a.center[dim] < b.center[dim];
 	});
-	
+	*/
+
 	system("pause");
 	return 0;
 }

@@ -2,9 +2,9 @@
 #define TRANSFOMRCOMPONENT_HPP
 
 #include <vector>
-#include <glm.hpp>
-#include <gtx/quaternion.hpp>
-#include <gtx/transform.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/transform.hpp>
 #include "helper.h"
 
 struct Bounds {

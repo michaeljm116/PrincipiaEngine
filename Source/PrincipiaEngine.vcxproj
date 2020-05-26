@@ -253,7 +253,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2015;..\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
     <TargetExt>.exe</TargetExt>
   </PropertyGroup>

@@ -1,2 +1,9 @@
-﻿  transformSystem.cpp
+﻿  animationSystem.cpp
+  poseSystem.cpp
+  serialize-node.cpp
+  prefabSystem.cpp
+  Generating Code...
+  renderSystem.cpp
+  resourceManager.cpp
+  Generating Code...
   PrincipiaEngine.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.exe

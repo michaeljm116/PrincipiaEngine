@@ -1,0 +1,40 @@
+﻿  tinyxml2.cpp
+c1xx : warning C4199: two-phase name lookup is not supported for C++/CLI, C++/CX, or OpenMP; use /Zc:twoPhase-
+  main.cpp
+c1xx : warning C4199: two-phase name lookup is not supported for C++/CLI, C++/CX, or OpenMP; use /Zc:twoPhase-
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(73): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(79): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(85): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(91): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(97): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(103): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(109): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(115): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(124): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(130): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\vector.hpp(140): warning C4141: 'inline': used more than once
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\utilities.hpp(159): error C3001: 'declare': expected an OpenMP directive name
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\utilities.hpp(163): error C3036: 'bbox_extend': invalid operator token in OpenMP 'reduction' clause
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\radix_sort.hpp(19): error C3861: 'omp_get_level': identifier not found
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\radix_sort.hpp(19): note: 'omp_get_level': function declaration must be available as none of the arguments depend on a template parameter
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\radix_sort.hpp(101): note: see reference to class template instantiation 'bvh::RadixSort<BitsPerIteration>' being compiled
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\radix_sort.hpp(30): error C3861: 'omp_get_level': identifier not found
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\radix_sort.hpp(30): note: 'omp_get_level': function declaration must be available as none of the arguments depend on a template parameter
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\radix_sort.hpp(30): note: This diagnostic occurred in the compiler generated function 'void bvh::RadixSort<BitsPerIteration>::sort_in_parallel(Key *__restrict &,Key *__restrict &,Value *__restrict &,Value *__restrict &,size_t,size_t)'
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\prefix_sum.hpp(18): error C3861: 'omp_get_level': identifier not found
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\prefix_sum.hpp(18): note: 'omp_get_level': function declaration must be available as none of the arguments depend on a template parameter
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\prefix_sum.hpp(68): note: see reference to class template instantiation 'bvh::PrefixSum<T>' being compiled
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\prefix_sum.hpp(23): error C3861: 'omp_get_level': identifier not found
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\prefix_sum.hpp(23): note: 'omp_get_level': function declaration must be available as none of the arguments depend on a template parameter
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\prefix_sum.hpp(23): note: This diagnostic occurred in the compiler generated function 'void bvh::PrefixSum<T>::sum_in_parallel(const T *,T *,size_t,F)'
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\top_down_builder.hpp(65): error C3001: 'task': expected an OpenMP directive name
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\top_down_builder.hpp(65): note: This diagnostic occurred in the compiler generated function 'void bvh::TopDownBuilder::run_task(BuildTask &,Args &&...)'
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(183): error C3001: 'taskloop': expected an OpenMP directive name
+  c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(253): note: see reference to class template instantiation 'bvh::SweepSahBuildTask<Bvh>' being compiled
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(218): error C3001: 'taskgroup': expected an OpenMP directive name
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(220): error C3001: 'task': expected an OpenMP directive name
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(222): error C3001: 'task': expected an OpenMP directive name
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(224): error C3001: 'task': expected an OpenMP directive name
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(229): error C3001: 'task': expected an OpenMP directive name
+c:\users\mike\desktop\principiumgames\principiaengine\lib\bvh\include\bvh\sweep_sah_builder.hpp(238): error C3005: 'capture': unexpected token encountered on OpenMP 'atomic' directive
+  Generating Code...

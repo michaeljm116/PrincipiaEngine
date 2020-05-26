@@ -208,7 +208,7 @@ namespace Principia {
 			//	tc->world[3] = glm::vec4(center, 1.f);
 			//}
 			objComp->extents = glm::vec3(tc->global.scale); 
-			objComp->extents = rotateAABB(tc->global.rotation, tc->global.scale);
+			//objComp->extents = rotateAABB(tc->global.rotation, tc->global.scale);
 			//obj.invWorld = glm::inverse(tc->TRM);
 			//obj.world = tc->world;
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;

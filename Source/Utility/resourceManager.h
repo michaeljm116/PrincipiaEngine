@@ -103,12 +103,13 @@ namespace Principia {
 			}
 			return 0;
 		}
-		inline rMaterial getMaterialU(int i) {
-			for (std::vector<rMaterial>::const_iterator itr = materials.begin(); itr != materials.end(); ++itr) {
-				if (itr->uniqueID == i)
-					return *itr;
-				return rMaterial();
+		inline rMaterial& getMaterialU(int i) {
+			for (auto& m : materials) {
+				if (i == m.uniqueID)
+					return m;
 			}
+			std::cout << "Error, Can't find Material";
+			return materials[0];
 		}
 		inline int getMaterialIndexU(int i) {
 			for (size_t j = 0; j < materials.size(); ++j) {
