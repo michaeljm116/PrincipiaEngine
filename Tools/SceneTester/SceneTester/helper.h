@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include <glm.hpp>
+#include <glm/glm.hpp>
 template<typename T>
 inline T max(const T& a, const T& b) {
 	if (a > b) return a; else return b;

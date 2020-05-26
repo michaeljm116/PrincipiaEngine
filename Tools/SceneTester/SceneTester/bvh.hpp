@@ -31,7 +31,7 @@ since youre not using center for anything else really you should just make it a 
 #pragma once
 #include "kdtree.hpp"
 #include <algorithm>
-
+#include <glm/glm.hpp>
 
 
 static const int MAX_BVH_OBJECTS = 4;

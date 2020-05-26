@@ -39,9 +39,9 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	//if (!ac) 
 	//	return;
 	TransformComponent* tc = transMapper.get(e);
-	auto delta =  world->getDelta();
-	if (delta > 1) delta = 0.1f;
-	auto dt = glm::vec4(delta/ac->time);
+	float delta =  world->getDelta();
+	//if (delta > 1) delta = 0.1f;
+	glm::vec4 dt = glm::vec4(delta/ac->time);
 	ac->currTime += world->getDelta();
 
 	//Interpolate dat ish
@@ -84,11 +84,9 @@ void Principia::AnimateSystem::preRemoved(artemis::Entity & e)
 //This sets the finish flags and returns true if they've all finished transforming
 inline bool Principia::AnimateSystem::CheckIfFinished(const sqt & curr, AnimateComponent * const ac)
 {
-
-	auto ep = 0.01f;
-	auto epv = glm::vec4(ep);
+	float ep = 0.01f;
 	glm::bvec4 p = glm::epsilonEqual(curr.position, ac->end.position, ep);
-	glm::bvec4 r = glm::epsilonEqual(curr.rotation, ac->end.rotation, 0.2f);
+	glm::bvec4 r = glm::epsilonEqual(curr.rotation, ac->end.rotation, ep);
 	glm::bvec4 s = glm::epsilonEqual(curr.scale, ac->end.scale, ep);
 
 	ac->flags.pf = p.x & p.y & p.z;
