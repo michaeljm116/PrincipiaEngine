@@ -63,8 +63,8 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 			tc->local = ac->end;
 		if (ac->flags.loop == 1) {
 			std::swap(ac->end, ac->start);
-			auto n = (NodeComponent*)e.getComponent<NodeComponent>();
-			std::cout << "\nLooped: " << n->name;
+			//auto n = (NodeComponent*)e.getComponent<NodeComponent>();
+			//std::cout << "\nLooped: " << n->name;
 		}
 		else
 			e.preRemoveComponent<AnimateComponent>();
@@ -75,7 +75,7 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 void Principia::AnimateSystem::preRemoved(artemis::Entity & e)
 {
 	AnimateComponent* ac = animMapper.get(e);
-	if(ac->flags.forceEnd == 1) transMapper.get(e)->local = ac->start;
+	if(ac->flags.forceEnd == 1) transMapper.get(e)->local = ac->end;
 	e.removeComponent<AnimateComponent>();
 	e.refresh();
 	change(e);

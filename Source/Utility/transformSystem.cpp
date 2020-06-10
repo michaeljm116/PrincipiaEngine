@@ -96,14 +96,11 @@ namespace Principia {
 			tc->world = local;
 		}
 
-
 		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
-
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			objComp->extents = glm::vec3(tc->global.scale);
-			//objComp->extents = rotateAABB(tc->global.rotation, tc->global.scale);
+			objComp->aabbExtents = rotateAABB(tc->global.rotation, tc->global.scale);
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
-
 		}
 		else if (nc->engineFlags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
@@ -127,29 +124,7 @@ namespace Principia {
 			}
 		}
 	}
-	void TransformSystem::regularTransform(NodeComponent* nc, TransformComponent* parent) {
-		bool hasParent = nc->parent == nullptr ? false : true;
-		TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 
-		//if you're a parent, transform based on world coords, else 
-		glm::mat4 rotationM;
-		glm::mat4 positionM;
-		glm::mat4 scaleM;
-
-		//build rotation matrix;
-		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
-		//build position and scale matrix;
-		positionM = glm::translate(glm::vec3(tc->local.position));
-		scaleM = glm::scale(glm::vec3(tc->local.scale));
-
-		//combine them into 1 and multiply by parent if u haz parent;
-		glm::mat4 local = positionM * rotationM * scaleM;
-		hasParent ? tc->world = local : tc->world = local * parent->world;
-
-	}
 	void TransformSystem::recursiveTransform(NodeComponent* nc) {
 		if (nc->engineFlags & COMPONENT_JOINT)
 			return;
@@ -187,34 +162,12 @@ namespace Principia {
 			tc->world = local;
 		}
 
-
 		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
 			//GET THE OBJ
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
-			//ssPrimitive& obj = rs->getObject(objComp->objIndex);
-
-			//these are primitive shapes, the extents are basically used as the bounds of the shapes
-			//if (objComp->uniqueID < 0) {
-			//		obj.extents = tc->global.scale; 
-			//}
-			//else {
-			//	//scale the aabb so that if you rotate it, the extents changes accordingly
-			//	obj.extents = rotateAABB(tc->global.rotation, tc->global.scale * objComp->extents);
-			//	obj.extents = objComp->extents * tc->global.scale;
-			//	//put the scale into the matrix for models, but not for shapes
-			//	tc->world *= glm::vec4(tc->global.scale, 1.f);
-			//	//position the object to be relative to its initial center
-			//	glm::vec3 center = objComp->center * tc->global.rotation + tc->global.position;
-			//	tc->world[3] = glm::vec4(center, 1.f);
-			//}
 			objComp->extents = glm::vec3(tc->global.scale); 
-			//objComp->extents = rotateAABB(tc->global.rotation, tc->global.scale);
-			//obj.invWorld = glm::inverse(tc->TRM);
-			//obj.world = tc->world;
+			objComp->aabbExtents = rotateAABB(tc->global.rotation, tc->global.scale);
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
-			//objComp->center = tc->world[3];
-			//objComp->extents = tc->global.scale;
-			//rs->setRenderUpdate(RenderSystem::UPDATE_OBJECT);
 		}
 
 		else if (nc->engineFlags & COMPONENT_CAMERA) {

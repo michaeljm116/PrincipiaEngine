@@ -142,7 +142,7 @@ namespace Principia {
 						BVHBucket buckets[numBuckets];
 						for (int i = start; i < end; ++i) {
 							PrimitiveComponent* pc = ptm->get(*prims[i]);
-							BVHBounds tempBounds = BVHBounds(pc->center(), pc->extents);
+							BVHBounds tempBounds = BVHBounds(pc->center(), pc->aabbExtents);
 							int b = numBuckets * centroid.Offset(pc->center(), axis);
 							if (b == numBuckets) b--;
 							buckets[b].count++;
@@ -224,8 +224,8 @@ namespace Principia {
 			//AABBComponent* bc = boundsMapper.get(*prims[i]);
 			//min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 			//max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
-			min = tulip::minV(min, pc->center() - glm::vec3(pc->extents));
-			max = tulip::maxV(max, pc->center() + glm::vec3(pc->extents));
+			min = tulip::minV(min, pc->center() - glm::vec3(pc->aabbExtents));
+			max = tulip::maxV(max, pc->center() + glm::vec3(pc->aabbExtents));
 		}
 		glm::vec3 c = (max + min) * 0.5f;
 		glm::vec3 ex = max - c;
@@ -245,8 +245,8 @@ namespace Principia {
 			PrimitiveComponent* pc = primMapper.get(*prims[i]);
 			//min = tulip::minV(min, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
 			//max = tulip::maxV(max, glm::vec3(tc->world[3]) + glm::vec3(tc->global.scale));
-			min = tulip::minV(min, pc->center() - pc->extents);
-			max = tulip::maxV(max, pc->center() + pc->extents);
+			min = tulip::minV(min, pc->center() - pc->aabbExtents);
+			max = tulip::maxV(max, pc->center() + pc->aabbExtents);
 		}
 		glm::vec3 c = (max + min) * 0.5f;
 		glm::vec3 ex = max - c;
