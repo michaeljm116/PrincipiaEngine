@@ -88,8 +88,9 @@ namespace Principia {
 	struct PrimitiveComponent : artemis::Component {
 		glm::mat4 world; //64bytes
 		glm::vec3 extents; //12bytes
+		glm::vec3 aabbExtents; //12bytes
 		int numChildren = 0; //4bytes;
-
+		
 		int id; //4bytes
 		int matId; //4bytes
 		int startIndex = 0;

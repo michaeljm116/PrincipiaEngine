@@ -3,6 +3,7 @@
 #include "transformComponent.hpp"
 #include <glm/glm.hpp>
 #include <vector>
+#include <string>
 
 
 static const int COMPONENT_TRANSFORM = 0x02;
