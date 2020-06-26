@@ -1,6 +1,6 @@
 #ifndef _INTERSECT_DISK_GLSL
 #define _INTERSECT_DISK_GLSL
-#include "structs.glsl"
+#include "intersect_plane.glsl"
 
 float diskIntersect(in Ray ray, in Primitive disk)
 {

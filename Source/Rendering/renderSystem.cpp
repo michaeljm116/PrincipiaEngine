@@ -286,8 +286,8 @@ void RenderSystem::loadResources()
 	std::vector<ssShape> shapes;
 	std::vector<ssBVHNode> blas;
 
-	std::vector<rModel>& models = RESOURCEMANAGER.getModels();
-	for each (rModel mod in models)
+	const std::vector<rModel>& models = RESOURCEMANAGER.getModels();
+	for (const rModel& mod : models)
 	{
 		for (size_t i = 0; i < mod.meshes.size(); ++i) {
 			//map that connects the model with its index;
@@ -1017,37 +1017,37 @@ void RenderSystem::updateDescriptors()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			6,
-			&compute.storageBuffers.primitives.Descriptor()),
+			&compute.storageBuffers.primitives.bufferInfo),
 		// Binding 6: for Joints
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			7,
-			&compute.storageBuffers.joints.Descriptor()),
+			&compute.storageBuffers.joints.bufferInfo),
 		//Binding 6 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			8,
-			&compute.storageBuffers.materials.Descriptor()),
+			&compute.storageBuffers.materials.bufferInfo),
 		//Binding 7 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			9,
-			&compute.storageBuffers.lights.Descriptor()),
+			&compute.storageBuffers.lights.bufferInfo),
 		//Binding 8 for gui
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			10,
-			&compute.storageBuffers.guis.Descriptor()),
+			&compute.storageBuffers.guis.bufferInfo),
 		//Binding 10 for bvhnodes
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			11,
-			&compute.storageBuffers.bvh.Descriptor())
+			&compute.storageBuffers.bvh.bufferInfo)
 	};
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
 	//vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -1269,67 +1269,67 @@ void RenderSystem::prepareCompute()
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
 			1,
-			&compute.uniformBuffer.Descriptor()),
+			&compute.uniformBuffer.bufferInfo),
 		// Binding 2: Shader storage buffer for the verts
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			2,
-			&compute.storageBuffers.verts.Descriptor()),
+			&compute.storageBuffers.verts.bufferInfo),
 		// Binding 3: Shader storage buffer for the indices
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			3,
-			&compute.storageBuffers.faces.Descriptor()),
+			&compute.storageBuffers.faces.bufferInfo),
 		// Binding 4: for blas
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			4,
-			&compute.storageBuffers.blas.Descriptor()),
+			&compute.storageBuffers.blas.bufferInfo),
 		//Binding 5: for shapes
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			5,
-			&compute.storageBuffers.shapes.Descriptor()),
+			&compute.storageBuffers.shapes.bufferInfo),
 		// Binding 6: for objectss
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			6,
-			&compute.storageBuffers.primitives.Descriptor()),
+			&compute.storageBuffers.primitives.bufferInfo),
 		// Binding 7: for joints
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			7,
-			&compute.storageBuffers.joints.Descriptor()),
+			&compute.storageBuffers.joints.bufferInfo),
 		//Binding 8 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			8,
-			&compute.storageBuffers.materials.Descriptor()),
+			&compute.storageBuffers.materials.bufferInfo),
 		//Binding 9 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			9,
-			&compute.storageBuffers.lights.Descriptor()),
+			&compute.storageBuffers.lights.bufferInfo),
 		//Binding 10 for guis
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			10,
-			&compute.storageBuffers.guis.Descriptor()),
+			&compute.storageBuffers.guis.bufferInfo),
 		//Binding 11 for bvhs
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			11,
-			&compute.storageBuffers.bvh.Descriptor()),
+			&compute.storageBuffers.bvh.bufferInfo),
 		//bINDING 12 FOR TEXTURES
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet, 
@@ -1413,9 +1413,9 @@ VkDescriptorSetLayoutBinding RenderSystem::descriptorSetLayoutBinding(uint32_t b
 	return bob;
 }
 
-VkDeviceInfo RenderSystem::getDeviceInfo()
+VkDeviceInfo RenderSystem::updateDeviceInfo()
 {
-	VkDeviceInfo devInfo = {};
+	//VkDeviceInfo devInfo = {};
 	devInfo.device = &vkDevice;
 	devInfo.copyQueue = graphicsQueue;
 	devInfo.framebuffers = swapChainFramebuffers;

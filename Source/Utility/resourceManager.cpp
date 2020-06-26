@@ -100,11 +100,11 @@ namespace Principia {
 		std::fstream binaryio;
 		binaryio.open(fileName.c_str(), std::ios::in | std::ios::binary);
 
-		int introLength;
-		int nameLength;
-		int numMesh;
-		int uniqueID;
-		int skeletonID;
+		int introLength = 0;
+		int nameLength = 0;
+		int numMesh = 0;
+		int uniqueID = 0;
+		int skeletonID = 0;
 		bool skinned = false;
 
 
@@ -129,11 +129,11 @@ namespace Principia {
 
 		for (int i = 0; i < numMesh; ++i) {
 			rMesh m;
-			int meshNameLength;
-			int numVerts;
-			int numFaces;
-			int numNodes;
-			int meshID;
+			int meshNameLength = 0;
+			int numVerts = 0;
+			int numFaces = 0;
+			int numNodes = 0;
+			int meshID = 0;
 
 			//name
 			binaryio.read(reinterpret_cast<char*>(&meshNameLength), sizeof(int));
@@ -183,10 +183,10 @@ namespace Principia {
 		}
 
 		//Get number of shapes
-		int numShapes;
+		int numShapes = 0;
 		binaryio.read(reinterpret_cast<char*>(&numShapes), sizeof(int));
 		for (int i = 0; i < numShapes; ++i) {
-			int shapeNameLength;
+			int shapeNameLength = 0;
 			rShape shape;
 			binaryio.read(reinterpret_cast<char*>(&shapeNameLength), sizeof(int));
 			for (int n = 0; n < shapeNameLength; ++n) {
@@ -200,7 +200,7 @@ namespace Principia {
 			mod.shapes.push_back(shape);
 		}
 
-		int numTransforms;
+		int numTransforms = 0;
 		binaryio.read(reinterpret_cast<char*>(&numTransforms), sizeof(int));
 
 		////Find out of skinned or not
@@ -292,7 +292,7 @@ namespace Principia {
 		tinyxml2::XMLNode * pRoot = doc.NewElement("Root");
 
 		doc.InsertFirstChild(pRoot);
-		for each (rMaterial mat in materials)
+		for(const rMaterial& mat : materials)
 		{
 			tinyxml2::XMLElement * saveMat = doc.NewElement("Material");
 			saveMat->SetAttribute("Name", mat.name.c_str());
@@ -350,7 +350,8 @@ namespace Principia {
 			else
 				lastOne = true;
 		}
-		XMLCheckResult(eResult);
+		//XMLCheckResult(eResult);
+		return eResult;
 	}
 
 	//const rPose & Resources::getPose(const std::string& prefabName, const std::string& poseName)

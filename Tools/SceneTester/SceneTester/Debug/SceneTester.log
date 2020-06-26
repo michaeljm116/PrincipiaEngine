@@ -1,5 +1,2 @@
 ﻿  main.cpp
-c:\users\mike\principiaengine\tools\scenetester\scenetester\bvh.hpp(158): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\mike\principiaengine\tools\scenetester\scenetester\bvh.hpp(189): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\mike\principiaengine\tools\scenetester\scenetester\bvh.hpp(192): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  SceneTester.vcxproj -> C:\Users\Mike\PrincipiaEngine\Tools\SceneTester\SceneTester\Debug\SceneTester.exe
+c:\users\mike\desktop\principiumgames\principiaengine\tools\scenetester\scenetester\transformcomponent.hpp(5): fatal error C1083: Cannot open include file: 'glm/glm.hpp': No such file or directory

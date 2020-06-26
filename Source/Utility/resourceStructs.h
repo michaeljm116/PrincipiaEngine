@@ -4,6 +4,7 @@ the resource manager
 */
 #pragma once
 #include <array>
+#include <string>
 #include "bvhComponent.hpp"
 //#include <glm/glm.hpp>
 //#include "../pch.h"

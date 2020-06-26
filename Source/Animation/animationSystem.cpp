@@ -68,7 +68,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 
 		// For the endFirst make sure there's no duplicates, then insert
 		for (auto& p : endPose.pose) {
-			auto& a = comps.find(p.second);
+			const auto& a = comps.find(p.second);
 			if (a != comps.end()) {
 				a->second->end = p.first;
 				a->second->flags.endSet = 1;

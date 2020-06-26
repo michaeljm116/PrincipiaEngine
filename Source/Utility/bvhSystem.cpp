@@ -1,7 +1,7 @@
 
 #include "../pch.h"
 #include "bvhSystem.h"
-#include "timer.hpp"
+#include "timer.h"
 
 namespace Principia {
 	BvhSystem::BvhSystem()

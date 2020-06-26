@@ -63,8 +63,10 @@ bool mbvhIntersect(Ray ray, vec3 invDir, in BVHNode node) {
 	float tMax = FLT_MAX;
 
 	for (int i = 0; i < 3; ++i) {
-		float t1 = (node.upper[i] - ray.o[i]) * invDir[i];
-		float t2 = (node.lower[i] - ray.o[i]) * invDir[i];
+		//float t1 = (node.upper[i] - ray.o[i]) * invDir[i];
+		//float t2 = (node.lower[i] - ray.o[i]) * invDir[i];
+		float t1 = -ray.o[i] * invDir[i] + (invDir[i] * node.upper[i]);
+		float t2 = -ray.o[i] * invDir[i] + (invDir[i] * node.lower[i]);
 
 		tMin = max(tMin, min(t1, t2));
 		tMax = min(tMax, max(t1, t2));

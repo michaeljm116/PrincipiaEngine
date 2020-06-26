@@ -41,7 +41,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\glm;C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\bvh\include;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\glm;$(LibraryPath)</LibraryPath>
     <IncludePath>C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\tinyxml2;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -88,12 +88,17 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\glm;C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\tinyxml2;C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\glm;C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <OpenMPSupport>true</OpenMPSupport>
+      <OpenMPSupport>false</OpenMPSupport>
       <EnableModules>false</EnableModules>
-      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
+    <Link />
+    <Link />
+    <CustomBuildStep>
+      <Inputs>-Xclang -fopenmp</Inputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -130,12 +135,41 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\Lib\tinyxml2\tinyxml2.h" />
-    <ClInclude Include="bvh.hpp" />
+    <ClInclude Include="bvhX.hpp" />
+    <ClInclude Include="bvh\binned_sah_builder.hpp" />
+    <ClInclude Include="bvh\bottom_up_algorithm.hpp" />
+    <ClInclude Include="bvh\bounding_box.hpp" />
+    <ClInclude Include="bvh\bvh.hpp" />
+    <ClInclude Include="bvh\heuristic_primitive_splitter.hpp" />
+    <ClInclude Include="bvh\hierarchy_refitter.hpp" />
+    <ClInclude Include="bvh\intersectors.hpp" />
+    <ClInclude Include="bvh\leaf_collapser.hpp" />
+    <ClInclude Include="bvh\linear_bvh_builder.hpp" />
+    <ClInclude Include="bvh\locally_ordered_clustering_builder.hpp" />
+    <ClInclude Include="bvh\morton.hpp" />
+    <ClInclude Include="bvh\morton_code_based_builder.hpp" />
+    <ClInclude Include="bvh\node_layout_optimizer.hpp" />
+    <ClInclude Include="bvh\parallel_reinsertion_optimizer.hpp" />
+    <ClInclude Include="bvh\platform.hpp" />
+    <ClInclude Include="bvh\prefix_sum.hpp" />
+    <ClInclude Include="bvh\radix_sort.hpp" />
+    <ClInclude Include="bvh\ray.hpp" />
+    <ClInclude Include="bvh\sah_based_algorithm.hpp" />
+    <ClInclude Include="bvh\single_ray_traverser.hpp" />
+    <ClInclude Include="bvh\spatial_split_bvh_builder.hpp" />
+    <ClInclude Include="bvh\sphere.hpp" />
+    <ClInclude Include="bvh\sweep_sah_builder.hpp" />
+    <ClInclude Include="bvh\top_down_builder.hpp" />
+    <ClInclude Include="bvh\triangle.hpp" />
+    <ClInclude Include="bvh\utilities.hpp" />
+    <ClInclude Include="bvh\vector.hpp" />
+    <ClInclude Include="customVec3.h" />
     <ClInclude Include="helper.h" />
     <ClInclude Include="kdtree.hpp" />
     <ClInclude Include="main.h" />
     <ClInclude Include="sceneLoader.hpp" />
     <ClInclude Include="transformComponent.hpp" />
+    <ClInclude Include="xxhash.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Text.txt" />
