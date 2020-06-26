@@ -44,6 +44,9 @@ You can contact the author at :
 * Sadly has to be included in the global namespace or literally everything breaks
 */
 #include <immintrin.h>
+#if defined (__clang__)
+#include <avxintrin.h>
+#endif
 
 namespace xxh
 {

@@ -1,7 +1,9 @@
 #include "animateSystem.h"
 #define GLM_FORCE_SSE2
+#define GLM_FORCE_ALIGN
 #include <glm/simd/common.h>
 #include <glm/gtc/epsilon.hpp>
+//#include <omp.h>
 Principia::AnimateSystem::AnimateSystem()
 {
 	addComponentType<TransformComponent>();
@@ -16,6 +18,8 @@ void Principia::AnimateSystem::initialize()
 {
 	transMapper.init(*world);
 	animMapper.init(*world);
+
+	omp_init_lock(&myLock);
 }
 
 void Principia::AnimateSystem::added(artemis::Entity & e)
@@ -36,8 +40,6 @@ void Principia::AnimateSystem::added(artemis::Entity & e)
 void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 {	
 	AnimateComponent* ac = animMapper.get(e);
-	//if (!ac) 
-	//	return;
 	TransformComponent* tc = transMapper.get(e);
 	float delta =  world->getDelta();
 	//if (delta > 1) delta = 0.1f;
@@ -70,6 +72,16 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 			e.preRemoveComponent<AnimateComponent>();
 	}
 
+}
+
+void Principia::AnimateSystem::processEntities(artemis::ImmutableBag<artemis::Entity*>& bag)
+{
+	//omp_set_lock(&myLock);
+	#pragma omp parallel for 
+	for (int i = 0; i < bag.getCount(); ++i)
+		processEntity(*bag.get(i));
+
+	//omp_unset_lock(&myLock);
 }
 
 void Principia::AnimateSystem::preRemoved(artemis::Entity & e)

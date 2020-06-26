@@ -1,4 +1,7 @@
 #pragma once
+#define GLM_FORCE_SSE2 // or GLM_FORCE_SSE42 if your processor supports it
+#define GLM_FORCE_ALIGNED
+
 #include <tinyxml2.h>
 #include "transformComponent.hpp"
 #include <glm/glm.hpp>

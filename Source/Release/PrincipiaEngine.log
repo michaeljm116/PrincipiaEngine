@@ -1,7 +1,2 @@
-﻿  main.cpp
-  Generating code
-  46 of 8285 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    11 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-  PrincipiaEngine.vcxproj -> C:\Users\Mike\PrincipiaEngine\Source\Release\Principia Engine.exe
+﻿  animationSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Animation\animationSystem.cpp(135,1): error C2857: '#include' statement specified with the /Yc../pch.h command-line option was not found in the source file

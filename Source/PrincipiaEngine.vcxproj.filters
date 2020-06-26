@@ -167,6 +167,9 @@
     <ClCompile Include="Physics\gravitySystem.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\timer.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -393,9 +396,6 @@
     <ClInclude Include="Utility\bvhComponent.hpp">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\timer.hpp">
-      <Filter>Source Files\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\Components\collisionComponent.h">
       <Filter>Source Files\Physics\Components</Filter>
     </ClInclude>
@@ -458,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="Physics\gravitySystem.h">
       <Filter>Source Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\timer.h">
+      <Filter>Source Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@ much rework but brotha aint got time fo dat
 #include "../Game/script.hpp"
 #include "../Utility/window.h"
 #include "../Utility/bvhComponent.hpp"
-#include "../Utility/timer.hpp"
+#include "../Utility/timer.h"
 
 #include "../Utility/componentIncludes.h"
 #include <unordered_map>
@@ -31,7 +31,8 @@ namespace Principia {
 		VkExtent2D& getSwapChainExtent() {
 			return swapChainExtent;
 		}
-		VkDeviceInfo getDeviceInfo();
+		VkDeviceInfo devInfo = {};
+		VkDeviceInfo updateDeviceInfo();
 		VkSubmitInfo submitInfo = {};
 		void startFrame(uint32_t& imageIndex);
 		void endFrame(const uint32_t& imageIndex);
@@ -174,7 +175,7 @@ namespace Principia {
 		bool prepared = false;
 
 		Camera m_Cam;
-		Principia::Timer m_RenderTime;
+		Principia::Timer m_RenderTime = Timer("Render");
 
 		Texture			computeTexture;
 		Texture			guiTextures[MAXTEXTURES];

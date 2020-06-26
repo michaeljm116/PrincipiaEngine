@@ -1,0 +1,171 @@
+﻿  pch.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  tinyxml2.cpp
+  animateSystem.cpp
+  animationSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(71,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(78,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(102,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(117,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  poseSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(71,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(78,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(102,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(117,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Component.cpp
+  ComponentType.cpp
+  ComponentTypeManager.cpp
+  DelayedEntityProcessingSystem.cpp
+  DelayedEntitySystem.cpp
+  Entity.cpp
+  EntityManager.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::Component *>::grow(void)'
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::Component *>::grow(void)' being compiled
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\EntityManager.h(68): message : see reference to class template instantiation 'artemis::Bag<artemis::Component *>' being compiled
+  EntityProcessingSystem.cpp
+  EntitySystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::Entity *>::grow(void)'
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::Entity *>::grow(void)' being compiled
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\EntitySystem.h(67): message : see reference to class template instantiation 'artemis::Bag<artemis::Entity *>' being compiled
+  GroupManager.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::Entity *>::grow(void)'
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::Entity *>::grow(void)' being compiled
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\GroupManager.h(18): message : see reference to class template instantiation 'artemis::Bag<artemis::Entity *>' being compiled
+  SystemBitManager.cpp
+  SystemManager.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::EntitySystem *>::grow(void)'
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::EntitySystem *>::grow(void)' being compiled
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\SystemManager.h(30): message : see reference to class template instantiation 'artemis::Bag<artemis::EntitySystem *>' being compiled
+  TagManager.cpp
+  Generating Code...
+  Compiling...
+  World.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::Entity *>::grow(void)'
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::Entity *>::grow(void)' being compiled
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\GroupManager.h(18): message : see reference to class template instantiation 'artemis::Bag<artemis::Entity *>' being compiled
+  audioSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Audio\audioComponents.h(3,10): fatal error C1083: Cannot open include file: 'SDL_mixer.h': No such file or directory
+  collidedWithSystem.cpp
+  collisionSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  gravitySystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Physics\Components\gravityComponent.h(6,24): warning C4305: 'initializing': truncation from 'double' to 'float'
+  gridSystem.cpp
+  immovableSystem.cpp
+  renderSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.h(210,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(71,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(78,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(102,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(117,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(53,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(228,47): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(297,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(298,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(299,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(324,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(495,46): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(512,46): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(563,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(650,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(878,5): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(927,53): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(994,91): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(994,68): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1052,126): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1070,5): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1094,112): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1111,28): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1233,28): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1341,126): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1432,43): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(1433,45): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.26.28801\include\utility(152,1): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data
+          with
+          [
+              _Ty2=int
+          ]
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(324): message : see reference to function template instantiation 'std::pair<int,int>::pair<int&,unsigned __int64,0>(_Other1,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int &,
+              _Other2=unsigned __int64
+          ]
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp(324): message : see reference to function template instantiation 'std::pair<int,int>::pair<int&,unsigned __int64,0>(_Other1,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int &,
+              _Other2=unsigned __int64
+          ]
+  renderbase.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+  Texture.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+  bvhSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(85,58): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(99,40): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(125,19): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(146,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(177,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(180,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(185,21): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+  serialize-node.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(71,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(78,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(102,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(117,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  prefabSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(71,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(78,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(102,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(117,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  resourceManager.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(71,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(78,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(102,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(117,1): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(107,7): warning C4101: 'skeletonID': unreferenced local variable
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(420,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Input.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(57,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(58,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(59,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(60,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  transformSystem.cpp
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.h(210,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  window.cpp
+  Generating Code...
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(312): warning C4715: 'Principia::Resources::SaveMaterials': not all control paths return a value
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(354): warning C4715: 'Principia::Resources::LoadMaterials': not all control paths return a value
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(384): warning C4172: returning address of local variable or temporary
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderbase.cpp(412): warning C4715: 'Principia::RenderBase::findSupportedFormat': not all control paths return a value

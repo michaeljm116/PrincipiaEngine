@@ -145,7 +145,7 @@ vec4 quadIntersect(in Ray ray, in Face q) {
 	float c = dot(qn, ray.d);
 	float b = dot(cross(q10, ray.d), e11);
 	b -= a + c;
-	float det = b * b - 4 * a*c;
+	float det = b * b - (4 * a*c);
 	if (det < 0) return vec4(-1);
 	det = sqrt(det);
 	float u1, u2;

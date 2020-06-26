@@ -118,7 +118,7 @@ namespace Principia {
 			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
 		}
 		if (nc->children.size() > 0) {
-			for each (NodeComponent* child in nc->children)
+			for (NodeComponent* child : nc->children)
 			{
 				SQTTransform(child);// &tc, rotM, transM, scaleM, false);
 			}
@@ -187,7 +187,7 @@ namespace Principia {
 		}
 
 		if (nc->children.size() > 0) {
-			for each (NodeComponent* child in nc->children)
+			for (NodeComponent* child : nc->children)
 			{
 				recursiveTransform(child);// &tc, rotM, transM, scaleM, false);
 			}
@@ -208,7 +208,7 @@ namespace Principia {
 		v[7] = glm::vec3(-extents.x, extents.y, extents.z);
 
 		//transform them
-#pragma omp parallel for
+//#pragma omp parallel for
 		for (int i = 0; i < 8; ++i) {
 			v[i] = abs(m * v[i]);// glm::vec4(v[i], 1.f));
 

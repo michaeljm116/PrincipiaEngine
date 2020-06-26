@@ -1,0 +1,2 @@
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\SceneTester\SceneTester\x64\Debug\SceneTester.exe
+C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\SceneTester\SceneTester\x64\Debug\SceneTester.pdb
