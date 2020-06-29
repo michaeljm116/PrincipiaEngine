@@ -128,5 +128,11 @@ struct sectID{
 	int pId;
 };
 
+struct iSectID{
+	uint primType;
+	uint primID;
+	uint faceID;
+	uint nodeID;
+};
 
 #endif
