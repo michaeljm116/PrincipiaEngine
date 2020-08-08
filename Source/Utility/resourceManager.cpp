@@ -273,7 +273,7 @@ namespace Principia {
 				sca->QueryFloatAttribute("y", &t.scale.y);
 				sca->QueryFloatAttribute("z", &t.scale.z);
 
-				pose.pose.push_back(std::make_pair(t, i));
+				pose.pose.push_back(std::make_pair(i, t));
 				transElement = transElement->NextSiblingElement("Tran");
 			}	
 

@@ -8,6 +8,43 @@
 #define ANIM_FLAG_RESET 0b11111111111000000000000000000000
 namespace Principia {
 	
+	//Returns a Breadth-First Vector of the nodes;
+	inline void flatten(std::vector<NodeComponent*>& vec, NodeComponent* head) {
+		std::queue<NodeComponent*> q;
+		q.push(head);
+		while (!q.empty()) {
+			auto f = q.front();
+			q.pop();
+			for (auto child : f->children) {
+				q.push(child);
+				vec.push_back(child);
+			}
+		}
+	}
+
+
+	//Breadth First Graph Component
+	//An array of node pointers layed out in BFS order
+	struct BFGraphComponent : artemis::Component {
+		std::vector<NodeComponent*> nodes;
+		std::vector<sqt> transforms;
+	};
+
+	inline void flatten(BFGraphComponent* graph, NodeComponent* head) {
+		std::queue<NodeComponent*> q;
+		q.push(head);
+		while (!q.empty()) {
+			auto f = q.front();
+			q.pop();
+			for (auto child : f->children) {
+				auto transform = ((TransformComponent*)child->data->getComponent<TransformComponent>())->local;
+				q.push(child);
+				graph->nodes.push_back(child);
+				graph->transforms.push_back(transform);
+			}
+		}
+	}
+
 	//Animation flags 4 bytes
 	struct AnimFlags {
 		uint32_t id : 8;
@@ -41,21 +78,26 @@ namespace Principia {
 	};
 
 	struct PoseComponent : artemis::Component {
-		std::vector<std::pair<sqt, int>> pose;
+		std::vector<std::pair<int, sqt>> pose;
 		std::string fileName;
 		std::string poseName;
 
-		PoseComponent(std::string n, std::string f, std::vector<std::pair<sqt, int>> p) :
+		PoseComponent(std::string n, std::string f, std::vector<std::pair<int,sqt>> p) :
 			poseName(n), fileName(f), pose(p) {};
 	};
 
 	struct AnimationComponent : artemis::Component {
-		int num;
-		AnimFlags flags;
+		int num = 0;
+		AnimFlags flags = AnimFlags(0, 0, 0, 0);
+
 		float time = 1.005f;
-		int start;
-		int end;
+		int start = 0;
+		int end = 0;
 		int prefabName;
+
+		float transTime = 0;
+		int trans = 0;
+		int transEnd = 0;
 
 		AnimationComponent(int n, std::string&& p, std::string&& s, std::string&& e, AnimFlags f) :
 			num(n), flags(f) {

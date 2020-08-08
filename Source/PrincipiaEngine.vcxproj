@@ -277,7 +277,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.1.101.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2015;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OpenMPSupport>false</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>

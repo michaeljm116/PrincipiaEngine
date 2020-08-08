@@ -130,9 +130,9 @@ struct sectID{
 
 struct iSectID{
 	uint primType;
-	uint primID;
-	uint faceID;
-	uint nodeID;
+	int  faceID;
+	int  primID;
+	int  nodeID;
 };
 
 #endif

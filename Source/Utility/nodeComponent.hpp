@@ -65,25 +65,7 @@ namespace Principia {
 		NodeComponent(artemis::Entity* d, std::string n, int64_t f) : data(d), name(n) { engineFlags |= f; parent = nullptr; };
 	};
 	
-	//Returns a Breadth-First Vector of the nodes;
-	inline void flatten(std::vector<NodeComponent*>& vec, NodeComponent* nc) {
-		std::queue<NodeComponent*> q;
-		q.push(nc);
-		while (!q.empty()) {
-			auto f = q.front();
-			q.pop();
-			for (auto child : f->children) {
-				q.push(child);
-				vec.push_back(child);
-			}
-		}
-	}
 
-	//Breadth First Graph Component
-	//An array of node pointers layed out in BFS order
-	struct BFGraphComponent : artemis::Component {
-		std::vector<NodeComponent*> nodes;
-	};
 
 	// I wish i thought of this a loooong time ago
 	// Adam Component: A Head Component in a node heirarchy

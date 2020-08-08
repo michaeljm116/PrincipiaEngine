@@ -53,8 +53,8 @@ void Principia::PoseSystem::added(artemis::Entity & e)
 	pNode->SetAttribute("Name", pose->poseName.c_str());
 	
 	for (int i = 0; i < numParts; ++i) {
-		int cn = pose->pose[i].second;
-		sqt t = pose->pose[i].first;
+		int cn = pose->pose[i].first;
+		sqt t = pose->pose[i].second;
 
 		XMLElement* pTransform = doc.NewElement("Tran");
 		pTransform->SetAttribute("CN", cn);

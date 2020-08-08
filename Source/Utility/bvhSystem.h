@@ -5,7 +5,7 @@
 #include "componentIncludes.h"
 
 namespace Principia {
-	static const int MAX_BVH_OBJECTS = 3;
+	static const int MAX_BVH_OBJECTS = 4;
 
 	class BvhSystem : public artemis::EntityProcessingSystem
 	{

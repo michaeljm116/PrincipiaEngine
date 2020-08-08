@@ -24,6 +24,7 @@ namespace Principia {
 		glm::vec3 local;
 		CollisionComponent(glm::vec3 p, glm::vec3 l, glm::vec3 e, CollisionType t) : position(p),local(l), extents(e), type(t) { }
 		CollisionComponent(glm::vec3 pos, glm::vec3 e, CollisionType t) : local(pos), extents(e), type(t){ }
+		CollisionComponent(glm::vec4 pos, glm::vec4 e, CollisionType t) : local(glm::vec3(pos)), extents(glm::vec3(e)), type(t) {}
 	};
 
 	//When you collide with an entity, this data is passed to it

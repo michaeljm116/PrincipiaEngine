@@ -104,7 +104,7 @@ namespace Principia {
 	};
 	struct rPose {
 		std::string name;
-		std::vector<std::pair<sqt, int>> pose;	
+		std::vector<std::pair<int, sqt>> pose;	
 		int hashVal;
 	};
 	struct rPoseList {

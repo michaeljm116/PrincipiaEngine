@@ -73,13 +73,21 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 	//vec3 norm;
 
 	// Get intersected primitive ID
-	sectID primitiveID = intersectMBVH(ray, norm);
-	//sectID primitiveID = intersect(ray, norm);
+	iSectID intersectID = intersectMBVH(ray, norm);
+	//sectID intersectID = intersect(ray, norm);
 
-	if (primitiveID.id == -1)
+	if (intersectID.faceID == -1)
 	{
 		return fMat;
 	}
+	
+	#ifdef DEBUGLINES
+	//do an intersection test with the bvh node
+	if (bvhBoundsIntersect(ray, 1/ray.d, bvhNodes[intersectID.nodeID])){
+		fMat.color = vec3(0, 1, 0);
+		return fMat;
+	}
+	#endif
 	
 	vec3 pos = ray.o + ray.t * ray.d;
 	//vec3 lightVec = normalize(lights[0].pos - pos);				
@@ -87,11 +95,11 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 	vec3 txtr;
 	
 	/////////////////SWAP HERE FOR DEBUG///////////////////////
-	Material mat = materials[primitives[primitiveID.id].matID];
-	//Material mat = materials[primitives[primitiveID.pId].matID];
+	Material mat = materials[primitives[intersectID.faceID].matID];
+	//Material mat = materials[primitives[intersectID.pId].matID];
 
 
-	switch(primitiveID.type){
+	switch(intersectID.primType){
 		case TYPE_PLANE:{
 			break;
 		}
@@ -100,13 +108,13 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 			break;
 		}
 		case TYPE_SPHERE:{
-			normal = sphereNormal(pos, primitives[primitiveID.id]);
+			normal = sphereNormal(pos, primitives[intersectID.faceID]);
 			break;
 		}
 		case TYPE_BOX:{
 			normal = norm;
 			if(mat.textureID > 0)
-			txtr = boxTexture(pos, normal, primitives[primitiveID.id], guiTest[mat.textureID]);
+			txtr = boxTexture(pos, normal, primitives[intersectID.faceID], guiTest[mat.textureID]);
 			break;
 		}
 		case TYPE_CYLINDER:{
@@ -114,15 +122,15 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 			break;
 		}
 		case TYPE_MESH:{
-			normal = quadNormal(primitives[primitiveID.pId], faces[primitiveID.id], norm.x, norm.y);
-			mat = materials[primitives[primitiveID.pId].matID];
+			normal = quadNormal(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
+			mat = materials[primitives[intersectID.primID].matID];
 			txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
 			//if(mat.textureID > 0)
 			//	fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz;
 			break; 
 		}
 		case TYPE_JOINT:{
-			normal = skinnedQuadNormal(joints[primitiveID.pId], faces[primitiveID.id], norm.x, norm.y);
+			normal = skinnedQuadNormal(joints[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
 			mat = materials[0];
 			txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
 			break;

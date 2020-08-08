@@ -19,7 +19,6 @@ void Principia::AnimateSystem::initialize()
 	transMapper.init(*world);
 	animMapper.init(*world);
 
-	omp_init_lock(&myLock);
 }
 
 void Principia::AnimateSystem::added(artemis::Entity & e)
@@ -39,11 +38,12 @@ void Principia::AnimateSystem::added(artemis::Entity & e)
 
 void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 {	
-	AnimateComponent* ac = animMapper.get(e);
+	//Get the Components
+	AnimateComponent*	ac = animMapper.get(e);
 	TransformComponent* tc = transMapper.get(e);
-	float delta =  world->getDelta();
-	//if (delta > 1) delta = 0.1f;
-	glm::vec4 dt = glm::vec4(delta/ac->time);
+
+	//Increment time
+	glm::vec4  dt = glm::vec4(world->getDelta() / ac->time);
 	ac->currTime += world->getDelta();
 
 	//Interpolate dat ish
@@ -51,7 +51,6 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	if(!ac->flags.sf)tc->local.scale	= glm::mix(tc->local.scale, ac->end.scale, dt);
 	if(!ac->flags.rf)tc->local.rotation = glm::lerp(tc->local.rotation, ac->end.rotation, dt.x);
 
-	//End Animation if finished
 	/*if (CheckIfFinished(tc->local, ac)) {
 		ac->flags.pf = 0; ac->flags.rf = 0; ac->flags.sf = 0;
 		if (ac->flags.loop == 1)
@@ -59,29 +58,30 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 		else
 			e.removeComponent<AnimateComponent>();
 	}*/
+	//End Animation if finished
 	if (ac->currTime >= ac->time) {
 		ac->currTime = 0.f;
-		if(ac->flags.forceEnd == 1)
+		if(ac->flags.forceEnd == 0)
 			tc->local = ac->end;
-		if (ac->flags.loop == 1) {
+
+		if (ac->flags.loop == 1 || ac->flags.forceEnd == 1)
 			std::swap(ac->end, ac->start);
-			//auto n = (NodeComponent*)e.getComponent<NodeComponent>();
-			//std::cout << "\nLooped: " << n->name;
-		}
 		else
 			e.preRemoveComponent<AnimateComponent>();
+
+		if (ac->flags.forceEnd == 1) {
+			ac->flags.forceEnd = 0;
+			//std::swap(ac->end, ac->start);
+		}
 	}
 
 }
 
 void Principia::AnimateSystem::processEntities(artemis::ImmutableBag<artemis::Entity*>& bag)
 {
-	//omp_set_lock(&myLock);
-	#pragma omp parallel for 
+	//#pragma omp parallel for 
 	for (int i = 0; i < bag.getCount(); ++i)
 		processEntity(*bag.get(i));
-
-	//omp_unset_lock(&myLock);
 }
 
 void Principia::AnimateSystem::preRemoved(artemis::Entity & e)

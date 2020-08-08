@@ -99,7 +99,7 @@ namespace Principia {
 		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			objComp->extents = glm::vec3(tc->global.scale);
-			objComp->aabbExtents = rotateAABB(tc->global.rotation, tc->global.scale);
+			objComp->aabbExtents = rotateAABB(glm::mat3(tc->world));
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
 		}
 		else if (nc->engineFlags & COMPONENT_CAMERA) {
@@ -142,6 +142,7 @@ namespace Principia {
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 		tc->local.rotation = rotationM;
 		tc->global.rotation *= tc->local.rotation;
+
 		//build position and scale matrix;
 		positionM = glm::translate(glm::vec3(tc->local.position));
 		scaleM = glm::scale(glm::vec3(tc->local.scale));
@@ -166,7 +167,7 @@ namespace Principia {
 			//GET THE OBJ
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			objComp->extents = glm::vec3(tc->global.scale); 
-			objComp->aabbExtents = rotateAABB(tc->global.rotation, tc->global.scale);
+			objComp->aabbExtents = rotateAABB(glm::mat3(tc->world));
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
 		}
 
@@ -194,9 +195,42 @@ namespace Principia {
 		}
 	}
 
-	glm::vec3 TransformSystem::rotateAABB(const glm::quat & m, const glm::vec3 & extents)
+//	glm::vec3 TransformSystem::rotateAABB(const glm::quat & m, const glm::vec3 & extents)
+//	{
+//
+//		//set up cube
+//		glm::vec3 v[8];
+//		v[0] = extents;
+//		v[1] = glm::vec3(extents.x, extents.y, -extents.z);
+//		v[2] = glm::vec3(extents.x, -extents.y, -extents.z);
+//		v[3] = glm::vec3(extents.x, -extents.y, extents.z);
+//		v[4] = glm::vec3(-extents);
+//		v[5] = glm::vec3(-extents.x, -extents.y, extents.z);
+//		v[6] = glm::vec3(-extents.x, extents.y, -extents.z);
+//		v[7] = glm::vec3(-extents.x, extents.y, extents.z);
+//
+//		//transform them
+//#pragma omp parallel for
+//		for (int i = 0; i < 8; ++i) {
+//			v[i] = abs(m * v[i]);// glm::vec4(v[i], 1.f));
+//
+//		}
+//
+//		//compare them
+//		glm::vec3 vmax = glm::vec3(FLT_MIN);
+//		for (int i = 0; i < 8; ++i) {
+//			vmax.x = tulip::max(vmax.x, v[i].x);
+//			vmax.y = tulip::max(vmax.y, v[i].y);
+//			vmax.z = tulip::max(vmax.z, v[i].z);
+//		}
+//
+//		return vmax;
+//	}
+
+	glm::vec3 TransformSystem::rotateAABB(const glm::mat3& m)
 	{
 		//set up cube
+		glm::vec3 extents = glm::vec3(1);
 		glm::vec3 v[8];
 		v[0] = extents;
 		v[1] = glm::vec3(extents.x, extents.y, -extents.z);
@@ -208,7 +242,7 @@ namespace Principia {
 		v[7] = glm::vec3(-extents.x, extents.y, extents.z);
 
 		//transform them
-//#pragma omp parallel for
+#pragma omp parallel for
 		for (int i = 0; i < 8; ++i) {
 			v[i] = abs(m * v[i]);// glm::vec4(v[i], 1.f));
 

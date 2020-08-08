@@ -24,6 +24,8 @@ namespace Principia {
 		artemis::ComponentMapper<BFGraphComponent> bfgMapper;
 
 		AnimateSystem* sys_Animate;
+
+		void transition(artemis::Entity& e);
 	};
 
 }

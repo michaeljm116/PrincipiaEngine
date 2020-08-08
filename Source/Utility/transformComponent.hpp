@@ -16,6 +16,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/simd/common.h>
 #include <Artemis/Artemis.h>
+#include <vector>
+#include <queue>
 
 namespace Principia {
 	struct sqt {
@@ -34,7 +36,7 @@ namespace Principia {
 
 		return (ret == 7);
 	}
-	
+
 	struct TransformComponent : public artemis::Component {
 		glm::mat4 world; //	translation rotation scale matrix
 		glm::mat4 TRM;  // note: this is a Translation+Rotation Matrix, scale is left separate
