@@ -29,7 +29,6 @@ namespace Principia {
 		inline bool CheckIfFinished(const sqt & curr, AnimateComponent * const ac);
 		Principia::Timer AnimationsTimer = Principia::Timer("Animation");
 
-		omp_lock_t myLock;
 		
 	};
 

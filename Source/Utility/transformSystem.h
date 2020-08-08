@@ -37,7 +37,8 @@ namespace Principia {
 		void processEntity(artemis::Entity &e);
 		void SQTTransform(NodeComponent* nc);// glm::vec3 sca, glm::quat rot, glm::vec3 pos);
 		void recursiveTransform(NodeComponent* nc);// , TransformComponent global = TransformComponent());
-		glm::vec3 rotateAABB(const glm::quat& m, const glm::vec3& extents);
+		//glm::vec3 rotateAABB(const glm::quat& m, const glm::vec3& extents);
+		glm::vec3 rotateAABB(const glm::mat3& m);//, const glm::vec3& extents);
 		void geometryTransformConverter(NodeComponent* nc);
 	};
 
