@@ -43,7 +43,8 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	TransformComponent* tc = transMapper.get(e);
 
 	//Increment time
-	glm::vec4  dt = glm::vec4(world->getDelta() / ac->time);
+	auto x = glm::clamp(world->getDelta() / ac->time, 0.f, 1.f);
+	glm::vec4  dt = glm::vec4(x);
 	ac->currTime += world->getDelta();
 
 	//Interpolate dat ish
@@ -61,8 +62,8 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	//End Animation if finished
 	if (ac->currTime >= ac->time) {
 		ac->currTime = 0.f;
-		if(ac->flags.forceEnd == 0)
-			tc->local = ac->end;
+		//if(ac->flags.forceEnd == 0)
+		//	tc->local = ac->end;
 
 		if (ac->flags.loop == 1 || ac->flags.forceEnd == 1)
 			std::swap(ac->end, ac->start);

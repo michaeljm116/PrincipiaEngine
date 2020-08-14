@@ -144,7 +144,8 @@ void Principia::AnimationSystem::preRemoved(artemis::Entity & e)
 	e.refresh();
 	change(e);
 }
-//typedef typename cltuple = std::pair<int, std::pair<sqt, sqt>>
+
+using cltuple = std::pair<int, std::tuple<Principia::sqt, Principia::sqt, Principia::AnimFlags>>;
 //On Transition, unused parts go back to normal, and similar parts transition
 void Principia::AnimationSystem::transition(artemis::Entity& e)
 {
@@ -160,21 +161,22 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 	for (auto& e : endPose.pose)	prevPose.insert(e.first);
 
 	//Create a list that combines everything
-	std::unordered_map<int, std::pair<sqt, sqt>> combinedList;
+	std::unordered_map<int, std::tuple<sqt, sqt, AnimFlags>> combinedList;
 
 	//Go through the previous pose, Start = It's Transform, End = It's Original Transform
-	for (auto& p : prevPose) 
-		combinedList.insert(std::pair<int, std::pair<sqt, sqt>>(p, std::pair<sqt, sqt>(
-		((TransformComponent*)bfg->nodes[p]->data->getComponent<TransformComponent>())->local, 
-		bfg->transforms[p])));
+	for (auto& p : prevPose)
+		combinedList.insert(cltuple(p, std::tuple<sqt, sqt, AnimFlags>(
+		((TransformComponent*)bfg->nodes[p]->data->getComponent<TransformComponent>())->local,
+		bfg->transforms[p], AnimFlags(0, 0, 1, 0))));
 
 	//Go through the transitional pose, End = the transitional pose, 
 	//Start = original transform if its not in list, or prevpose start if in the list
 	for (auto& p : transPose.pose) {
 		if (combinedList.find(p.first) == combinedList.end())
-			combinedList.insert(std::pair<int, std::pair<sqt, sqt>>(p.first, std::pair<sqt, sqt>(bfg->transforms[p.first], p.second)));
-		else 
-			combinedList[p.first].second = p.second;
+			combinedList.insert(cltuple(p.first, std::tuple<sqt, sqt, AnimFlags>(bfg->transforms[p.first], p.second, AnimFlags(0, 0, 1, 1))));
+		else
+			std::get<1>(combinedList[p.first]) = p.second;
+			//combinedList[p.first].second = p.second;
 	}
 
 	//Iterate through the list and dispatch animate components
@@ -183,8 +185,9 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 		an->flags = ac->flags;
 		an->flags.endSet = 1;
 		an->time = ac->time;
-		an->start = t.second.first;
-		an->end = t.second.second;
+		an->start = std::get<0>(t.second);// .first;
+		an->end = std::get<1>(t.second);// .second;
+		an->flags = std::get<2>(t.second);
 		
 		bfg->nodes[t.first]->data->addComponent(an);
 		bfg->nodes[t.first]->data->refresh();
