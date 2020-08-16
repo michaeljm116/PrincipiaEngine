@@ -28,7 +28,8 @@ namespace Principia {
 		COMPONENT_IMPULSE = 0X20000,
 		COMPONENT_GUI = 0X40000,
 		COMPONENT_BUTTON = 0x80000,
-		COMPONENT_JOINT = 0x100000
+		COMPONENT_JOINT = 0x100000,
+		COMPONENT_HEADNODE = 0x20000
 	};
 
 	//enum Tagflags {
@@ -55,6 +56,7 @@ namespace Principia {
 		bool clicked = false;
 		bool isDynamic = false;
 		bool isParent = false;
+		bool isHead = false;
 		int64_t engineFlags = COMPONENT_NODE;
 		int64_t gameFlags = 0;
 
@@ -75,6 +77,10 @@ namespace Principia {
 	//	size_t numChildren = 0;
 	//	AdamComponent(size_t n) { numChildren = n; };
 	//};
+
+	struct HeadNodeComponent : artemis::Component {
+		HeadNodeComponent() {};
+	};
 
 }
 

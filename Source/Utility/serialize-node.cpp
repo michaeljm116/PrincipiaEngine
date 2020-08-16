@@ -27,6 +27,7 @@ namespace Principia {
 
 		//Save dynamicness
 		pNode->SetAttribute("Dynamic", parent->isDynamic);
+
 		//save component infos
 		//TransformInfo
 		if (parent->engineFlags & COMPONENT_TRANSFORM) {
@@ -211,6 +212,8 @@ namespace Principia {
 		n->gameFlags = gFlags;
 		 e->addComponent(n); //TODO: aparently this might not be needed???? wat????
 
+		 if (eFlags & COMPONENT_HEADNODE)
+			 e->addComponent(new HeadNodeComponent());
 
 		if (gFlags == 4) {
 			// e->addComponent(new AudioComponent(dir + "Test/Audio/wallcol.wav"));
