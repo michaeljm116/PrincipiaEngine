@@ -18,6 +18,7 @@ namespace Principia {
 
 		artemis::ComponentMapper<TransformComponent> transformMapper;
 		artemis::ComponentMapper<NodeComponent> nodeMapper;
+		//artemis::ComponentMapper<HeadNodeComponent> headMapper;
 		//artemis::ComponentMapper<Principia::CollisionComponent> colMapper;
 
 		artemis::EntityManager* em;

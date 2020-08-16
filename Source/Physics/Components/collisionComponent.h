@@ -1,7 +1,9 @@
 #pragma once
 #include "Artemis/Component.h"
 #include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <unordered_map>
+#include <BulletDynamics/Dynamics/btRigidBody.h>
 
 namespace Principia {
 	enum class CollisionState {
@@ -18,6 +20,8 @@ namespace Principia {
 	struct CollisionComponent : artemis::Component {
 		bool checked = false;
 		int id;
+		btRigidBody* body;
+		float mass = 0.f;
 		CollisionType type;
 		glm::vec3 extents;
 		glm::vec3 position;
@@ -59,5 +63,31 @@ namespace Principia {
 		}
 	};
 
+	//glm 2 bullet vector3
+	inline btVector3 g2bv3(const glm::vec4& v) {
+		return btVector3(v.x, v.y, v.z);
+	}
+	inline btVector3 g2bv3(const glm::vec3& v) {
+		return btVector3(v.x, v.y, v.z);
+	}
+	//glm 2 bullet transform
+	inline btTransform g2bt(const glm::mat4& t) {
+		auto pos = g2bv3(t[3]);
+		auto rot = btMatrix3x3(
+			t[0][0], t[1][0], t[2][0],
+			t[0][1], t[1][1], t[2][1],
+			t[0][2], t[1][2], t[2][2]);
+		return btTransform(rot, pos);
+	}
 
+	inline btQuaternion g2bq(const glm::quat q) {
+		return btQuaternion(q.x, q.y, q.z, q.w);
+	}
+
+	inline glm::quat b2gq(const btQuaternion& q) {
+		return glm::quat(q.w(), q.x(), q.y(), q.z());
+	}
+	inline glm::vec4 b2gv4(const btVector3 v) {
+		return glm::vec4(v.x(), v.y(), v.z(), 1.f);
+	}
 }

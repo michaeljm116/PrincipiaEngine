@@ -112,6 +112,7 @@ namespace Principia {
 		bool CapsuleBox(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
 		bool CapsuleCapsule(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {return false;};
 
+		//Converts the type to a bitwise operation
 		inline int Convert(const CollisionType& a, const CollisionType& b) {
 			int res = (int)a;
 			res |= ((int)b << 2);

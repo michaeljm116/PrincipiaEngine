@@ -7,7 +7,7 @@ namespace Principia {
 	{
 		addComponentType<CollisionComponent>();
 		addComponentType<TransformComponent>();
-		addComponentType<DynamicComponent>();
+		//addComponentType<DynamicComponent>();
 	}
 
 	CollisionSystem::~CollisionSystem()
@@ -18,17 +18,21 @@ namespace Principia {
 	{
 		colMapper.init(*world);
 		transMapper.init(*world);
-		grid = (GridComponent*)world->getSingleton()->getComponent<GridComponent>();
+		//grid = (GridComponent*)world->getSingleton()->getComponent<GridComponent>();
+		bulletInit();
 	}
 
 	void CollisionSystem::begin()
 	{
-		checkDynamicCollisions();
+		bulletUpdate();
 	}
 
 
 	void CollisionSystem::processEntity(artemis::Entity & e)
 	{
+		bulletProcessEntity(e);
+
+		/*
 		//Goes through every object and checks for collision
 		TransformComponent* tc = transMapper.get(e);
 		CollisionComponent* col = colMapper.get(e);
@@ -37,9 +41,18 @@ namespace Principia {
 
 		//This is for all static objects ///////////////do later right now u finna test spheres
 		checkStaticCollision(e);		
+		*/
 
+	}
 
+	void CollisionSystem::added(artemis::Entity& e)
+	{
+		bulletAdded(e);
+	}
 
+	void CollisionSystem::removed(artemis::Entity& e)
+	{
+		bulletRemoved(e);
 	}
 
 	void CollisionSystem::checkDynamicCollisions()
@@ -135,5 +148,96 @@ namespace Principia {
 		}
 
 		return vmax;
+	}
+
+	void CollisionSystem::bulletInit()
+	{
+		collisionConfiguration = new btDefaultCollisionConfiguration();
+		dispatcher = new btCollisionDispatcher(collisionConfiguration);
+		overlappingPairCache = new btDbvtBroadphase();
+		solver = new btSequentialImpulseConstraintSolver;
+		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+		dynamicsWorld->setGravity(btVector3(0, -10, 0));
+
+		//Add ground for now
+		btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);// new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
+		collisionShapes.push_back(groundShape);
+		btTransform groundTransform;
+		groundTransform.setIdentity();
+		groundTransform.setOrigin(btVector3(8, -6 + 1.5f, 8));
+		btScalar mass(0.);
+		btVector3 localInertia(0, 0, 0);
+		btDefaultMotionState* myMotionState = new btDefaultMotionState(groundTransform);
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, groundShape, localInertia);
+		btRigidBody* body = new btRigidBody(rbInfo);
+
+		dynamicsWorld->addRigidBody(body);
+	}
+
+	void CollisionSystem::bulletAdded(artemis::Entity& e)
+	{
+		auto* col = colMapper.get(e);
+		auto* tc = transMapper.get(e);
+		btVector3 inertia = btVector3(0.f, 0.f, 0.f);
+		btScalar mass =  col->mass;
+		btCollisionShape* shape;
+
+		switch (col->type) {
+		case CollisionType::Box: shape = new btBoxShape(g2bv3(col->extents)); break;
+		case CollisionType::Sphere: shape = new btSphereShape(btScalar(col->extents.x)); break;
+		case CollisionType::Capsule: shape = new btCapsuleShape(col->extents.x, col->extents.y); break;
+		case CollisionType::Other: break;
+		default: break;
+		}
+
+		collisionShapes.push_back(shape);
+		btDefaultMotionState* ms = new btDefaultMotionState(g2bt(tc->TRM));
+		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, ms, shape, inertia);
+		btRigidBody* body = new btRigidBody(rbInfo);
+
+		dynamicsWorld->addRigidBody(body);
+		col->body = body;
+	}
+
+	void CollisionSystem::bulletRemoved(artemis::Entity& e)
+	{
+		auto* col = colMapper.get(e);
+		dynamicsWorld->removeRigidBody(col->body);
+
+	}
+
+	void CollisionSystem::bulletUpdate()
+	{
+		//int numManifolds = dispatcher->getNumManifolds();
+		//for (int i = 0; i < numManifolds; ++i) {
+		//	btPersistentManifold* contactManifold = dispatcher->getManifoldByIndexInternal(i);
+		//	const btCollisionObject* a = contactManifold->getBody0();
+		//	const btCollisionObject* b = contactManifold->getBody1();
+		//	int numContacts = contactManifold->getNumContacts();
+		//	for (int j = 0; j < numContacts; ++j) {
+		//		btManifoldPoint pt = contactManifold->getContactPoint(j);
+		//		if (pt.getDistance() < 0.0f) {
+		//			//insert collisiondata stuff
+
+		//		}
+		//	}
+		//}
+
+
+		dynamicsWorld->stepSimulation(0.016666666666666666f, 10.f);
+	}
+
+	void CollisionSystem::bulletProcessEntity(artemis::Entity& e)
+	{
+		auto* col = colMapper.get(e);
+		auto* tc = transMapper.get(e);
+		auto& trans = col->body->getWorldTransform();
+		tc->local.rotation = b2gq(trans.getRotation());
+		tc->local.position = b2gv4(trans.getOrigin());
+
+	}
+
+	void CollisionSystem::bulletOnCollision(btCollisionObject* a, btCollisionObject* b, btManifoldPoint p)
+	{
 	}
 }
