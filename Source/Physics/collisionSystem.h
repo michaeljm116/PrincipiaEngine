@@ -52,6 +52,6 @@ namespace Principia {
 		btSequentialImpulseConstraintSolver* solver;
 		btSimpleDynamicsWorld* dynamicsWorld;
 		
-
+		std::unordered_map<const btCollisionObject*, int> entityMap;
 	};
 }
