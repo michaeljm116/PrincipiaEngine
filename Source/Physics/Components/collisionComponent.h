@@ -14,6 +14,7 @@ namespace Principia {
 		Box = 0x01, 
 		Capsule = 0x02,
 		Other = 0x03,
+		Ghost = 0x04
 	};
 	
 	//This component is passed to any entity you wish to have collisions with
@@ -40,6 +41,7 @@ namespace Principia {
 		glm::vec3 normal;
 		CollisionData() {};
 		CollisionData(int i) : id(i) {};
+		CollisionData(int i, glm::vec3 c, glm::vec3 n) : id(i), colpoint(c), normal(n) {};
 	};
 
 	//This component is passed to an entity when it collides with it
@@ -53,9 +55,12 @@ namespace Principia {
 			for (auto& cw : collidedWith) {
 				if (cw.id == cd.id) {
 					//cw.position = cd.position;
+					found = true;
 					cw.normal = cd.normal;
 					cw.colpoint = cd.colpoint;
 					cw.timer++;
+					cw.state = CollisionState::Continue;
+					return;
 				}
 			}
 			if (!found) //This is a unique collision there should be an alert
@@ -89,5 +94,9 @@ namespace Principia {
 	}
 	inline glm::vec4 b2gv4(const btVector3 v) {
 		return glm::vec4(v.x(), v.y(), v.z(), 1.f);
+	}
+	inline glm::vec3 b2gv3(const btVector3 v) {
+		return glm::vec3(v.x(), v.y(), v.z());
+
 	}
 }
