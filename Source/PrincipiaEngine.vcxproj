@@ -552,6 +552,8 @@
     <ClInclude Include="Utility\helpers.h" />
     <ClInclude Include="Utility\kdtree.hpp" />
     <ClInclude Include="Utility\key.h" />
+    <ClInclude Include="Utility\script-component.h" />
+    <ClInclude Include="Utility\script-system.h" />
     <ClInclude Include="Utility\serialize-node.h" />
     <ClInclude Include="Utility\mouse.h" />
     <ClInclude Include="Utility\nodeComponent.hpp" />

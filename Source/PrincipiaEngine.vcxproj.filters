@@ -1596,6 +1596,12 @@
     <ClInclude Include="..\Lib\bullet3\btBulletDynamicsCommon.h">
       <Filter>Source Files\Physics\bullet3</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\script-component.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\script-system.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.h">
