@@ -221,6 +221,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Utility\script-system.cpp" />
     <ClCompile Include="Utility\serialize-node.cpp" />
     <ClCompile Include="Utility\prefabSystem.cpp" />
     <ClCompile Include="Utility\resourceManager.cpp">
