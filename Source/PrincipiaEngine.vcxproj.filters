@@ -623,6 +623,9 @@
     <ClCompile Include="..\Lib\bullet3\LinearMath\TaskScheduler\btThreadSupportWin32.cpp">
       <Filter>Source Files\Physics\bullet3</Filter>
     </ClCompile>
+    <ClCompile Include="Utility\script-system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">

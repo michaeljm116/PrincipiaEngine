@@ -573,6 +573,7 @@ void RenderSystem::updateBVH(std::vector<artemis::Entity*>& orderedPrims, std::s
 	//reserve newobjects array
 	//std::vector<ssPrimitive> newObjs;
 	size_t numPrims = orderedPrims.size();
+	if (numPrims == 0)return;
 	primitives.clear();
 	primitives.reserve(numPrims);
 
