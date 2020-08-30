@@ -2,6 +2,7 @@
 //#include "../pch.h"
 #include <unordered_set>
 #include <unordered_map>
+#include <memory_resource>
 #include "animationSystem.h"
 #include "../Utility/resourceManager.h"
 
@@ -156,11 +157,16 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 	auto& transPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->trans);
 
 	//First place every Previous Pose in a hashset
-	std::unordered_set<int> prevPose;// (startPose.pose.begin()->first, startPose.pose.end()->first);
+	//std::byte stackBuff[2048];
+	//std::pmr::monotonic_buffer_resource rsrc(stackBuff, sizeof stackBuff);
+	//auto prevPose = std::pmr::unordered_set<int>(0, &rsrc);// (startPose.pose.begin()->first, startPose.pose.end()->first);
+	std::unordered_set<int> prevPose;
+
 	for (auto& s : startPose.pose)	prevPose.insert(s.first);
 	for (auto& e : endPose.pose)	prevPose.insert(e.first);
 
 	//Create a list that combines everything
+	//auto combinedList = std::pmr::unordered_map<int, std::tuple<sqt, sqt, AnimFlags>>(0, &rsrc);
 	std::unordered_map<int, std::tuple<sqt, sqt, AnimFlags>> combinedList;
 
 	//Go through the previous pose, Start = It's Transform, End = It's Original Transform
@@ -195,4 +201,5 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 
 	//Turn off transform;
 	ac->transTime = 0.0001f;
+
 }

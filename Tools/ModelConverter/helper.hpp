@@ -1,6 +1,6 @@
 #pragma once
 #include "includes.h"
-#include "../../Lib/xxhash.hpp"
+#include "../../Lib/xxhash/xxhash.hpp"
 
 static inline xxh::hash32_t xxhasher(std::string s) { return xxh::xxhash<32, char>(s.c_str(), 0); }
 
