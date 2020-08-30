@@ -530,6 +530,7 @@
     <ClInclude Include="Physics\Components\gravityComponent.h" />
     <ClInclude Include="Physics\Components\gridComponent.h" />
     <ClInclude Include="Physics\Components\immovableComponent.h" />
+    <ClInclude Include="Physics\Components\physicsComponent.h" />
     <ClInclude Include="Physics\Components\staticComponent.h" />
     <ClInclude Include="Physics\gravitySystem.h" />
     <ClInclude Include="Physics\gridSystem.h" />

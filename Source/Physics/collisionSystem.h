@@ -11,6 +11,7 @@
 
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
+#include "Components/physicsComponent.h"
 
 namespace Principia {
 	class CollisionSystem : public artemis::EntityProcessingSystem {
@@ -45,12 +46,13 @@ namespace Principia {
 		GridComponent* grid;
 
 		//Bullet
-		btAlignedObjectArray<btCollisionShape*> collisionShapes;
-		btDefaultCollisionConfiguration* collisionConfiguration;
-		btCollisionDispatcher* dispatcher;
-		btBroadphaseInterface* overlappingPairCache;
-		btSequentialImpulseConstraintSolver* solver;
-		btSimpleDynamicsWorld* dynamicsWorld;
+		//btAlignedObjectArray<btCollisionShape*> collisionShapes;
+		//btDefaultCollisionConfiguration* collisionConfiguration;
+		//btCollisionDispatcher* dispatcher;
+		//btBroadphaseInterface* overlappingPairCache;
+		//btSequentialImpulseConstraintSolver* solver;
+		//btSimpleDynamicsWorld* dynamicsWorld;
+		Cmp_Physics* physics;
 		
 		std::unordered_map<const btCollisionObject*, int> entityMap;
 	};

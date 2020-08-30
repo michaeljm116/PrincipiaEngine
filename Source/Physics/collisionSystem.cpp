@@ -53,6 +53,7 @@ namespace Principia {
 
 	void CollisionSystem::removed(artemis::Entity& e)
 	{
+		if(!world->getShutdown())
 		bulletRemoved(e);
 	}
 
@@ -153,13 +154,14 @@ namespace Principia {
 
 	void CollisionSystem::bulletInit()
 	{
-		collisionConfiguration = new btDefaultCollisionConfiguration();
-		dispatcher = new btCollisionDispatcher(collisionConfiguration);
-		overlappingPairCache = new btDbvtBroadphase();
-		solver = new btSequentialImpulseConstraintSolver;
-		dynamicsWorld = new btSimpleDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-		dynamicsWorld->setGravity(btVector3(0, -10, 0));
-
+		physics = new Cmp_Physics();
+		physics->collisionConfiguration = new btDefaultCollisionConfiguration();
+		physics->dispatcher = new btCollisionDispatcher(physics->collisionConfiguration);
+		physics->overlappingPairCache = new btDbvtBroadphase();
+		physics->solver = new btSequentialImpulseConstraintSolver;
+		physics->dynamicsWorld = new btSimpleDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
+		physics->dynamicsWorld->setGravity(btVector3(0, -10, 0));
+		world->getSingleton()->addComponent(physics);
 		//Add ground for now
 		//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);// new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
 		//collisionShapes.push_back(groundShape);
@@ -184,20 +186,20 @@ namespace Principia {
 		btCollisionShape* shape;
 
 		switch (col->type) {
-		case CollisionType::Box: shape = new btBoxShape(g2bv3(col->extents)); break;
-		case CollisionType::Sphere: shape = new btSphereShape(btScalar(col->extents.x)); break;
+		case CollisionType::Box:	 shape = new btBoxShape(g2bv3(col->extents)); break;
+		case CollisionType::Sphere:  shape = new btSphereShape(btScalar(col->extents.x)); break;
 		case CollisionType::Capsule: shape = new btCapsuleShape(col->extents.x, col->extents.y); break;
-		case CollisionType::Ghost: shape = new btSphereShape(btScalar(col->extents.x)); break;
+		case CollisionType::Ghost:	 shape = new btSphereShape(btScalar(col->extents.x)); break;
 		default: break;
 		}
 
-		collisionShapes.push_back(shape);
+		physics->collisionShapes.push_back(shape);
 		btDefaultMotionState* ms = new btDefaultMotionState(g2bt(tc->TRM));
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, ms, shape, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
 		if(col->type == CollisionType::Ghost)body->setCollisionFlags(btCollisionObject::CO_GHOST_OBJECT);
 
-		dynamicsWorld->addRigidBody(body);
+		physics->dynamicsWorld->addRigidBody(body);
 		col->body = body;
 		entityMap.insert(std::make_pair(body, e.getId()));
 
@@ -209,15 +211,15 @@ namespace Principia {
 	void CollisionSystem::bulletRemoved(artemis::Entity& e)
 	{
 		auto* col = colMapper.get(e);
-		dynamicsWorld->removeRigidBody(col->body);
+		physics->dynamicsWorld->removeRigidBody(col->body);
 		entityMap.erase(col->body);
 	}
 
 	void CollisionSystem::bulletUpdate()
 	{
-		int numManifolds = dispatcher->getNumManifolds();
+		int numManifolds = physics->dispatcher->getNumManifolds();
 		for (int i = 0; i < numManifolds; ++i) {
-			btPersistentManifold* contactManifold = dispatcher->getManifoldByIndexInternal(i);
+			btPersistentManifold* contactManifold = physics->dispatcher->getManifoldByIndexInternal(i);
 			const btCollisionObject* a = contactManifold->getBody0();
 			const btCollisionObject* b = contactManifold->getBody1();
 			int numContacts = contactManifold->getNumContacts();
@@ -255,7 +257,7 @@ namespace Principia {
 		}
 
 
-		dynamicsWorld->stepSimulation(0.016666666666666666f, 10.f);
+		physics->dynamicsWorld->stepSimulation(0.016666666666666666f, 10.f);
 	}
 
 	void CollisionSystem::bulletProcessEntity(artemis::Entity& e)

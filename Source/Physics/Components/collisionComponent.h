@@ -35,7 +35,8 @@ namespace Principia {
 	//When you collide with an entity, this data is passed to it
 	struct CollisionData{
 		int id;
-		int timer = 1;
+		int timer = 0;
+		int prev = 0;
 		CollisionState state = CollisionState::None;
 		glm::vec3 colpoint;
 		glm::vec3 normal;

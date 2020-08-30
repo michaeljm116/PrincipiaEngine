@@ -18,6 +18,7 @@ void Principia::CollidedWithSystem::initialize()
 
 void Principia::CollidedWithSystem::added(artemis::Entity & e)
 {
+	//e.removeComponent<CollidedComponent>();
 	CollidedComponent* cc = cwMapper.get(e);
 	for (auto& cw : cc->collidedWith) {
 		if (cw.state == CollisionState::None)
@@ -33,16 +34,17 @@ void Principia::CollidedWithSystem::removed(artemis::Entity & e)
 
 void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 { 
-	std::vector<CollisionData>& cw = cwMapper.get(e)->collidedWith;
-	cw.erase(std::remove_if(cw.begin(), cw.end(), [](CollisionData& cd) {
-		cd.timer -= 1;
-		//std::cout << "COLLIDING";
-		return cd.timer < 1;
-	}), cw.end());
+	//std::vector<CollisionData>& cw = cwMapper.get(e)->collidedWith;
+	//cw.erase(std::remove_if(cw.begin(), cw.end(), [](CollisionData& cd) {
+	//	cd.timer -= 1; 
+	//	int prev = cd.prev;
+	//	cd.prev = cd.timer;
+	//	return cd.timer == prev;
+	//}), cw.end());
 
-	if (cw.empty()) {
-		e.removeComponent<CollidedComponent>();
-		e.refresh();
-	}
+	//if (cw.empty()) {
+	//	e.removeComponent<CollidedComponent>();
+	//	e.refresh();
+	//}
 }
 

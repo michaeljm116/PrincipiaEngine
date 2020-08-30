@@ -19,6 +19,10 @@ namespace Principia {
 		void added(artemis::Entity& e) override;
 		void preRemoved(artemis::Entity& e) override;
 
+		//Timer t = Timer("Timer");
+		//void begin() override { t.Start(); };
+		//void end() override { t.End(); std::cout << t.ms << "ms\n"; };
+
 	private:
 		artemis::ComponentMapper<AnimationComponent> animMapper;
 		artemis::ComponentMapper<BFGraphComponent> bfgMapper;
