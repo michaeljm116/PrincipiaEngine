@@ -76,7 +76,7 @@ namespace Principia {
 		VkCommandPool* commandPool;
 
 		//Validation Layers
-		const std::vector<const char*> validationLayers = { "VK_LAYER_LUNARG_standard_validation" };
+		const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };// "VK_LAYER_LUNARG_standard_validation"};
 
 #ifdef NDEBUG
 		const bool enableValidationLayers = true;

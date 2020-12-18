@@ -19,7 +19,6 @@ const uint TYPE_PLANE = 0x4u;
 const uint TYPE_MESH = 0x8u;
 const uint TYPE_CYLINDER = 0x10u;
 const uint TYPE_DISK = 0x20u;
-const uint TYPE_JOINT = 0x40u;
 const uint TYPE_BVHNODE = 0x80u;
 const int BIT_000_MAX = 268435455;
 

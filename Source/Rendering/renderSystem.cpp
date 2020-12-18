@@ -14,14 +14,12 @@ static const int MAXINDS		= 256;
 static const int MAXOBJS		= 512;
 static const int MAXLIGHTS		= 256;
 static const int MAXGUIS		= 256;
-static const int MAXJOINTS		= 256;
 static const int MAXNODES		= 256;
 
 // Setup and fill the compute shader storage buffers containing primitives for the raytraced scene
 void RenderSystem::prepareStorageBuffers()
 {
 	//objects.reserve(MAXOBJS);
-	joints.reserve(MAXJOINTS);
 	//verts.reserve(MAXVERTS);
 	//indices.reserve(MAXINDS);
 	materials.reserve(MAXMATERIALS);
@@ -39,7 +37,6 @@ void RenderSystem::prepareStorageBuffers()
 	//std::vector<PrimitiveComponent> temp;
 	//temp.push_back(PrimitiveComponent());
 	compute.storageBuffers.primitives.InitStorageBufferCustomSize(vkDevice, primitives, primitives.size(), MAXOBJS);
-	compute.storageBuffers.joints.InitStorageBufferCustomSize(vkDevice, joints, joints.size(), MAXJOINTS);
 	compute.storageBuffers.materials.InitStorageBufferCustomSize(vkDevice, materials, materials.size(), MAXMATERIALS);
 	compute.storageBuffers.lights.InitStorageBufferCustomSize(vkDevice, lights, lights.size(), MAXLIGHTS);
 
@@ -522,12 +519,6 @@ void RenderSystem::updateObjectMemory()
 	updateDescriptors();
 }
 
-void RenderSystem::updateJointMemory()
-{
-	compute.storageBuffers.joints.UpdateAndExpandBuffers(vkDevice, joints, joints.size());
-	updateDescriptors();
-}
-
 void RenderSystem::updateBuffers()
 {
 	if (updateflags & UPDATE_NONE)
@@ -546,10 +537,6 @@ void RenderSystem::updateBuffers()
 	if (updateflags & UPDATE_GUI) {
 		compute.storageBuffers.guis.UpdateBuffers(vkDevice, guis);
 		updateflags &= ~UPDATE_GUI;
-	}
-	if (updateflags & UPDATE_JOINT) {
-		compute.storageBuffers.joints.UpdateBuffers(vkDevice, joints);
-		updateflags &= UPDATE_JOINT;
 	}
 	
 	updateflags |= UPDATE_NONE;
@@ -1019,35 +1006,29 @@ void RenderSystem::updateDescriptors()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			6,
 			&compute.storageBuffers.primitives.bufferInfo),
-		// Binding 6: for Joints
-		vks::initializers::writeDescriptorSet(
-			compute.descriptorSet,
-			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			7,
-			&compute.storageBuffers.joints.bufferInfo),
 		//Binding 6 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			8,
+			7,
 			&compute.storageBuffers.materials.bufferInfo),
 		//Binding 7 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			9,
+			8,
 			&compute.storageBuffers.lights.bufferInfo),
 		//Binding 8 for gui
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			10,
+			9,
 			&compute.storageBuffers.guis.bufferInfo),
 		//Binding 10 for bvhnodes
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			11,
+			10,
 			&compute.storageBuffers.bvh.bufferInfo)
 	};
 	vkUpdateDescriptorSets(vkDevice.logicalDevice, computeWriteDescriptorSets.size(), computeWriteDescriptorSets.data(), 0, NULL);
@@ -1060,7 +1041,7 @@ void RenderSystem::createDescriptorPool() {
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 3 + MAXTEXTURES),	// Graphics image samplers || +4 FOR TEXTURE
 		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
-		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 10),			// Storage buffer for the scene primitives
+		vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 9),			// Storage buffer for the scene primitives
 		//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
 	};
 
@@ -1196,36 +1177,31 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			6),
-		// Binding 7: Shader storage buffer for the joints
+		// Binding 7: Shader storage buffer for the materials
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			7),
-		// Binding 8: Shader storage buffer for the materials
+		// Binding 8: Shader storage buffer for the lights
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			8),
-		// binding 9: Shader storage buffer for the lights
+		// binding 9: Shader storage buffer for the guis
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			9),
-		// Binding 10: Shader storage buffer for the guis?
+		// Binding 10: Shader storage buffer for the bvh
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
 			10),
-		// bINDING 11: the bvh
-		vks::initializers::descriptorSetLayoutBinding(
-			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			VK_SHADER_STAGE_COMPUTE_BIT,
-			11),
 		// Binding 12: the textures
 		vks::initializers::descriptorSetLayoutBinding(
 			VK_DESCRIPTOR_TYPE_SAMPLER,
 			VK_SHADER_STAGE_COMPUTE_BIT,
-			12, MAXTEXTURES)
+			11, MAXTEXTURES)
 	};
 
 	VkDescriptorSetLayoutCreateInfo descriptorLayout =
@@ -1301,41 +1277,35 @@ void RenderSystem::prepareCompute()
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
 			6,
 			&compute.storageBuffers.primitives.bufferInfo),
-		// Binding 7: for joints
-		vks::initializers::writeDescriptorSet(
-			compute.descriptorSet,
-			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			7,
-			&compute.storageBuffers.joints.bufferInfo),
 		//Binding 8 for materials
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			8,
+			7,
 			&compute.storageBuffers.materials.bufferInfo),
 		//Binding 9 for lights
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			9,
+			8,
 			&compute.storageBuffers.lights.bufferInfo),
 		//Binding 10 for guis
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			10,
+			9,
 			&compute.storageBuffers.guis.bufferInfo),
 		//Binding 11 for bvhs
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet,
 			VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
-			11,
+			10,
 			&compute.storageBuffers.bvh.bufferInfo),
 		//bINDING 12 FOR TEXTURES
 		vks::initializers::writeDescriptorSet(
 			compute.descriptorSet, 
 			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-			12, 
+			11, 
 			textureimageinfos, MAXTEXTURES)
 	};
 
@@ -1383,7 +1353,6 @@ void RenderSystem::destroyCompute()
 	compute.storageBuffers.blas.Destroy(vkDevice);
 	compute.storageBuffers.shapes.Destroy(vkDevice);
 	compute.storageBuffers.primitives.Destroy(vkDevice);
-	compute.storageBuffers.joints.Destroy(vkDevice);
 	compute.storageBuffers.materials.Destroy(vkDevice);
 	compute.storageBuffers.lights.Destroy(vkDevice);
 	compute.storageBuffers.guis.Destroy(vkDevice);

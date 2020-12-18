@@ -30,17 +30,6 @@ struct BVHNode {
 	int numChildren;
 };
 
-struct Joint {
-	mat4 world;
-	vec3 extents;
-	int id;	
-
-	int startIndex;
-	int endIndex;
-	int startShape;
-	int endShape;
-}; 
-
 struct TriangleVert{
 	vec3 pos;
 	int _pad;
