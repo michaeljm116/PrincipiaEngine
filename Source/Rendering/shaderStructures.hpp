@@ -47,18 +47,6 @@ namespace Principia {
 
 	};//Total = 96bytes
 
-	struct ssJoint {
-		glm::mat4 world;		//64bytes
-		glm::vec3 extents;		//12bytes
-		int id;					//4bytes
-
-		int startIndex = 0;		//4bytes
-		int endIndex = 0;		//4bytes
-		int startShape = 0; 	//4bytes
-		int endShape = 0;		//4bytes
-	}; //Total = 96bytes
-
-
 	struct ssVert {
 		glm::vec3 pos;
 		float u;

@@ -57,7 +57,6 @@ namespace Principia {
 
 
 		void updateObjectMemory();
-		void updateJointMemory();
 
 		float getRenderTime() { return m_RenderTime.ms; }
 
@@ -72,8 +71,7 @@ namespace Principia {
 			UPDATE_NONE = 0x80,
 			UPDATE_OBJECT = 0x100,
 			UPDATE_LIGHT = 0x200,
-			UPDATE_GUI = 0x400,
-			UPDATE_JOINT = 0x800
+			UPDATE_GUI = 0x400
 		};
 
 		int32_t updateflags;
@@ -92,7 +90,6 @@ namespace Principia {
 		virtual void recreateSwapChain();
 		bool editor = true;
 		void togglePlayMode(bool b);
-		ssJoint& getJoint(int i) { return joints[i]; };
 		ssLight& getLight(int i) { return lights[i]; };
 
 	private:
@@ -127,7 +124,6 @@ namespace Principia {
 
 				//CPU + GPU 
 				VBuffer<ssPrimitive> primitives;	// for the primitives
-				VBuffer<ssJoint> joints;		// for the animated joints
 				VBuffer<ssMaterial> materials;	// (Shader) storage buffer object with scene Materials
 				VBuffer<ssLight> lights;
 				VBuffer<ssGUI> guis;
@@ -152,7 +148,6 @@ namespace Principia {
 		} compute;
 
 		std::vector<ssPrimitive> primitives;
-		std::vector<ssJoint> joints;
 		std::vector<ssMaterial> materials;
 		std::vector<ssLight> lights;
 		std::vector<ssGUI> guis;

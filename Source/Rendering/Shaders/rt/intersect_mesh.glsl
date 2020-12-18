@@ -110,23 +110,6 @@ vec3 quadNormal(Primitive prim, Face f, float u, float v) {
 	//return vec3(0);
 }
 
-vec3 skinnedQuadNormal(Joint prim, Face f, float u, float v) {
-	vec3 n0 = verts[f.v[0]].norm;
-	vec3 n1 = verts[f.v[1]].norm;
-	vec3 n2 = verts[f.v[2]].norm;
-	vec3 n3 = verts[f.v[3]].norm;
-	
-	vec3 lerp1 = mix(n0, n1, u);
-	vec3 lerp2 = mix(n3, n2, u);
-	mat4 temp2 =
-		mat4(prim.extents.x, 0, 0, 0,
-			0, prim.extents.y, 0, 0,
-			0, 0, prim.extents.z, 0,
-			0, 0, 0, 1);
-	mat4 world = prim.world * temp2;
-	return normalize(world * vec4(mix(lerp1, lerp2, v), 0.f)).xyz;
-}
-
 float copysign(float x, float y) {
 	if ((x < 0 && y > 0) || (x > 0 && y < 0))
 		return -x;
