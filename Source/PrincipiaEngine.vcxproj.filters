@@ -110,15 +110,6 @@
     <ClCompile Include="Utility\resourceManager.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui_demo.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Animation\animationSystem.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
@@ -626,6 +617,21 @@
     <ClCompile Include="Utility\script-system.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -648,12 +654,6 @@
     </None>
     <None Include="Rendering\Shaders\pbr.frag">
       <Filter>Source Files\Rendering\Shaders</Filter>
-    </None>
-    <None Include="..\Lib\imgui\README.md">
-      <Filter>imgui</Filter>
-    </None>
-    <None Include="..\Lib\imgui\.travis.yml">
-      <Filter>imgui</Filter>
     </None>
     <None Include="Rendering\Shaders\rt\structs.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
@@ -788,24 +788,6 @@
     </ClInclude>
     <ClInclude Include="Rendering\VulkanBuffer.hpp">
       <Filter>Source Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\stb_rect_pack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\stb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\stb_truetype.h">
-      <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="Rendering\lightComponent.hpp">
       <Filter>Source Files\Components</Filter>
@@ -1608,19 +1590,28 @@
     <ClInclude Include="Physics\Components\physicsComponent.h">
       <Filter>Source Files\Physics\Components</Filter>
     </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.h">
       <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="..\Lib\imgui\LICENSE.txt">
-      <Filter>imgui</Filter>
-    </Text>
-    <Text Include="..\Lib\imgui\TODO.txt">
-      <Filter>imgui</Filter>
-    </Text>
-    <Text Include="..\Lib\imgui\CHANGELOG.txt">
-      <Filter>imgui</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

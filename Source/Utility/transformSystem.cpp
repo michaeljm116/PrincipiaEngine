@@ -166,13 +166,11 @@ namespace Principia {
 		}
 
 		if (nc->engineFlags & COMPONENT_PRIMITIVE) {
-			//GET THE OBJ
 			PrimitiveComponent* objComp = (PrimitiveComponent*)nc->data->getComponent<PrimitiveComponent>();
 			objComp->extents = glm::vec3(tc->global.scale); 
 			objComp->aabbExtents = rotateAABB(glm::mat3(tc->world));
 			objComp->id < 0 ? objComp->world = tc->TRM : objComp->world = tc->world;
 		}
-
 		else if (nc->engineFlags & COMPONENT_CAMERA) {
 			CameraComponent* c = (CameraComponent*)nc->data->getComponent<CameraComponent>();
 			c->rotM = tc->world;
@@ -188,7 +186,6 @@ namespace Principia {
 
 			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
 		}
-
 		if (nc->children.size() > 0) {
 			for (NodeComponent* child : nc->children)
 			{
