@@ -18,8 +18,26 @@ namespace Principia {
 		virtual void added() = 0;
 		virtual void process(float dt) = 0;
 		virtual void removed() = 0;
+		inline static artemis::World* world;
 	protected:
 		artemis::Entity* entity = nullptr;
+	};
+
+	class WorldScript : public Script {
+	private:
+		WorldScript() {};
+	public:
+		~WorldScript() {};
+		static WorldScript& get() {
+			static WorldScript instance;
+			return instance;
+		}
+		WorldScript(WorldScript const&) = delete;
+		void operator= (WorldScript const&) = delete;
+		void added() override {};
+		void process(float dt) override {};
+		void removed() override {};
+		void SetWorld(artemis::World& w) { world = &w; }
 	};
 
 	class TestScript : public Script {

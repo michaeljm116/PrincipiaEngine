@@ -686,19 +686,11 @@ void RenderSystem::initialize() {
 
 void RenderSystem::startFrame(uint32_t& imageIndex)
 {
-	//Timer timer("Rendering: ");
-	//Timer timer("Render time: ");
-
-
-
-	//VkSubmitInfo submitInfo = {};
-
 	m_RenderTime.Start();
 	VkResult result = vkAcquireNextImageKHR(vkDevice.logicalDevice, swapChain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &imageIndex);
 
 	if (result == VK_ERROR_OUT_OF_DATE_KHR) {
 		recreateSwapChain();
-		//return &submitInfo;
 		return;
 	}
 	else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
@@ -708,9 +700,7 @@ void RenderSystem::startFrame(uint32_t& imageIndex)
 	submitInfo.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 	submitInfo.commandBufferCount = 1;
 	submitInfo.pCommandBuffers = &commandBuffers[imageIndex];
-	//VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE), "GRAPHICS QUEUE SUBMIT");
 
-	//VkSemaphore waitSemaphores[] = { imageAvailableSemaphore };
 	VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 	submitInfo.waitSemaphoreCount = 1;
 	submitInfo.pWaitSemaphores = &imageAvailableSemaphore;// waitSemaphores;
@@ -721,7 +711,6 @@ void RenderSystem::startFrame(uint32_t& imageIndex)
 
 	VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submitInfo, VK_NULL_HANDLE), "GRAPHICS QUEUE SUBMIT");
 	
-	//return &submitInfo;
 }
 void RenderSystem::endFrame(const uint32_t& imageIndex)
 {

@@ -17,7 +17,7 @@ namespace Principia {
 
 	void Window::init() {
 		height = 720;
-		width = 1280;
+		width = 1280;//1680;// 1280;
 		maximized = false;
 
 

@@ -172,6 +172,8 @@
     <ClCompile Include="..\Lib\imgui\imgui.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Lib\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\Lib\tinyxml2\tinyxml2.cpp" />
     <ClCompile Include="Animation\animateSystem.cpp" />
     <ClCompile Include="Animation\animationSystem.cpp">
@@ -241,8 +243,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Lib\imgui\.travis.yml" />
-    <None Include="..\Lib\imgui\README.md" />
     <None Include="ArtemisFrameWork\zzReadMe.md" />
     <None Include="Rendering\Shaders\basic.frag" />
     <None Include="Rendering\Shaders\basic.vert" />
@@ -492,9 +492,9 @@
     <ClInclude Include="..\Lib\imgui\imconfig.h" />
     <ClInclude Include="..\Lib\imgui\imgui.h" />
     <ClInclude Include="..\Lib\imgui\imgui_internal.h" />
-    <ClInclude Include="..\Lib\imgui\stb_rect_pack.h" />
-    <ClInclude Include="..\Lib\imgui\stb_textedit.h" />
-    <ClInclude Include="..\Lib\imgui\stb_truetype.h" />
+    <ClInclude Include="..\Lib\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\Lib\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\Lib\imgui\imstb_truetype.h" />
     <ClInclude Include="..\Lib\tinyxml2\tinyxml2.h" />
     <ClInclude Include="Animation\animateSystem.h" />
     <ClInclude Include="Animation\animationComponent.hpp" />
@@ -571,9 +571,6 @@
     <ClInclude Include="Utility\xxhash.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Lib\imgui\CHANGELOG.txt" />
-    <Text Include="..\Lib\imgui\LICENSE.txt" />
-    <Text Include="..\Lib\imgui\TODO.txt" />
     <Text Include="TODO.h" />
   </ItemGroup>
   <ItemGroup>
