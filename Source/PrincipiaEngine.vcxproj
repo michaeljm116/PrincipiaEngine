@@ -175,11 +175,13 @@
     <ClCompile Include="..\Lib\imgui\imgui_tables.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp" />
     <ClCompile Include="..\Lib\tinyxml2\tinyxml2.cpp" />
-    <ClCompile Include="Animation\animateSystem.cpp" />
+    <ClCompile Include="Animation\animateSystem.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.2.154.1\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2015;..\Lib\bullet3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="Animation\animationSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Animation\poseSystem.cpp" />

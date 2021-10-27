@@ -9,6 +9,7 @@ just have an input system, but ill put that on the todolist
 #ifndef INPUT_H
 #define INPUT_H
 
+#define UIIZON
 #include "window.h"
 #include "../Utility/key.h"
 #include "../Utility/mouse.h"
@@ -18,7 +19,6 @@ just have an input system, but ill put that on the todolist
 namespace Principia {
 
 #define INPUT Input::get()
-#define UIIZON
 
 	class Input
 	{
