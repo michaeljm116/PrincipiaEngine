@@ -1,7 +1,6 @@
 /* Copyright (C) Mike Murrell 2017 Window class
 a singleton class that handles the window
-probably should be a system instead
-*/
+probably should be a system instead */
 
 #pragma once
 #ifndef WINDOW_H
