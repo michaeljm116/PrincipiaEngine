@@ -1,3 +1,2 @@
 C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.pdb
 C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Debug\Principia Engine.pdb
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\Debug\Principia Engine.exe

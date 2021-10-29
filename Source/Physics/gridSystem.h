@@ -24,6 +24,6 @@ namespace Principia {
 	private:
 		artemis::ComponentMapper<StaticComponent> staticMapper;
 		artemis::ComponentMapper<CollisionComponent> colMapper;
-		GridComponent* gridComp;
+		//GridComponent* gridComp;
 	};
 }

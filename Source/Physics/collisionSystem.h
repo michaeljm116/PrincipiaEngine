@@ -43,7 +43,7 @@ namespace Principia {
 		artemis::ComponentMapper<DynamicComponent> dynamicMapper;
 		//artemis::ComponentMapper<GameObjectTypeComponent> gotMapper;
 
-		GridComponent* grid;
+		//GridComponent* grid;
 
 		//Bullet
 		//btAlignedObjectArray<btCollisionShape*> collisionShapes;
