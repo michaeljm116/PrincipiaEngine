@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "Artemis/Component.h"
 #include "Artemis/Entity.h"
 #include <array>
@@ -22,19 +22,19 @@ namespace Principia {
 		};
 	};
 
-	/*
 	
-	0 1 2 3
-	1
-	2
-	3
+	
+	//0 1 2 3
+	//1
+	//2
+	//3
 
-	  1 2 3
-	3
-	2
-	1
+	//  1 2 3
+	//3
+	//2
+	//1
 	 
-	*/
+	
 	struct GridBlock {
 		int leftx : 8;
 		int rightx : 8;
@@ -61,4 +61,4 @@ namespace Principia {
 			return true;
 		}
 	};
-}
+}*/

@@ -75,17 +75,17 @@ namespace Principia {
 	{
 		std::vector<artemis::Entity*> collisions;
 		CollisionComponent* cc = colMapper.get(e);
-		GridBlock gb = GridBlock(cc->position, cc->extents);
-		if (!gb.verify(grid->size))
-			return;
-		for (int r = gb.leftx; r < gb.rightx; r += gb.itr) {
-			for (int c = gb.downy; c < gb.upy; c += gb.itr) {
-				if (grid->grid[r][c] != nullptr) {
-					if (std::find(collisions.begin(), collisions.end(), grid->grid[r][c]) == collisions.end())
-						collisions.push_back(grid->grid[r][c]);
-				}
-			}
-		}
+		//GridBlock gb = GridBlock(cc->position, cc->extents);
+		//if (!gb.verify(grid->size))
+		//	return;
+		//for (int r = gb.leftx; r < gb.rightx; r += gb.itr) {
+		//	for (int c = gb.downy; c < gb.upy; c += gb.itr) {
+		//		if (grid->grid[r][c] != nullptr) {
+		//			if (std::find(collisions.begin(), collisions.end(), grid->grid[r][c]) == collisions.end())
+		//				collisions.push_back(grid->grid[r][c]);
+		//		}
+		//	}
+		//}
 
 		//check collision list for collisions
 		if (collisions.size() > 0) {
