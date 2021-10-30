@@ -16,7 +16,7 @@ void Principia::Sys_Scripting::initialize()
 
 void Principia::Sys_Scripting::added(artemis::Entity& e)
 {
-	//scriptMapper.get(e)->added();
+	scriptMapper.get(e)->added();
 }
 
 void Principia::Sys_Scripting::removed(artemis::Entity& e)

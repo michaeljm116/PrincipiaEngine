@@ -87,7 +87,7 @@ namespace Principia {
 		if (parent->engineFlags & COMPONENT_MATERIAL) {
 			MaterialComponent* m = (MaterialComponent*)parent->data->getComponent<MaterialComponent>();
 			XMLElement* pMaterial = doc->NewElement("Material");
-			pMaterial->SetAttribute("ID", m->matUnqiueID);
+ 			pMaterial->SetAttribute("ID", m->matUnqiueID);
 
 			pNode->InsertEndChild(pMaterial);
 		}
