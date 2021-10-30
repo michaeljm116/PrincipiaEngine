@@ -16,17 +16,17 @@ namespace Principia {
 		glfwSetMouseButtonCallback(window, Input::mouse_button_callback);
 		glfwSetScrollCallback(window, Input::scroll_callback);
 
-		int present = glfwJoystickPresent(GLFW_JOYSTICK_2);
+		int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
 		int present2 = glfwJoystickPresent(GLFW_JOYSTICK_3);
 		if (present == GLFW_TRUE) {
 			if (present == GLFW_TRUE) {
 				int axesCount;
-				const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_2, &axesCount);
+				const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
 
 				int buttonCount;
-				const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_2, &buttonCount);
+				const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
 
-				const char *name = glfwGetJoystickName(GLFW_JOYSTICK_2);
+				const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
 				int a = 4;
 			}
 		}
