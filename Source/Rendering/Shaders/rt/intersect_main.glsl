@@ -21,6 +21,9 @@ const uint TYPE_CYLINDER = 0x10u;
 const uint TYPE_DISK = 0x20u;
 const uint TYPE_BVHNODE = 0x80u;
 const int BIT_000_MAX = 268435455;
+const int SAMPLES = 1;
+
+const vec2[] SampleTable = {vec2(-0.5, 0.5f), vec2(0.5f, -0.5f), vec2(0.5f, 0.5f), vec2(-0.5f, -0.5f)};
 
 iSectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 	iSectID id = iSectID(0, -1, -1, -1);

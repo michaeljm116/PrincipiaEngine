@@ -9,7 +9,7 @@ just have an input system, but ill put that on the todolist
 #ifndef INPUT_H
 #define INPUT_H
 
-//#define UIIZON
+#define UIIZON
 #include "window.h"
 #include "../Utility/key.h"
 #include "../Utility/mouse.h"
