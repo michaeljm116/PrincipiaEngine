@@ -236,7 +236,10 @@
     </ClCompile>
     <ClCompile Include="Utility\Input.cpp" />
     <ClCompile Include="Utility\timer.cpp" />
-    <ClCompile Include="Utility\transformSystem.cpp" />
+    <ClCompile Include="Utility\transformSystem.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="Utility\window.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
@@ -259,6 +262,7 @@
     <None Include="Rendering\Shaders\rt\intersect_plane.glsl" />
     <None Include="Rendering\Shaders\rt\intersect_sphere.glsl" />
     <None Include="Rendering\Shaders\rt\layouts.glsl" />
+    <None Include="Rendering\Shaders\rt\pbr.glsl" />
     <None Include="Rendering\Shaders\rt\structs.glsl" />
     <None Include="Rendering\Shaders\texture.frag" />
     <None Include="Rendering\Shaders\texture.vert" />

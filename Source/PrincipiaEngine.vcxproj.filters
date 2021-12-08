@@ -685,6 +685,9 @@
     <None Include="Rendering\Shaders\rt\layouts.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
+    <None Include="Rendering\Shaders\rt\pbr.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Rendering\Texture.h">
