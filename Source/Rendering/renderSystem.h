@@ -44,6 +44,7 @@ namespace Principia {
 		void end() override;
 
 		void loadResources();
+		void loadResourcesRaster();
 
 		void addLight(artemis::Entity &e);
 		void addCamera(artemis::Entity &e);
@@ -110,7 +111,11 @@ namespace Principia {
 			VkDescriptorSet			descriptorSetPreCompute;
 			VkDescriptorSet			descriptorSet;
 			VkPipelineLayout		pipelineLayout;
-			VkPipeline				pipeline;
+			//VkPipeline				pipeline;
+			struct {
+				VkPipeline empty;
+				VkPipeline raster;
+			}pipelines;
 		}graphics;
 
 		// Resources for the compute part of the example
@@ -143,6 +148,7 @@ namespace Principia {
 				glm::mat4 rotM = glm::mat4(1);
 				float fov = 10.0f;
 				float aspectRatio;
+				int rand;
 			} ubo;
 			VBuffer<UBOCompute> uniformBuffer;			// Uniform buffer object containing scene data
 		} compute;

@@ -235,6 +235,7 @@ void RenderSystem::added(artemis::Entity & e)
 		compute.ubo.aspectRatio = cam->aspectRatio;
 		compute.ubo.rotM = transComp->world;
 		compute.ubo.fov = cam->fov;
+		compute.ubo.rand = random_int();
 	}
 
 }
@@ -343,6 +344,11 @@ void RenderSystem::loadResources()
 	guiTextures[3].CreateTexture(vkDevice);
 	guiTextures[4].path = "../Assets/Levels/Test/Textures/circuit.jpg";
 	guiTextures[4].CreateTexture(vkDevice);
+
+}
+
+void RenderSystem::loadResourcesRaster()
+{
 
 }
 
@@ -549,6 +555,7 @@ void RenderSystem::updateCamera(CameraComponent* c) {
 	compute.ubo.aspectRatio = c->aspectRatio;
 	compute.ubo.fov = glm::tan(c->fov * 0.03490658503);
 	compute.ubo.rotM = c->rotM;
+	compute.ubo.rand = random_int();
 	compute.uniformBuffer.ApplyChanges(vkDevice, compute.ubo);
 
 	//updateUniformBuffer();
@@ -637,6 +644,7 @@ void RenderSystem::SetStuffUp()
 	//compute.ubo.pos = m_Cam.position * -1.0f;
 	compute.ubo.fov = glm::tan(m_Cam.fov * 0.03490658503); //0.03490658503 = pi / 180 / 2
 	compute.ubo.rotM = glm::mat4();
+	compute.ubo.rand = random_int();
 }
 
 
@@ -669,7 +677,7 @@ void RenderSystem::initialize() {
 	renderMapper.init(*world);
 	prepareStorageBuffers();
 	createUniformBuffers();
-	prepareTextureTarget(&computeTexture, 1920, 1080, VK_FORMAT_R8G8B8A8_UNORM);
+	prepareTextureTarget(&computeTexture, 1280, 720, VK_FORMAT_R8G8B8A8_UNORM);
 	createDescriptorSetLayout();
 	createGraphicsPipeline();
 	createDescriptorPool();
@@ -764,7 +772,8 @@ void RenderSystem::cleanup() {
 	RenderBase::cleanup();
 }
 void RenderSystem::cleanupSwapChain() {
-	vkDestroyPipeline(vkDevice.logicalDevice, graphics.pipeline, nullptr);
+	vkDestroyPipeline(vkDevice.logicalDevice, graphics.pipelines.empty, nullptr);
+	vkDestroyPipeline(vkDevice.logicalDevice, graphics.pipelines.raster, nullptr);
 	vkDestroyPipelineLayout(vkDevice.logicalDevice, graphics.pipelineLayout, nullptr);
 
 	RenderBase::cleanupSwapChain();
@@ -856,9 +865,6 @@ void RenderSystem::createGraphicsPipeline() {
 	auto vertShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.vert.spv");
 	auto fragShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.frag.spv");
 
-	auto bindingDescription = Vertex::getBindingDescription();
-	auto attributeDescriptions = Vertex::getAttributeDescriptions();
-
 	VkShaderModule vertShaderModule;
 	VkShaderModule fragShaderModule;
 	
@@ -905,11 +911,27 @@ void RenderSystem::createGraphicsPipeline() {
 	pipelineCreateInfo.pStages = shaderStages.data();
 	pipelineCreateInfo.renderPass = renderPass;
 
-	VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.pipeline), "CREATE GRAPHICS PIPELINE");
+	VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.pipelines.empty), "CREATE GRAPHICS PIPELINE");
 
 	//must be destroyed at the end of the object
 	vkDestroyShaderModule(vkDevice.logicalDevice, fragShaderModule, nullptr);
 	vkDestroyShaderModule(vkDevice.logicalDevice, vertShaderModule, nullptr);
+
+
+	//pipeline for rasterization
+	auto attributeDescription = getVertexAttributeDescriptions();
+	auto bindingDescription = getVertexBindingDescription();
+
+	VkPipelineVertexInputStateCreateInfo inputState{};
+	inputState.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+	inputState.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescription.size());
+	inputState.pVertexAttributeDescriptions = attributeDescription.data();
+	inputState.vertexBindingDescriptionCount = 1;
+	inputState.pVertexBindingDescriptions = &bindingDescription;
+	pipelineCreateInfo.pVertexInputState = &inputState;
+
+
+	VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.pipelines.raster), "CREATE GRAPHICS PIPELINE");
 }
 
 void RenderSystem::createCommandBuffers(float swapratio, int32_t offsetWidth, int32_t offsetHeight) {
@@ -975,7 +997,7 @@ void RenderSystem::createCommandBuffers(float swapratio, int32_t offsetWidth, in
 		vkCmdSetScissor(commandBuffers[i], 0, 1, &scissor);
 		
 		vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.pipelineLayout, 0, 1, &graphics.descriptorSet, 0, NULL);
-		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.pipeline);
+		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.pipelines.empty);
 		vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
 
 		vkCmdEndRenderPass(commandBuffers[i]);

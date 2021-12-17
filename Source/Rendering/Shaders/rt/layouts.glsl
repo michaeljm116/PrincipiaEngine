@@ -6,6 +6,7 @@ layout(binding = 1) uniform UBO
 	mat4 rotM;
 	float fov;
 	float aspectRatio;
+	int rand;
 		
 } ubo;
 
