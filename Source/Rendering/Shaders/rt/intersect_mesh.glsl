@@ -75,6 +75,44 @@ flool triIntersect(Ray ray, Face tri) {
 	return flool(f * dot(edge2, q), true);
 }
 
+vec3 triIntersectUV(Ray ray, Face tri){
+	vec3 edge1 = verts[tri.v[1]].pos - verts[tri.v[0]].pos;
+	vec3 edge2 = verts[tri.v[2]].pos - verts[tri.v[0]].pos;
+	vec3 h = cross(ray.d, edge2);
+	float a = dot(edge1, h);
+	if (a > -EPSILON && a < EPSILON)
+		return vec3(-1.f);
+	float f = 1 / a;
+	vec3 s = ray.o - verts[tri.v[0]].pos;
+	float u = f * dot(s, h);
+	if (u < 0.f || u > 1.f)
+		return vec3(-1.f);
+	vec3 q = cross(s, edge1);
+	float v = f * dot(ray.d, q);
+	if (v < 0.f || u + v > 1.f)
+		return vec3(-1.f);
+	float t = f * dot(edge2, q);
+	return vec3(t, u, v);
+}
+
+vec3 triNormalUV(Primitive prim, Face f, float u, float v){
+	
+	vec3 n0 = verts[f.v[0]].norm;
+	vec3 n1 = verts[f.v[1]].norm;
+	vec3 n2 = verts[f.v[2]].norm;
+
+	vec3 lerp1 = mix(n0, n1, u);
+	vec3 lerp2 = mix(n2, n1, u);
+
+	mat4 temp2 = 
+	mat4(prim.extents.x, 0, 0, 0,
+		 0, prim.extents.y, 0, 0,
+		 0, 0, prim.extents.z, 0,
+		0, 0, 0, 1);
+	mat4 world = prim.world * temp2;
+	return normalize(world * vec4(mix(lerp1, lerp2, v), 0.f)).xyz;
+}
+
 vec3 quadNormal(Primitive prim, Face f, float u, float v) {
 	//vec3 n0 = (prim.world * vec4(verts[f.v[0]].norm, 1.f)).xyz;
 	//vec3 n1 = (prim.world * vec4(verts[f.v[1]].norm, 1.f)).xyz;

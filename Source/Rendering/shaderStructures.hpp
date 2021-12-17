@@ -100,4 +100,34 @@ namespace Principia {
 		int id;
 	};
 
+
+	static VkVertexInputBindingDescription getVertexBindingDescription() {
+		//vertex info binding
+		VkVertexInputBindingDescription vibd{};
+		vibd.binding = 0;
+		vibd.stride = sizeof(rVertex);
+		vibd.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+		return vibd;
+	}
+	static std::array<VkVertexInputAttributeDescription, 3> getVertexAttributeDescriptions() {
+		std::array<VkVertexInputAttributeDescription, 3> viad{};
+		viad[0].binding = 0;
+		viad[0].location = 0;
+		viad[0].format = VK_FORMAT_R32G32B32_SFLOAT;
+		viad[0].offset = offsetof(rVertex, rVertex::pos);
+
+		viad[1].binding = 0;
+		viad[1].location = 1;
+		viad[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+		viad[1].offset = offsetof(rVertex, rVertex::norm);
+
+		viad[2].binding = 0;
+		viad[2].location = 2;
+		viad[2].format = VK_FORMAT_R32G32_SFLOAT;
+		viad[2].offset = offsetof(rVertex, rVertex::uv);
+
+		return viad;
+	}
+
 }

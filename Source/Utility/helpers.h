@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <random>
 namespace tulip {
 	template<typename T>
 	inline T max(const T& a, const T& b) {
@@ -37,5 +38,13 @@ namespace Principia {
 	inline int sign(const float& a) {
 		return  1 | ((int)a >> (sizeof(int) * CHAR_BIT - 1));  // if v < 0 then -1, else +1
 	}
+
+	inline uint64_t random_int() {
+		//static std::uniform_real_distribution<double> distribution(0.0, 1.0);
+		static std::uniform_int_distribution<int32_t> distribution(INT_MIN, INT_MAX);
+		static std::mt19937 generator;
+		return distribution(generator);
+	}
+
 }
 

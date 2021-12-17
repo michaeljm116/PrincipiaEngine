@@ -179,6 +179,7 @@ namespace Principia {
 
 			m.meshID = meshID;
 			//add the model
+
 			mod.meshes.push_back(m);
 		}
 
@@ -217,6 +218,11 @@ namespace Principia {
 		binaryio.close();
 		mod.uniqueID = uniqueID;
 		//mod.skeletonID = skinned ? (skeletons.end() - 1)->id : 0;
+		
+		//check if its triangulated
+		auto triCheck = fileName.substr(fileName.length() - 5, fileName.length());
+		if (triCheck == "_t") mod.triangular = true;
+
 		models.push_back(mod);
 		return true;
 	}

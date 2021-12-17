@@ -18,7 +18,7 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn);
 
 
 PrincipiaModel ReadPEModel(const char* pFile);
-bool LoadDirectory(std::string directory);
+bool LoadDirectory(std::string directory, bool triangulate);
 
 
 ///////////////ANIMATION STUFF///////////////////////
@@ -38,7 +38,12 @@ bool LoadBones(const aiScene* scene, tempDataStruct& tds);
 bool hasAnim = false;
 
 int main() {
-	LoadDirectory("Input");
+	std::cout << "Triangulate: y/n? " << std::endl;
+	char triangulate;
+	std::cin >> triangulate;
+	bool t = false;
+	if (triangulate == 'y') t = true;
+	LoadDirectory("Input", t);
 	system("Pause");
 }
 
@@ -208,10 +213,10 @@ bool WriteSkeleton(PrincipiaSkeleton& s, std::string fn) {
 		for (int c = 0; c < s.animations[a].numChannels; c++) {
 			binaryio.write(CCAST(&s.animations[a].channels[c].numKeys), sizeof(int));
 			for (int k = 0; k < s.animations[a].channels[c].numKeys; ++k) {
-				binaryio.write(CCAST(&s.animations[a].channels[c].keys[k].time), sizeof(float));
-				binaryio.write(CCAST(&aiVec3ToGLM(s.animations[a].channels[c].keys[k].pos.mValue)), sizeof(glm::vec3));
-				binaryio.write(CCAST(&aiQuatToGLM(s.animations[a].channels[c].keys[k].rot.mValue)), sizeof(glm::vec4));
-				binaryio.write(CCAST(&aiVec3ToGLM(s.animations[a].channels[c].keys[k].sca.mValue)), sizeof(glm::vec3));
+				//binaryio.write(CCAST(&s.animations[a].channels[c].keys[k].time), sizeof(float));
+				//binaryio.write(CCAST(&aiVec3ToGLM(s.animations[a].channels[c].keys[k].pos.mValue)), sizeof(glm::vec3));
+				//binaryio.write(CCAST(&aiQuatToGLM(s.animations[a].channels[c].keys[k].rot.mValue)), sizeof(glm::vec4));
+				//binaryio.write(CCAST(&aiVec3ToGLM(s.animations[a].channels[c].keys[k].sca.mValue)), sizeof(glm::vec3));
 			}
 		}
 	}
@@ -548,7 +553,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	return true;
 }
 
-bool LoadDirectory(std::string directory)
+bool LoadDirectory(std::string directory, bool triangulate)
 {
 	for (const auto & p : fs::directory_iterator(directory)) {
 		UID++;
@@ -557,7 +562,6 @@ bool LoadDirectory(std::string directory)
 		mod.uniqueID = newUniqueID(p.path().stem().string());
 		skeleton.uniqueID = newUniqueID(p.path().stem().string() + "_skel");
 		mod.skeletonID = skeleton.uniqueID;
-		bool triangulate = false;
 		if (DoTheImportThing(p.path().string(), mod, skeleton, triangulate)) {
 			//break;
 

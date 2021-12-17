@@ -101,6 +101,7 @@ namespace Principia {
 		int uniqueID;
 		int skeletonID;
 		bool skinned = false;
+		bool triangular = false;
 	};
 	struct rPose {
 		std::string name;
