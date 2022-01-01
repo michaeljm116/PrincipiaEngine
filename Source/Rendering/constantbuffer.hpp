@@ -74,7 +74,7 @@ namespace Principia {
 		}
 
 		void InitStorageBuffer(VulkanDevice& vkDevice, std::vector<T> objects, size_t mul,
-			VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+			VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VkMemoryPropertyFlags properties = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) {
 
 			VkDeviceSize bufferSize = sizeof(Data) * mul;
@@ -92,7 +92,7 @@ namespace Principia {
 			bufferInfo.range = bufferSize;// sizeof(T);
 		}
 		void InitStorageBufferCustomSize(VulkanDevice& vkDevice, std::vector<T> objects, size_t mul, size_t max,
-			VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
+			VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
 			VkMemoryPropertyFlags properties = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT) {
 
 			VkDeviceSize bufferSize = sizeof(Data) * mul;
@@ -112,7 +112,7 @@ namespace Principia {
 		}
 
 		void InitStorageBufferWithStaging(VulkanDevice& vkDevice, std::vector<T> objects, size_t mul,
-			VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT) {
+			VkBufferUsageFlags usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT) {
 			VkBuffer stagingBuffer;
 			VkDeviceMemory stagingBufferMemory;
 			VkDeviceSize bufferSize = sizeof(Data) * mul;

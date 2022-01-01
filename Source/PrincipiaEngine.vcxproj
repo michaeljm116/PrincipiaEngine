@@ -211,6 +211,7 @@
     <ClCompile Include="Physics\gravitySystem.cpp" />
     <ClCompile Include="Physics\gridSystem.cpp" />
     <ClCompile Include="Physics\immovableSystem.cpp" />
+    <ClCompile Include="Rendering\raytrace-compute-renderer.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
@@ -254,6 +255,8 @@
     <None Include="ArtemisFrameWork\zzReadMe.md" />
     <None Include="Rendering\Shaders\basic.frag" />
     <None Include="Rendering\Shaders\basic.vert" />
+    <None Include="Rendering\Shaders\instancing.frag" />
+    <None Include="Rendering\Shaders\instancing.vert" />
     <None Include="Rendering\Shaders\pbr.frag" />
     <None Include="Rendering\Shaders\raytracing.comp" />
     <None Include="Rendering\Shaders\rt\intersect_box.glsl" />
@@ -549,6 +552,7 @@
     <ClInclude Include="Rendering\constantbuffer.hpp" />
     <ClInclude Include="Rendering\lightComponent.hpp" />
     <ClInclude Include="Rendering\materialComponent.hpp" />
+    <ClInclude Include="Rendering\raytrace-compute-renderer.h" />
     <ClInclude Include="Rendering\renderSystem.h" />
     <ClInclude Include="Rendering\renderbase.h" />
     <ClInclude Include="Rendering\rendermanagers.h" />

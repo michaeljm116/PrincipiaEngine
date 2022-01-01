@@ -347,11 +347,6 @@ void RenderSystem::loadResources()
 
 }
 
-void RenderSystem::loadResourcesRaster()
-{
-
-}
-
 void RenderSystem::addLight(artemis::Entity & e)
 {
 	NodeComponent* node = (NodeComponent*)e.getComponent<NodeComponent>();
@@ -474,6 +469,12 @@ void RenderSystem::addNode(NodeComponent* node) {
 		compute.ubo.aspectRatio = cam->aspectRatio;
 		compute.ubo.rotM = transComp->world;
 		compute.ubo.fov = cam->fov;
+
+		if (rasterize) {
+			graphics.camera.view = transComp->world;
+			m_Cam.fov = cam->fov;
+			m_Cam.updateAspectRatio(cam->aspectRatio);
+		}
 	}
 }
 
@@ -558,6 +559,13 @@ void RenderSystem::updateCamera(CameraComponent* c) {
 	compute.ubo.rand = random_int();
 	compute.uniformBuffer.ApplyChanges(vkDevice, compute.ubo);
 
+	//for raster
+	if (rasterize) {
+		graphics.camera.view = c->rotM;
+		m_Cam.fov = c->fov;
+		m_Cam.updateAspectRatio(c->aspectRatio);
+		graphics.camera.proj = m_Cam.matrices.perspective;
+	}
 	//updateUniformBuffer();
 }
 void RenderSystem::updateBVH(std::vector<artemis::Entity*>& orderedPrims, std::shared_ptr<BVHNode> root, int numNodes)
@@ -645,6 +653,9 @@ void RenderSystem::SetStuffUp()
 	compute.ubo.fov = glm::tan(m_Cam.fov * 0.03490658503); //0.03490658503 = pi / 180 / 2
 	compute.ubo.rotM = glm::mat4();
 	compute.ubo.rand = random_int();
+
+	graphics.camera.proj = m_Cam.matrices.perspective;
+	graphics.camera.view = m_Cam.matrices.view;
 }
 
 
@@ -763,7 +774,7 @@ void RenderSystem::cleanup() {
 	destroyCompute();
 
 	vkDestroyDescriptorPool(vkDevice.logicalDevice, descriptorPool, nullptr);
-	vkDestroyDescriptorSetLayout(vkDevice.logicalDevice, graphics.descriptorSetLayout, nullptr);
+	vkDestroyDescriptorSetLayout(vkDevice.logicalDevice, graphics.empty.descriptorSetLayout, nullptr);
 	
 	vkDestroyCommandPool(vkDevice.logicalDevice, commandPool, nullptr);
 	//vkDestroyCommandPool(vkDevice.logicalDevice, compute.commandPool, nullptr);
@@ -772,9 +783,10 @@ void RenderSystem::cleanup() {
 	RenderBase::cleanup();
 }
 void RenderSystem::cleanupSwapChain() {
-	vkDestroyPipeline(vkDevice.logicalDevice, graphics.pipelines.empty, nullptr);
-	vkDestroyPipeline(vkDevice.logicalDevice, graphics.pipelines.raster, nullptr);
-	vkDestroyPipelineLayout(vkDevice.logicalDevice, graphics.pipelineLayout, nullptr);
+	vkDestroyPipeline(vkDevice.logicalDevice, graphics.empty.pipeline, nullptr);
+	vkDestroyPipeline(vkDevice.logicalDevice, graphics.raster.pipeline, nullptr);
+	vkDestroyPipelineLayout(vkDevice.logicalDevice, graphics.empty.pipelineLayout, nullptr);
+	vkDestroyPipelineLayout(vkDevice.logicalDevice, graphics.raster.pipelineLayout, nullptr);
 
 	RenderBase::cleanupSwapChain();
 }
@@ -888,7 +900,7 @@ void RenderSystem::createGraphicsPipeline() {
 
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo =
 		vks::initializers::pipelineCreateInfo(
-			graphics.pipelineLayout,
+			graphics.empty.pipelineLayout,
 			renderPass,
 			0);
 
@@ -911,7 +923,7 @@ void RenderSystem::createGraphicsPipeline() {
 	pipelineCreateInfo.pStages = shaderStages.data();
 	pipelineCreateInfo.renderPass = renderPass;
 
-	VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.pipelines.empty), "CREATE GRAPHICS PIPELINE");
+	VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.empty.pipeline), "CREATE GRAPHICS PIPELINE");
 
 	//must be destroyed at the end of the object
 	vkDestroyShaderModule(vkDevice.logicalDevice, fragShaderModule, nullptr);
@@ -919,19 +931,22 @@ void RenderSystem::createGraphicsPipeline() {
 
 
 	//pipeline for rasterization
-	auto attributeDescription = getVertexAttributeDescriptions();
-	auto bindingDescription = getVertexBindingDescription();
+	//auto attributeDescription = getVertexAttributeDescriptions();
+	//auto bindingDescription = getVertexBindingDescription();
+
+	auto attributeDescriptions = getPrimitiveAttributeDescriptions();
+	auto bindingDescriptions = getPrimitiveBindingDescriptions();
 
 	VkPipelineVertexInputStateCreateInfo inputState{};
 	inputState.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-	inputState.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescription.size());
-	inputState.pVertexAttributeDescriptions = attributeDescription.data();
-	inputState.vertexBindingDescriptionCount = 1;
-	inputState.pVertexBindingDescriptions = &bindingDescription;
+	inputState.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size());
+	inputState.pVertexAttributeDescriptions = attributeDescriptions.data();
+	inputState.vertexBindingDescriptionCount = 2;
+	inputState.pVertexBindingDescriptions = bindingDescriptions.data();
 	pipelineCreateInfo.pVertexInputState = &inputState;
 
 
-	VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.pipelines.raster), "CREATE GRAPHICS PIPELINE");
+	//VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics.raster.pipeline), "CREATE GRAPHICS PIPELINE");
 }
 
 void RenderSystem::createCommandBuffers(float swapratio, int32_t offsetWidth, int32_t offsetHeight) {
@@ -996,9 +1011,14 @@ void RenderSystem::createCommandBuffers(float swapratio, int32_t offsetWidth, in
 		VkRect2D scissor = vks::initializers::rect2D(swapChainExtent.width, swapChainExtent.height, 0, 0);
 		vkCmdSetScissor(commandBuffers[i], 0, 1, &scissor);
 		
-		vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.pipelineLayout, 0, 1, &graphics.descriptorSet, 0, NULL);
-		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.pipelines.empty);
+		vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.empty.pipelineLayout, 0, 1, &graphics.empty.descriptorSet, 0, NULL);
+		vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics.empty.pipeline);
 		vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+
+		if (rasterize) {
+
+		}
+
 
 		vkCmdEndRenderPass(commandBuffers[i]);
 
@@ -1069,16 +1089,16 @@ void RenderSystem::createDescriptorSets() {
 	VkDescriptorSetAllocateInfo allocInfo =
 		vks::initializers::descriptorSetAllocateInfo(
 			descriptorPool,
-			&graphics.descriptorSetLayout,
+			&graphics.empty.descriptorSetLayout,
 			1);
 
-	VK_CHECKRESULT(vkAllocateDescriptorSets(vkDevice.logicalDevice, &allocInfo, &graphics.descriptorSet), "ALLOCATE DESCRIPTOR SET");
+	VK_CHECKRESULT(vkAllocateDescriptorSets(vkDevice.logicalDevice, &allocInfo, &graphics.empty.descriptorSet), "ALLOCATE DESCRIPTOR SET");
 
 	std::vector<VkWriteDescriptorSet> writeDescriptorSets =
 	{
 		// Binding 0 : Fragment shader texture sampler
 		vks::initializers::writeDescriptorSet(
-			graphics.descriptorSet,
+			graphics.empty.descriptorSet,
 			VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
 			0,
 			&computeTexture.descriptor)
@@ -1103,14 +1123,24 @@ void RenderSystem::createDescriptorSetLayout() {
 			setLayoutBindings.data(),
 			setLayoutBindings.size());
 
-	VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &graphics.descriptorSetLayout), "CREATE DESCRIPTOR SET LAYOUT");
+	VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &graphics.empty.descriptorSetLayout), "CREATE DESCRIPTOR SET LAYOUT");
 
 	VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo =
 		vks::initializers::pipelineLayoutCreateInfo(
-			&graphics.descriptorSetLayout,
+			&graphics.empty.descriptorSetLayout,
 			1);
 
-	VK_CHECKRESULT(vkCreatePipelineLayout(vkDevice.logicalDevice, &pPipelineLayoutCreateInfo, nullptr, &graphics.pipelineLayout), "CREATE PIPELINE LAYOUT");
+	VK_CHECKRESULT(vkCreatePipelineLayout(vkDevice.logicalDevice, &pPipelineLayoutCreateInfo, nullptr, &graphics.empty.pipelineLayout), "CREATE PIPELINE LAYOUT");
+
+	if (rasterize) {
+		VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo =
+			vks::initializers::pipelineLayoutCreateInfo(
+				&graphics.raster.descriptorSetLayout,
+				1);
+
+		VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &graphics.raster.descriptorSetLayout), "CREATE DESCIRPTOR SET LAYOUT FOR RASTER");
+		VK_CHECKRESULT(vkCreatePipelineLayout(vkDevice.logicalDevice, &pPipelineLayoutCreateInfo, nullptr, &graphics.raster.pipelineLayout), "CREATE PIPELINE LAYOUT FO RASTER");
+	}
 }
 
 void RenderSystem::createUniformBuffers()
@@ -1121,6 +1151,13 @@ void RenderSystem::createUniformBuffers()
 		VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
 	compute.uniformBuffer.ApplyChanges(vkDevice, compute.ubo);
 	//updateUniformBuffer();
+
+	if (rasterize) {
+		graphics.uniformBuffer.Initialize(vkDevice, 1,
+			VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		graphics.uniformBuffer.ApplyChanges(vkDevice, graphics.camera);
+	}
 }
 #pragma endregion
 
