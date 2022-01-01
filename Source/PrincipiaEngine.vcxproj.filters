@@ -632,6 +632,9 @@
     <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Rendering\raytrace-compute-renderer.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -687,6 +690,12 @@
     </None>
     <None Include="Rendering\Shaders\rt\pbr.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\instancing.vert">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="Rendering\Shaders\instancing.frag">
+      <Filter>Source Files\Rendering\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1610,6 +1619,9 @@
     </ClInclude>
     <ClInclude Include="..\Lib\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\raytrace-compute-renderer.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

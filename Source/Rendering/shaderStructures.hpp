@@ -100,34 +100,116 @@ namespace Principia {
 		int id;
 	};
 
-
+	/*
 	static VkVertexInputBindingDescription getVertexBindingDescription() {
 		//vertex info binding
 		VkVertexInputBindingDescription vibd{};
 		vibd.binding = 0;
-		vibd.stride = sizeof(rVertex);
+		vibd.stride = sizeof(ssVert);
 		vibd.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
 
 		return vibd;
 	}
-	static std::array<VkVertexInputAttributeDescription, 3> getVertexAttributeDescriptions() {
-		std::array<VkVertexInputAttributeDescription, 3> viad{};
+	static std::array<VkVertexInputAttributeDescription, 4> getVertexAttributeDescriptions() {
+		std::array<VkVertexInputAttributeDescription, 4> viad{};
 		viad[0].binding = 0;
 		viad[0].location = 0;
 		viad[0].format = VK_FORMAT_R32G32B32_SFLOAT;
-		viad[0].offset = offsetof(rVertex, rVertex::pos);
+		viad[0].offset = offsetof(ssVert, ssVert::pos);
 
 		viad[1].binding = 0;
 		viad[1].location = 1;
-		viad[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-		viad[1].offset = offsetof(rVertex, rVertex::norm);
+		viad[1].format = VK_FORMAT_R32_SFLOAT;
+		viad[1].offset = offsetof(ssVert, ssVert::u);
 
 		viad[2].binding = 0;
 		viad[2].location = 2;
-		viad[2].format = VK_FORMAT_R32G32_SFLOAT;
-		viad[2].offset = offsetof(rVertex, rVertex::uv);
+		viad[2].format = VK_FORMAT_R32G32B32_SFLOAT;
+		viad[2].offset = offsetof(ssVert, ssVert::norm);
+
+		viad[3].binding = 0;
+		viad[3].location = 3;
+		viad[3].format = VK_FORMAT_R32_SFLOAT;
+		viad[3].offset = offsetof(ssVert, ssVert::v);
+
+		return viad;
+	}*/
+
+	static std::array<VkVertexInputBindingDescription, 2> getPrimitiveBindingDescriptions() 
+	{
+		std::array<VkVertexInputBindingDescription, 2> vibd{};
+
+		//vertex info binding
+		vibd[0].binding = 0;
+		vibd[0].stride = sizeof(ssVert);
+		vibd[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+		//vertex info binding
+		vibd[1].binding = 1;
+		vibd[1].stride = sizeof(ssPrimitive);
+		vibd[1].inputRate = VK_VERTEX_INPUT_RATE_INSTANCE;
+
+		return vibd;
+	}
+
+	static std::array<VkVertexInputAttributeDescription, 11> getPrimitiveAttributeDescriptions() {
+		std::array<VkVertexInputAttributeDescription, 11> viad{};
+
+		viad[0].binding = 0;
+		viad[0].location = 0;
+		viad[0].format = VK_FORMAT_R32G32B32_SFLOAT;
+		viad[0].offset = offsetof(ssVert, ssVert::pos);
+
+		viad[1].binding = 0;
+		viad[1].location = 1;
+		viad[1].format = VK_FORMAT_R32_SFLOAT;
+		viad[1].offset = offsetof(ssVert, ssVert::u);
+
+		viad[2].binding = 0;
+		viad[2].location = 2;
+		viad[2].format = VK_FORMAT_R32G32B32_SFLOAT;
+		viad[2].offset = offsetof(ssVert, ssVert::norm);
+
+		viad[3].binding = 0;
+		viad[3].location = 3;
+		viad[3].format = VK_FORMAT_R32_SFLOAT;
+		viad[3].offset = offsetof(ssVert, ssVert::v);
+
+		viad[4].binding = 1;
+		viad[4].location = 4;
+		viad[4].format = VK_FORMAT_ASTC_4x4_SFLOAT_BLOCK_EXT;
+		viad[4].offset = offsetof(ssPrimitive, ssPrimitive::world);
+
+		viad[5].binding = 1;
+		viad[5].location = 5;
+		viad[5].format = VK_FORMAT_R32G32B32_SFLOAT;
+		viad[5].offset = offsetof(ssPrimitive, ssPrimitive::extents);
+		
+		viad[6].binding = 1;
+		viad[6].location = 6;
+		viad[6].format = VK_FORMAT_R32_SINT;
+		viad[6].offset = offsetof(ssPrimitive, ssPrimitive::numChildren);
+
+		viad[7].binding = 1;
+		viad[7].location = 7;
+		viad[7].format = VK_FORMAT_R32_SINT;
+		viad[7].offset = offsetof(ssPrimitive, ssPrimitive::id);
+
+		viad[8].binding = 1;
+		viad[8].location = 8;
+		viad[8].format = VK_FORMAT_R32_SINT;
+		viad[8].offset = offsetof(ssPrimitive, ssPrimitive::matId);
+
+		viad[9].binding = 1;
+		viad[9].location = 9;
+		viad[9].format = VK_FORMAT_R32_SINT;
+		viad[9].offset = offsetof(ssPrimitive, ssPrimitive::startIndex);
+
+		viad[10].binding = 1;
+		viad[10].location = 10;
+		viad[10].format = VK_FORMAT_R32_SINT;
+		viad[10].offset = offsetof(ssPrimitive, ssPrimitive::endIndex);
 
 		return viad;
 	}
-
 }

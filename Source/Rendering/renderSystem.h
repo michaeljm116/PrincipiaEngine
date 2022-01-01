@@ -44,7 +44,6 @@ namespace Principia {
 		void end() override;
 
 		void loadResources();
-		void loadResourcesRaster();
 
 		void addLight(artemis::Entity &e);
 		void addCamera(artemis::Entity &e);
@@ -93,6 +92,8 @@ namespace Principia {
 		void togglePlayMode(bool b);
 		ssLight& getLight(int i) { return lights[i]; };
 
+		bool rasterize = false;
+
 	private:
 
 		artemis::ComponentMapper<RenderComponent> renderMapper;
@@ -105,18 +106,26 @@ namespace Principia {
 		void createCommandBuffers(float swapratio, int32_t offsetWidth, int32_t offsetHeight);
 		void updateDescriptors();
 
+
 		VkDescriptorPool	  descriptorPool;
+
+		struct SetsAndLayouts {
+			VkDescriptorSetLayout descriptorSetLayout;
+			VkDescriptorSet descriptorSet;
+			VkPipelineLayout pipelineLayout;
+			VkPipeline pipeline;
+		};
 		struct {
-			VkDescriptorSetLayout	descriptorSetLayout;
-			VkDescriptorSet			descriptorSetPreCompute;
-			VkDescriptorSet			descriptorSet;
-			VkPipelineLayout		pipelineLayout;
-			//VkPipeline				pipeline;
-			struct {
-				VkPipeline empty;
-				VkPipeline raster;
-			}pipelines;
+			SetsAndLayouts empty;
+			SetsAndLayouts raster;
+			struct UBORaster {
+				glm::mat4 view;
+				glm::mat4 proj;
+			}camera;
+			VBuffer<UBORaster> uniformBuffer;
 		}graphics;
+
+		
 
 		// Resources for the compute part of the example
 		struct {
