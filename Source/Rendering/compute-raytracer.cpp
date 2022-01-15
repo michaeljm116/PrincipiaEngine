@@ -1,0 +1,1184 @@
+#include "../pch.h"
+#include "compute-raytracer.h"
+#include <set>
+#include "../Utility/resourceManager.h"
+#include "../Utility/Input.h"
+namespace Principia {
+
+	static int curr_id = 0;	// Id used to identify objects by the ray tracing shader
+	static const int MAX_MATERIALS = 256;
+	static const int MAX_MESHES = 256;
+	static const int MAX_VERTS = 256;
+	static const int MAX_INDS = 256;
+	static const int MAX_OBJS = 512;
+	static const int MAX_LIGHTS = 256;
+	static const int MAX_guis_ = 256;
+	static const int MAX_NODES = 256;
+
+	ComputeRaytracer::ComputeRaytracer()
+	{
+	}
+
+	ComputeRaytracer::~ComputeRaytracer()
+	{
+	}
+
+	void ComputeRaytracer::PrepareStorageBuffers()
+	{	//objects.reserve(MAXOBJS);
+	//verts.reserve(MAXVERTS);
+	//indices.reserve(MAXINDS);
+		materials_.reserve(MAX_MATERIALS);
+		lights_.reserve(MAX_LIGHTS);
+
+
+		//THESE SHOULD BE STAGED MEOW
+		//compute_.storage_buffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
+		//compute_.storage_buffers.indices.InitStorageBufferWithStaging(vkDevice, indices, indices.size());
+
+		//compute_.storage_buffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
+		//compute_.storage_buffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
+
+		//these are changable 
+		//std::vector<PrimitiveComponent> temp;
+		//temp.push_back(PrimitiveComponent());
+		compute_.storage_buffers.primitives.InitStorageBufferCustomSize(vkDevice, primitives_, primitives_.size(), MAX_OBJS);
+		compute_.storage_buffers.materials.InitStorageBufferCustomSize(vkDevice, materials_, materials_.size(), MAX_MATERIALS);
+		compute_.storage_buffers.lights.InitStorageBufferCustomSize(vkDevice, lights_, lights_.size(), MAX_LIGHTS);
+
+
+		//create 1 gui main global kind of gui for like title/menu screen etc...
+		artemis::World* world = new artemis::World();
+		GUIComponent* guiComp = (GUIComponent*)world->getSingleton()->getComponent<GUIComponent>();
+		ssGUI gui = ssGUI(guiComp->min, guiComp->extents, guiComp->alignMin, guiComp->alignExt, guiComp->layer, guiComp->id);
+		gui.visible = guiComp->visible;
+
+		//Give the component a reference to it and initialize
+		guiComp->ref = guis_.size();
+		guis_.push_back(gui);
+		compute_.storage_buffers.guis.InitStorageBufferCustomSize(vkDevice, guis_, guis_.size(), MAX_guis_);
+
+		//std::vector<ssBVHNode> tempbvh;
+		//tempbvh.push_back(ssBVHNode());
+		compute_.storage_buffers.bvh.InitStorageBufferCustomSize(vkDevice, bvh_, bvh_.size(), MAX_NODES);
+
+	}
+
+	void ComputeRaytracer::CreateUniformBuffers()
+	{
+		compute_.uniform_buffer.Initialize(vkDevice, 1,
+			VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+			VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
+	}
+
+	void ComputeRaytracer::PrepareTextureTarget(Texture* tex, uint32_t width, uint32_t height, VkFormat format)
+	{
+		// Get device properties for the requested texture format
+		VkFormatProperties formatProperties;
+		
+		vkGetPhysicalDeviceFormatProperties(vkDevice.physicalDevice, format, &formatProperties);
+		// Check if requested image format supports image storage operations
+		assert(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT);
+
+		// Prepare blit target texture
+		tex->width = width;
+		tex->height = height;
+
+		VkImageCreateInfo imageCreateInfo = vks::initializers::imageCreateInfo();
+		imageCreateInfo.imageType = VK_IMAGE_TYPE_2D;
+		imageCreateInfo.format = format;
+		imageCreateInfo.extent = { width, height, 1 };
+		imageCreateInfo.mipLevels = 1;
+		imageCreateInfo.arrayLayers = 1;
+		imageCreateInfo.samples = VK_SAMPLE_COUNT_1_BIT;
+		imageCreateInfo.tiling = VK_IMAGE_TILING_OPTIMAL;
+		imageCreateInfo.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+		// Image will be sampled in the fragment shader and used as storage target in the compute shader
+		imageCreateInfo.usage = VK_IMAGE_USAGE_SAMPLED_BIT | VK_IMAGE_USAGE_STORAGE_BIT;
+		imageCreateInfo.flags = 0;
+
+		VkMemoryAllocateInfo memAllocInfo = vks::initializers::memoryAllocateInfo();
+		VkMemoryRequirements memReqs;
+
+		VK_CHECKRESULT(vkCreateImage(vkDevice.logicalDevice, &imageCreateInfo, nullptr, &tex->image), "CREATE IMAGE");
+		vkGetImageMemoryRequirements(vkDevice.logicalDevice, tex->image, &memReqs);
+		memAllocInfo.allocationSize = memReqs.size;
+		memAllocInfo.memoryTypeIndex = vkDevice.findMemoryType(memReqs.memoryTypeBits, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
+		VK_CHECKRESULT(vkAllocateMemory(vkDevice.logicalDevice, &memAllocInfo, nullptr, &tex->memory), "ALLOCATE TXTR MEMORY");
+		VK_CHECKRESULT(vkBindImageMemory(vkDevice.logicalDevice, tex->image, tex->memory, 0), "BIND IMAGE MEMORY");
+
+		VkCommandBuffer layoutCmd = vkDevice.beginSingleTimeCommands(); //VulkanExampleBase::createCommandBuffer(VK_COMMAND_BUFFER_LEVEL_PRIMARY, true);
+
+		tex->imageLayout = VK_IMAGE_LAYOUT_GENERAL;
+		vkDevice.setImageLayout(
+			layoutCmd,
+			tex->image,
+			VK_IMAGE_ASPECT_COLOR_BIT,
+			VK_IMAGE_LAYOUT_UNDEFINED,
+			tex->imageLayout);
+
+		vkDevice.endSingleTimeCommands(layoutCmd); //VulkanExampleBase::flushCommandBuffer(layoutCmd, queue, true);
+
+		// Create sampler
+		VkSamplerCreateInfo sampler = vks::initializers::samplerCreateInfo();
+		sampler.magFilter = VK_FILTER_LINEAR;
+		sampler.minFilter = VK_FILTER_LINEAR;
+		sampler.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
+		sampler.addressModeU = VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER;
+		sampler.addressModeV = sampler.addressModeU;
+		sampler.addressModeW = sampler.addressModeU;
+		sampler.mipLodBias = 0.0f;
+		sampler.maxAnisotropy = 1.0f;
+		sampler.compareOp = VK_COMPARE_OP_NEVER;
+		sampler.minLod = 0.0f;
+		sampler.maxLod = 0.0f;
+		sampler.borderColor = VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE;
+		VK_CHECKRESULT(vkCreateSampler(vkDevice.logicalDevice, &sampler, nullptr, &tex->sampler), "CREATE SAMPLER");
+
+		// Create image view
+		VkImageViewCreateInfo view = vks::initializers::imageViewCreateInfo();
+		view.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		view.format = format;
+		view.components = { VK_COMPONENT_SWIZZLE_R, VK_COMPONENT_SWIZZLE_G, VK_COMPONENT_SWIZZLE_B, VK_COMPONENT_SWIZZLE_A };
+		view.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
+		view.image = tex->image;
+		VK_CHECKRESULT(vkCreateImageView(vkDevice.logicalDevice, &view, nullptr, &tex->view), "CREATE IMAGE");
+
+		// Initialize a descriptor for later use
+		tex->descriptor.imageLayout = tex->imageLayout;
+		tex->descriptor.imageView = tex->view;
+		tex->descriptor.sampler = tex->sampler;
+		//tex->device = vulkanDevice;
+	}
+
+	void ComputeRaytracer::CreateComputeCommandBuffer()
+	{
+		VkCommandBufferBeginInfo cmdBufInfo = vks::initializers::commandBufferBeginInfo();
+
+		VK_CHECKRESULT(vkBeginCommandBuffer(compute_.command_buffer, &cmdBufInfo), "CREATE COMPUTE COMMAND BUFFER");
+
+		vkCmdBindPipeline(compute_.command_buffer, VK_PIPELINE_BIND_POINT_COMPUTE, compute_.pipeline);
+		vkCmdBindDescriptorSets(compute_.command_buffer, VK_PIPELINE_BIND_POINT_COMPUTE, compute_.pipeline_layout, 0, 1, &compute_.descriptor_set, 0, 0);
+
+		vkCmdDispatch(compute_.command_buffer, compute_texture_.width / 16, compute_texture_.height / 16, 1);
+
+		vkEndCommandBuffer(compute_.command_buffer);
+	}
+
+	void ComputeRaytracer::PrepareCompute()
+	{
+		// Create a compute capable device queue
+// The VulkanDevice::createLogicalDevice functions finds a compute capable queue and prefers queue families that only support compute
+// Depending on the implementation this may result in different queue family indices for graphics and computes,
+// requiring proper synchronization (see the memory barriers in buildComputeCommandBuffer)
+		VkDeviceQueueCreateInfo queueCreateInfo = {};
+		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queueCreateInfo.pNext = NULL;
+		queueCreateInfo.queueFamilyIndex = vkDevice.qFams.computeFamily;
+		queueCreateInfo.queueCount = 1;
+		vkGetDeviceQueue(vkDevice.logicalDevice, vkDevice.qFams.computeFamily, 0, &compute_.queue);
+
+		std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings = {
+			// Binding 0: Storage image (raytraced output)
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_IMAGE,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				0),
+			// Binding 1: Uniform buffer block
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				1),
+			// Binding 2: Shader storage buffer for the verts
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				2),
+			// Binding 3: Shader storage buffer for the indices
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				3),
+			// Binding 4: Shader storage buffer for the blas
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				4),
+			// Binding 5: Shader storage buffer for the shapes
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				5),
+			// Binding 6: Shader storage buffer for the objects
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				6),
+			// Binding 7: Shader storage buffer for the materials
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				7),
+			// Binding 8: Shader storage buffer for the lights
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				8),
+			// binding 9: Shader storage buffer for the guis_
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				9),
+			// Binding 10: Shader storage buffer for the bvh
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				10),
+			// Binding 12: the textures
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_SAMPLER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				11, MAX_TEXTURES)
+		};
+
+		VkDescriptorSetLayoutCreateInfo descriptorLayout =
+			vks::initializers::descriptorSetLayoutCreateInfo(
+				setLayoutBindings.data(),
+				setLayoutBindings.size());
+
+		VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &compute_.descriptor_set_layout), "CREATE COMPUTE DSL");
+
+		VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo =
+			vks::initializers::pipelineLayoutCreateInfo(
+				&compute_.descriptor_set_layout,
+				1);
+
+		VK_CHECKRESULT(vkCreatePipelineLayout(vkDevice.logicalDevice, &pPipelineLayoutCreateInfo, nullptr, &compute_.pipeline_layout), "CREATECOMPUTE PIEPLINEEEE");
+
+		VkDescriptorSetAllocateInfo allocInfo =
+			vks::initializers::descriptorSetAllocateInfo(
+				descriptor_pool_,
+				&compute_.descriptor_set_layout,
+				1);
+
+		VK_CHECKRESULT(vkAllocateDescriptorSets(vkDevice.logicalDevice, &allocInfo, &compute_.descriptor_set), "ALLOCATE DOMPUTE DSET");
+
+		VkDescriptorImageInfo textureimageinfos[MAX_TEXTURES] = {
+			gui_textures_[0].descriptor,
+			gui_textures_[1].descriptor,
+			gui_textures_[2].descriptor,
+			gui_textures_[3].descriptor,
+			gui_textures_[4].descriptor
+		};
+		compute_write_descriptor_sets_ =
+		{
+			// Binding 0: Output storage image
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_IMAGE,
+				0,
+				&compute_texture_.descriptor),
+			// Binding 1: Uniform buffer block
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER,
+				1,
+				&compute_.uniform_buffer.bufferInfo),
+			// Binding 2: Shader storage buffer for the verts
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				2,
+				&compute_.storage_buffers.verts.bufferInfo),
+			// Binding 3: Shader storage buffer for the indices
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				3,
+				&compute_.storage_buffers.faces.bufferInfo),
+			// Binding 4: for blas
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				4,
+				&compute_.storage_buffers.blas.bufferInfo),
+			//Binding 5: for shapes
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				5,
+				&compute_.storage_buffers.shapes.bufferInfo),
+			// Binding 6: for objectss
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				6,
+				&compute_.storage_buffers.primitives.bufferInfo),
+			//Binding 8 for materials
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				7,
+				&compute_.storage_buffers.materials.bufferInfo),
+			//Binding 9 for lights
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				8,
+				&compute_.storage_buffers.lights.bufferInfo),
+			//Binding 10 for guis_
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				9,
+				&compute_.storage_buffers.guis.bufferInfo),
+			//Binding 11 for bvhs
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				10,
+				&compute_.storage_buffers.bvh.bufferInfo),
+			//bINDING 12 FOR TEXTURES
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+				11,
+				textureimageinfos, MAX_TEXTURES)
+		};
+
+		vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
+
+		// Create compute shader pipelines
+		VkComputePipelineCreateInfo computePipelineCreateInfo =
+			vks::initializers::computePipelineCreateInfo(
+				compute_.pipeline_layout,
+				0);
+
+		computePipelineCreateInfo.stage = vkDevice.createShader("../../PrincipiaEngine/Source/Rendering/Shaders/raytracing.comp.spv", VK_SHADER_STAGE_COMPUTE_BIT);
+		VK_CHECKRESULT(vkCreateComputePipelines(vkDevice.logicalDevice, pipelineCache, 1, &computePipelineCreateInfo, nullptr, &compute_.pipeline), "CREATE COMPUTE PIPELINE");
+
+		// Separate command pool as queue family for compute may be different than graphics
+		VkCommandPoolCreateInfo cmdPoolInfo = {};
+		cmdPoolInfo.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
+		cmdPoolInfo.queueFamilyIndex = vkDevice.qFams.computeFamily;
+		cmdPoolInfo.flags = VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT;
+		VK_CHECKRESULT(vkCreateCommandPool(vkDevice.logicalDevice, &cmdPoolInfo, nullptr, &compute_.command_pool), "CREATE COMMAND POOL");
+
+		// Create a command buffer for compute operations
+		VkCommandBufferAllocateInfo cmdBufAllocateInfo =
+			vks::initializers::commandBufferAllocateInfo(
+				compute_.command_pool,
+				VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+				1);
+
+		VK_CHECKRESULT(vkAllocateCommandBuffers(vkDevice.logicalDevice, &cmdBufAllocateInfo, &compute_.command_buffer), "ALLOCATE COMMAND BUFFERS");
+
+		// Fence for compute CB sync
+		VkFenceCreateInfo fenceCreateInfo = vks::initializers::fenceCreateInfo(VK_FENCE_CREATE_SIGNALED_BIT);
+		VK_CHECKRESULT(vkCreateFence(vkDevice.logicalDevice, &fenceCreateInfo, nullptr, &compute_.fence), "CREATE FENCE");
+
+		// Build a single command buffer containing the compute dispatch commands
+		CreateComputeCommandBuffer();
+		vkDestroyShaderModule(vkDevice.logicalDevice, computePipelineCreateInfo.stage.module, nullptr);
+	}
+
+	void ComputeRaytracer::DestroyCompute()
+	{
+		compute_.uniform_buffer.Destroy(vkDevice);
+		compute_.storage_buffers.verts.Destroy(vkDevice);
+		compute_.storage_buffers.faces.Destroy(vkDevice);
+		compute_.storage_buffers.blas.Destroy(vkDevice);
+		compute_.storage_buffers.shapes.Destroy(vkDevice);
+		compute_.storage_buffers.primitives.Destroy(vkDevice);
+		compute_.storage_buffers.materials.Destroy(vkDevice);
+		compute_.storage_buffers.lights.Destroy(vkDevice);
+		compute_.storage_buffers.guis.Destroy(vkDevice);
+		compute_.storage_buffers.bvh.Destroy(vkDevice);
+
+		compute_texture_.destroy(vkDevice.logicalDevice);
+		for (int i = 0; i < MAX_TEXTURES; ++i)
+			gui_textures_[i].destroy(vkDevice.logicalDevice);
+
+		vkDestroyPipelineCache(vkDevice.logicalDevice, pipelineCache, nullptr);
+		vkDestroyPipeline(vkDevice.logicalDevice, compute_.pipeline, nullptr);
+		vkDestroyPipelineLayout(vkDevice.logicalDevice, compute_.pipeline_layout, nullptr);
+		vkDestroyDescriptorSetLayout(vkDevice.logicalDevice, compute_.descriptor_set_layout, nullptr);
+		vkDestroyFence(vkDevice.logicalDevice, compute_.fence, nullptr);
+		vkDestroyCommandPool(vkDevice.logicalDevice, compute_.command_pool, nullptr);
+	}
+
+	VkDescriptorSetLayoutBinding DescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptor_type, uint32_t descriptor_count, VkShaderStageFlags flags)
+	{
+		VkDescriptorSetLayoutBinding dslb;
+
+		dslb.binding = binding;
+		dslb.descriptorType = descriptor_type;
+		dslb.descriptorCount = descriptor_count;
+		dslb.stageFlags = flags;
+		dslb.pImmutableSamplers = nullptr;
+
+		return dslb;
+	}
+
+	void ComputeRaytracer::UpdateBuffers()
+	{
+		if (update_flags_ & kUpdateNone)
+			return;
+		if (update_flags_ & kUpdateObject) {
+			//compute_.storage_buffers.primitives.UpdateBuffers(vkDevice, primitives);
+			update_flags_ &= ~kUpdateObject;
+		}
+		if (update_flags_ & kUpdateMaterial) {
+			update_flags_ &= ~kUpdateMaterial;
+		}
+		if (update_flags_ & kUpdateLight) {
+			compute_.storage_buffers.lights.UpdateBuffers(vkDevice, lights_);
+			update_flags_ &= ~kUpdateLight;
+		}
+		if (update_flags_ & kUpdateGui) {
+			compute_.storage_buffers.guis.UpdateBuffers(vkDevice, guis_);
+			update_flags_ &= ~kUpdateGui;
+		}
+
+		update_flags_ |= kUpdateNone;
+		//compute_.storage_buffers.objects.UpdateAndExpandBuffers(vkDevice, objects, objects.size());
+		//compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh, bvh.size());
+		UpdateDescriptors();
+	}
+
+	void ComputeRaytracer::UpdateCamera(CameraComponent* c)
+	{
+		compute_.ubo.aspect_ratio = c->aspectRatio;
+		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503);
+		compute_.ubo.rotM = c->rotM;
+		compute_.ubo.rand = random_int();
+		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
+	}
+
+	void ComputeRaytracer::UpdateBVH(std::vector<artemis::Entity*>& ordered_prims, std::shared_ptr<BVHNode> root, int num_nodes)
+	{	//Principia::NamedTimer nt("BVHUPDATE");
+	//reserve newobjects array
+	//std::vector<ssPrimitive> newObjs;
+		size_t num_prims = ordered_prims.size();
+		if (num_prims == 0)return;
+		primitives_.clear();
+		primitives_.reserve(num_prims);
+
+		//fill in the new objects array;
+		for (size_t i = 0; i < num_prims; ++i) {
+			PrimitiveComponent* pc = (PrimitiveComponent*)ordered_prims[i]->getComponent<PrimitiveComponent>();
+			if (pc) {
+				primitives_.emplace_back(ssPrimitive(pc));
+				//pc->objIndex = newObjs.size() - 1;
+			}
+		}
+
+		//replace objects with it
+		//primitives = std::move(newObjs);
+
+		//now that the objs are ordered relative to the BVH, you can flatten the BVH;
+		int offset = 0;
+		//bvh.reserve(numNodes);
+		bvh_.resize(num_nodes);
+		FlattenBVH(root, &offset, bvh_);
+		vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
+
+		compute_.storage_buffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives_, primitives_.size());
+		compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh_, bvh_.size());
+	}
+
+	int ComputeRaytracer::FlattenBVH(std::shared_ptr<BVHNode> node, int* offset, std::vector<ssBVHNode>& bvh)
+	{	
+		//first pusch back a node
+		ssBVHNode* bvhNode = &bvh[*offset];
+		bvhNode->upper = node->bounds.center + node->bounds.extents;
+		bvhNode->lower = node->bounds.center - node->bounds.extents;
+		//bvhNode.splitAxis = node->splitAxis;
+
+		//increment the offset
+		int myOffset = (*offset)++;
+
+		//check if leaf
+		if (node->nPrims > 0) {
+			bvhNode->numChildren = node->nPrims;
+			//bvhNode->numChildren |= (node->splitAxis << 29);
+			//bvh[index].numChildren |= (node->splitAxis << 29);
+			bvhNode->offset = node->firstPrimOffset;
+		} //else make new node
+		else {
+			FlattenBVH(node->children[0], offset, bvh);
+			bvhNode->offset = FlattenBVH(node->children[1], offset, bvh);
+			bvhNode->numChildren = 0;
+			//bvhNode->numChildren |= (node->splitAxis << 29);
+			//bvh[index].numChildren |= (node->splitAxis << 29);
+
+		}
+		return myOffset;
+	}
+
+	void ComputeRaytracer::TogglePlayMode(bool play_mode)
+	{
+		if (play_mode) {
+			WINDOW.resize();
+			RenderBase::recreateSwapChain();
+			CreateDescriptorSetLayout();
+			CreateGraphicsPipeline();
+			CreateCommandBuffers(1.f, 0, 0);
+			//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
+		}
+		else {
+			recreateSwapChain();
+		}
+	}
+
+	void ComputeRaytracer::SetStuffUp()
+	{
+		camera_.type = Camera::CameraType::lookat;
+		camera_.setPerspective(13.0f, 1280.f / 720.f, 0.1f, 1256.0f);
+		camera_.setRotation(glm::vec3(35.0f, 90.0f, 45.0f));
+		camera_.setTranslation(glm::vec3(0.0f, 0.0f, -4.0f));
+		camera_.rotationSpeed = 0.0f;
+		camera_.movementSpeed = 7.5f;
+
+		compute_.ubo.aspect_ratio = camera_.aspect;
+		//compute_.ubo.lookat = glm::vec3(1.f, 1.f, 1.f);// testScript.vData[6];// camera_.rotation;
+		//compute_.ubo.pos = camera_.position * -1.0f;
+		compute_.ubo.fov = glm::tan(camera_.fov * 0.03490658503); //0.03490658503 = pi / 180 / 2
+		compute_.ubo.rotM = glm::mat4();
+		compute_.ubo.rand = random_int();
+	}
+
+	void ComputeRaytracer::CreateGraphicsPipeline()
+	{
+		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState =
+			vks::initializers::pipelineInputAssemblyStateCreateInfo(
+				VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+				0,
+				VK_FALSE);
+
+		VkPipelineRasterizationStateCreateInfo rasterizationState =
+			vks::initializers::pipelineRasterizationStateCreateInfo(
+				VK_POLYGON_MODE_FILL,
+				VK_CULL_MODE_FRONT_BIT,
+				VK_FRONT_FACE_COUNTER_CLOCKWISE,
+				0);
+
+		VkPipelineColorBlendAttachmentState blendAttachmentState =
+			vks::initializers::pipelineColorBlendAttachmentState(
+				0xf,
+				VK_FALSE);
+
+		VkPipelineColorBlendStateCreateInfo colorBlendState =
+			vks::initializers::pipelineColorBlendStateCreateInfo(
+				1,
+				&blendAttachmentState);
+
+		VkPipelineDepthStencilStateCreateInfo depthStencilState =
+			vks::initializers::pipelineDepthStencilStateCreateInfo(
+				VK_FALSE,
+				VK_FALSE,
+				VK_COMPARE_OP_LESS_OR_EQUAL);
+
+		VkPipelineViewportStateCreateInfo viewportState =
+			vks::initializers::pipelineViewportStateCreateInfo(1, 1, 0);
+
+		VkPipelineMultisampleStateCreateInfo multisampleState =
+			vks::initializers::pipelineMultisampleStateCreateInfo(
+				VK_SAMPLE_COUNT_1_BIT,
+				0);
+
+		std::vector<VkDynamicState> dynamicStateEnables = {
+			VK_DYNAMIC_STATE_VIEWPORT,
+			VK_DYNAMIC_STATE_SCISSOR
+		};
+		VkPipelineDynamicStateCreateInfo dynamicState =
+			vks::initializers::pipelineDynamicStateCreateInfo(
+				dynamicStateEnables.data(),
+				dynamicStateEnables.size(),
+				0);
+		auto vertShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.vert.spv");
+		auto fragShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.frag.spv");
+
+		VkShaderModule vertShaderModule;
+		VkShaderModule fragShaderModule;
+
+		vertShaderModule = vkDevice.createShaderModule(vertShaderCode);
+		fragShaderModule = vkDevice.createShaderModule(fragShaderCode);
+
+		//Create the structure for the vertex shader
+		VkPipelineShaderStageCreateInfo vertShaderStageInfo = {};
+		vertShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		vertShaderStageInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+		vertShaderStageInfo.module = vertShaderModule;
+		vertShaderStageInfo.pName = "main";
+
+		VkPipelineShaderStageCreateInfo fragShaderStageInfo = {};
+		fragShaderStageInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+		fragShaderStageInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+		fragShaderStageInfo.module = fragShaderModule;
+		fragShaderStageInfo.pName = "main";
+
+		std::array<VkPipelineShaderStageCreateInfo, 2> shaderStages = { vertShaderStageInfo, fragShaderStageInfo };
+
+		VkGraphicsPipelineCreateInfo pipelineCreateInfo =
+			vks::initializers::pipelineCreateInfo(
+				graphics_.pipeline_layout,
+				renderPass,
+				0);
+
+		VkPipelineVertexInputStateCreateInfo emptyInputState{};
+		emptyInputState.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
+		emptyInputState.vertexAttributeDescriptionCount = 0;
+		emptyInputState.pVertexAttributeDescriptions = nullptr;
+		emptyInputState.vertexBindingDescriptionCount = 0;
+		emptyInputState.pVertexBindingDescriptions = nullptr;
+		pipelineCreateInfo.pVertexInputState = &emptyInputState;
+
+		pipelineCreateInfo.pInputAssemblyState = &inputAssemblyState;
+		pipelineCreateInfo.pRasterizationState = &rasterizationState;
+		pipelineCreateInfo.pColorBlendState = &colorBlendState;
+		pipelineCreateInfo.pMultisampleState = &multisampleState;
+		pipelineCreateInfo.pViewportState = &viewportState;
+		pipelineCreateInfo.pDepthStencilState = &depthStencilState;
+		pipelineCreateInfo.pDynamicState = &dynamicState;
+		pipelineCreateInfo.stageCount = shaderStages.size();
+		pipelineCreateInfo.pStages = shaderStages.data();
+		pipelineCreateInfo.renderPass = renderPass;
+
+		VK_CHECKRESULT(vkCreateGraphicsPipelines(vkDevice.logicalDevice, pipelineCache, 1, &pipelineCreateInfo, nullptr, &graphics_.pipeline), "CREATE GRAPHICS PIPELINE");
+
+		//must be destroyed at the end of the object
+		vkDestroyShaderModule(vkDevice.logicalDevice, fragShaderModule, nullptr);
+		vkDestroyShaderModule(vkDevice.logicalDevice, vertShaderModule, nullptr);
+	}
+
+	void ComputeRaytracer::CreateDescriptorPool()
+	{
+		std::vector<VkDescriptorPoolSize> poolSizes =
+		{
+			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 2),			// Compute UBO
+			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 3 + MAX_TEXTURES),	// Graphics image samplers || +4 FOR TEXTURE
+			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
+			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 9),			// Storage buffer for the scene primitives
+			//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
+		};
+
+		VkDescriptorPoolCreateInfo descriptorPoolInfo =
+			vks::initializers::descriptorPoolCreateInfo(
+				poolSizes.size(),
+				poolSizes.data(),
+				3);
+
+		VK_CHECKRESULT(vkCreateDescriptorPool(vkDevice.logicalDevice, &descriptorPoolInfo, nullptr, &descriptor_pool_), "CREATE DESCRIPTOR POOL");
+
+	}
+
+	void ComputeRaytracer::CreateDescriptorSets()
+	{
+		VkDescriptorSetAllocateInfo allocInfo =
+			vks::initializers::descriptorSetAllocateInfo(
+				descriptor_pool_,
+				&graphics_.descriptor_set_layout,
+				1);
+
+		VK_CHECKRESULT(vkAllocateDescriptorSets(vkDevice.logicalDevice, &allocInfo, &graphics_.descriptor_set), "ALLOCATE DESCRIPTOR SET");
+
+		std::vector<VkWriteDescriptorSet> writeDescriptorSets =
+		{
+			// Binding 0 : Fragment shader texture sampler
+			vks::initializers::writeDescriptorSet(
+				graphics_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+				0,
+				&compute_texture_.descriptor)
+		};
+
+		vkUpdateDescriptorSets(vkDevice.logicalDevice, writeDescriptorSets.size(), writeDescriptorSets.data(), 0, NULL);
+
+	}
+
+	void ComputeRaytracer::CreateDescriptorSetLayout()
+	{
+		std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings =
+		{
+			// Binding 0 : Fragment shader image sampler
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+				VK_SHADER_STAGE_FRAGMENT_BIT,
+				0)
+		};
+
+		VkDescriptorSetLayoutCreateInfo descriptorLayout =
+			vks::initializers::descriptorSetLayoutCreateInfo(
+				setLayoutBindings.data(),
+				setLayoutBindings.size());
+
+		VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &graphics_.descriptor_set_layout), "CREATE DESCRIPTOR SET LAYOUT");
+
+		VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo =
+			vks::initializers::pipelineLayoutCreateInfo(
+				&graphics_.descriptor_set_layout,
+				1);
+
+		VK_CHECKRESULT(vkCreatePipelineLayout(vkDevice.logicalDevice, &pPipelineLayoutCreateInfo, nullptr, &graphics_.pipeline_layout), "CREATE PIPELINE LAYOUT");
+
+	}
+
+	void ComputeRaytracer::CreateCommandBuffers(float swap_ratio, int32_t offset_width, int32_t offset_height)
+	{
+		commandBuffers.resize(swapChainFramebuffers.size());
+		UpdateSwapScale(swap_ratio);
+		VkCommandBufferAllocateInfo allocInfo = {};
+		allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
+		allocInfo.commandPool = commandPool;
+		allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY; //specifies if its a primary or secondary buffer
+		allocInfo.commandBufferCount = (uint32_t)commandBuffers.size();
+
+		//@COMPUTEHERE be sure to have compute-specific command buffers too
+		if (vkAllocateCommandBuffers(vkDevice.logicalDevice, &allocInfo, commandBuffers.data()) != VK_SUCCESS) {
+			throw std::runtime_error("failed to allocate command buffers!");
+		}
+
+
+		for (size_t i = 0; i < commandBuffers.size(); i++) {
+			VkCommandBufferBeginInfo beginInfo = {};
+			beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
+			beginInfo.flags = VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT; //The cmdbuf will be rerecorded right after executing it 1s
+			beginInfo.pInheritanceInfo = nullptr; // Optional //only for secondary buffers
+
+			vkBeginCommandBuffer(commandBuffers[i], &beginInfo);
+			// Image memory barrier to make sure that compute shader writes are finished before sampling from the texture
+			VkImageMemoryBarrier imageMemoryBarrier = {};
+			imageMemoryBarrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+			imageMemoryBarrier.oldLayout = VK_IMAGE_LAYOUT_GENERAL;
+			imageMemoryBarrier.newLayout = VK_IMAGE_LAYOUT_GENERAL;
+			imageMemoryBarrier.image = compute_texture_.image;
+			imageMemoryBarrier.subresourceRange = { VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 };
+			imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+			imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+			vkCmdPipelineBarrier(
+				commandBuffers[i],
+				VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
+				VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+				0,
+				0, nullptr,
+				0, nullptr,
+				1, &imageMemoryBarrier);
+
+			VkRenderPassBeginInfo renderPassInfo = {};
+			renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
+			renderPassInfo.renderPass = renderPass;
+			renderPassInfo.framebuffer = swapChainFramebuffers[i];
+			renderPassInfo.renderArea.offset = { offset_width, offset_height }; //size of render area, should match size of attachments
+			renderPassInfo.renderArea.extent = scaled_swap_;// swapChainExtent; //scaledSwap;//
+
+			std::array<VkClearValue, 2> clearValues = {};
+			clearValues[0].color = { 0.0f, 0.0f, 0.0f, 1.0f }; //derp
+			clearValues[1].depthStencil = { 1.0f, 0 }; //1.0 = farplane, 0.0 = nearplane HELP
+
+			renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size()); //cuz
+			renderPassInfo.pClearValues = clearValues.data(); //duh
+
+			vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+			VkViewport viewport = vks::initializers::viewport(swapChainExtent.width, swapChainExtent.height, 0.0f, 1.0f);
+			vkCmdSetViewport(commandBuffers[i], 0, 1, &viewport);
+
+			VkRect2D scissor = vks::initializers::rect2D(swapChainExtent.width, swapChainExtent.height, 0, 0);
+			vkCmdSetScissor(commandBuffers[i], 0, 1, &scissor);
+
+			vkCmdBindDescriptorSets(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics_.pipeline_layout, 0, 1, &graphics_.descriptor_set, 0, NULL);
+			vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphics_.pipeline);
+			vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+			vkCmdEndRenderPass(commandBuffers[i]);
+
+			VK_CHECKRESULT(vkEndCommandBuffer(commandBuffers[i]), "END COMMAND BUFFER");
+		}
+	}
+
+	void ComputeRaytracer::UpdateDescriptors()
+	{
+		vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
+
+		compute_write_descriptor_sets_ =
+		{
+			// Binding 5: for objects
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				6,
+				&compute_.storage_buffers.primitives.bufferInfo),
+			//Binding 6 for materials
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				7,
+				&compute_.storage_buffers.materials.bufferInfo),
+			//Binding 7 for lights
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				8,
+				&compute_.storage_buffers.lights.bufferInfo),
+			//Binding 8 for gui
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				9,
+				&compute_.storage_buffers.guis.bufferInfo),
+			//Binding 10 for bvhnodes
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_STORAGE_BUFFER,
+				10,
+				&compute_.storage_buffers.bvh.bufferInfo)
+		};
+		vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
+		//vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
+		CreateComputeCommandBuffer();
+	}
+
+	void ComputeRaytracer::StartUp()
+	{
+		initVulkan();
+		SetStuffUp();
+		std::vector<rMaterial> copy = RESOURCEMANAGER.getMaterials();
+		for (std::vector<rMaterial>::iterator itr = copy.begin(); itr != copy.end(); ++itr) {
+			materials_.push_back(ssMaterial(itr->diffuse, itr->reflective, itr->roughness, itr->transparency, itr->refractiveIndex, itr->textureID));
+			itr->renderedMat = &materials_.back();// materials_.end();
+		}
+		LoadResources();
+	}
+
+	void ComputeRaytracer::Initialize()
+	{
+		//renderMapper.init(*world);
+		PrepareStorageBuffers();
+		CreateUniformBuffers();
+		PrepareTextureTarget(&compute_texture_, 1280, 720, VK_FORMAT_R8G8B8A8_UNORM);
+		CreateDescriptorSetLayout();
+		CreateGraphicsPipeline();
+		CreateDescriptorPool();
+		CreateDescriptorSets();
+		PrepareCompute();
+		CreateCommandBuffers(0.733333333333f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+		UpdateDescriptors();
+
+		//setupUI();
+		prepared_ = true;
+	}
+
+	void ComputeRaytracer::StartFrame(uint32_t& image_index)
+	{
+		render_time_.Start();
+		VkResult result = vkAcquireNextImageKHR(vkDevice.logicalDevice, swapChain, std::numeric_limits<uint64_t>::max(), imageAvailableSemaphore, VK_NULL_HANDLE, &image_index);
+
+		if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+			RecreateSwapChain();
+			return;
+		}
+		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
+			throw std::runtime_error("failed to acquire swap chain image!");
+		}
+
+		submit_info_.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		submit_info_.commandBufferCount = 1;
+		submit_info_.pCommandBuffers = &commandBuffers[image_index];
+
+		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+		submit_info_.waitSemaphoreCount = 1;
+		submit_info_.pWaitSemaphores = &imageAvailableSemaphore;// waitSemaphores;
+		submit_info_.pWaitDstStageMask = waitStages;
+
+		submit_info_.signalSemaphoreCount = 1;
+		submit_info_.pSignalSemaphores = &renderFinishedSemaphore;
+
+		VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submit_info_, VK_NULL_HANDLE), "GRAPHICS QUEUE SUBMIT");
+
+	}
+
+	void ComputeRaytracer::EndFrame(const uint32_t& image_index)
+	{
+		VkPresentInfoKHR presentInfo = {};
+		presentInfo.sType = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+		presentInfo.waitSemaphoreCount = submit_info_.signalSemaphoreCount;
+		presentInfo.pWaitSemaphores = submit_info_.pSignalSemaphores;//ui->visible ? &uiSemaphore : &renderFinishedSemaphore;// signalSemaphores;
+		presentInfo.pResults = nullptr; //optional
+
+		VkSwapchainKHR swapChains[] = { swapChain };
+		presentInfo.swapchainCount = 1;
+		presentInfo.pSwapchains = swapChains;
+		presentInfo.pImageIndices = &image_index;
+
+		VkResult result = vkQueuePresentKHR(presentQueue, &presentInfo);
+		if (result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR) {
+			recreateSwapChain();
+		}
+		else if (result != VK_SUCCESS) {
+			throw std::runtime_error("failed to present swap chain image!");
+		}
+		vkQueueWaitIdle(presentQueue);// sync with gpu
+
+		//Possible compute here? image is in swapchain so maybe you can use image for compute stuff...
+		vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
+		vkResetFences(vkDevice.logicalDevice, 1, &compute_.fence);
+
+		VkSubmitInfo compute_submit_info = {};
+		compute_submit_info.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
+		compute_submit_info.commandBufferCount = 1;
+		compute_submit_info.pCommandBuffers = &compute_.command_buffer;// &computeCommandBuffer;
+
+		if (vkQueueSubmit(computeQueue, 1, &compute_submit_info, compute_.fence) != VK_SUCCESS)
+			throw std::runtime_error("failed to submit compute commadn buffer!");
+		render_time_.End();
+		INPUT.renderTime = render_time_.ms;
+	}
+
+	void ComputeRaytracer::CleanUp()
+	{
+		vkDeviceWaitIdle(vkDevice.logicalDevice);
+		CleanUpSwapChain();
+
+		DestroyCompute();
+
+		vkDestroyDescriptorPool(vkDevice.logicalDevice, descriptor_pool_, nullptr);
+		vkDestroyDescriptorSetLayout(vkDevice.logicalDevice, graphics_.descriptor_set_layout, nullptr);
+
+		vkDestroyCommandPool(vkDevice.logicalDevice, commandPool, nullptr);
+		//vkDestroyCommandPool(vkDevice.logicalDevice, compute_.commandPool, nullptr);
+
+		RenderBase::cleanup();
+	}
+
+	void ComputeRaytracer::CleanUpSwapChain()
+	{
+		vkDestroyPipeline(vkDevice.logicalDevice, graphics_.pipeline, nullptr);
+		//vkDestroyPipeline(vkDevice.logicalDevice, graphics_.raster.pipeline, nullptr);
+		vkDestroyPipelineLayout(vkDevice.logicalDevice, graphics_.pipeline_layout, nullptr);
+		//vkDestroyPipelineLayout(vkDevice.logicalDevice, graphics_.raster.pipeline_layout, nullptr);
+
+		RenderBase::cleanupSwapChain();
+	}
+
+	void ComputeRaytracer::RecreateSwapChain()
+	{	//WINDOW.resize();
+		RenderBase::recreateSwapChain();
+		CreateDescriptorSetLayout();
+		CreateGraphicsPipeline();
+		//editor ?
+		CreateCommandBuffers(0.7333333333f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+		//	createCommandBuffers(0.6666666666666f, 0, 0);
+		swapChainFramebuffers;
+		//return swapChainFramebuffers;
+		//ui->visible = false;
+		//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
+	}
+
+	void ComputeRaytracer::UpdateUniformBuffer()
+	{
+		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
+	}
+
+	void ComputeRaytracer::LoadResources()
+	{
+		//get all the models and load err thang
+		std::vector<ssVert> verts;
+		std::vector<ssIndex> faces;
+		std::vector<ssShape> shapes;
+		std::vector<ssBVHNode> blas;
+
+		const std::vector<rModel>& models = RESOURCEMANAGER.getModels();
+		for (const rModel& mod : models)
+		{
+			for (size_t i = 0; i < mod.meshes.size(); ++i) {
+				//map that connects the model with its index;
+				rMesh rmesh = mod.meshes[i];
+
+				//toss in the vertice data
+				int prevVertSize = verts.size();
+				int prevIndSize = faces.size();
+				int prevBlasSize = blas.size();
+
+
+				//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
+				//load up ze vertices;
+				verts.reserve(prevVertSize + rmesh.verts.size());
+				for (std::vector<rVertex>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr) {
+					verts.emplace_back(ssVert(itr->pos / rmesh.extents, itr->norm, itr->uv.x, itr->uv.y));
+				}
+
+				//Load up da indices
+				faces.reserve(prevIndSize + rmesh.faces.size());
+				for (std::vector<glm::ivec4>::const_iterator itr = rmesh.faces.begin(); itr != rmesh.faces.end(); ++itr) {
+					faces.emplace_back(ssIndex(*itr + prevVertSize));// , ++currId));
+				}
+
+				//Load up da bottom level acceleration structure
+				blas.reserve(prevBlasSize + rmesh.bvh.size());
+				for (auto itr : rmesh.bvh) {
+					itr.numChildren > 0 ? itr.offset += prevIndSize : itr.offset += prevBlasSize;
+					blas.emplace_back(itr);
+				}
+
+				//finish mia
+				//meshAssigner[mod.uniqueID + i ] = std::pair<int, int>(prevBlasSize, blas.size());
+				mesh_assigner_[mod.uniqueID + i] = std::pair<int, int>(prevIndSize, faces.size());
+			}
+
+		}
+
+		shapes.push_back(ssShape(glm::vec3(0.f), glm::vec3(1.f), 1));
+		compute_.storage_buffers.verts.InitStorageBufferWithStaging(vkDevice, verts, verts.size());
+		compute_.storage_buffers.faces.InitStorageBufferWithStaging(vkDevice, faces, faces.size());
+		compute_.storage_buffers.blas.InitStorageBufferWithStaging(vkDevice, blas, blas.size());
+		compute_.storage_buffers.shapes.InitStorageBufferWithStaging(vkDevice, shapes, shapes.size());
+
+		//compute_.storage_buffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
+		//compute_.storage_buffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
+		//compute_.storage_buffers.meshes.InitStorageBufferCustomSize(vkDevice, meshes, meshes.size(), MAXMESHES);
+
+		gui_textures_[0].path = "../Assets/Levels/Test/Textures/numbers.png";
+		gui_textures_[0].CreateTexture(vkDevice);
+		gui_textures_[1].path = "../Assets/Levels/Test/Textures/title.png";
+		gui_textures_[1].CreateTexture(vkDevice);
+		gui_textures_[2].path = "../Assets/Levels/Test/Textures/menu.png";
+		gui_textures_[2].CreateTexture(vkDevice);
+		gui_textures_[3].path = "../Assets/Levels/Test/Textures/ARROW.png";
+		gui_textures_[3].CreateTexture(vkDevice);
+		gui_textures_[4].path = "../Assets/Levels/Test/Textures/circuit.jpg";
+		gui_textures_[4].CreateTexture(vkDevice);
+	}
+
+	void ComputeRaytracer::UpdateObjectMemory()
+	{
+	}
+
+	void ComputeRaytracer::AddLight(artemis::Entity& e)
+	{
+		NodeComponent* node = (NodeComponent*)e.getComponent<NodeComponent>();
+		AddNode(node);
+
+		compute_.storage_buffers.lights.UpdateAndExpandBuffers(vkDevice, lights_, lights_.size());
+		UpdateDescriptors();
+	}
+
+	void ComputeRaytracer::AddCamera(artemis::Entity& e)
+	{	//so fo da cam cam wat u finta do is....
+		CameraComponent* comp = (CameraComponent*)e.getComponent<CameraComponent>();
+		comp->fov = compute_.ubo.fov;
+		comp->aspectRatio = compute_.ubo.aspect_ratio;
+		//comp->pos = &compute_.ubo.pos;
+		comp->rotM = compute_.ubo.rotM;
+
+		//compute_.ubo.pos = (TransformComponent*)e.getComponent<TransformComponent>()
+	}
+
+	void ComputeRaytracer::AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri)
+	{
+		ssMaterial mat = ssMaterial(diff, rfl, rough, trans, ri, 0);
+		materials_.push_back(mat);
+		compute_.storage_buffers.materials.UpdateAndExpandBuffers(vkDevice, materials_, materials_.size());
+		UpdateDescriptors();
+	}
+
+	void ComputeRaytracer::AddNodes(std::vector<NodeComponent*> nodes)
+	{
+		for (auto n : nodes) {
+			if (n->children.size() > 0)
+				AddNodes(n->children);
+		}
+	}
+
+	void ComputeRaytracer::AddNode(NodeComponent* node)
+	{
+		if (node->engineFlags & COMPONENT_MODEL) {
+			return;
+		}	
+		if (node->engineFlags & COMPONENT_LIGHT) {
+			LightComponent* lightComp = (LightComponent*)node->data->getComponent<LightComponent>();
+			TransformComponent* transComp = (TransformComponent*)node->data->getComponent<TransformComponent>();
+			ssLight light;
+			light.pos = transComp->global.position;
+			light.color = lightComp->color;
+			light.intensity = lightComp->intensity;
+			light.id = lightComp->id;
+
+			lights_.push_back(light);
+			light_comps_.push_back(lightComp);
+		}
+		if (node->engineFlags & COMPONENT_CAMERA) {
+			CameraComponent* cam = (CameraComponent*)node->data->getComponent<CameraComponent>();
+			TransformComponent* transComp = (TransformComponent*)node->data->getComponent<TransformComponent>();
+			compute_.ubo.aspect_ratio = cam->aspectRatio;
+			compute_.ubo.rotM = transComp->world;
+			compute_.ubo.fov = cam->fov;
+
+			//if (rasterize) {
+			//	graphics_.camera.view = transComp->world;
+			//	camera_.fov = cam->fov;
+			//	camera_.updateaspect_ratio(cam->aspect_ratio);
+			//}
+		}
+	}
+
+	void ComputeRaytracer::UpdateMaterials()
+	{
+		compute_.storage_buffers.materials.UpdateBuffers(vkDevice, materials_);
+	}
+
+	void ComputeRaytracer::UpdateMaterial(int id)
+	{
+		rMaterial* m = &RESOURCEMANAGER.getMaterial(id);
+
+		materials_[id].diffuse = m->diffuse;
+		materials_[id].reflective = m->reflective;
+		materials_[id].roughness = m->roughness;
+		materials_[id].transparency = m->transparency;
+		materials_[id].refractiveIndex = m->refractiveIndex;
+		materials_[id].textureID = m->textureID;
+
+		UpdateMaterials();
+	}
+
+	void ComputeRaytracer::UpdateGui(GUIComponent* gc)
+	{
+		ssGUI& g = guis_[gc->ref];
+		g.min = gc->min;
+		g.extents = gc->extents;
+		g.alignMin = gc->alignMin;
+		g.alignExt = gc->alignExt;
+		g.layer = gc->layer;
+		g.id = gc->id;
+		g.visible = gc->visible;
+		SetRenderUpdate(kUpdateGui);
+	}
+
+	void ComputeRaytracer::AddGuiNumber(GUINumberComponent* gnc)
+	{
+		std::vector<int> nums = intToArrayOfInts(gnc->number);
+		for (int i = 0; i < nums.size(); ++i) {
+			ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+			gnc->shaderReferences.push_back(guis_.size());
+			gui.visible = gnc->visible;
+			guis_.push_back(gui);
+		}
+		gnc->ref = gnc->shaderReferences[0];
+		SetRenderUpdate(kUpdateGui);
+	}
+
+	void ComputeRaytracer::UpdateGuiNumber(GUINumberComponent* gnc)
+	{
+		std::vector<int> nums = intToArrayOfInts(gnc->number);
+		for (int i = 0; i < gnc->shaderReferences.size(); ++i) {
+			guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+			guis_[gnc->shaderReferences[i]].visible = gnc->visible;
+		}
+		if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
+			ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+			gnc->shaderReferences.push_back(guis_.size());
+			guis_.push_back(gui);
+			compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+		}
+		SetRenderUpdate(kUpdateGui);
+	}
+}

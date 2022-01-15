@@ -116,13 +116,10 @@ namespace Principia {
 			VkPipeline pipeline;
 		};
 		struct {
-			SetsAndLayouts empty;
-			SetsAndLayouts raster;
-			struct UBORaster {
-				glm::mat4 view;
-				glm::mat4 proj;
-			}camera;
-			VBuffer<UBORaster> uniformBuffer;
+			VkDescriptorSetLayout descriptorSetLayout;
+			VkDescriptorSet descriptorSet;
+			VkPipelineLayout pipelineLayout;
+			VkPipeline pipeline;
 		}graphics;
 
 		
