@@ -632,7 +632,7 @@
     <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\raytrace-compute-renderer.cpp">
+    <ClCompile Include="Rendering\compute-raytracer.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1620,7 +1620,10 @@
     <ClInclude Include="..\Lib\imgui\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering\raytrace-compute-renderer.h">
+    <ClInclude Include="Rendering\compute-raytracer.h">
+      <Filter>Source Files\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\renderer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
