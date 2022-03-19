@@ -39,7 +39,7 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 		cd.timer -= 1; 
 		int prev = cd.prev;
 		cd.prev = cd.timer;
-		return cd.timer == prev;
+		return cd.timer <= prev;
 	}), cw.end());
 
 	if (cw.empty()) {

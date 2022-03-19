@@ -121,8 +121,8 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 			break;
 		}
 		case TYPE_MESH:{
-			normal = triNormalUV(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
-			//normal = triNormal(primitives[intersectID.primID], faces[intersectID.faceID]);
+			//normal = triNormalUV(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
+			normal = quadNormal(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
 			mat = materials[primitives[intersectID.primID].matID];
 			txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
 			//if(mat.textureID > 0)

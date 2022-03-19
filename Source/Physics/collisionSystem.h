@@ -12,6 +12,7 @@
 #include <btBulletCollisionCommon.h>
 #include <btBulletDynamicsCommon.h>
 #include "Components/physicsComponent.h"
+#include <thread>
 
 namespace Principia {
 	class CollisionSystem : public artemis::EntityProcessingSystem {
@@ -21,6 +22,7 @@ namespace Principia {
 
 		void initialize();
 		void begin();
+		void end();
 		void processEntity(artemis::Entity &e) override;
 		void added(artemis::Entity& e)override;
 		void removed(artemis::Entity& e)override;
@@ -54,6 +56,7 @@ namespace Principia {
 		//btSimpleDynamicsWorld* dynamicsWorld;
 		Cmp_Physics* physics;
 		
+		//std::thread physicsThread;
 		std::unordered_map<const btCollisionObject*, int> entityMap;
 	};
 }

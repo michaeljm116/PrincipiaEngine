@@ -55,21 +55,21 @@ iSectID intersectMBVH(inout Ray ray, inout vec3 norm) {
 						int startIndex = primitives[i].startIndex;
 						int endIndex = primitives[i].endIndex;
 						for (int f = startIndex; f < endIndex; f++) {
-							/*vec4 tQuad = quadIntersect(r, faces[f]);
+							vec4 tQuad = quadIntersect(r, faces[f]);
 							if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
 								id = iSectID(TYPE_MESH, f, i, offset);
 								ray.t = tQuad.x;
 								norm.x = tQuad.y;
 								norm.y = tQuad.z;
-							}*/
-							vec3 triSect = triIntersectUV(r, faces[f]);
+							}
+							/*vec3 triSect = triIntersectUV(r, faces[f]);
 							if((triSect.x > 0) && (triSect.x > EPSILON) && (triSect.x < ray.t))
 							{
 								id = iSectID(TYPE_MESH, f, i, offset);
 								ray.t = triSect.x;
 								norm.x = triSect.y;
 								norm.y = triSect.z;
-							}
+							}*/
 							
 						}
 						//sectID temp = intersectPrimBVH(ray, norm, r, primitives[i].startIndex, primitives[i].endIndex);

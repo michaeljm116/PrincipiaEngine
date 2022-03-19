@@ -1,10 +1,10 @@
+#pragma once
 #include "renderer.h"
 
 #include "../Utility/bvhComponent.hpp"
 #include <unordered_map>
 
 namespace Principia {
-	static const int MAX_TEXTURES = 5;
 
 	class ComputeRaytracer : public Renderer
 	{
@@ -12,10 +12,15 @@ namespace Principia {
 		ComputeRaytracer();
 		~ComputeRaytracer();
 
-		void StartUp() override;
-		void Initialize() override;
+		void StartUp(artemis::World* world) override;
+		void Initialize(artemis::ComponentMapper<RenderComponent>* render_mapper) override;
 		void StartFrame(uint32_t& image_index) override;
 		void EndFrame(const uint32_t& image_index) override;
+
+		void Added(artemis::Entity& e) override;
+		void Removed(artemis::Entity& e) override;
+		void ProcessEntity(artemis::Entity& e) override;
+		void End() override;
 
 		void CleanUp() override;
 		void CleanUpSwapChain() override;
@@ -24,54 +29,30 @@ namespace Principia {
 
 		void UpdateUniformBuffer();
 		void LoadResources();
-		void UpdateObjectMemory();
 
-#pragma region Enginey stuff?
-		void AddLight(artemis::Entity& e);
-		void AddCamera(artemis::Entity& e);
-		void AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri);
-		void AddNodes(std::vector<NodeComponent*> nodes);
-		void AddNode(NodeComponent* node);
-
-		void UpdateMaterials();
-		void UpdateMaterial(int id);
+#pragma region System Related functions
+		void AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri) override;
+		void AddNode(NodeComponent* node) override;
+		void UpdateMaterial(int id) override;
 
 		//meh
 		void UpdateGui(GUIComponent* gc);
 		void AddGuiNumber(GUINumberComponent* gnc);
 		void UpdateGuiNumber(GUINumberComponent* gnc);
-		//
-#pragma endregion 
-
-		enum RenderUpdate {
-			kUpdateBox = 0x01,
-			kUpdateSphere = 0x02,
-			kUpdatePlane = 0x04,
-			kUpdateCylinder = 0x08,
-			kUpdateCone = 0x10,
-			kUpdateMesh = 0x20,
-			kUpdateMaterial = 0x40,
-			kUpdateNone = 0x80,
-			kUpdateObject = 0x100,
-			kUpdateLight = 0x200,
-			kUpdateGui = 0x400
-		};
-
-		int32_t update_flags_;
-		void SetRenderUpdate(RenderUpdate ru) {
-			update_flags_ |= ru;
-			if (update_flags_ & kUpdateNone)
-				update_flags_ &= kUpdateNone;
-		}
-
+		
 		void UpdateBuffers();
 		void UpdateCamera(CameraComponent* c) override;
+
+		void TogglePlayMode(bool b) override;
+#pragma endregion 
+
+#pragma Compute exclusive Functions
 		void UpdateBVH(std::vector<artemis::Entity*>& ordredPrims, std::shared_ptr<BVHNode> root, int numNodes);
 		int FlattenBVH(std::shared_ptr<BVHNode> node, int* offset, std::vector<ssBVHNode>& bvh);
+#pragma endregion
 
 		bool editor_ = true;
-		void TogglePlayMode(bool b);
-		//ssLight& getLight(int i) { return lights[i]; }
+		ssLight& getLight(int i) { return lights_[i]; }
 
 		std::vector<int> intToArrayOfInts(const int& a) {
 			if (a == 0) {
@@ -99,7 +80,7 @@ namespace Principia {
 		void CreateDescriptorSets();
 		void CreateDescriptorSetLayout();
 		void CreateCommandBuffers(float swap_ratio, int32_t offset_width, int32_t offset_height);
-		void UpdateDescriptors();
+		void UpdateDescriptors() override;
 
 		VkDescriptorPool descriptor_pool_;
 		struct {

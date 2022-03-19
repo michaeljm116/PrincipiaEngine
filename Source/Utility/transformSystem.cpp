@@ -117,7 +117,7 @@ namespace Principia {
 			light.pos = glm::vec3(tc->global.position);
 			light.pos = tc->world[3];
 
-			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
+			rs->setRenderUpdate(Renderer::kUpdateLight);
 		}
 		if (nc->children.size() > 0) {
 			for (NodeComponent* child : nc->children)
@@ -184,7 +184,7 @@ namespace Principia {
 			light.pos = glm::vec3(tc->global.position);
 			light.pos = tc->world[3];
 
-			rs->setRenderUpdate(RenderSystem::UPDATE_LIGHT);
+			rs->setRenderUpdate(Renderer::kUpdateLight);
 		}
 		if (nc->children.size() > 0) {
 			for (NodeComponent* child : nc->children)
