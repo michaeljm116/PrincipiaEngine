@@ -12,7 +12,7 @@ namespace Principia {
 	static const int MAX_INDS = 256;
 	static const int MAX_OBJS = 512;
 	static const int MAX_LIGHTS = 256;
-	static const int MAX_guis_ = 256;
+	static const int MAX_GUIS = 256;
 	static const int MAX_NODES = 256;
 
 	ComputeRaytracer::ComputeRaytracer()
@@ -47,7 +47,6 @@ namespace Principia {
 
 
 		//create 1 gui main global kind of gui for like title/menu screen etc...
-		artemis::World* world = new artemis::World();
 		GUIComponent* guiComp = (GUIComponent*)world->getSingleton()->getComponent<GUIComponent>();
 		ssGUI gui = ssGUI(guiComp->min, guiComp->extents, guiComp->alignMin, guiComp->alignExt, guiComp->layer, guiComp->id);
 		gui.visible = guiComp->visible;
@@ -55,7 +54,7 @@ namespace Principia {
 		//Give the component a reference to it and initialize
 		guiComp->ref = guis_.size();
 		guis_.push_back(gui);
-		compute_.storage_buffers.guis.InitStorageBufferCustomSize(vkDevice, guis_, guis_.size(), MAX_guis_);
+		compute_.storage_buffers.guis.InitStorageBufferCustomSize(vkDevice, guis_, guis_.size(), MAX_GUIS);
 
 		//std::vector<ssBVHNode> tempbvh;
 		//tempbvh.push_back(ssBVHNode());
@@ -236,7 +235,7 @@ namespace Principia {
 				10),
 			// Binding 12: the textures
 			vks::initializers::descriptorSetLayoutBinding(
-				VK_DESCRIPTOR_TYPE_SAMPLER,
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
 				VK_SHADER_STAGE_COMPUTE_BIT,
 				11, MAX_TEXTURES)
 		};
@@ -422,6 +421,7 @@ namespace Principia {
 
 	void ComputeRaytracer::UpdateBuffers()
 	{
+		vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
 		if (update_flags_ & kUpdateNone)
 			return;
 		if (update_flags_ & kUpdateObject) {
@@ -438,6 +438,12 @@ namespace Principia {
 		if (update_flags_ & kUpdateGui) {
 			compute_.storage_buffers.guis.UpdateBuffers(vkDevice, guis_);
 			update_flags_ &= ~kUpdateGui;
+		}
+
+		if (update_flags_ & kUpdateBvh) {
+			compute_.storage_buffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives_, primitives_.size());
+			compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh_, bvh_.size());
+			update_flags_ &= ~kUpdateBvh;
 		}
 
 		update_flags_ |= kUpdateNone;
@@ -481,10 +487,12 @@ namespace Principia {
 		//bvh.reserve(numNodes);
 		bvh_.resize(num_nodes);
 		FlattenBVH(root, &offset, bvh_);
-		vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
+		//vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
 
-		compute_.storage_buffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives_, primitives_.size());
-		compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh_, bvh_.size());
+		//compute_.storage_buffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives_, primitives_.size());
+		//compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh_, bvh_.size());
+
+		SetRenderUpdate(kUpdateBvh);
 	}
 
 	int ComputeRaytracer::FlattenBVH(std::shared_ptr<BVHNode> node, int* offset, std::vector<ssBVHNode>& bvh)
@@ -838,8 +846,9 @@ namespace Principia {
 		CreateComputeCommandBuffer();
 	}
 
-	void ComputeRaytracer::StartUp()
+	void ComputeRaytracer::StartUp(artemis::World* world)
 	{
+		this->world = world;
 		initVulkan();
 		SetStuffUp();
 		std::vector<rMaterial> copy = RESOURCEMANAGER.getMaterials();
@@ -850,8 +859,9 @@ namespace Principia {
 		LoadResources();
 	}
 
-	void ComputeRaytracer::Initialize()
+	void ComputeRaytracer::Initialize(artemis::ComponentMapper<RenderComponent>* render_mapper)
 	{
+		mapper_ = render_mapper;
 		//renderMapper.init(*world);
 		PrepareStorageBuffers();
 		CreateUniformBuffers();
@@ -932,6 +942,117 @@ namespace Principia {
 			throw std::runtime_error("failed to submit compute commadn buffer!");
 		render_time_.End();
 		INPUT.renderTime = render_time_.ms;
+	}
+
+	void ComputeRaytracer::Added(artemis::Entity& e)
+	{
+		RenderType t = ((RenderComponent*)e.getComponent<RenderComponent>())->type;// renderMapper.get(e)->type;
+
+		if (t == RENDER_MATERIAL) {
+
+		}
+		if (t == RENDER_PRIMITIVE) {
+			PrimitiveComponent* primComp = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
+			//AABBComponent* aabb = (AABBComponent*)e.getComponent<AABBComponent>();
+			MaterialComponent* mat = (MaterialComponent*)e.getComponent<MaterialComponent>();
+			TransformComponent* trans = (TransformComponent*)e.getComponent<TransformComponent>();
+
+			primComp->matId = mat->matID;
+			primComp->world = trans->world;
+			primComp->extents = trans->local.scale;
+			if (primComp->id > 0) {
+				std::pair<int, int> temp = mesh_assigner_[primComp->id];
+				primComp->startIndex = temp.first;
+				primComp->endIndex = temp.second;
+			}
+
+			SetRenderUpdate(RenderUpdate::kUpdateObject);
+		}
+		if (t == RENDER_LIGHT) {
+
+			LightComponent* lightComp = (LightComponent*)e.getComponent<LightComponent>();
+			TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
+			ssLight light;
+			light.pos = transComp->global.position;
+			light.color = lightComp->color;
+			light.intensity = lightComp->intensity;
+			light.id = e.getUniqueId();// lightComp->id;
+
+			lights_.push_back(light);
+			light_comps_.push_back(lightComp);
+
+			//NodeComponent* node = (NodeComponent*)e.getComponent<NodeComponent>();
+			//addNode(node);
+
+			compute_.storage_buffers.lights.UpdateAndExpandBuffers(vkDevice, lights_, lights_.size());
+			//UpdateDescriptors();
+		}
+		if (t == RENDER_GUI) {
+
+		}
+		if (t == RENDER_GUINUM) {
+			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
+			std::vector<int> nums = intToArrayOfInts(gnc->number);
+			for (int i = 0; i < nums.size(); ++i) {
+				ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+				gnc->shaderReferences.push_back(guis_.size());
+				gui.visible = gnc->visible;
+				guis_.push_back(gui);
+			}
+			gnc->ref = gnc->shaderReferences[0];
+			SetRenderUpdate(kUpdateGui);
+		}
+		if (t == RENDER_CAMERA) {
+			CameraComponent* cam = (CameraComponent*)e.getComponent<CameraComponent>();
+			TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
+			compute_.ubo.aspect_ratio = cam->aspectRatio;
+			compute_.ubo.rotM = transComp->world;
+			compute_.ubo.fov = cam->fov;
+		}
+	}
+
+	void ComputeRaytracer::Removed(artemis::Entity& e)
+	{
+		RenderType t = ((RenderComponent*)e.getComponent<RenderComponent>())->type;// renderMapper.get(e)->type;
+	}
+
+	void ComputeRaytracer::ProcessEntity(artemis::Entity& e)
+	{
+		RenderType type = ((RenderComponent*)e.getComponent<RenderComponent>())->type;// renderMapper.get(e)->type;
+		if (type == RENDER_NONE) return;
+		switch (type)
+		{
+		case RENDER_MATERIAL:
+			SetRenderUpdate(RenderUpdate::kUpdateMaterial);
+			break;
+		case RENDER_PRIMITIVE:
+			SetRenderUpdate(RenderUpdate::kUpdateObject);
+			break;
+		case RENDER_LIGHT:
+			SetRenderUpdate(RenderUpdate::kUpdateLight);
+			break;
+		case RENDER_GUI: {
+			GUIComponent* gui = (GUIComponent*)e.getComponent<GUIComponent>();
+			UpdateGui(gui);
+			break; }
+		case RENDER_GUINUM: {
+			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
+			UpdateGuiNumber(gnc);
+			break; }
+		default:
+			break;
+		}
+		type = RENDER_NONE;
+	}
+
+	void ComputeRaytracer::End()
+	{
+		UpdateBuffers();
+		UpdateDescriptors();
+		if (glfwWindowShouldClose(WINDOW.getWindow())) {
+			world->setShutdown();
+			vkDeviceWaitIdle(vkDevice.logicalDevice); //so it can destroy properly
+		}
 	}
 
 	void ComputeRaytracer::CleanUp()
@@ -1049,44 +1170,12 @@ namespace Principia {
 		gui_textures_[4].CreateTexture(vkDevice);
 	}
 
-	void ComputeRaytracer::UpdateObjectMemory()
-	{
-	}
-
-	void ComputeRaytracer::AddLight(artemis::Entity& e)
-	{
-		NodeComponent* node = (NodeComponent*)e.getComponent<NodeComponent>();
-		AddNode(node);
-
-		compute_.storage_buffers.lights.UpdateAndExpandBuffers(vkDevice, lights_, lights_.size());
-		UpdateDescriptors();
-	}
-
-	void ComputeRaytracer::AddCamera(artemis::Entity& e)
-	{	//so fo da cam cam wat u finta do is....
-		CameraComponent* comp = (CameraComponent*)e.getComponent<CameraComponent>();
-		comp->fov = compute_.ubo.fov;
-		comp->aspectRatio = compute_.ubo.aspect_ratio;
-		//comp->pos = &compute_.ubo.pos;
-		comp->rotM = compute_.ubo.rotM;
-
-		//compute_.ubo.pos = (TransformComponent*)e.getComponent<TransformComponent>()
-	}
-
 	void ComputeRaytracer::AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri)
 	{
 		ssMaterial mat = ssMaterial(diff, rfl, rough, trans, ri, 0);
 		materials_.push_back(mat);
 		compute_.storage_buffers.materials.UpdateAndExpandBuffers(vkDevice, materials_, materials_.size());
 		UpdateDescriptors();
-	}
-
-	void ComputeRaytracer::AddNodes(std::vector<NodeComponent*> nodes)
-	{
-		for (auto n : nodes) {
-			if (n->children.size() > 0)
-				AddNodes(n->children);
-		}
 	}
 
 	void ComputeRaytracer::AddNode(NodeComponent* node)
@@ -1105,6 +1194,9 @@ namespace Principia {
 
 			lights_.push_back(light);
 			light_comps_.push_back(lightComp);
+
+			compute_.storage_buffers.lights.UpdateAndExpandBuffers(vkDevice, lights_, lights_.size());
+			UpdateDescriptors();
 		}
 		if (node->engineFlags & COMPONENT_CAMERA) {
 			CameraComponent* cam = (CameraComponent*)node->data->getComponent<CameraComponent>();
@@ -1121,11 +1213,6 @@ namespace Principia {
 		}
 	}
 
-	void ComputeRaytracer::UpdateMaterials()
-	{
-		compute_.storage_buffers.materials.UpdateBuffers(vkDevice, materials_);
-	}
-
 	void ComputeRaytracer::UpdateMaterial(int id)
 	{
 		rMaterial* m = &RESOURCEMANAGER.getMaterial(id);
@@ -1137,7 +1224,7 @@ namespace Principia {
 		materials_[id].refractiveIndex = m->refractiveIndex;
 		materials_[id].textureID = m->textureID;
 
-		UpdateMaterials();
+		compute_.storage_buffers.materials.UpdateBuffers(vkDevice, materials_);
 	}
 
 	void ComputeRaytracer::UpdateGui(GUIComponent* gc)

@@ -32,8 +32,16 @@ namespace Principia {
 		RENDER_CAMERA = 0x20
 	};
 
+	enum RendererType {
+		kComputeRaytracer,
+		kHardwareRaytracer,
+		kComputeRasterizer,
+		kHardwareRasterizer
+	};
+
 	struct RenderComponent : artemis::Component {
 		RenderType type;
+		RendererType renderer = kComputeRaytracer;
 		RenderComponent() {};
 		RenderComponent(RenderType t) : type(t) {};
 	};

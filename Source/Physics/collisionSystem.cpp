@@ -22,10 +22,21 @@ namespace Principia {
 		//grid = (GridComponent*)world->getSingleton()->getComponent<GridComponent>();
 		bulletInit();
 	}
-
+	void randomfunc() {
+		std::cout << "MUlti thread me bby ooo yeah";
+	}
 	void CollisionSystem::begin()
 	{
+		//physicsThread = new std::thread(bulletUpdate);
+		//physicsThread = std::thread(&bulletUpdate);
+		//std::thread bob(bulletUpdate);
+		//bob.join();
 		bulletUpdate();
+	}
+
+	void CollisionSystem::end()
+	{
+		//physicsThread.join();
 	}
 
 

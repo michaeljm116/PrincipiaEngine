@@ -52,11 +52,11 @@ namespace Principia {
 			collidedWith.push_back(d);
 		}
 		void update(CollisionData cd) {
-			bool found = false;
+			//bool found = false;
 			for (auto& cw : collidedWith) {
 				if (cw.id == cd.id) {
 					//cw.position = cd.position;
-					found = true;
+					//found = true;
 					cw.normal = cd.normal;
 					cw.colpoint = cd.colpoint;
 					cw.timer++;
@@ -64,7 +64,8 @@ namespace Principia {
 					return;
 				}
 			}
-			if (!found) //This is a unique collision there should be an alert
+			//TODOthiz iz irrelevant zince if it goe here it muzt not have found
+			//if (!found) //This is a unique collision there should be an alert alz
 				collidedWith.push_back(cd);
 		}
 	};

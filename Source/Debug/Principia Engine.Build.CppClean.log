@@ -1,9 +1,9 @@
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.pch
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.idb
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\pch.obj
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.pdb
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.idb
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.pdb
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\transformsystem.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\rendersystem.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.pch
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\pch.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btcompoundcompoundcollisionalgorithm.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btcompoundcollisionalgorithm.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btcollisionworldimporter.obj
@@ -164,7 +164,7 @@ c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btserializer.
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btquickprof.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btpolardecomposition.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btgeometryutil.obj
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\renderbase.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\compute-raytracer.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\immovablesystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\gridsystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\gravitysystem.obj
@@ -184,17 +184,16 @@ c:\users\mike\desktop\principiumgames\principiaengine\source\debug\delayedentity
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\delayedentityprocessingsystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\componenttypemanager.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\componenttype.obj
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\transformsystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\timer.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\input.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\prefabsystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\serialize-node.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\script-system.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\texture.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\renderbase.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\window.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\resourcemanager.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\bvhsystem.obj
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\rendersystem.obj
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.exe
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.command.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.read.1.tlog
