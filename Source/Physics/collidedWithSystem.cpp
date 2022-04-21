@@ -5,6 +5,7 @@
 Principia::CollidedWithSystem::CollidedWithSystem()
 {
 	addComponentType<CollidedComponent>();
+	addComponentType<NodeComponent>();
 }
 
 Principia::CollidedWithSystem::~CollidedWithSystem()
@@ -14,6 +15,7 @@ Principia::CollidedWithSystem::~CollidedWithSystem()
 void Principia::CollidedWithSystem::initialize()
 {
 	cwMapper.init(*world);
+	nodeMapper.init(*world);
 }
 
 void Principia::CollidedWithSystem::added(artemis::Entity & e)
@@ -21,8 +23,13 @@ void Principia::CollidedWithSystem::added(artemis::Entity & e)
 	//e.removeComponent<CollidedComponent>();
 	CollidedComponent* cc = cwMapper.get(e);
 	for (auto& cw : cc->collidedWith) {
-		if (cw.state == CollisionState::None)
+		if (cw.state == CollisionState::None) {
 			cw.state = CollisionState::Enter;
+
+			auto* node = nodeMapper.get(e);
+			auto* cn = (NodeComponent*)world->getEntity(cw.id).getComponent<NodeComponent>();
+			std::cout << "Collision Begin: " << node->name << " | " << cn->name << "\n";
+		}
 	}
 }
 
@@ -35,14 +42,39 @@ void Principia::CollidedWithSystem::removed(artemis::Entity & e)
 void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 { 
 	std::vector<CollisionData>& cw = cwMapper.get(e)->collidedWith;
-	cw.erase(std::remove_if(cw.begin(), cw.end(), [](CollisionData& cd) {
+	auto* node = nodeMapper.get(e);
+	std::vector<CollisionData> copy = cw;
+	cw.erase(std::remove_if(cw.begin(), cw.end(), [&](CollisionData& cd) {
+		if (cd.state == CollisionState::None) {
+			cd.state == CollisionState::Enter;
+			return false;
+		}
+
 		cd.timer -= 1; 
-		int prev = cd.prev;
-		cd.prev = cd.timer;
-		return cd.timer <= prev;
+		//int prev = cd.prev;
+		//cd.prev = cd.timer;
+		//return cd.timer <= prev;
+		bool removed = cd.timer <= 0;
+		if (removed) {
+			auto* e = &world->getEntity(cd.id);
+			if (e != nullptr) {
+				auto* n = (NodeComponent*)world->getEntity(cd.id).getComponent<NodeComponent>();
+				std::cout << "Collision End: " << node->name << " | " << n->name << "\n";
+			}
+		}
+		return removed;
 	}), cw.end());
 
 	if (cw.empty()) {
+		////auto* node = (NodeComponent*)world->getEntityManager()->getComponent<NodeComponent*>(e);
+		//if (node != nullptr) {
+		//	std::cout << "Collision for: " << node->name << " is removed!\n";/*
+		//	std::cout << "Copy Data: \n";
+		//	for (auto c : copy) {
+		//		auto* n = (NodeComponent*)world->getEntity(c.id).getComponent<NodeComponent>();
+		//		std::cout << "\t" << n->name << "\n";
+		//	}*/
+		//}
 		e.removeComponent<CollidedComponent>();
 		e.refresh();
 	}

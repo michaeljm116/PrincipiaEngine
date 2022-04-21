@@ -3,6 +3,7 @@
 #include "Artemis/ComponentMapper.h"
 #include "Artemis/EntityProcessingSystem.h"
 #include "Components/collisionComponent.h"
+#include "../Utility/nodeComponent.hpp"
 
 namespace Principia {
 	class CollidedWithSystem : public artemis::EntityProcessingSystem {
@@ -17,5 +18,6 @@ namespace Principia {
 
 	private:
 		artemis::ComponentMapper<CollidedComponent> cwMapper;
+		artemis::ComponentMapper<NodeComponent> nodeMapper;
 	};
 }
