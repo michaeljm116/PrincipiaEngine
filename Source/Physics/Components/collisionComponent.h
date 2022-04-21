@@ -33,10 +33,11 @@ namespace Principia {
 	};
 
 	//When you collide with an entity, this data is passed to it
+	static const int max_timer = 5;
 	struct CollisionData{
 		int id;
-		int timer = 0;
-		int prev = 0;
+		int timer = max_timer;
+		//int prev = 0;
 		CollisionState state = CollisionState::None;
 		glm::vec3 colpoint;
 		glm::vec3 normal;
@@ -59,7 +60,7 @@ namespace Principia {
 					//found = true;
 					cw.normal = cd.normal;
 					cw.colpoint = cd.colpoint;
-					cw.timer++;
+					cw.timer = max_timer;
 					cw.state = CollisionState::Continue;
 					return;
 				}

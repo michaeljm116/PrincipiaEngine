@@ -267,18 +267,15 @@ namespace Principia {
 			}
 		}
 
-
 		physics->dynamicsWorld->stepSimulation(0.016666666666666666f, 10.f);
 	}
 
 	void CollisionSystem::bulletProcessEntity(artemis::Entity& e)
 	{
-		auto* col = colMapper.get(e);
 		auto* tc = transMapper.get(e);
-		auto& trans = col->body->getWorldTransform();
+		auto& trans = colMapper.get(e)->body->getWorldTransform();
 		tc->local.rotation = b2gq(trans.getRotation());
-		tc->local.position = b2gv4(trans.getOrigin());
-
+		tc->local.position = b2gv4(trans.getOrigin()); 
 	}
 
 	void CollisionSystem::bulletOnCollision(btCollisionObject* a, btCollisionObject* b, btManifoldPoint p)
