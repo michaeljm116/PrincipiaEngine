@@ -169,24 +169,27 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 		power = lights[i].intensity / (ld * ld);
 		vec3 lightDirection = normalize(distance);
 		if(power > 0.1f){
-		
 			if(mat.textureID > 0)
 				fMat.color += specularContribution(lightDirection, View, normal, F0, txtr + mat.diffuse, mat.reflective, mat.roughness) * power;
 			else
 				fMat.color += specularContribution(lightDirection, View, normal, F0, mat.diffuse, mat.reflective, mat.roughness) * power;
-		
+				
+
 			if(shadow < 0.9f){
 				Ray shadowRay = Ray(pos, length(distance), lightDirection, 0);
 				shadow += calcShadowBVH(shadowRay);
-				if(shadow >= 0.9f) shadow = 1.f;
 			}
+		//	if(shadow >= 0.9f){
+		//		shadow = 1;
+		//	}
 		}
 	}
 	//if (power > 8) power = 8;
 
 
 
-	if (shadow > 1) shadow = 1;
+	//if (shadow > 1) shadow = 1;
+	shadow = shadow * float(shadow < 0.9f) + float(shadow >= .9f);
 
 	fMat.color *=  shadow;
 	fMat.reflection = mat.reflective;

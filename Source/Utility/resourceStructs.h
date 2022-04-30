@@ -12,9 +12,13 @@ the resource manager
 //Structure for the config file, will expand moar l8r
 
 namespace Principia {
+	struct rController {
+		std::array<int, 16> buttons;
+		std::array<float, 6> axis;
+	};
 	struct rConfig {
 		int numControllersConfigs;
-		std::vector<std::array<int, 24>> controllerConfigs;
+		std::vector<rController> controllerConfigs;
 	};
 
 	const float BONE_EPSILON = 0.05f;

@@ -1,0 +1,2 @@
+^C:\USERS\MIKE\DESKTOP\PRINCIPIUMGAMES\PRINCIPIAENGINE\SOURCE\RENDERING\SHADERS\RAYTRACING.COMP
+C:\VulkanSDK\1.3.204.1\Bin\glslangValidator -V -o Rendering\Shaders\raytracing.comp.spv Rendering\Shaders\raytracing.comp

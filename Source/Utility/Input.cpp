@@ -15,31 +15,32 @@ namespace Principia {
 		glfwSetCursorPosCallback(window, Input::cursor_position_callback);
 		glfwSetMouseButtonCallback(window, Input::mouse_button_callback);
 		glfwSetScrollCallback(window, Input::scroll_callback);
-
-		int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
-		int present2 = glfwJoystickPresent(GLFW_JOYSTICK_3);
-		if (present == GLFW_TRUE) {
-			if (present == GLFW_TRUE) {
+		glfwSetJoystickCallback(Input::joystick_callback);
+		
+		for (int i = 0; i < 16; ++i) {
+			if (glfwJoystickPresent(i)) {
 				int axesCount;
-				const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &axesCount);
+				const float* axes = glfwGetJoystickAxes(i, &axesCount);
 
 				int buttonCount;
-				const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+				const unsigned char* buttons = glfwGetJoystickButtons(i, &buttonCount);
 
-				const char *name = glfwGetJoystickName(GLFW_JOYSTICK_1);
-				int a = 4;
+				const char* name = glfwGetJoystickName(i);
+				const char* game_pad_name = "NOT a Gamepad";
+				bool is_game_pad = false;
+				GLFWgamepadstate state;
+				if (glfwJoystickIsGamepad(i)) {
+					is_game_pad = true;
+					hasGamepad = true;
+					game_pad_name = glfwGetGamepadName(i);
+					glfwGetGamepadState(i, &state);
+				}
+				//printf("%s: \t Axes:%f \t buttons:%c", name, axes, buttons);
+				printf("\n%u is a %s aka %s it has %u Axes and %u buttons\n", i, name, game_pad_name, axesCount, buttonCount);
 			}
 		}
-		if (present2 == GLFW_TRUE) {
-			int axesCount;
-			const float *axes = glfwGetJoystickAxes(GLFW_JOYSTICK_3, &axesCount);
 
-			int buttonCount;
-			const unsigned char *buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_3, &buttonCount);
 
-			const char *name = glfwGetJoystickName(GLFW_JOYSTICK_3);
-			int a = 4;
-		}
 
 
 		/*
@@ -52,6 +53,7 @@ namespace Principia {
 		*/
 
 		//set up mouse
+
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
 		mouse.x = x;

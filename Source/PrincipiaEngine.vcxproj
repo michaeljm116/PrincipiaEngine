@@ -258,7 +258,13 @@
     <None Include="Rendering\Shaders\instancing.frag" />
     <None Include="Rendering\Shaders\instancing.vert" />
     <None Include="Rendering\Shaders\pbr.frag" />
-    <None Include="Rendering\Shaders\raytracing.comp" />
+    <CustomBuild Include="Rendering\Shaders\raytracing.comp">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VULKAN_SDK)\Bin\glslangValidator -V -o %(Identity).spv %(Identity)</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling Shader</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Identity).spv</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+    </CustomBuild>
     <None Include="Rendering\Shaders\rt\intersect_box.glsl" />
     <None Include="Rendering\Shaders\rt\intersect_bvh.glsl" />
     <None Include="Rendering\Shaders\rt\intersect_cylinder.glsl" />
