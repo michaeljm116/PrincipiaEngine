@@ -97,7 +97,14 @@ namespace Principia {
 		}
 
 		static void joystick_callback(int jid, int event) {
-
+			if (event == GLFW_CONNECTED)
+			{
+				// The joystick was connected
+			}
+			else if (event == GLFW_DISCONNECTED)
+			{
+				// The joystick was disconnected
+			}
 		}
 
 
@@ -122,6 +129,8 @@ namespace Principia {
 		bool displayUI = false;
 		bool playToggled = false;
 		bool playMode = false;
+
+		bool hasGamepad = false;
 	};
 
 #endif // !INPUT_H

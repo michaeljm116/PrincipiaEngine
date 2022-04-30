@@ -13,54 +13,92 @@ namespace Principia {
 
 	bool Resources::LoadConfig(std::string fileName)
 	{
-		config.numControllersConfigs = 2;
-		std::array<int, 24> global;
-		std::array<int, 24> controller1;
-		std::array<int, 24> controller2;
-		for (int i = 0; i < 24; ++i) {
-			global[i] = 0;
-			controller1[i] = 0;
-			controller2[i] = 0;
+
+		//initialize and set defaults
+		config.numControllersConfigs = 4;
+		rController global{};
+		rController keyboard_left{};
+		rController keyboard_right{};
+		rController  gamepad{};
+		//rController joystick{};
+
+		for (int i = 0; i < 16; ++i) {
+			global.buttons[i] = 0;
+			keyboard_left.buttons[i] = 0;
+			keyboard_right.buttons[i] = 0;
 		}
-		global[0] = GLFW_KEY_D;
-		global[1] = GLFW_KEY_SPACE;
-		global[2] = GLFW_KEY_W;
-		global[3] = GLFW_KEY_A;
-		global[4] = GLFW_KEY_LEFT_ALT;
-		global[5] = GLFW_KEY_S;
-		global[6] = GLFW_KEY_LEFT_BRACKET;
-		global[7] = GLFW_KEY_F11;
-		global[8] = GLFW_KEY_RIGHT_BRACKET;
-		global[9] = GLFW_KEY_ESCAPE;
-		global[10] = GLFW_KEY_BACKSLASH;
 
-		controller1[0] = GLFW_KEY_D;
-		controller1[1] = GLFW_KEY_W;
-		controller1[2] = GLFW_KEY_A;
-		controller1[3] = GLFW_KEY_S;
-		controller1[4] = GLFW_KEY_SPACE;
-		controller1[5] = GLFW_KEY_Q;
-		controller1[6] = GLFW_KEY_F;
-		controller1[7] = GLFW_KEY_G;
-		controller1[8] = GLFW_KEY_E;
-		controller1[9] = GLFW_KEY_HOME;
 
-		//controller1[1] = GLFW_JOYSTICK_1;
+		global.axis[0] = GLFW_KEY_D;
+		global.axis[1] = GLFW_KEY_SPACE;
+		global.axis[2] = GLFW_KEY_W;
+		global.axis[3] = GLFW_KEY_A;
+		global.axis[4] = GLFW_KEY_LEFT_ALT;
+		global.axis[5] = GLFW_KEY_S;
+		global.buttons[0] = GLFW_KEY_O;
+		global.buttons[1] = GLFW_KEY_RIGHT_BRACKET; 
+		global.buttons[2] = GLFW_KEY_F11;
+		global.buttons[3] = GLFW_KEY_ESCAPE;
+		global.buttons[4] = GLFW_KEY_BACKSLASH;
 
-		controller2[0] = GLFW_KEY_RIGHT;
-		controller2[1] = GLFW_KEY_UP;
-		controller2[2] = GLFW_KEY_LEFT;
-		controller2[3] = GLFW_KEY_DOWN;
-		controller2[4] = GLFW_KEY_SPACE;
-		controller2[5] = GLFW_KEY_RIGHT_SHIFT;
-		controller2[6] = GLFW_KEY_RIGHT_CONTROL;
-		controller2[7] = GLFW_KEY_RIGHT_ALT;
-		controller2[8] = GLFW_KEY_SLASH;
-		controller2[9] = GLFW_KEY_HOME;
+		keyboard_left.axis[0] = GLFW_KEY_D;
+		keyboard_left.axis[1] = GLFW_KEY_W;
+		keyboard_left.axis[2] = GLFW_KEY_A;
+		keyboard_left.axis[3] = GLFW_KEY_S;
+		keyboard_left.axis[4] = GLFW_KEY_SPACE;
+		keyboard_left.axis[5] = GLFW_KEY_Q;
+		keyboard_left.buttons[0] = GLFW_KEY_SPACE; 
+		keyboard_left.buttons[1] = GLFW_KEY_E;
+		keyboard_left.buttons[2] = GLFW_KEY_G;
+		keyboard_left.buttons[3] = GLFW_KEY_F;
+		keyboard_left.buttons[8] = GLFW_KEY_TAB;
+
+		keyboard_right.axis[0] = GLFW_KEY_RIGHT;
+		keyboard_right.axis[1] = GLFW_KEY_UP;
+		keyboard_right.axis[2] = GLFW_KEY_LEFT;
+		keyboard_right.axis[3] = GLFW_KEY_DOWN;
+		keyboard_right.axis[4] = GLFW_KEY_SPACE;
+		keyboard_right.axis[5] = GLFW_KEY_RIGHT_SHIFT;
+		keyboard_right.buttons[0] = GLFW_KEY_RIGHT_CONTROL;
+		keyboard_right.buttons[1] = GLFW_KEY_RIGHT_ALT;
+		keyboard_right.buttons[2] = GLFW_KEY_SLASH;
+		keyboard_right.buttons[3] = GLFW_KEY_HOME;
+
+		/*
+		#define GLFW_GAMEPAD_BUTTON_A               0
+		#define GLFW_GAMEPAD_BUTTON_B               1
+		#define GLFW_GAMEPAD_BUTTON_X               2
+		#define GLFW_GAMEPAD_BUTTON_Y               3
+		#define GLFW_GAMEPAD_BUTTON_LEFT_BUMPER     4
+		#define GLFW_GAMEPAD_BUTTON_RIGHT_BUMPER    5
+		#define GLFW_GAMEPAD_BUTTON_BACK            6
+		#define GLFW_GAMEPAD_BUTTON_START           7
+		#define GLFW_GAMEPAD_BUTTON_GUIDE           8
+		#define GLFW_GAMEPAD_BUTTON_LEFT_THUMB      9
+		#define GLFW_GAMEPAD_BUTTON_RIGHT_THUMB     10
+		#define GLFW_GAMEPAD_BUTTON_DPAD_UP         11
+		#define GLFW_GAMEPAD_BUTTON_DPAD_RIGHT      12
+		#define GLFW_GAMEPAD_BUTTON_DPAD_DOWN       13
+		#define GLFW_GAMEPAD_BUTTON_DPAD_LEFT       14
+		#define GLFW_GAMEPAD_BUTTON_LAST            GLFW_GAMEPAD_BUTTON_DPAD_LEFT
+
+		#define GLFW_GAMEPAD_BUTTON_CROSS       GLFW_GAMEPAD_BUTTON_A
+		#define GLFW_GAMEPAD_BUTTON_CIRCLE      GLFW_GAMEPAD_BUTTON_B
+		#define GLFW_GAMEPAD_BUTTON_SQUARE      GLFW_GAMEPAD_BUTTON_X
+		#define GLFW_GAMEPAD_BUTTON_TRIANGLE    GLFW_GAMEPAD_BUTTON_Y
+		*/
+
+		for (int i = 0; i < 16; ++i) {
+			if (i < 6) {
+				gamepad.axis[i] = i;
+			}
+			gamepad.buttons[i] = i;
+		}
 
 		config.controllerConfigs.push_back(global);
-		config.controllerConfigs.push_back(controller1);
-		config.controllerConfigs.push_back(controller2);
+		config.controllerConfigs.push_back(keyboard_left);
+		config.controllerConfigs.push_back(keyboard_right);
+		config.controllerConfigs.push_back(gamepad);
 
 		return true;
 	}

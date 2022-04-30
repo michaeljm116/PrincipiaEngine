@@ -646,9 +646,6 @@
     <None Include="ArtemisFrameWork\zzReadMe.md">
       <Filter>Source Files\ArtemisFramework</Filter>
     </None>
-    <None Include="Rendering\Shaders\raytracing.comp">
-      <Filter>Source Files\Rendering\Shaders</Filter>
-    </None>
     <None Include="Rendering\Shaders\texture.frag">
       <Filter>Source Files\Rendering\Shaders</Filter>
     </None>
@@ -1639,5 +1636,10 @@
     <Xml Include="..\Assets\Levels\RayTracedInvaders\Materials.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Rendering\Shaders\raytracing.comp">
+      <Filter>Source Files\Rendering\Shaders</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

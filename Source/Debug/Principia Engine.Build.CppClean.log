@@ -1,8 +1,6 @@
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.pch
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.pdb
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.idb
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\transformsystem.obj
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\rendersystem.obj
-c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.pch
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\pch.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btcompoundcompoundcollisionalgorithm.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\btcompoundcollisionalgorithm.obj
@@ -192,8 +190,10 @@ c:\users\mike\desktop\principiumgames\principiaengine\source\debug\script-system
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\texture.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\renderbase.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\window.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\transformsystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\resourcemanager.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\bvhsystem.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\rendersystem.obj
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.exe
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.command.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.read.1.tlog
