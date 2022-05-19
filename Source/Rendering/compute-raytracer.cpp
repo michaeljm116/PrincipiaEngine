@@ -1164,9 +1164,9 @@ namespace Principia {
 		gui_textures_[1].CreateTexture(vkDevice);
 		gui_textures_[2].path = "../Assets/Levels/Test/Textures/menu.png";
 		gui_textures_[2].CreateTexture(vkDevice);
-		gui_textures_[3].path = "../Assets/Levels/Test/Textures/ARROW.png";
+		gui_textures_[3].path = "../Assets/Levels/Test/Textures/skybox.png";
 		gui_textures_[3].CreateTexture(vkDevice);
-		gui_textures_[4].path = "../Assets/Levels/Test/Textures/circuit.jpg";
+		gui_textures_[4].path = "../Assets/Levels/Test/Textures/pebbles.png";
 		gui_textures_[4].CreateTexture(vkDevice);
 	}
 

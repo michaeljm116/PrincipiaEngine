@@ -11,8 +11,7 @@ layout(binding = 1) uniform UBO
 } ubo;
 
 
-layout(std140, binding = 2) buffer Verts
-{
+layout(std140, binding = 2) buffer Verts{
 	Vert verts[];
 };
 
