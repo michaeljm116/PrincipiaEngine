@@ -12,6 +12,7 @@ namespace Principia {
 	{
 	public:
 		Texture();
+		Texture(std::string p) : path(p) {};
 		~Texture();
 
 		VkImage image;
@@ -24,7 +25,7 @@ namespace Principia {
 		uint32_t layerCount;
 		VkDescriptorImageInfo descriptor;
 		std::string path;
-
+		VkDescriptorSet descriptor_set;
 		//VulkanDevice* device;
 
 		void destroy(VkDevice& device);

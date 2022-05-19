@@ -241,7 +241,7 @@ namespace Principia {
 		v[7] = glm::vec3(-extents.x, extents.y, extents.z);
 
 		//transform them
-#pragma omp parallel for
+//#pragma omp parallel for
 		for (int i = 0; i < 8; ++i) {
 			v[i] = abs(m * v[i]);// glm::vec4(v[i], 1.f));
 

@@ -77,7 +77,13 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 	
 	//if it doesn't interset anything, return the material
 	if (intersectID.faceID == -1){
-		return fMat;
+//		fMat.color = vec3(0.99f, 0.99f, 1.0f);
+
+		ivec2 dim = imageSize(resultImage);
+		vec2 uv = vec2(gl_GlobalInvocationID.x, dim.y - gl_GlobalInvocationID.y + 180) / dim;
+
+		fMat.color = texture(guiTest[3], uv).xyz;
+		return fMat; 
 	}
 	
 	#ifdef DEBUGLINES
