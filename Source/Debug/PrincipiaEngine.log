@@ -1,7 +1,3 @@
-﻿  Texture.cpp
-  compute-raytracer.cpp
-  Generating Code...
-  renderSystem.cpp
-  transformSystem.cpp
-  Generating Code...
+﻿  Compiling Shader
+  Rendering\Shaders\raytracing.comp
   PrincipiaEngine.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.exe
