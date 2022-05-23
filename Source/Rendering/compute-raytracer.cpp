@@ -988,7 +988,12 @@ namespace Principia {
 			//UpdateDescriptors();
 		}
 		if (t == RENDER_GUI) {
-
+			GUIComponent* gc = (GUIComponent*)e.getComponent<GUIComponent>();
+			ssGUI gui = ssGUI(gc->min, gc->extents, gc->alignMin, gc->alignExt, gc->layer, gc->id);
+			gc->ref = guis_.size();
+			gui.visible = gc->visible;
+			guis_.push_back(gui);
+			SetRenderUpdate(kUpdateGui);
 		}
 		if (t == RENDER_GUINUM) {
 			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
@@ -1162,7 +1167,7 @@ namespace Principia {
 		gui_textures_[0].CreateTexture(vkDevice);
 		gui_textures_[1].path = "../Assets/Levels/Test/Textures/title.png";
 		gui_textures_[1].CreateTexture(vkDevice);
-		gui_textures_[2].path = "../Assets/Levels/Test/Textures/menu.png";
+		gui_textures_[2].path = "../Assets/Levels/Test/Textures/jabby_bird_stuff-01.png";
 		gui_textures_[2].CreateTexture(vkDevice);
 		gui_textures_[3].path = "../Assets/Levels/Test/Textures/skybox.png";
 		gui_textures_[3].CreateTexture(vkDevice);

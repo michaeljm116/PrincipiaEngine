@@ -242,9 +242,9 @@ void main()
 		//uv = uv of whole screen
 		//guv = uv relative to the selected box
 		//txt = combined texture result, rgba
-		//vec4 txt = texture(guiTest[1], uv);
-		//if(txt.w > 0 && gl_GlobalInvocationID.y > .5f)
-		//	imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
+//		vec4 txt = texture(guiTest[1], uv);
+//		if(txt.w > 0 && gl_GlobalInvocationID.y > .5f)
+//			imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
 	
 		//vec4 txt = vec4(0);
 		for(int i = 0; i < guis.length(); ++i){
@@ -255,7 +255,8 @@ void main()
 						vec2 guv = diff/guis[i].extents;
 						guv.y = -guv.y;
 						vec2 fin = guis[i].alignMin + guv * guis[i].alignExt;
-						txt += texture(guiTest[guis[i].id], fin);
+						vec4 temp_txtr = texture(guiTest[guis[i].id], fin);
+						txt += temp_txtr * temp_txtr.a;
 					}
 				}
 			}
@@ -297,8 +298,8 @@ void main()
 				}
 			}
 			combinedColor += finalColor.color / SAMPLES;
-		}
 		imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1-txt.a), 0.0));
+		}
 	}
 	//imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), texture(guiTest[1], uv));
 }
