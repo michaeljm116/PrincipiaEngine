@@ -1,3 +1,6 @@
-﻿  Compiling Shader
-  Rendering\Shaders\raytracing.comp
+﻿  compute-raytracer.cpp
+  Input.cpp
+  selectable-gui-system.cpp
+  Generating Code...
+  renderSystem.cpp
   PrincipiaEngine.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.exe

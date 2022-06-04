@@ -49,7 +49,7 @@ namespace Principia {
 		//create 1 gui main global kind of gui for like title/menu screen etc...
 		GUIComponent* guiComp = (GUIComponent*)world->getSingleton()->getComponent<GUIComponent>();
 		ssGUI gui = ssGUI(guiComp->min, guiComp->extents, guiComp->alignMin, guiComp->alignExt, guiComp->layer, guiComp->id);
-		gui.visible = guiComp->visible;
+		gui.alpha = guiComp->alpha;
 
 		//Give the component a reference to it and initialize
 		guiComp->ref = guis_.size();
@@ -991,7 +991,7 @@ namespace Principia {
 			GUIComponent* gc = (GUIComponent*)e.getComponent<GUIComponent>();
 			ssGUI gui = ssGUI(gc->min, gc->extents, gc->alignMin, gc->alignExt, gc->layer, gc->id);
 			gc->ref = guis_.size();
-			gui.visible = gc->visible;
+			gui.alpha = gc->alpha;
 			guis_.push_back(gui);
 			SetRenderUpdate(kUpdateGui);
 		}
@@ -1001,7 +1001,7 @@ namespace Principia {
 			for (int i = 0; i < nums.size(); ++i) {
 				ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
 				gnc->shaderReferences.push_back(guis_.size());
-				gui.visible = gnc->visible;
+				gui.alpha = gnc->alpha;
 				guis_.push_back(gui);
 			}
 			gnc->ref = gnc->shaderReferences[0];
@@ -1241,7 +1241,7 @@ namespace Principia {
 		g.alignExt = gc->alignExt;
 		g.layer = gc->layer;
 		g.id = gc->id;
-		g.visible = gc->visible;
+		g.alpha = gc->alpha;
 		SetRenderUpdate(kUpdateGui);
 	}
 
@@ -1251,7 +1251,7 @@ namespace Principia {
 		for (int i = 0; i < nums.size(); ++i) {
 			ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
 			gnc->shaderReferences.push_back(guis_.size());
-			gui.visible = gnc->visible;
+			gui.alpha = gnc->alpha;
 			guis_.push_back(gui);
 		}
 		gnc->ref = gnc->shaderReferences[0];
@@ -1263,7 +1263,7 @@ namespace Principia {
 		std::vector<int> nums = intToArrayOfInts(gnc->number);
 		for (int i = 0; i < gnc->shaderReferences.size(); ++i) {
 			guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
-			guis_[gnc->shaderReferences[i]].visible = gnc->visible;
+			guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
 		}
 		if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
 			ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);

@@ -24,7 +24,7 @@ namespace Principia {
 		int layer;
 		int id;
 		int pad = 0;
-		int visible = 1;
+		float alpha = 1.f;
 
 		ssGUI() {};
 		ssGUI(glm::vec2 min, glm::vec2 max, glm::vec2 aMin, glm::vec2 aExt, int l, int i) : min(min), extents(max), alignMin(aMin), alignExt(aExt), layer(l), id(i) {};

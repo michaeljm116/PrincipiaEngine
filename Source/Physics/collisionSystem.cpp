@@ -210,6 +210,9 @@ namespace Principia {
 		btRigidBody* body = new btRigidBody(rbInfo);
 		if(col->type == CollisionType::Ghost)body->setCollisionFlags(btCollisionObject::CO_GHOST_OBJECT);
 
+		auto isDynamic = ((DynamicComponent*)e.getComponent<DynamicComponent>() != nullptr);
+		if(isDynamic)body->setCollisionFlags(body->getCollisionFlags() & ~1);// CF_STATIC_OBJECT);
+
 		physics->dynamicsWorld->addRigidBody(body);
 		col->body = body;
 		entityMap.insert(std::make_pair(body, e.getId()));

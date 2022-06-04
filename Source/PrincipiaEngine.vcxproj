@@ -230,6 +230,7 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="Utility\script-system.cpp" />
+    <ClCompile Include="Utility\selectable-gui-system.cpp" />
     <ClCompile Include="Utility\serialize-node.cpp" />
     <ClCompile Include="Utility\prefabSystem.cpp" />
     <ClCompile Include="Utility\resourceManager.cpp">
@@ -576,6 +577,7 @@
     <ClInclude Include="Utility\key.h" />
     <ClInclude Include="Utility\script-component.h" />
     <ClInclude Include="Utility\script-system.h" />
+    <ClInclude Include="Utility\selectable-gui-system.h" />
     <ClInclude Include="Utility\serialize-node.h" />
     <ClInclude Include="Utility\mouse.h" />
     <ClInclude Include="Utility\nodeComponent.hpp" />

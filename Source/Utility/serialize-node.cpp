@@ -277,7 +277,7 @@ namespace Principia {
 				int goalNum = n->name.at(n->name.length() - 1) - '0';
 				// e->addComponent(new BallScoreComponent(goalNum));
 				GUINumberComponent* guinumber = new GUINumberComponent(pos, ext, 0);
-				guinumber->visible = false;
+				guinumber->alpha = 0;// false;
 				 e->addComponent(guinumber);
 				// e->addComponent(new AudioComponent(dir + "Test/Audio/goal.wav"));
 			}

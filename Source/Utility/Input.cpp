@@ -13,7 +13,8 @@ namespace Principia {
 		glfwSetKeyCallback(window, Input::key_callback);
 		glfwSetCharCallback(window, Input::char_callback);
 		glfwSetCursorPosCallback(window, Input::cursor_position_callback);
-		glfwSetMouseButtonCallback(window, Input::mouse_button_callback);
+		//glfwSetMouseButtonCallback(window, Input::mouse_button_callback);
+		glfwSetInputMode(window, GLFW_STICKY_KEYS, true);
 		glfwSetScrollCallback(window, Input::scroll_callback);
 		glfwSetJoystickCallback(Input::joystick_callback);
 		
@@ -86,6 +87,12 @@ namespace Principia {
 		float newTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - startTime).count() / 1000.0f;
 		deltaTime = abs(time - newTime);
 		time = newTime;
+
+		int left_mb = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
+		int right_mb = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+		mouse.updateButton(GLFW_MOUSE_BUTTON_LEFT, left_mb);
+		mouse.updateButton(GLFW_MOUSE_BUTTON_RIGHT, right_mb);
+		
 	}
 
 }

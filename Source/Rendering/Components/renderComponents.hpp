@@ -119,6 +119,18 @@ namespace Principia {
 		ModelComponent(int n, int id) { modelIndex = n; modelUniqueID = id; };
 	};
 
+	enum class SelectableState {
+		Unselected, 
+		Released, 
+		Held, 
+		Pressed
+	};
+	struct Cmp_Selectable : artemis::Component {
+		SelectableState state;
+		bool active = false;
+		bool reset = false;
+	};
+
 	struct GUIComponent : artemis::Component {
 		glm::vec2 min;
 		glm::vec2 extents;
@@ -127,16 +139,19 @@ namespace Principia {
 		int layer;
 		int id;
 		int ref;
-		bool visible;
+		float alpha = 0.f;
+		//bool visible;
 		GUIComponent() {};
-		GUIComponent(glm::vec2 m, glm::vec2 e, glm::vec2 amin, glm::vec2 ae, int l, int i, bool v) :
-			min(m), extents(e), alignMin(amin), alignExt(ae), layer(l), id(i), visible(v) {};
+		GUIComponent(glm::vec2 m, glm::vec2 e, glm::vec2 amin, glm::vec2 ae, int l, int i, float a) :
+			min(m), extents(e), alignMin(amin), alignExt(ae), layer(l), id(i), alpha(a) {};
 	};
 	struct GUINumberComponent : GUIComponent {
 		int number;
 		std::vector<int> shaderReferences;
 		GUINumberComponent() {};
 		GUINumberComponent(glm::vec2 m, glm::vec2 e, int n) { min = m; extents = e; number = n; alignMin = glm::vec2(0.0f, 0.0f); alignExt = glm::vec2(0.1f, 1.f); layer = 0; id = 0; };
+		GUINumberComponent(glm::vec2 m, glm::vec2 e, int n, float a) { min = m; extents = e; number = n; alignMin = glm::vec2(0.0f, 0.0f); alignExt = glm::vec2(0.1f, 1.f); layer = 0; id = 0; alpha = a; };
+
 	};
 
 	struct Vertex {

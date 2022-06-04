@@ -248,7 +248,7 @@ void main()
 	
 		//vec4 txt = vec4(0);
 		for(int i = 0; i < guis.length(); ++i){
-			if(guis[i].visible > 0){
+			if(guis[i].alpha > 0.f){
 				vec2 diff = uv - guis[i].min;
 				if((diff.x > 0) && (diff.y > 0)){
 					if((diff.x < guis[i].extents.x) && (diff.y < guis[i].extents.y)){
