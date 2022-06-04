@@ -86,7 +86,7 @@ struct Gui {
 	int layer;
 	int id;
 	int pad;
-	int visible;
+	float alpha;
 };
 
 struct flool{

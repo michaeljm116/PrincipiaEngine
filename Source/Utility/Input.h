@@ -84,13 +84,14 @@ namespace Principia {
 		}
 
 
-		static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
-			/*if (action == GLFW_PRESS || action == GLFW_REPEAT)
-				INPUT.mouse.updateButton(button, true);
-			else
-				INPUT.mouse.updateButton(button, false);*/
-			INPUT.mouse.buttons[button] = action;
-		}
+		//static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+		//	/*if (action == GLFW_PRESS || action == GLFW_REPEAT)
+		//		INPUT.mouse.updateButton(button, true);
+		//	else
+		//		INPUT.mouse.updateButton(button, false);*/
+		//	INPUT.mouse.buttons[button] = action;
+		//	//INPUT.mouse.updateButton(button, (bool)action);
+		//}
 
 		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
 			INPUT.mouse.updateScroll(yoffset);
