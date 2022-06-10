@@ -35,7 +35,7 @@ namespace Principia {
 		global.axis[3] = GLFW_KEY_A;
 		global.axis[4] = GLFW_KEY_LEFT_ALT;
 		global.axis[5] = GLFW_KEY_S;
-		global.buttons[0] = GLFW_KEY_O;
+		global.buttons[0] = GLFW_KEY_LEFT_BRACKET;
 		global.buttons[1] = GLFW_KEY_RIGHT_BRACKET; 
 		global.buttons[2] = GLFW_KEY_F11;
 		global.buttons[3] = GLFW_KEY_ESCAPE;
