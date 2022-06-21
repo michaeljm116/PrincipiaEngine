@@ -977,7 +977,7 @@ namespace Principia {
 			light.color = lightComp->color;
 			light.intensity = lightComp->intensity;
 			light.id = e.getUniqueId();// lightComp->id;
-
+			lightComp->id = light.id;
 			lights_.push_back(light);
 			light_comps_.push_back(lightComp);
 
@@ -1019,6 +1019,26 @@ namespace Principia {
 	void ComputeRaytracer::Removed(artemis::Entity& e)
 	{
 		RenderType t = ((RenderComponent*)e.getComponent<RenderComponent>())->type;// renderMapper.get(e)->type;
+
+		if (t == RENDER_LIGHT) {
+			if (lights_.size() == 1) {
+				lights_.clear();
+				light_comps_.clear();
+			}
+			else {
+				auto* lc = (LightComponent*)e.getComponent<LightComponent>();
+				for (auto it = lights_.begin(); it != lights_.end(); ++it) {
+					if (lc->id == it->id)
+						lights_.erase(it);
+				}
+			}
+		}
+		/*else if (t == RENDER_GUINUM) {
+			auto* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
+			//gnc->
+
+		}*/
+		
 	}
 
 	void ComputeRaytracer::ProcessEntity(artemis::Entity& e)
@@ -1041,7 +1061,11 @@ namespace Principia {
 			UpdateGui(gui);
 			break; }
 		case RENDER_GUINUM: {
-			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
+			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();			
+			if (gnc->number > 9) {
+				auto* nodular = (NodeComponent*)e.getComponent<NodeComponent>();
+				std::cout << nodular->name + ": " << gnc->number;
+			}
 			UpdateGuiNumber(gnc);
 			break; }
 		default:
@@ -1189,6 +1213,7 @@ namespace Principia {
 			return;
 		}	
 		if (node->engineFlags & COMPONENT_LIGHT) {
+			return;
 			LightComponent* lightComp = (LightComponent*)node->data->getComponent<LightComponent>();
 			TransformComponent* transComp = (TransformComponent*)node->data->getComponent<TransformComponent>();
 			ssLight light;
@@ -1261,15 +1286,24 @@ namespace Principia {
 	void ComputeRaytracer::UpdateGuiNumber(GUINumberComponent* gnc)
 	{
 		std::vector<int> nums = intToArrayOfInts(gnc->number);
-		for (int i = 0; i < gnc->shaderReferences.size(); ++i) {
-			guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
-			guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+
+		if (nums.size() < gnc->shaderReferences.size()) { //aka it went from like... 10 to 9
+			for (int i = 0; i < nums.size(); ++i) {
+				guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+				guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+			}
 		}
-		if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
-			ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
-			gnc->shaderReferences.push_back(guis_.size());
-			guis_.push_back(gui);
-			compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+		else {
+			for (int i = 0; i < gnc->shaderReferences.size(); ++i) {
+				guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+				guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+			}
+			if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
+				ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+				gnc->shaderReferences.push_back(guis_.size());
+				guis_.push_back(gui);
+				compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+			}
 		}
 		SetRenderUpdate(kUpdateGui);
 	}

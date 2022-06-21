@@ -52,7 +52,12 @@ namespace Principia {
 #pragma endregion
 
 		bool editor_ = true;
-		ssLight& getLight(int i) { return lights_[i]; }
+		ssLight& getLight(int i) {
+			for (auto& l : lights_) {
+				if (i == l.id)
+					return l;
+			}
+		}
 
 		std::vector<int> intToArrayOfInts(const int& a) {
 			if (a == 0) {
