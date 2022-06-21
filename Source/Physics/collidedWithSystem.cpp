@@ -6,6 +6,7 @@ Principia::CollidedWithSystem::CollidedWithSystem()
 {
 	addComponentType<CollidedComponent>();
 	addComponentType<NodeComponent>();
+	addComponentType<Cmp_Collision_Script>();
 }
 
 Principia::CollidedWithSystem::~CollidedWithSystem()
@@ -16,6 +17,7 @@ void Principia::CollidedWithSystem::initialize()
 {
 	cwMapper.init(*world);
 	nodeMapper.init(*world);
+	scriptMapper.init(*world);
 }
 
 void Principia::CollidedWithSystem::added(artemis::Entity & e)
@@ -31,6 +33,7 @@ void Principia::CollidedWithSystem::added(artemis::Entity & e)
 			std::cout << "Collision Begin: " << node->name << " | " << cn->name << "\n";
 		}
 	}
+	scriptMapper.get(e)->OnCollisionEnter(cc);
 }
 
 void Principia::CollidedWithSystem::removed(artemis::Entity & e)
@@ -43,7 +46,10 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 { 
 	std::vector<CollisionData>& cw = cwMapper.get(e)->collidedWith;
 	auto* node = nodeMapper.get(e);
+	auto* script = scriptMapper.get(e);
 	std::vector<CollisionData> copy = cw;
+
+	//Remove anything that's no longer colliding
 	cw.erase(std::remove_if(cw.begin(), cw.end(), [&](CollisionData& cd) {
 		if (cd.state == CollisionState::None) {
 			cd.state == CollisionState::Enter;
@@ -58,6 +64,7 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 		if (removed) {
 			auto* e = &world->getEntity(cd.id);
 			if (e != nullptr) {
+				script->OnCollisionExit(e);
 				auto* n = (NodeComponent*)world->getEntity(cd.id).getComponent<NodeComponent>();
 				std::cout << "Collision End: " << node->name << " | " << n->name << "\n";
 			}
@@ -65,6 +72,7 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 		return removed;
 	}), cw.end());
 
+	//if no collisions then empty
 	if (cw.empty()) {
 		////auto* node = (NodeComponent*)world->getEntityManager()->getComponent<NodeComponent*>(e);
 		//if (node != nullptr) {
@@ -78,5 +86,9 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 		e.removeComponent<CollidedComponent>();
 		e.refresh();
 	}
+	else
+		// otherwise Process the collisions
+		script->OnCollisionStay(world->getDelta());
+
 }
 

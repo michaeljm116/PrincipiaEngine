@@ -7,7 +7,7 @@
 
 #include "transformComponent.hpp"
 #include "nodeComponent.hpp"
-
+#include "../Physics/Components/collisionComponent.h"
 
 namespace Principia {
 
@@ -19,8 +19,20 @@ namespace Principia {
 		virtual void process(float dt) = 0;
 		virtual void removed() = 0;
 		inline static artemis::World* world;
+
 	protected:
 		artemis::Entity* entity = nullptr;
+	};
+
+	class CollisionScript : public Script {
+	public: 
+		CollisionScript() {};
+		~CollisionScript() {};
+		virtual void OnCollisionEnter(CollidedComponent* cc) = 0;
+		virtual void OnCollisionStay(float dt) = 0;
+		virtual void OnCollisionExit(artemis::Entity* e) = 0;
+	protected:
+		CollidedComponent* collision = nullptr;
 	};
 
 	class WorldScript : public Script {
@@ -69,6 +81,37 @@ namespace Principia {
 			added = [this]() {script->added(); };
 			process = [this](float dt) {script->process(dt); };
 			removed = [this]() {script->removed(); };
+		}
+	};
+
+	struct Cmp_Collision_Script : artemis::Component 
+	{
+		std::function<void(void)> added = nullptr;
+		std::function<void(float)> process = nullptr;
+		std::function<void(void)> removed = nullptr;
+
+		std::function<void(CollidedComponent*)> OnCollisionEnter = nullptr;
+		std::function<void(float)> OnCollisionStay = nullptr;
+		std::function<void(artemis::Entity*)> OnCollisionExit = nullptr;
+
+		std::unique_ptr<CollisionScript> script;
+
+		//ScriptComponent(Script* s){
+		//	script = s;
+		//	added = [this]() {script->added(); };
+		//	process = [this](float dt) {script->process(dt); };
+		//	removed = [this]() {script->removed(); };
+		//};
+		Cmp_Collision_Script(std::unique_ptr<CollisionScript> s) 
+		{
+			script = std::move(s);
+			added = [this]() {script->added(); };
+			process = [this](float dt) {script->process(dt); };
+			removed = [this]() {script->removed(); };
+
+			OnCollisionEnter = [this](CollidedComponent* cc) {script->OnCollisionEnter(cc); };
+			OnCollisionStay = [this](float dt) {script->OnCollisionStay(dt); };
+			OnCollisionExit = [this](artemis::Entity* e) {script->OnCollisionExit(e); };
 		}
 	};
 

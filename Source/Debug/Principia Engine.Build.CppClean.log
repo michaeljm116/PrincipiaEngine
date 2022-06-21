@@ -194,10 +194,15 @@ c:\users\mike\desktop\principiumgames\principiaengine\source\debug\transformsyst
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\resourcemanager.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\bvhsystem.obj
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\rendersystem.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\selectable-gui-system.obj
+c:\users\mike\desktop\principiumgames\principiaengine\source\rendering\shaders\raytracing.comp.spv
 c:\users\mike\desktop\principiumgames\shinyafroman\debug\principia engine.exe
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.command.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.read.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.write.1.tlog
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\custombuild.command.1.tlog
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\custombuild.read.1.tlog
+c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\custombuild.write.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\lib-link.read.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\lib-link.write.1.tlog
 c:\users\mike\desktop\principiumgames\principiaengine\source\debug\principia engine.tlog\lib.command.1.tlog
