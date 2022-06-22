@@ -37,9 +37,9 @@ namespace Principia {
 		virtual void ProcessEntity(artemis::Entity& e) = 0;
 		virtual void End() = 0;
 
-		virtual void CleanUp() { RenderBase::cleanup(); }
-		virtual void CleanUpSwapChain() { RenderBase::cleanupSwapChain(); }
-		virtual void RecreateSwapChain() { RenderBase::recreateSwapChain(); }
+		virtual void CleanUp() = 0;// { RenderBase::cleanup(); }
+		virtual void CleanUpSwapChain() = 0;// { RenderBase::cleanupSwapChain(); }
+		virtual void RecreateSwapChain() = 0;// { RenderBase::recreateSwapChain(); }
 
 		virtual void AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri) = 0;
 		virtual void AddNode(NodeComponent* node) = 0;
