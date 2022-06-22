@@ -33,9 +33,7 @@ namespace Principia {
 		void removed(artemis::Entity &e) override;
 		void end() override;
 
-		void togglePlayMode(bool play) {
-
-		}
+		virtual void TogglePlayMode(bool play) { ((ComputeRaytracer*)renderer_)->TogglePlayMode(play); }
 
 		//Other common functions
 		//This could probably all be inlined, although private renderer hmm

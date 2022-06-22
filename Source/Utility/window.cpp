@@ -17,7 +17,11 @@ namespace Principia {
 
 	void Window::init() {
 		height = 720;
-		width = 1280;//1680;// 1280;
+		width = 1280; //1280;//1680;// 1280;
+#ifdef UIIZON
+		width = 1280;
+#endif // UIIZON
+
 		maximized = false;
 
 
