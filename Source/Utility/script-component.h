@@ -153,12 +153,12 @@ namespace Principia {
 				std::default_random_engine generator;// std::chrono::system_clock::now());
 				std::uniform_real_distribution<float> dx(2, 14);
 				std::uniform_real_distribution<float> dz(2, 14);
-				std::uniform_real_distribution<float> dy(-4, 0);
+				//std::uniform_real_distribution<float> dy(-4, 0);
 
 				unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 				generator.seed(seed);
 				nextPos.x = dx(generator);
-				nextPos.y = dy(generator);
+				//nextPos.y = dy(generator);
 				nextPos.z = dz(generator);
 
 			}

@@ -1062,10 +1062,10 @@ namespace Principia {
 			break; }
 		case RENDER_GUINUM: {
 			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();			
-			if (gnc->number > 9) {
-				auto* nodular = (NodeComponent*)e.getComponent<NodeComponent>();
-				std::cout << nodular->name + ": " << gnc->number;
-			}
+			//if (gnc->number > 9) {
+			//	/*auto* nodular = (NodeComponent*)e.getComponent<NodeComponent>();
+			//	std::cout << nodular->name + ": " << gnc->number;*/
+			//}
 			UpdateGuiNumber(gnc);
 			break; }
 		default:
