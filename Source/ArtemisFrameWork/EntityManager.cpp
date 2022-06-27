@@ -186,7 +186,7 @@ namespace artemis {
     //Also calls removeComponentsOfEntity. All systems will be updated and will remove each entity.
     this->removeAllEntities();
     // Destroy the data from memory; activeEntities should be empty by now.
-    this->removedAndAvailable.deleteData();
+     this->removedAndAvailable.deleteData();
     
     for(int i=0; i<componentsByType.getCapacity(); i++) {
       if(componentsByType.get(i) == NULL) continue;

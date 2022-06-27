@@ -353,7 +353,7 @@ namespace Principia {
 				compute_.pipeline_layout,
 				0);
 
-		computePipelineCreateInfo.stage = vkDevice.createShader("../../PrincipiaEngine/Source/Rendering/Shaders/raytracing.comp.spv", VK_SHADER_STAGE_COMPUTE_BIT);
+		computePipelineCreateInfo.stage = vkDevice.createShader("../Assets/Shaders/raytracing.comp.spv", VK_SHADER_STAGE_COMPUTE_BIT);
 		VK_CHECKRESULT(vkCreateComputePipelines(vkDevice.logicalDevice, pipelineCache, 1, &computePipelineCreateInfo, nullptr, &compute_.pipeline), "CREATE COMPUTE PIPELINE");
 
 		// Separate command pool as queue family for compute may be different than graphics
@@ -604,8 +604,8 @@ namespace Principia {
 				dynamicStateEnables.data(),
 				dynamicStateEnables.size(),
 				0);
-		auto vertShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.vert.spv");
-		auto fragShaderCode = readFile("../../PrincipiaEngine/Source/Rendering/Shaders/texture.frag.spv");
+		auto vertShaderCode = readFile("../Assets/Shaders/texture.vert.spv");
+		auto fragShaderCode = readFile("../Assets/Shaders/texture.frag.spv");
 
 		VkShaderModule vertShaderModule;
 		VkShaderModule fragShaderModule;
