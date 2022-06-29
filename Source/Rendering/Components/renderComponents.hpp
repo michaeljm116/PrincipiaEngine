@@ -65,7 +65,7 @@ namespace Principia {
 
 	struct CylinderComponent : artemis::Component {
 		glm::vec3 top;
-		glm::vec3 bottom;
+		glm::vec3 bottom; 
 		float radius;
 		int cylinderIndex;
 

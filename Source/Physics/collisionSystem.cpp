@@ -170,7 +170,8 @@ namespace Principia {
 		physics->dispatcher = new btCollisionDispatcher(physics->collisionConfiguration);
 		physics->overlappingPairCache = new btDbvtBroadphase();
 		physics->solver = new btSequentialImpulseConstraintSolver;
-		physics->dynamicsWorld = new btSimpleDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
+		//physics->dynamicsWorld = new btSimpleDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
+		physics->dynamicsWorld = new btDiscreteDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
 		physics->dynamicsWorld->setGravity(btVector3(0, -100, 0));
 		world->getSingleton()->addComponent(physics);
 		//Add ground for now
@@ -231,46 +232,49 @@ namespace Principia {
 
 	void CollisionSystem::bulletUpdate()
 	{
-		int numManifolds = physics->dispatcher->getNumManifolds();
-		for (int i = 0; i < numManifolds; ++i) {
-			btPersistentManifold* contactManifold = physics->dispatcher->getManifoldByIndexInternal(i);
-			const btCollisionObject* a = contactManifold->getBody0();
-			const btCollisionObject* b = contactManifold->getBody1();
-			int numContacts = contactManifold->getNumContacts();
-			for (int j = 0; j < numContacts; ++j) {
-				btManifoldPoint pt = contactManifold->getContactPoint(j);
-				if (pt.getDistance() < 0.0f) {
-					int a_id = entityMap.at(a);
-					int b_id = entityMap.at(b);
+		if (physics->dynamicsWorld->stepSimulation(world->getDelta(), 10.f)) {
 
-					artemis::Entity& a_ent = world->getEntity(a_id);
-					artemis::Entity& b_ent = world->getEntity(b_id);
+			int numManifolds = physics->dispatcher->getNumManifolds();
+			for (int i = 0; i < numManifolds; ++i) {
+				btPersistentManifold* contactManifold = physics->dispatcher->getManifoldByIndexInternal(i);
+				const btCollisionObject* a = contactManifold->getBody0();
+				const btCollisionObject* b = contactManifold->getBody1();
+				int numContacts = contactManifold->getNumContacts();
+				for (int j = 0; j < numContacts; ++j) {
+					btManifoldPoint pt = contactManifold->getContactPoint(j);
+					if (pt.getDistance() < 0.0f) {
+						int a_id = entityMap.at(a);
+						int b_id = entityMap.at(b);
 
-					CollisionData a_cd = CollisionData(a_id, b2gv3(pt.m_positionWorldOnA), b2gv3(pt.m_normalWorldOnB));
-					CollisionData b_cd = CollisionData(b_id, b2gv3(pt.m_positionWorldOnB), b2gv3(pt.m_normalWorldOnB));
+						artemis::Entity& a_ent = world->getEntity(a_id);
+						artemis::Entity& b_ent = world->getEntity(b_id);
 
-					CollidedComponent* a_cw = (CollidedComponent*)a_ent.getComponent<CollidedComponent>();
-					CollidedComponent* b_cw = (CollidedComponent*)b_ent.getComponent<CollidedComponent>();
+						CollisionData a_cd = CollisionData(a_id, b2gv3(pt.m_positionWorldOnA), b2gv3(pt.m_normalWorldOnB));
+						CollisionData b_cd = CollisionData(b_id, b2gv3(pt.m_positionWorldOnB), b2gv3(pt.m_normalWorldOnB));
+
+						CollidedComponent* a_cw = (CollidedComponent*)a_ent.getComponent<CollidedComponent>();
+						CollidedComponent* b_cw = (CollidedComponent*)b_ent.getComponent<CollidedComponent>();
 
 
-					a_cw == nullptr ?
-						a_ent.addComponent(new CollidedComponent(b_cd))
-						:
-						a_cw->update(b_cd);
+						a_cw == nullptr ?
+							a_ent.addComponent(new CollidedComponent(b_cd))
+							:
+							a_cw->update(b_cd);
 
-					b_cw == nullptr ?
-						b_ent.addComponent(new CollidedComponent(a_cd))
-						:
-						b_cw->update(a_cd);
+						b_cw == nullptr ?
+							b_ent.addComponent(new CollidedComponent(a_cd))
+							:
+							b_cw->update(a_cd);
 
-					a_ent.refresh();
-					b_ent.refresh();
+						a_ent.refresh();
+						b_ent.refresh();
 
+					}
 				}
 			}
 		}
 
-		physics->dynamicsWorld->stepSimulation(0.016666666666666666f, 10.f);
+		//physics->dynamicsWorld->stepSimulation(world->getDelta());// , 10.f);
 	}
 
 	void CollisionSystem::bulletProcessEntity(artemis::Entity& e)
