@@ -10,6 +10,7 @@ namespace Principia {
 		btCollisionDispatcher* dispatcher = nullptr;
 		btBroadphaseInterface* overlappingPairCache = nullptr;
 		btSequentialImpulseConstraintSolver* solver = nullptr;
-		btSimpleDynamicsWorld* dynamicsWorld = nullptr;
+		//btSimpleDynamicsWorld* dynamicsWorld = nullptr;
+		btDiscreteDynamicsWorld* dynamicsWorld = nullptr;
 	};
 }
