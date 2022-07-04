@@ -16,6 +16,8 @@
 
 namespace Principia {
 	class CollisionSystem : public artemis::EntityProcessingSystem {
+
+		const btScalar time_step = btScalar(1.) / btScalar(60.);
 	public:
 		CollisionSystem();
 		~CollisionSystem();
