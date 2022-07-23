@@ -81,7 +81,7 @@ namespace Principia {
 #ifdef NDEBUG
 		const bool enableValidationLayers = true;
 #else
-		const bool enableValidationLayers = true;
+		const bool enableValidationLayers = false;
 #endif
 
 		const std::vector<const char*> deviceExtensions = {

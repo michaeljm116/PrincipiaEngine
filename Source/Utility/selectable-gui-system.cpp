@@ -25,11 +25,11 @@ void Principia::Sys_Selectable_GUI::processEntity(artemis::Entity& e)
 			return;
 		const glm::ivec2 min = ConvertUnitToPixel(gui->min);
 		const glm::ivec2 extents = ConvertUnitToPixel(gui->extents);
-		const glm::ivec2 mouse = glm::ivec2(INPUT.mouse.x, INPUT.mouse.y);
-		const glm::ivec2 diff = -min + glm::ivec2(INPUT.mouse.x, WINDOW.getHeight() - INPUT.mouse.y);
+		const glm::ivec2 mouse = glm::ivec2(pINPUT.mouse.x, pINPUT.mouse.y);
+		const glm::ivec2 diff = -min + glm::ivec2(pINPUT.mouse.x, WINDOW.getHeight() - pINPUT.mouse.y);
 		bool hit = (diff.x > 0 && diff.x < extents.x) && (diff.y > 0 && diff.y < extents.y);
 		if (hit) {
-			selected->state = (SelectableState)INPUT.mouse.buttons[GLFW_MOUSE_BUTTON_LEFT];
+			selected->state = (SelectableState)pINPUT.mouse.buttons[GLFW_MOUSE_BUTTON_LEFT];
 			//selected_entity = &e;
 		}
 	}
@@ -43,7 +43,7 @@ void Principia::Sys_Selectable_GUI::removed(artemis::Entity& e)
 
 void Principia::Sys_Selectable_GUI::update()
 {
-	if (INPUT.mouse.buttons[GLFW_MOUSE_BUTTON_LEFT] & MOUSE_BUTTON_CHANGED) {
+	if (pINPUT.mouse.buttons[GLFW_MOUSE_BUTTON_LEFT] & MOUSE_BUTTON_CHANGED) {
 		process();
 	}
 }

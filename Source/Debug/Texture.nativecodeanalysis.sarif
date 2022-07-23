@@ -1,0 +1,1453 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "Return value ignored: 'std::basic_string<char,std::char_traits<char>,std::allocator<char> >::at'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 216,
+                  "startColumn": 5,
+                  "endLine": 216,
+                  "endColumn": 12
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::loadShader",
+                  "decoratedName": "?loadShader@VulkanDevice@Principia@@QAE_KPBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::descriptor_set' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::descriptor_set"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::descriptor' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::descriptor"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::layerCount' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::layerCount"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::mipLevels' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::mipLevels"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::height' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::height"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::width' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::width"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::sampler' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::sampler"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::memory' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::memory"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::view' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::view"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::imageLayout' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::imageLayout"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::image' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 3,
+                  "endLine": 15,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::image"
+          }
+        },
+        {
+          "ruleId": "C6001",
+          "message": {
+            "text": "Using uninitialized memory 'coutput'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 3667,
+                  "startColumn": 29,
+                  "endLine": 3667,
+                  "endColumn": 29
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "load_jpeg_image",
+                  "decoratedName": "?load_jpeg_image@@YAPAEPAUstbi__jpeg@@PAH11H@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3526,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3526,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3526,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3527,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3530,
+                            "startColumn": 21
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3533,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3536,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3538,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3540,
+                            "startColumn": 34
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3543,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3547,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3548,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3548,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3549,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3550,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "'coutput' is not initialized"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3552,
+                            "startColumn": 22
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3554,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3554,
+                            "startColumn": 19
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this loop, (assume 'k<decode_n' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3577,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3578,
+                            "startColumn": 11
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '!output' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3581,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3581,
+                            "startColumn": 19
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this loop, (assume 'j<z->s->img_y')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3582,
+                            "startColumn": 19
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3583,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3583,
+                            "startColumn": 22
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this loop, (assume 'k<decode_n' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3597,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'n>=3' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3640,
+                            "startColumn": 17
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume 'is_rgb' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3650,
+                            "startColumn": 41
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3660,
+                            "startColumn": 41
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this branch, (assume '<branch condition>' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3667,
+                            "startColumn": 25
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                          },
+                          "region": {
+                            "startLine": 3667,
+                            "startColumn": 29
+                          }
+                        },
+                        "message": {
+                          "text": "'coutput' is used, but may not have been initialized"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 5244,
+                  "startColumn": 12,
+                  "endLine": 5244,
+                  "endColumn": 12
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__tga_get_comp",
+                  "decoratedName": "?stbi__tga_get_comp@@YAHHHPAH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 6467,
+                  "startColumn": 15,
+                  "endLine": 6467,
+                  "endColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__hdr_convert",
+                  "decoratedName": "?stbi__hdr_convert@@YAXPAMPAEH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+                },
+                "region": {
+                  "startLine": 6470,
+                  "startColumn": 15,
+                  "endLine": 6470,
+                  "endColumn": 15
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbi__hdr_convert",
+                  "decoratedName": "?stbi__hdr_convert@@YAXPAMPAEH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::descriptor_set' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::descriptor_set"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::layerCount' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::layerCount"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::mipLevels' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::mipLevels"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::height' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::height"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::width' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::width"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::sampler' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::sampler"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::memory' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::memory"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::view' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::view"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::imageLayout' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::imageLayout"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Texture::image' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 11,
+                  "endLine": 8,
+                  "endColumn": 11
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::{ctor}",
+                  "decoratedName": "??0Texture@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Texture::image"
+          }
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 28,
+                  "endLine": 33,
+                  "endColumn": 51
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::CreateTexture",
+                  "decoratedName": "?CreateTexture@Texture@Principia@@QAE?AW4VkResult@@AAUVulkanDevice@2@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '*' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '*' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+                },
+                "region": {
+                  "startLine": 33,
+                  "startColumn": 28,
+                  "endLine": 33,
+                  "endColumn": 39
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Texture::CreateTexture",
+                  "decoratedName": "?CreateTexture@Texture@Principia@@QAE?AW4VkResult@@AAUVulkanDevice@2@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "1845a7d61bbcd9d0cbbb38fc99ae22e4e58f494b5623bf2a27e3b7b4defda402"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "49a41131ad228ec73c8500cfa6a80dcf690b1c5da3eac2bb28e736395bfab990"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/stb/stb_image.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "155017e657b6d807dd16d7b8252bd4b750bf95348a1d27b7a22a9117f01c26e6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/Texture.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "a649c164c425fd48871b71921d120c670a4c4e37a2978e2b2a026c94a4018aa8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/rendering/vulkaninitializers.hpp"
+          },
+          "hashes": {
+            "sha-256": "55026c99cbb1c806f0fb74aac6e5a589467b434d0812f14528b55e54290f979d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.3.216.0/include/vulkan/vulkan.h"
+          },
+          "hashes": {
+            "sha-256": "ba0fdad27dac9a0e8f3caf328e6b77e8895b026d5cc0e201bbdce19d0f2b4aa7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.3.216.0/include/vulkan/vk_platform.h"
+          },
+          "hashes": {
+            "sha-256": "6bc08085985094224a327df89802ec72451e138587e9ec6675a0bd4c940dcce9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.3.216.0/include/vulkan/vulkan_core.h"
+          },
+          "hashes": {
+            "sha-256": "5803cb09cf34af9a15f7541500e131a3cdb556fe6f2b32cc6cd9d6f110dd2dad"
+          }
+        }
+      ]
+    }
+  ]
+}

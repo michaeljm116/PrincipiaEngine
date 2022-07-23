@@ -1,0 +1,107 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/delayedentityprocessingsystem.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "e0fa4eaae87867762648945a810c3a7d74cab0a8b8eedb9267dd6caead1986a0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/delayedentityprocessingsystem.h"
+          },
+          "hashes": {
+            "sha-256": "2555f52539debd36af55f0e7bd1fa2659059266b1df0ae70718ffe6455a0c1f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/delayedentitysystem.h"
+          },
+          "hashes": {
+            "sha-256": "e74770023856873e6c529dc47c864af04d57d9179c27a1974789207c30182de5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entitysystem.h"
+          },
+          "hashes": {
+            "sha-256": "9dc2cb5a246ff867350d1d44b7f5d306804d5e55661930dfc98ffc3a95a73cc7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/bitsize.h"
+          },
+          "hashes": {
+            "sha-256": "e11bf2b634ef24448c6d5266e2df75a116604601f87e3f21f2a4f0bfcf4a42f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/component.h"
+          },
+          "hashes": {
+            "sha-256": "b81b4ef4948306a46318576c1590bc53b05f654d174648665221d7b251bf3fc3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/immutablebag.h"
+          },
+          "hashes": {
+            "sha-256": "079f4fc7978626bf9746b9a612df86fe14a9984391155dfb1aa916bcdb039fc5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componenttypemanager.h"
+          },
+          "hashes": {
+            "sha-256": "ca1840ea6015b50606c498e0c7d681139a0ce4681054493d1bd18faa72fd18db"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/typeinfocomparator.h"
+          },
+          "hashes": {
+            "sha-256": "b9b28de2f6ac7837d1965376ec15e837ae050b4a0490663721a8a4fdf0d0c143"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componenttype.h"
+          },
+          "hashes": {
+            "sha-256": "2dab631f857303b1f1aedb585ff5adde7760f399d020b062303d9e5c8e5b874e"
+          }
+        }
+      ]
+    }
+  ]
+}

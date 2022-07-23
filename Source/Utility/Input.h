@@ -18,7 +18,7 @@ just have an input system, but ill put that on the todolist
 
 namespace Principia {
 
-#define INPUT Input::get()
+#define pINPUT Input::get()
 
 	class Input
 	{
@@ -38,17 +38,17 @@ namespace Principia {
 
 		static void key_callback(GLFWwindow * window, int key, int scancode, int action, int mods)
 		{
-			INPUT.keys[key] = action;
+			pINPUT.keys[key] = action;
 			switch (action)
 			{
 			case GLFW_PRESS:
-				INPUT.pressed = true;
+				pINPUT.pressed = true;
 				break;
 			case GLFW_REPEAT:
-				INPUT.pressed = true;
+				pINPUT.pressed = true;
 				break;
 			case GLFW_RELEASE:
-				INPUT.pressed = false;
+				pINPUT.pressed = false;
 				break;
 			default:
 				break;
@@ -80,7 +80,7 @@ namespace Principia {
 		}
 
 		static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
-			INPUT.mouse.updatePosition((int)xpos, (int)ypos);
+			pINPUT.mouse.updatePosition((int)xpos, (int)ypos);
 		}
 
 
@@ -94,7 +94,7 @@ namespace Principia {
 		//}
 
 		static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
-			INPUT.mouse.updateScroll(yoffset);
+			pINPUT.mouse.updateScroll(yoffset);
 		}
 
 		static void joystick_callback(int jid, int event) {

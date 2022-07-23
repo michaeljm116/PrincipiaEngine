@@ -1,5 +1,4 @@
 #include "renderbase.h"
-
 namespace Principia {
 	void RenderBase::initWindow() {
 		//Handle swapchain recreation
@@ -54,8 +53,9 @@ namespace Principia {
 	void RenderBase::createInstance() {
 
 		//Check validation layers
-		if (vkDevice.enableValidationLayers && !vkDevice.checkValidationLayerSupport())
+		if (vkDevice.enableValidationLayers && !vkDevice.checkValidationLayerSupport()) {
 			throw std::runtime_error("validation layers requested, but not available!");
+		}
 
 		//Optional Data about the application
 		VkApplicationInfo appInfo = {};
