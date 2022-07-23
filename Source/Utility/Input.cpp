@@ -1,13 +1,13 @@
 #include "Input.h"
 #include "window.h"
 #include <chrono>
-
 namespace Principia {
 	Input::~Input()
 	{
 	}
 
 	void Input::init() {
+
 		//set up callbacks
 		window = Window::get().getWindow();
 		glfwSetKeyCallback(window, Input::key_callback);

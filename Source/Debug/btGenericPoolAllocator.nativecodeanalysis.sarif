@@ -1,0 +1,94 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGenericPoolAllocator::m_pools' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGenericPoolAllocator.h"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 2,
+                  "endLine": 131,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGenericPoolAllocator::{ctor}",
+                  "decoratedName": "??0btGenericPoolAllocator@@QAE@II@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGenericPoolAllocator::m_pools"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGenericPoolAllocator.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "dc9b6483b447ff5b38a49eb638cadd1fd78245cbdb8ffd631052bb154dd73b91"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btgenericpoolallocator.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "fe65be6de3eb87f9afb7388a9432b7c0d4fa76e99f19de48c30f66fe17db75f6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btalignedallocator.h"
+          },
+          "hashes": {
+            "sha-256": "c77ccb87e547d5bfe5bdcaba72144943a61872de33805df664b2105da571c86c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btscalar.h"
+          },
+          "hashes": {
+            "sha-256": "c7e87b5ce5561fa212d68397faf2ef54765f7d5978314f61941c3b37a1de2277"
+          }
+        }
+      ]
+    }
+  ]
+}

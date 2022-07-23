@@ -1,0 +1,763 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVector3::<unnamed-tag>::mVec128' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btVector3.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVector3::{ctor}",
+                  "decoratedName": "??0btVector3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVector3::<unnamed-tag>::mVec128"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVector3::<unnamed-tag>::m_floats' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btVector3.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVector3::{ctor}",
+                  "decoratedName": "??0btVector3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVector3::<unnamed-tag>::m_floats"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'HullDesc::mMaxFaces' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 2,
+                  "endLine": 69,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "HullDesc::{ctor}",
+                  "decoratedName": "??0HullDesc@@QAE@W4HullFlag@@IPBVbtVector3@@I@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "HullDesc::mMaxFaces"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'ConvexH::HalfEdge::v' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 3,
+                  "endLine": 131,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ConvexH::HalfEdge::{ctor}",
+                  "decoratedName": "??0HalfEdge@ConvexH@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "ConvexH::HalfEdge::v"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'ConvexH::HalfEdge::p' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 3,
+                  "endLine": 131,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ConvexH::HalfEdge::{ctor}",
+                  "decoratedName": "??0HalfEdge@ConvexH@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "ConvexH::HalfEdge::p"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'ConvexH::HalfEdge::ea' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 131,
+                  "startColumn": 3,
+                  "endLine": 131,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "ConvexH::HalfEdge::{ctor}",
+                  "decoratedName": "??0HalfEdge@ConvexH@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "ConvexH::HalfEdge::ea"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int4::y' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 150,
+                  "startColumn": 2,
+                  "endLine": 150,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int4::{ctor}",
+                  "decoratedName": "??0int4@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int4::y"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int4::z' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 150,
+                  "startColumn": 2,
+                  "endLine": 150,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int4::{ctor}",
+                  "decoratedName": "??0int4@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int4::z"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int4::x' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 150,
+                  "startColumn": 2,
+                  "endLine": 150,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int4::{ctor}",
+                  "decoratedName": "??0int4@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int4::x"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int4::w' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+                },
+                "region": {
+                  "startLine": 150,
+                  "startColumn": 2,
+                  "endLine": 150,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int4::{ctor}",
+                  "decoratedName": "??0int4@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int4::w"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int3::y' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 2,
+                  "endLine": 29,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int3::{ctor}",
+                  "decoratedName": "??0int3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int3::y"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int3::z' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 2,
+                  "endLine": 29,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int3::{ctor}",
+                  "decoratedName": "??0int3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int3::z"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'int3::x' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 2,
+                  "endLine": 29,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "int3::{ctor}",
+                  "decoratedName": "??0int3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "int3::x"
+          }
+        },
+        {
+          "ruleId": "C26451",
+          "message": {
+            "text": "Arithmetic overflow: Using operator '-' on a 4 byte value and then casting the result to a 8 byte value. Cast the value to the wider type before calling operator '-' to avoid overflow (io.2)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 118,
+                  "startColumn": 33,
+                  "endLine": 118,
+                  "endColumn": 41
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "DistanceBetweenLines",
+                  "decoratedName": "?DistanceBetweenLines@@YAMABVbtVector3@@000PAV1@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btHullTriangle::id' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 330,
+                  "startColumn": 2,
+                  "endLine": 330,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btHullTriangle::{ctor}",
+                  "decoratedName": "??0btHullTriangle@@QAE@HHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btHullTriangle::id"
+          }
+        },
+        {
+          "ruleId": "C26437",
+          "message": {
+            "text": "Do not slice (es.63)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 423,
+                  "startColumn": 7,
+                  "endLine": 423,
+                  "endColumn": 12
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "HullLibrary::extrude",
+                  "decoratedName": "?extrude@HullLibrary@@AAEXPAVbtHullTriangle@@H@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6011",
+          "message": {
+            "text": "Dereferencing NULL pointer 't'. "
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 454,
+                  "startColumn": 2,
+                  "endLine": 454,
+                  "endColumn": 35
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "HullLibrary::extrudable",
+                  "decoratedName": "?extrudable@HullLibrary@@AAEPAVbtHullTriangle@@M@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                          },
+                          "region": {
+                            "startLine": 445,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                          },
+                          "region": {
+                            "startLine": 446,
+                            "startColumn": 18
+                          }
+                        },
+                        "message": {
+                          "text": "'t' is NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                          },
+                          "region": {
+                            "startLine": 447,
+                            "startColumn": 9
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                          },
+                          "region": {
+                            "startLine": 447,
+                            "startColumn": 16
+                          }
+                        },
+                        "message": {
+                          "text": "Skip this loop, (assume 'i<m_tris.size()' is false)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                          },
+                          "region": {
+                            "startLine": 454,
+                            "startColumn": 2
+                          }
+                        },
+                        "message": {
+                          "text": "'t' is dereferenced, but may still be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26437",
+          "message": {
+            "text": "Do not slice (es.63)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 560,
+                  "startColumn": 9,
+                  "endLine": 560,
+                  "endColumn": 22
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "HullLibrary::calchullgen",
+                  "decoratedName": "?calchullgen@HullLibrary@@AAEHPAVbtVector3@@HH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26437",
+          "message": {
+            "text": "Do not slice (es.63)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+                },
+                "region": {
+                  "startLine": 572,
+                  "startColumn": 9,
+                  "endLine": 572,
+                  "endColumn": 23
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "HullLibrary::calchullgen",
+                  "decoratedName": "?calchullgen@HullLibrary@@AAEHPAVbtVector3@@HH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btVector3.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "a31c61f5208dee63535c78185b47b14a0a7c7af39af79bb50d4a86b873f27100"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "e963f5a6173b550b62a22feb347c6cfa453b8f526d5a40a1f3f3039f29742d3c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btConvexHull.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "5586b1070829edaa321d8b7d5c6b3c8b8f694c8061a5300c5043816191da7190"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btscalar.h"
+          },
+          "hashes": {
+            "sha-256": "c7e87b5ce5561fa212d68397faf2ef54765f7d5978314f61941c3b37a1de2277"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btminmax.h"
+          },
+          "hashes": {
+            "sha-256": "ab009c29a7deb28450d6446c7a1b9cce8b06252a06c0c8f6f97e8a4313ddc555"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btalignedallocator.h"
+          },
+          "hashes": {
+            "sha-256": "c77ccb87e547d5bfe5bdcaba72144943a61872de33805df664b2105da571c86c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btalignedobjectarray.h"
+          },
+          "hashes": {
+            "sha-256": "0a528aa12fa916744299f00a5683ae150954178600419f98ff2541d57964b0c1"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26819",
+          "message": {
+            "text": "Unannotated fallthrough between switch labels (es.78)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/imgui/imstb_truetype.h"
+                },
+                "region": {
+                  "startLine": 2148,
+                  "startColumn": 12,
+                  "endLine": 2148,
+                  "endColumn": 12
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "stbtt__run_charstring",
+                  "decoratedName": "?stbtt__run_charstring@@YAHPBUstbtt_fontinfo@@HPAUstbtt__csctx@@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/imgui/imstb_truetype.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "f091989bdadc1324c7f349d6a2a74bb494f890ac8fde27ef7ea6baf6eb130639"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/imgui/imgui_draw.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "6f2d389ed57283ed85342a41d8d0c5288ebf7331f810e02477962015ab1ab2d0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/imgui/imgui.h"
+          },
+          "hashes": {
+            "sha-256": "3d46b6f5c70a733e9a740de8e47edf1b2e39bef27280c569f37b85f04fceae9e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/imgui/imconfig.h"
+          },
+          "hashes": {
+            "sha-256": "6e29128c1ee10a8a826b468d9e6b0bfc89f52f7b191016369d7f867e4553d11e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/imgui/imgui_internal.h"
+          },
+          "hashes": {
+            "sha-256": "18720d22072d3b7acec16084f6daa1665d67e56cfa59aaa01445f2b1d1944752"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/imgui/imstb_textedit.h"
+          },
+          "hashes": {
+            "sha-256": "89faaed4811f8d58b25c1bc706267e9b122709a6b139e2730c01205aa4464a14"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/imgui/imstb_rectpack.h"
+          },
+          "hashes": {
+            "sha-256": "bb53504995e983d54b1ae06ea727f0b39647e5e205b4bf7da01343953974951c"
+          }
+        }
+      ]
+    }
+  ]
+}

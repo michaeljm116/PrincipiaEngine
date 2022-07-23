@@ -1,0 +1,641 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6386",
+          "message": {
+            "text": "Buffer overrun while writing to 'newData'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                },
+                "region": {
+                  "startLine": 214,
+                  "startColumn": 9,
+                  "endLine": 214,
+                  "endColumn": 28
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "artemis::Bag<artemis::Component *>::grow",
+                  "decoratedName": "?grow@?$Bag@PAVComponent@artemis@@@artemis@@AAEXH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 211,
+                            "startColumn": 10
+                          }
+                        },
+                        "message": {
+                          "text": "'newData' is an array of 1 elements (4 bytes)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 25
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this loop, (assume 'i<size')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 214,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 34
+                          }
+                        },
+                        "message": {
+                          "text": "'i' may equal 1"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 25
+                          }
+                        },
+                        "message": {
+                          "text": "Continue this loop, (assume 'i<size')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 214,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "Invalid write to 'newData[1]', (writable range is 0 to 0)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6386",
+          "message": {
+            "text": "Buffer overrun while writing to 'newData'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                },
+                "region": {
+                  "startLine": 214,
+                  "startColumn": 9,
+                  "endLine": 214,
+                  "endColumn": 28
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "artemis::Bag<artemis::Bag<artemis::Component *> *>::grow",
+                  "decoratedName": "?grow@?$Bag@PAV?$Bag@PAVComponent@artemis@@@artemis@@@artemis@@AAEXH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 211,
+                            "startColumn": 10
+                          }
+                        },
+                        "message": {
+                          "text": "'newData' is an array of 1 elements (4 bytes)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 25
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this loop, (assume 'i<size')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 214,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 34
+                          }
+                        },
+                        "message": {
+                          "text": "'i' may equal 1"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 25
+                          }
+                        },
+                        "message": {
+                          "text": "Continue this loop, (assume 'i<size')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 214,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "Invalid write to 'newData[1]', (writable range is 0 to 0)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6386",
+          "message": {
+            "text": "Buffer overrun while writing to 'newData'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                },
+                "region": {
+                  "startLine": 214,
+                  "startColumn": 9,
+                  "endLine": 214,
+                  "endColumn": 28
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "artemis::Bag<artemis::Entity *>::grow",
+                  "decoratedName": "?grow@?$Bag@PAVEntity@artemis@@@artemis@@AAEXH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 211,
+                            "startColumn": 10
+                          }
+                        },
+                        "message": {
+                          "text": "'newData' is an array of 1 elements (4 bytes)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 16
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 25
+                          }
+                        },
+                        "message": {
+                          "text": "Enter this loop, (assume 'i<size')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 214,
+                            "startColumn": 20
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 34
+                          }
+                        },
+                        "message": {
+                          "text": "'i' may equal 1"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "startColumn": 25
+                          }
+                        },
+                        "message": {
+                          "text": "Continue this loop, (assume 'i<size')"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ],
+                      "importance": "important"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+                          },
+                          "region": {
+                            "startLine": 214,
+                            "startColumn": 20
+                          }
+                        },
+                        "message": {
+                          "text": "Invalid write to 'newData[1]', (writable range is 0 to 0)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/ArtemisFrameWork/Artemis/ImmutableBag.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "079f4fc7978626bf9746b9a612df86fe14a9984391155dfb1aa916bcdb039fc5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/entitymanager.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "7ad9769dc2f51817129ab41672d2dd9ccb381ec46a2f594c7cb331a1b9b76801"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entitymanager.h"
+          },
+          "hashes": {
+            "sha-256": "53a63f81b471471c294649860444d537119218f761e7fb1c43d05dc48400e427"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/component.h"
+          },
+          "hashes": {
+            "sha-256": "b81b4ef4948306a46318576c1590bc53b05f654d174648665221d7b251bf3fc3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componenttypemanager.h"
+          },
+          "hashes": {
+            "sha-256": "ca1840ea6015b50606c498e0c7d681139a0ce4681054493d1bd18faa72fd18db"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/typeinfocomparator.h"
+          },
+          "hashes": {
+            "sha-256": "b9b28de2f6ac7837d1965376ec15e837ae050b4a0490663721a8a4fdf0d0c143"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componenttype.h"
+          },
+          "hashes": {
+            "sha-256": "2dab631f857303b1f1aedb585ff5adde7760f399d020b062303d9e5c8e5b874e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/bitsize.h"
+          },
+          "hashes": {
+            "sha-256": "e11bf2b634ef24448c6d5266e2df75a116604601f87e3f21f2a4f0bfcf4a42f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entitysystem.h"
+          },
+          "hashes": {
+            "sha-256": "9dc2cb5a246ff867350d1d44b7f5d306804d5e55661930dfc98ffc3a95a73cc7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/systemmanager.h"
+          },
+          "hashes": {
+            "sha-256": "c304192eba1305896a73273d1915bc9aefe9476eea9f752f159b2ecae43b59c8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/world.h"
+          },
+          "hashes": {
+            "sha-256": "835a09851c315e7e2aa8682bea7eb2a0246c763b3c622b53692e3a623edf15ae"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/tagmanager.h"
+          },
+          "hashes": {
+            "sha-256": "930e44bff7612f8fa6730f71def41f37f2aef4a03ff6f717d3f95dcabbb7b4cf"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/groupmanager.h"
+          },
+          "hashes": {
+            "sha-256": "608b6615d186dd145309055fbd8b931d37659854a51d7ae410e3f09f3ee8911b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entity.h"
+          },
+          "hashes": {
+            "sha-256": "2ba298396a82be242ba5f1323187962d361fb6a83fcc808878af22855d17babc"
+          }
+        }
+      ]
+    }
+  ]
+}

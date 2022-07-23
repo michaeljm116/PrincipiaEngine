@@ -1,0 +1,2711 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVector3::<unnamed-tag>::mVec128' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btVector3.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVector3::{ctor}",
+                  "decoratedName": "??0btVector3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVector3::<unnamed-tag>::mVec128"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVector3::<unnamed-tag>::m_floats' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btVector3.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVector3::{ctor}",
+                  "decoratedName": "??0btVector3@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVector3::<unnamed-tag>::m_floats"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btQuadWord::<unnamed-tag>::m_floats' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btQuadWord.h"
+                },
+                "region": {
+                  "startLine": 178,
+                  "startColumn": 2,
+                  "endLine": 178,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btQuadWord::{ctor}",
+                  "decoratedName": "??0btQuadWord@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btQuadWord::<unnamed-tag>::m_floats"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btQuadWord::<unnamed-tag>::mVec128' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btQuadWord.h"
+                },
+                "region": {
+                  "startLine": 178,
+                  "startColumn": 2,
+                  "endLine": 178,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btQuadWord::{ctor}",
+                  "decoratedName": "??0btQuadWord@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btQuadWord::<unnamed-tag>::mVec128"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_distance1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_distance1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_combinedFriction' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_combinedFriction"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_combinedRollingFriction' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_combinedRollingFriction"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_combinedSpinningFriction' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_combinedSpinningFriction"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_partId0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_partId0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_combinedRestitution' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_combinedRestitution"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_partId1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_partId1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_index0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_index0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_index1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_index1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_partId0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 2,
+                  "endLine": 69,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@ABVbtVector3@@00M@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_partId0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_partId1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 2,
+                  "endLine": 69,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@ABVbtVector3@@00M@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_partId1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_index0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 2,
+                  "endLine": 69,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@ABVbtVector3@@00M@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_index0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldPoint::m_index1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+                },
+                "region": {
+                  "startLine": 69,
+                  "startColumn": 2,
+                  "endLine": 69,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldPoint::{ctor}",
+                  "decoratedName": "??0btManifoldPoint@@QAE@ABVbtVector3@@00M@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldPoint::m_index1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_partId0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_partId0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_index0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_index0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_manifoldPtr' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_manifoldPtr"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_index1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_index1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_body0Wrap' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_body0Wrap"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_partId1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_partId1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btManifoldResult::m_body1Wrap' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+                },
+                "region": {
+                  "startLine": 60,
+                  "startColumn": 2,
+                  "endLine": 60,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btManifoldResult::{ctor}",
+                  "decoratedName": "??0btManifoldResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btManifoldResult::m_body1Wrap"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btBroadphaseProxy::m_collisionFilterGroup' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btBroadphaseProxy::{ctor}",
+                  "decoratedName": "??0btBroadphaseProxy@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btBroadphaseProxy::m_collisionFilterGroup"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btBroadphaseProxy::m_collisionFilterMask' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btBroadphaseProxy::{ctor}",
+                  "decoratedName": "??0btBroadphaseProxy@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btBroadphaseProxy::m_collisionFilterMask"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btBroadphaseProxy::m_uniqueId' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+                },
+                "region": {
+                  "startLine": 117,
+                  "startColumn": 2,
+                  "endLine": 117,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btBroadphaseProxy::{ctor}",
+                  "decoratedName": "??0btBroadphaseProxy@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btBroadphaseProxy::m_uniqueId"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btBroadphaseProxy::m_uniqueId' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+                },
+                "region": {
+                  "startLine": 121,
+                  "startColumn": 2,
+                  "endLine": 121,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btBroadphaseProxy::{ctor}",
+                  "decoratedName": "??0btBroadphaseProxy@@QAE@ABVbtVector3@@0PAXHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btBroadphaseProxy::m_uniqueId"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btCollisionAlgorithmConstructionInfo::m_manifold' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+                },
+                "region": {
+                  "startLine": 39,
+                  "startColumn": 2,
+                  "endLine": 39,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btCollisionAlgorithmConstructionInfo::{ctor}",
+                  "decoratedName": "??0btCollisionAlgorithmConstructionInfo@@QAE@PAVbtDispatcher@@H@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btCollisionAlgorithmConstructionInfo::m_manifold"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btCollisionAlgorithm::m_dispatcher' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+                },
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 2,
+                  "endLine": 62,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btCollisionAlgorithm@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btCollisionAlgorithm::m_dispatcher"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btBroadphaseRayCallback::m_lambda_max' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 2,
+                  "endLine": 41,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btBroadphaseRayCallback::{ctor}",
+                  "decoratedName": "??0btBroadphaseRayCallback@@IAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btBroadphaseRayCallback::m_lambda_max"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btBroadphaseRayCallback::m_signs' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 2,
+                  "endLine": 41,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btBroadphaseRayCallback::{ctor}",
+                  "decoratedName": "??0btBroadphaseRayCallback@@IAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btBroadphaseRayCallback::m_signs"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_TRIANGLE_CONTACT::m_point_count' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btTriangleShapeEx.h"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 2,
+                  "endLine": 55,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_TRIANGLE_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_TRIANGLE_CONTACT@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_TRIANGLE_CONTACT::m_point_count"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_TRIANGLE_CONTACT::m_penetration_depth' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btTriangleShapeEx.h"
+                },
+                "region": {
+                  "startLine": 55,
+                  "startColumn": 2,
+                  "endLine": 55,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_TRIANGLE_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_TRIANGLE_CONTACT@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_TRIANGLE_CONTACT::m_penetration_depth"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btPrimitiveTriangle::m_dummy' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btTriangleShapeEx.h"
+                },
+                "region": {
+                  "startLine": 76,
+                  "startColumn": 2,
+                  "endLine": 76,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btPrimitiveTriangle::{ctor}",
+                  "decoratedName": "??0btPrimitiveTriangle@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btPrimitiveTriangle::m_dummy"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_PAIR::m_index2' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactBvhStructs.h"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 2,
+                  "endLine": 37,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_PAIR::{ctor}",
+                  "decoratedName": "??0GIM_PAIR@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_PAIR::m_index2"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_PAIR::m_index1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactBvhStructs.h"
+                },
+                "region": {
+                  "startLine": 37,
+                  "startColumn": 2,
+                  "endLine": 37,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_PAIR::{ctor}",
+                  "decoratedName": "??0GIM_PAIR@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_PAIR::m_index1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'BT_QUANTIZED_BVH_NODE::m_quantizedAabbMin' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactQuantizedBvhStructs.h"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 2,
+                  "endLine": 41,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "BT_QUANTIZED_BVH_NODE::{ctor}",
+                  "decoratedName": "??0BT_QUANTIZED_BVH_NODE@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "BT_QUANTIZED_BVH_NODE::m_quantizedAabbMin"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'BT_QUANTIZED_BVH_NODE::m_quantizedAabbMax' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactQuantizedBvhStructs.h"
+                },
+                "region": {
+                  "startLine": 41,
+                  "startColumn": 2,
+                  "endLine": 41,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "BT_QUANTIZED_BVH_NODE::{ctor}",
+                  "decoratedName": "??0BT_QUANTIZED_BVH_NODE@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "BT_QUANTIZED_BVH_NODE::m_quantizedAabbMax"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactMeshShapePart::TrimeshPrimitiveManager::type' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+                },
+                "region": {
+                  "startLine": 526,
+                  "startColumn": 3,
+                  "endLine": 526,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactMeshShapePart::TrimeshPrimitiveManager::{ctor}",
+                  "decoratedName": "??0TrimeshPrimitiveManager@btGImpactMeshShapePart@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactMeshShapePart::TrimeshPrimitiveManager::type"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactMeshShapePart::TrimeshPrimitiveManager::indicestype' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+                },
+                "region": {
+                  "startLine": 526,
+                  "startColumn": 3,
+                  "endLine": 526,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactMeshShapePart::TrimeshPrimitiveManager::{ctor}",
+                  "decoratedName": "??0TrimeshPrimitiveManager@btGImpactMeshShapePart@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactMeshShapePart::TrimeshPrimitiveManager::indicestype"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactMeshShapePart::TrimeshPrimitiveManager::type' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+                },
+                "region": {
+                  "startLine": 541,
+                  "startColumn": 3,
+                  "endLine": 541,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactMeshShapePart::TrimeshPrimitiveManager::{ctor}",
+                  "decoratedName": "??0TrimeshPrimitiveManager@btGImpactMeshShapePart@@QAE@ABV01@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactMeshShapePart::TrimeshPrimitiveManager::type"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactMeshShapePart::TrimeshPrimitiveManager::indicestype' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+                },
+                "region": {
+                  "startLine": 541,
+                  "startColumn": 3,
+                  "endLine": 541,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactMeshShapePart::TrimeshPrimitiveManager::{ctor}",
+                  "decoratedName": "??0TrimeshPrimitiveManager@btGImpactMeshShapePart@@QAE@ABV01@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactMeshShapePart::TrimeshPrimitiveManager::indicestype"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactMeshShapePart::TrimeshPrimitiveManager::type' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+                },
+                "region": {
+                  "startLine": 557,
+                  "startColumn": 3,
+                  "endLine": 557,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactMeshShapePart::TrimeshPrimitiveManager::{ctor}",
+                  "decoratedName": "??0TrimeshPrimitiveManager@btGImpactMeshShapePart@@QAE@PAVbtStridingMeshInterface@@H@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactMeshShapePart::TrimeshPrimitiveManager::type"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactMeshShapePart::TrimeshPrimitiveManager::indicestype' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+                },
+                "region": {
+                  "startLine": 557,
+                  "startColumn": 3,
+                  "endLine": 557,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactMeshShapePart::TrimeshPrimitiveManager::{ctor}",
+                  "decoratedName": "??0TrimeshPrimitiveManager@btGImpactMeshShapePart@@QAE@PAVbtStridingMeshInterface@@H@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactMeshShapePart::TrimeshPrimitiveManager::indicestype"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVoronoiSimplexSolver::m_numVertices' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 2,
+                  "endLine": 130,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVoronoiSimplexSolver::{ctor}",
+                  "decoratedName": "??0btVoronoiSimplexSolver@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVoronoiSimplexSolver::m_numVertices"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVoronoiSimplexSolver::m_needsUpdate' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 2,
+                  "endLine": 130,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVoronoiSimplexSolver::{ctor}",
+                  "decoratedName": "??0btVoronoiSimplexSolver@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVoronoiSimplexSolver::m_needsUpdate"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btVoronoiSimplexSolver::m_cachedValidClosest' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+                },
+                "region": {
+                  "startLine": 130,
+                  "startColumn": 2,
+                  "endLine": 130,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btVoronoiSimplexSolver::{ctor}",
+                  "decoratedName": "??0btVoronoiSimplexSolver@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btVoronoiSimplexSolver::m_cachedValidClosest"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btSubSimplexClosestResult::m_degenerate' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+                },
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 1,
+                  "endLine": 88,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btSubSimplexClosestResult::{ctor}",
+                  "decoratedName": "??0btSubSimplexClosestResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btSubSimplexClosestResult::m_degenerate"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btSubSimplexClosestResult::m_barycentricCoords' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+                },
+                "region": {
+                  "startLine": 88,
+                  "startColumn": 1,
+                  "endLine": 88,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btSubSimplexClosestResult::{ctor}",
+                  "decoratedName": "??0btSubSimplexClosestResult@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btSubSimplexClosestResult::m_barycentricCoords"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_CONTACT::m_feature2' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+                },
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 2,
+                  "endLine": 50,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_CONTACT@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_CONTACT::m_feature2"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_CONTACT::m_depth' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+                },
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 2,
+                  "endLine": 50,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_CONTACT@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_CONTACT::m_depth"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_CONTACT::m_feature1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+                },
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 2,
+                  "endLine": 50,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_CONTACT@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_CONTACT::m_feature1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_CONTACT::m_distance' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+                },
+                "region": {
+                  "startLine": 50,
+                  "startColumn": 2,
+                  "endLine": 50,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_CONTACT@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_CONTACT::m_distance"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_CONTACT::m_distance' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+                },
+                "region": {
+                  "startLine": 54,
+                  "startColumn": 2,
+                  "endLine": 54,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_CONTACT@@QAE@ABV0@@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_CONTACT::m_distance"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_CONTACT::m_distance' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+                },
+                "region": {
+                  "startLine": 62,
+                  "startColumn": 2,
+                  "endLine": 62,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_CONTACT::{ctor}",
+                  "decoratedName": "??0GIM_CONTACT@@QAE@ABVbtVector3@@0MHH@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_CONTACT::m_distance"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'GIM_ShapeRetriever::ChildShapeRetriever::m_parent' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 101,
+                  "startColumn": 2,
+                  "endLine": 101,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "GIM_ShapeRetriever::ChildShapeRetriever::{ctor}",
+                  "decoratedName": "??0ChildShapeRetriever@GIM_ShapeRetriever@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "GIM_ShapeRetriever::ChildShapeRetriever::m_parent"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactCollisionAlgorithm::m_part1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 30,
+                  "endLine": 182,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btGImpactCollisionAlgorithm@@QAE@ABUbtCollisionAlgorithmConstructionInfo@@PBUbtCollisionObjectWrapper@@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactCollisionAlgorithm::m_part1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactCollisionAlgorithm::m_triface1' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 30,
+                  "endLine": 182,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btGImpactCollisionAlgorithm@@QAE@ABUbtCollisionAlgorithmConstructionInfo@@PBUbtCollisionObjectWrapper@@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactCollisionAlgorithm::m_triface1"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactCollisionAlgorithm::m_part0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 30,
+                  "endLine": 182,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btGImpactCollisionAlgorithm@@QAE@ABUbtCollisionAlgorithmConstructionInfo@@PBUbtCollisionObjectWrapper@@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactCollisionAlgorithm::m_part0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactCollisionAlgorithm::m_triface0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 30,
+                  "endLine": 182,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btGImpactCollisionAlgorithm@@QAE@ABUbtCollisionAlgorithmConstructionInfo@@PBUbtCollisionObjectWrapper@@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactCollisionAlgorithm::m_triface0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactCollisionAlgorithm::m_dispatchInfo' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 30,
+                  "endLine": 182,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btGImpactCollisionAlgorithm@@QAE@ABUbtCollisionAlgorithmConstructionInfo@@PBUbtCollisionObjectWrapper@@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactCollisionAlgorithm::m_dispatchInfo"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactCollisionAlgorithm::m_resultOut' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 182,
+                  "startColumn": 30,
+                  "endLine": 182,
+                  "endColumn": 30
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactCollisionAlgorithm::{ctor}",
+                  "decoratedName": "??0btGImpactCollisionAlgorithm@@QAE@ABUbtCollisionAlgorithmConstructionInfo@@PBUbtCollisionObjectWrapper@@1@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactCollisionAlgorithm::m_resultOut"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactTriangleCallback::margin' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 766,
+                  "startColumn": 1,
+                  "endLine": 766,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactTriangleCallback::{ctor}",
+                  "decoratedName": "??0btGImpactTriangleCallback@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactTriangleCallback::margin"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactTriangleCallback::swapped' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 766,
+                  "startColumn": 1,
+                  "endLine": 766,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactTriangleCallback::{ctor}",
+                  "decoratedName": "??0btGImpactTriangleCallback@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactTriangleCallback::swapped"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactTriangleCallback::gimpactshape0' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 766,
+                  "startColumn": 1,
+                  "endLine": 766,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactTriangleCallback::{ctor}",
+                  "decoratedName": "??0btGImpactTriangleCallback@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactTriangleCallback::gimpactshape0"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactTriangleCallback::body1Wrap' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 766,
+                  "startColumn": 1,
+                  "endLine": 766,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactTriangleCallback::{ctor}",
+                  "decoratedName": "??0btGImpactTriangleCallback@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactTriangleCallback::body1Wrap"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactTriangleCallback::body0Wrap' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 766,
+                  "startColumn": 1,
+                  "endLine": 766,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactTriangleCallback::{ctor}",
+                  "decoratedName": "??0btGImpactTriangleCallback@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactTriangleCallback::body0Wrap"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'btGImpactTriangleCallback::algorithm' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+                },
+                "region": {
+                  "startLine": 766,
+                  "startColumn": 1,
+                  "endLine": 766,
+                  "endColumn": 1
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "btGImpactTriangleCallback::{ctor}",
+                  "decoratedName": "??0btGImpactTriangleCallback@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "btGImpactTriangleCallback::algorithm"
+          }
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btVector3.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "a31c61f5208dee63535c78185b47b14a0a7c7af39af79bb50d4a86b873f27100"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/LinearMath/btQuadWord.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "1f2b5111c3846cadd41313fa1c0c82358de2ab05c35159e28f22af80435c3791"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "0cbdf97f8f3fadb46ab433b46ce9997a0aafe38908793c935643ebb453ae845e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/CollisionDispatch/btManifoldResult.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "5f0dce567fc657340cc9b37f79c6b93bb82d16f7a5aefa2f39c1137b937a1b51"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "59ba6104b99755443caf187cef48a7cdbdc62c2bff56d93dd59a75b721c26ed7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "29d5f4d7f932496166dbabd5f9467852a9949b0472cf8a2c35e312556892c051"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "dfef94558b9f4793465f6c7a5ed6afd27429de99fbd095622f09591b7b1f68bb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btTriangleShapeEx.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "08d1a1fd84af55bcdc892b1f9a34f42e43aa64ce9bcd42ac6b7ebdaec5747e62"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactBvhStructs.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "ea5211e6d5e9b1bba081d815c98b92397a2e784b6abbbaf1a32fb6b95ef8cc9c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactQuantizedBvhStructs.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "08651c035ae0bd0fc39c88efa036a78d1772bede0a3a76adb8b581b02c54aa91"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactShape.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "c78783d4d643abb7aae89afffc85414a1373f5ff9367519c8dc509af6a41787b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/NarrowPhaseCollision/btVoronoiSimplexSolver.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "9e011c1dddc6fb2632732cdf8ac6b59dea8223f781db554becba1f09c67a308d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btContactProcessingStructs.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "29c51bc04d4c5ee48a961c1f5301dd8ad515fa85c2288c8c152a0300afc4cf9a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Lib/bullet3/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "b9a98b90aefeff965c541185006b433de3677812836f91f943f42c2dd9fe59ca"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/narrowphasecollision/btpersistentmanifold.h"
+          },
+          "hashes": {
+            "sha-256": "14e605baa7771c4ee950123f506fac5cb9b161933585db62a6c2de048bb196c4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btscalar.h"
+          },
+          "hashes": {
+            "sha-256": "c7e87b5ce5561fa212d68397faf2ef54765f7d5978314f61941c3b37a1de2277"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btminmax.h"
+          },
+          "hashes": {
+            "sha-256": "ab009c29a7deb28450d6446c7a1b9cce8b06252a06c0c8f6f97e8a4313ddc555"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btalignedallocator.h"
+          },
+          "hashes": {
+            "sha-256": "c77ccb87e547d5bfe5bdcaba72144943a61872de33805df664b2105da571c86c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/bttransform.h"
+          },
+          "hashes": {
+            "sha-256": "856496eccc05f7a72639958b6327f65ae599a20864c73dcc822ffafc6937bdb6"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btmatrix3x3.h"
+          },
+          "hashes": {
+            "sha-256": "02e847c41cb5c0f0ad23eb56bfd45b83f23ea4c69a876bd093fae5235272225f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btquaternion.h"
+          },
+          "hashes": {
+            "sha-256": "a3d865d3896070fe55c207d0c82cd697de0414a54c9ea362adf4e425f1137f02"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/bttransformutil.h"
+          },
+          "hashes": {
+            "sha-256": "f891d45685b7b5c97776c4cec2763caff629c339857d44cfad2789d7f4b27a89"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/narrowphasecollision/btdiscretecollisiondetectorinterface.h"
+          },
+          "hashes": {
+            "sha-256": "a5662badbe0c22603f32bd105dba5abbca1441e75a0ffd6c4fa29d16b8eda84b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btcollisionobjectwrapper.h"
+          },
+          "hashes": {
+            "sha-256": "615ae1f23bec8cafd90131a06b6506a30e72c8daf57949ba936096a67a697b58"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btcollisionobject.h"
+          },
+          "hashes": {
+            "sha-256": "eab48c882be09c90f4663114076b76086fcc4fe6f0db03ff9a35869f206fc415"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btmotionstate.h"
+          },
+          "hashes": {
+            "sha-256": "cb91ed1be50dddea4a564e9e3d52f1dc7f6107946f1796ad7d5f60460bf6f9b4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btalignedobjectarray.h"
+          },
+          "hashes": {
+            "sha-256": "0a528aa12fa916744299f00a5683ae150954178600419f98ff2541d57964b0c1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btidebugdraw.h"
+          },
+          "hashes": {
+            "sha-256": "4f63cc19352054749a52c02f4a8966b92fe96ebed47b41592dad2dd3a20873b2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btboxshape.h"
+          },
+          "hashes": {
+            "sha-256": "73666e4b04195228eb29de5f427fb3bc0a21526efaf022c854768c136cca055f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btpolyhedralconvexshape.h"
+          },
+          "hashes": {
+            "sha-256": "857a3254c77cfa73985d58a08070d6f8bd12d511ade371edd4d6b55217e9c772"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btconvexinternalshape.h"
+          },
+          "hashes": {
+            "sha-256": "8cb24354378a28a8e6b6588215aee03b3abbcc52873f9a8159dc8ee1f9c50c53"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btconvexshape.h"
+          },
+          "hashes": {
+            "sha-256": "c9938e1a1125214ae62ffc05977d96301f7b90c700210a1b64b47cfeadac7457"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btcollisionshape.h"
+          },
+          "hashes": {
+            "sha-256": "fd4e94b8c1b966366aa2b2c09902541a1d3b324d6b22c0db698656c4dfb9353d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btcollisionmargin.h"
+          },
+          "hashes": {
+            "sha-256": "a55c3280f71d2d511235a38b86e825b63208e09a37cf89c21bb2038929268dfa"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btaabbutil2.h"
+          },
+          "hashes": {
+            "sha-256": "34802732407eb5e10743142cc161de4243fb6498ddbd3001cec34d60dd2ed4c3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btgimpactcollisionalgorithm.h"
+          },
+          "hashes": {
+            "sha-256": "a56984794eda01cde2835e9d652bdf1c4226434dbf546739a910cb832e91d11a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btactivatingcollisionalgorithm.h"
+          },
+          "hashes": {
+            "sha-256": "8352671a6a6a148f87f4139d453df0291284b18931cf57b2079e07105994aa24"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/broadphasecollision/btdispatcher.h"
+          },
+          "hashes": {
+            "sha-256": "b5921fe6947297465bc0b9133603935fa4c5009a4187592a18e4e11844f46c43"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btcollisioncreatefunc.h"
+          },
+          "hashes": {
+            "sha-256": "111f41cb984b7f5e6e25b0a8bd78614ac05f6b2d43a85864f9967c86763c4680"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btcollisiondispatcher.h"
+          },
+          "hashes": {
+            "sha-256": "289fc2d10a5df23379e245f571e53afedda087682f956c7f01f49324dc020ea8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/bttriangleshape.h"
+          },
+          "hashes": {
+            "sha-256": "64df568e6a0732f65987b7d373ddabb290ba1cbb3a8643e8a6828a5e544897b2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btstridingmeshinterface.h"
+          },
+          "hashes": {
+            "sha-256": "ff66e43141d4a608995194e247f3023e1946f0ff90347043a8e88f851c9ed18f"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/bttrianglecallback.h"
+          },
+          "hashes": {
+            "sha-256": "79f51d8accf47ab892e8abc726cc63a0a40d026977560eb60b77d9baa3575042"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btconcaveshape.h"
+          },
+          "hashes": {
+            "sha-256": "7890143ca0123d0a914862110f21a6a490dc61edf0da2225d4759d17a660e051"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btcollisionworld.h"
+          },
+          "hashes": {
+            "sha-256": "f9b72f153b38ec21d4606d938677dc0d0d541708f94610903f911db3fda9ca6c"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/broadphasecollision/btoverlappingpaircache.h"
+          },
+          "hashes": {
+            "sha-256": "8026eb6415a0566b948fdcf15e21ea228afd6a3cce648ff9f9bcafce006848a0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/broadphasecollision/btoverlappingpaircallback.h"
+          },
+          "hashes": {
+            "sha-256": "4531ed966c0a7facc03c4f99479256c8ecd7727e0e6d29dcda45d9405ce68612"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/bttetrahedronshape.h"
+          },
+          "hashes": {
+            "sha-256": "c3be144af8e4cfdc92ab23edb325d23afcd3a9a16e9650c0385b222297400eea"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btgimpactquantizedbvh.h"
+          },
+          "hashes": {
+            "sha-256": "dc33681113d47254ea4f685b9e2d7077f6c3eb5da0cb8769e1716cab321bb7ae"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btgimpactbvh.h"
+          },
+          "hashes": {
+            "sha-256": "ba15255cf31269972e24f28425ceced9dfab06970891c3d79e84e4812aff1afc"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btboxcollision.h"
+          },
+          "hashes": {
+            "sha-256": "2470bcc4d28195a2b32f9e50eed678e19bc1207933a9174d17d36af57e8f0f58"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btclippolygon.h"
+          },
+          "hashes": {
+            "sha-256": "d94fda59f845b5b4320a3161127570a9bb1955f5c03881e8a37d156e3146efc0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btgeometryutil.h"
+          },
+          "hashes": {
+            "sha-256": "3a6385234cb139a2b8e6c61da8f470bb537f93985c0c33a8584bc55a50cbb76d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btgeometryoperations.h"
+          },
+          "hashes": {
+            "sha-256": "068cac329b24963fd32a13658d603e2d93ec21b2866eb9a4375d25667737eb9a"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btquantization.h"
+          },
+          "hashes": {
+            "sha-256": "7cd04deca7cfc2edc84128d9bc8f2e6285edad8b66c34a8236328fb8daa82c29"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btstaticplaneshape.h"
+          },
+          "hashes": {
+            "sha-256": "eb5927deb33416e49baeee05b74ca68e78e7a943ae8fde6ffadc98d8010399c3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisionshapes/btcompoundshape.h"
+          },
+          "hashes": {
+            "sha-256": "3c4d54d1e0d6c3cd95ea6db22d99c8651a60972a96b870b745c3aefa4f536ab7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/collisiondispatch/btconvexconvexalgorithm.h"
+          },
+          "hashes": {
+            "sha-256": "e857cd7b940db65d342778a188151facfe7d0dd05f566c2afbe8e8fe46313a20"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/narrowphasecollision/btgjkpairdetector.h"
+          },
+          "hashes": {
+            "sha-256": "74d2b6b598d1d619d216e1ac194a37de30f8115b788bae9d307302f2385c6724"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/narrowphasecollision/btsimplexsolverinterface.h"
+          },
+          "hashes": {
+            "sha-256": "17dd7903020a6ba470117e3cf32fc981558918c9ff60f28f95eb8b078931a921"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/narrowphasecollision/btpolyhedralcontactclipping.h"
+          },
+          "hashes": {
+            "sha-256": "5b1277f2f5bbe2514b7e53596ff3a4f934f3cd99c8de671ab7614038c41a7a30"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/bulletcollision/gimpact/btcontactprocessing.h"
+          },
+          "hashes": {
+            "sha-256": "50d4ebd826c8c600835c723f75b88985bf787237454ebbac4a4c6ce41c11fdf7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/bullet3/linearmath/btquickprof.h"
+          },
+          "hashes": {
+            "sha-256": "e0b8c5880cca3ae0b8c4e58ffb6cdae1f10d62851a8741fc155389c6c8a814e5"
+          }
+        }
+      ]
+    }
+  ]
+}

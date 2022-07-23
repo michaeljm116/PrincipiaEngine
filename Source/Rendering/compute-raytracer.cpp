@@ -946,7 +946,7 @@ namespace Principia {
 		if (vkQueueSubmit(computeQueue, 1, &compute_submit_info, compute_.fence) != VK_SUCCESS)
 			throw std::runtime_error("failed to submit compute commadn buffer!");
 		render_time_.End();
-		INPUT.renderTime = render_time_.ms;
+		pINPUT.renderTime = render_time_.ms;
 	}
 
 	void ComputeRaytracer::Added(artemis::Entity& e)
@@ -1071,7 +1071,10 @@ namespace Principia {
 			//	/*auto* nodular = (NodeComponent*)e.getComponent<NodeComponent>();
 			//	std::cout << nodular->name + ": " << gnc->number;*/
 			//}
-			UpdateGuiNumber(gnc);
+			if (gnc->update) {
+				gnc->update = false;
+				UpdateGuiNumber(gnc);
+			}
 			break; }
 		default:
 			break;
@@ -1196,7 +1199,7 @@ namespace Principia {
 		gui_textures_[0].CreateTexture(vkDevice);
 		gui_textures_[1].path = "../Assets/Levels/Test/Textures/title.png";
 		gui_textures_[1].CreateTexture(vkDevice);
-		gui_textures_[2].path = "../Assets/Levels/Test/Textures/jabby_bird_stuff-01.png";
+		gui_textures_[2].path = "../Assets/Levels/Test/Textures/jabby_bird_stuff_4k.png";
 		gui_textures_[2].CreateTexture(vkDevice);
 		gui_textures_[3].path = "../Assets/Levels/Test/Textures/skybox.png";
 		gui_textures_[3].CreateTexture(vkDevice);
@@ -1291,25 +1294,90 @@ namespace Principia {
 	void ComputeRaytracer::UpdateGuiNumber(GUINumberComponent* gnc)
 	{
 		std::vector<int> nums = intToArrayOfInts(gnc->number);
-
-		if (nums.size() < gnc->shaderReferences.size()) { //aka it went from like... 10 to 9
-			for (int i = 0; i < nums.size(); ++i) {
+		bool change_occured = nums.size() != gnc->highest_active_digit_index + 1;
+		if (change_occured == false) {
+			for (int i = 0; i < gnc->highest_active_digit_index + 1; ++i) {
 				guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
 				guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
 			}
 		}
 		else {
-			for (int i = 0; i < gnc->shaderReferences.size(); ++i) {
-				guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
-				guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+ 			bool increased = nums.size() > gnc->highest_active_digit_index + 1;
+			if (increased) {
+				bool needs_shader_ref = nums.size() > gnc->shaderReferences.size();
+				if (needs_shader_ref) {
+					for (int i = nums.size() - gnc->shaderReferences.size(); i > 0; --i) {
+						ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+						gnc->shaderReferences.push_back(guis_.size());
+						guis_.push_back(gui);
+					}
+					compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+				}
+				for (int i = 0; i < nums.size(); ++i) {
+					guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+					guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+					guis_[gnc->shaderReferences[i]].min.x = gnc->min.x - ((nums.size() - 1 - i) * gnc->extents.x);
+				}
+				gnc->highest_active_digit_index = nums.size() - 1;
 			}
-			if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
-				ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
-				gnc->shaderReferences.push_back(guis_.size());
-				guis_.push_back(gui);
-				compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+			else { //decreased
+				for (int i = 0; i < nums.size(); ++i) {
+					guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+					guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+					guis_[gnc->shaderReferences[i]].min.x = gnc->min.x - ((nums.size() - 1 -  i) * gnc->extents.x);
+				}
+				for (int i = gnc->highest_active_digit_index; i > nums.size() - 1; --i) {
+					guis_[gnc->shaderReferences[i]].alpha = 0;
+				}
+				gnc->highest_active_digit_index = nums.size() - 1;
 			}
 		}
+
+		//if (nums.size() < gnc->highest_active_digit_index + 1) {
+		//	for (int i = gnc->highest_active_digit_index; i > nums.size() - 1; --i) {
+		//		guis_[i].alpha = 0.f;
+		//	}
+		//	for (int i = 0; i < nums.size(); ++i) {
+		//		guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+		//		guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+		//	}
+		//	gnc->highest_active_digit_index = nums.size() - 1;
+		//}
+
+		////if (nums.size() < gnc->shaderReferences.size()) { //aka it went from like... 10 to 9
+		////	for (int i = 0; i < nums.size(); ++i) {
+		////		guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
+		////		guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
+		////	}
+
+		////	//Shift everything to the left and when you get to the last one... delete the ref? this works ONLY for raytracy bird
+		////	/*auto ref = gnc->shaderReferences[0];
+		////	for (int i = gnc->shaderReferences.size(); i > 0; --i) {
+		////		gnc->shaderReferences[i - 1] = gnc->shaderReferences[i];
+		////	}
+		////	guis_[ref].alpha = 0;
+		////	gnc->shaderReferences.pop_back();*/
+		////}
+		//else {
+		//	if (nums.size() > gnc->shaderReferences.size()) { //aka it went from like 9 to 10
+		//  //First create the resource
+		//		ssGUI gui = ssGUI(gnc->min + glm::vec2(gnc->extents.x, 0.f), gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+
+		//		//This expands the array of references and shifts everything to the right
+		//		gnc->shaderReferences.push_back(0);
+		//		for (int i = 0; i < gnc->shaderReferences.size() - 1; ++i) {
+		//			gnc->shaderReferences[i + 1] = gnc->shaderReferences[i];
+		//		}
+		//		gnc->shaderReferences[0] = guis_.size();
+		//		gnc->highest_active_digit_index++;
+
+		//		// Now place it in the shader structs and update
+		//		guis_.push_back(gui);
+		//		compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+		//	}
+		//}
+		
+		
 		SetRenderUpdate(kUpdateGui);
 	}
 }

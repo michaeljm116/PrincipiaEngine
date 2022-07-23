@@ -1,0 +1,1237 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6031",
+          "message": {
+            "text": "Return value ignored: 'std::basic_string<char,std::char_traits<char>,std::allocator<char> >::at'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 216,
+                  "startColumn": 5,
+                  "endLine": 216,
+                  "endColumn": 12
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::loadShader",
+                  "decoratedName": "?loadShader@VulkanDevice@Principia@@QAE_KPBD@Z",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Window::mode' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 25,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Window::{ctor}",
+                  "decoratedName": "??0Window@Principia@@AAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Window::mode"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Window::maximized' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 25,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Window::{ctor}",
+                  "decoratedName": "??0Window@Principia@@AAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Window::maximized"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Window::width' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 25,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Window::{ctor}",
+                  "decoratedName": "??0Window@Principia@@AAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Window::width"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Window::primary' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 25,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Window::{ctor}",
+                  "decoratedName": "??0Window@Principia@@AAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Window::primary"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Window::height' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 25,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Window::{ctor}",
+                  "decoratedName": "??0Window@Principia@@AAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Window::height"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::Window::window' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 25,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::Window::{ctor}",
+                  "decoratedName": "??0Window@Principia@@AAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::Window::window"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::swapChain' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::swapChain"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::pipelineCache' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::pipelineCache"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::renderPass' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::renderPass"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::computeQueue' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::computeQueue"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::presentQueue' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::presentQueue"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::graphicsQueue' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::graphicsQueue"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::depthImageView' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::depthImageView"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::depthImageMemory' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::depthImageMemory"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::depthImage' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::depthImage"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::surface' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::surface"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::swapChainImageFormat' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::swapChainImageFormat"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::swapChainExtent' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::swapChainExtent"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::commandPool' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::commandPool"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::imageAvailableSemaphore' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::imageAvailableSemaphore"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::RenderBase::renderFinishedSemaphore' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 31,
+                  "startColumn": 3,
+                  "endLine": 31,
+                  "endColumn": 3
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::{ctor}",
+                  "decoratedName": "??0RenderBase@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::RenderBase::renderFinishedSemaphore"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::VulkanDevice::instance' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 608,
+                  "startColumn": 2,
+                  "endLine": 608,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::{ctor}",
+                  "decoratedName": "??0VulkanDevice@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::VulkanDevice::instance"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::VulkanDevice::logicalDevice' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 608,
+                  "startColumn": 2,
+                  "endLine": 608,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::{ctor}",
+                  "decoratedName": "??0VulkanDevice@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::VulkanDevice::logicalDevice"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::VulkanDevice::callback' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 608,
+                  "startColumn": 2,
+                  "endLine": 608,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::{ctor}",
+                  "decoratedName": "??0VulkanDevice@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::VulkanDevice::callback"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::VulkanDevice::queue' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 608,
+                  "startColumn": 2,
+                  "endLine": 608,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::{ctor}",
+                  "decoratedName": "??0VulkanDevice@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::VulkanDevice::queue"
+          }
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::VulkanDevice::commandPool' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+                },
+                "region": {
+                  "startLine": 608,
+                  "startColumn": 2,
+                  "endLine": 608,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::VulkanDevice::{ctor}",
+                  "decoratedName": "??0VulkanDevice@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::VulkanDevice::commandPool"
+          }
+        },
+        {
+          "ruleId": "C26444",
+          "message": {
+            "text": "Don't try to declare a local variable with no name (es.84)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.cpp"
+                },
+                "region": {
+                  "startLine": 295,
+                  "startColumn": 22
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::createPipelineCache",
+                  "decoratedName": "?createPipelineCache@RenderBase@Principia@@AAEXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26495",
+          "message": {
+            "text": "Variable 'Principia::SwapChainSupportDetails::capabilities' is uninitialized. Always initialize a member variable (type.6)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+                },
+                "region": {
+                  "startLine": 16,
+                  "startColumn": 2,
+                  "endLine": 16,
+                  "endColumn": 2
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::SwapChainSupportDetails::{ctor}",
+                  "decoratedName": "??0SwapChainSupportDetails@Principia@@QAE@XZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "targetSymbol": "Principia::SwapChainSupportDetails::capabilities"
+          }
+        },
+        {
+          "ruleId": "C26817",
+          "message": {
+            "text": "Potentially expensive copy of variable 'qfam' in range-for loop. Consider making it a const reference (es.71)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.cpp"
+                },
+                "region": {
+                  "startLine": 565,
+                  "startColumn": 13,
+                  "endLine": 565,
+                  "endColumn": 13
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::setComputeQueueFamilyIndex",
+                  "decoratedName": "?setComputeQueueFamilyIndex@RenderBase@Principia@@IAEXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26817",
+          "message": {
+            "text": "Potentially expensive copy of variable 'qfamAgn' in range-for loop. Consider making it a const reference (es.71)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.cpp"
+                },
+                "region": {
+                  "startLine": 576,
+                  "startColumn": 14,
+                  "endLine": 576,
+                  "endColumn": 14
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::setComputeQueueFamilyIndex",
+                  "decoratedName": "?setComputeQueueFamilyIndex@RenderBase@Principia@@IAEXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C26813",
+          "message": {
+            "text": "Use 'bitwise and' to check if a flag is set."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.cpp"
+                },
+                "region": {
+                  "startLine": 566,
+                  "startColumn": 31,
+                  "endLine": 566,
+                  "endColumn": 50
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Principia::RenderBase::setComputeQueueFamilyIndex",
+                  "decoratedName": "?setComputeQueueFamilyIndex@RenderBase@Principia@@IAEXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31329.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/vulkanbase.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "1845a7d61bbcd9d0cbbb38fc99ae22e4e58f494b5623bf2a27e3b7b4defda402"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Utility/window.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "3d6de905b9bf5de11f7b2c744c8aee6eb21951f44b9b9b95962d5506b461b8d2"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.h"
+          },
+          "roles": [
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "ab8df44d9c4cebb72e207702181c4dc8478a46d882ee69b92496d31139336764"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///C:/dev/PrincipiumGames/PrincipiaEngine/Source/Rendering/renderbase.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "53a61d8c39b1f5c9b301119925058718a1b8b9b0de913b8f0aece4958c1a4ce0"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/rendering/vulkaninitializers.hpp"
+          },
+          "hashes": {
+            "sha-256": "55026c99cbb1c806f0fb74aac6e5a589467b434d0812f14528b55e54290f979d"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.3.216.0/include/vulkan/vulkan.h"
+          },
+          "hashes": {
+            "sha-256": "ba0fdad27dac9a0e8f3caf328e6b77e8895b026d5cc0e201bbdce19d0f2b4aa7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.3.216.0/include/vulkan/vk_platform.h"
+          },
+          "hashes": {
+            "sha-256": "6bc08085985094224a327df89802ec72451e138587e9ec6675a0bd4c940dcce9"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/vulkansdk/1.3.216.0/include/vulkan/vulkan_core.h"
+          },
+          "hashes": {
+            "sha-256": "5803cb09cf34af9a15f7541500e131a3cdb556fe6f2b32cc6cd9d6f110dd2dad"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/lib/glfw/include/glfw/glfw3.h"
+          },
+          "hashes": {
+            "sha-256": "02f117a14cc5ec6889e86d737e448b19f453a7fc3d149c05c102764b83096299"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/artemis.h"
+          },
+          "hashes": {
+            "sha-256": "a94091063537a1dd99832fd2baffd00438d4a28beee44e6968707b281ae240cb"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/bitsize.h"
+          },
+          "hashes": {
+            "sha-256": "e11bf2b634ef24448c6d5266e2df75a116604601f87e3f21f2a4f0bfcf4a42f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entityprocessingsystem.h"
+          },
+          "hashes": {
+            "sha-256": "6174888e588ec9760dce671f3641ecb2d80d5bdca8f4894238fd379858ef6dff"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/immutablebag.h"
+          },
+          "hashes": {
+            "sha-256": "079f4fc7978626bf9746b9a612df86fe14a9984391155dfb1aa916bcdb039fc5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entitysystem.h"
+          },
+          "hashes": {
+            "sha-256": "9dc2cb5a246ff867350d1d44b7f5d306804d5e55661930dfc98ffc3a95a73cc7"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/component.h"
+          },
+          "hashes": {
+            "sha-256": "b81b4ef4948306a46318576c1590bc53b05f654d174648665221d7b251bf3fc3"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componenttypemanager.h"
+          },
+          "hashes": {
+            "sha-256": "ca1840ea6015b50606c498e0c7d681139a0ce4681054493d1bd18faa72fd18db"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/typeinfocomparator.h"
+          },
+          "hashes": {
+            "sha-256": "b9b28de2f6ac7837d1965376ec15e837ae050b4a0490663721a8a4fdf0d0c143"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componenttype.h"
+          },
+          "hashes": {
+            "sha-256": "2dab631f857303b1f1aedb585ff5adde7760f399d020b062303d9e5c8e5b874e"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/componentmapper.h"
+          },
+          "hashes": {
+            "sha-256": "e4b58a171962425bd2c6d5d71f86a6e00255790b2a930fa3d079e554859dfea4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entitymanager.h"
+          },
+          "hashes": {
+            "sha-256": "53a63f81b471471c294649860444d537119218f761e7fb1c43d05dc48400e427"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/world.h"
+          },
+          "hashes": {
+            "sha-256": "835a09851c315e7e2aa8682bea7eb2a0246c763b3c622b53692e3a623edf15ae"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/tagmanager.h"
+          },
+          "hashes": {
+            "sha-256": "930e44bff7612f8fa6730f71def41f37f2aef4a03ff6f717d3f95dcabbb7b4cf"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/groupmanager.h"
+          },
+          "hashes": {
+            "sha-256": "608b6615d186dd145309055fbd8b931d37659854a51d7ae410e3f09f3ee8911b"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/systembitmanager.h"
+          },
+          "hashes": {
+            "sha-256": "530744f21fd20473aa2975ed7dc4212531391cd2cac6ef9f9a0c9d04e6433139"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/delayedentityprocessingsystem.h"
+          },
+          "hashes": {
+            "sha-256": "2555f52539debd36af55f0e7bd1fa2659059266b1df0ae70718ffe6455a0c1f8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/delayedentitysystem.h"
+          },
+          "hashes": {
+            "sha-256": "e74770023856873e6c529dc47c864af04d57d9179c27a1974789207c30182de5"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/systemmanager.h"
+          },
+          "hashes": {
+            "sha-256": "c304192eba1305896a73273d1915bc9aefe9476eea9f752f159b2ecae43b59c8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/dev/principiumgames/principiaengine/source/artemisframework/artemis/entity.h"
+          },
+          "hashes": {
+            "sha-256": "2ba298396a82be242ba5f1323187962d361fb6a83fcc808878af22855d17babc"
+          }
+        }
+      ]
+    }
+  ]
+}

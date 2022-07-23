@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include "window.h"
+#include <stb_image.h>
 
 /*
 Window::Window()
@@ -36,7 +37,15 @@ namespace Principia {
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 
 		//glfwGetPrimaryMonitor() , nullptr);
-		window = glfwCreateWindow(width, height, "Vulkany", nullptr, nullptr);//nullptr , nullptr);
+		window = glfwCreateWindow(width, height, "RayTracy Bird", nullptr, nullptr);//nullptr , nullptr);
+
+
+		GLFWimage icons[1];
+		std::string path = "../Assets/Levels/Test/Textures/window_icon.png";
+		icons[0].pixels = stbi_load(path.c_str(), &icons->width, &icons->height, 0, STBI_rgb_alpha);
+		glfwSetWindowIcon(window, 1, icons);
+		stbi_image_free(icons[0].pixels);
+
 	}
 
 	void Window::update() {
