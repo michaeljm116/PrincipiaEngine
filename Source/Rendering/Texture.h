@@ -6,6 +6,7 @@ nvm turns out i still use it
 */
 //#include "RenderHelplers.h"
 #include "vulkanbase.h"
+#include <assert.h>
 
 namespace Principia {
 	struct Texture
@@ -31,6 +32,22 @@ namespace Principia {
 		void destroy(VkDevice& device);
 		VkResult CreateTexture(VulkanDevice& device);
 		void updateDescriptor();
+	};
+
+	struct PrPixel {
+		unsigned char r, g, b, a = 1;
+		unsigned char& operator[](int i) {
+			assert(i > -1 && i < 4);
+			return *(&r + i);
+		}
+	};
+
+	struct PrImage {
+		unsigned int width, height, channels;
+		std::vector<std::vector<PrPixel>> data;
+		PrImage(int image_width, int image_height, int image_channels) : width(image_width), height(image_height), channels(image_channels) {
+			data = std::vector(width, std::vector<PrPixel>(height));
+		}
 	};
 
 }
