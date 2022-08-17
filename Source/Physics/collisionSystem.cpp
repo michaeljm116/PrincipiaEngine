@@ -172,7 +172,7 @@ namespace Principia {
 		physics->solver = new btSequentialImpulseConstraintSolver;
 		//physics->dynamicsWorld = new btSimpleDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
 		physics->dynamicsWorld = new btDiscreteDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
-		physics->dynamicsWorld->setGravity(btVector3(0, -100, 0));
+		physics->dynamicsWorld->setGravity(btVector3(0, -10, 0));
 		world->getSingleton()->addComponent(physics);
 		//Add ground for now
 		//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);// new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));

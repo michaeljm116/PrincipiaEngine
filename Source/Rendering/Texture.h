@@ -7,6 +7,7 @@ nvm turns out i still use it
 //#include "RenderHelplers.h"
 #include "vulkanbase.h"
 #include <assert.h>
+#include <stb_image.h>
 
 namespace Principia {
 	struct Texture
@@ -43,11 +44,29 @@ namespace Principia {
 	};
 
 	struct PrImage {
-		unsigned int width, height, channels;
+		int width, height, channels;
 		std::vector<std::vector<PrPixel>> data;
 		PrImage(int image_width, int image_height, int image_channels) : width(image_width), height(image_height), channels(image_channels) {
 			data = std::vector(width, std::vector<PrPixel>(height));
 		}
+		PrImage(std::string txtr_file) {
+			LoadPrImageFromTexture(txtr_file);
+		}
+		void LoadPrImageFromTexture(std::string txtr_file) {
+			stbi_uc* pixels = stbi_load(txtr_file.c_str(), &width, &height, &channels,0);
+			data = std::vector(width, std::vector<PrPixel>(height));
+			unsigned int i, j, k;
+			for (k = 0; k < channels; ++k) {
+				for (j = 0; j < height; ++j) {
+					for (i = 0; i < width; ++i) {
+						unsigned int index = k + channels * i + channels * width * j;
+						data[i][j][k] = pixels[index];
+					}
+				}
+			}
+			stbi_image_free(pixels);
+		}
 	};
+
 
 }

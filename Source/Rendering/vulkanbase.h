@@ -78,10 +78,10 @@ namespace Principia {
 		//Validation Layers
 		const std::vector<const char*> validationLayers = { "VK_LAYER_KHRONOS_validation" };// "VK_LAYER_LUNARG_standard_validation"};
 
-#ifdef NDEBUG
+#ifdef UIIZON
 		const bool enableValidationLayers = true;
 #else
-		const bool enableValidationLayers = false;
+		const bool enableValidationLayers = true;
 #endif
 
 		const std::vector<const char*> deviceExtensions = {
