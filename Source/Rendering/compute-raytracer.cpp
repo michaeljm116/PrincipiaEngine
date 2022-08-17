@@ -532,6 +532,12 @@ namespace Principia {
 			CreateDescriptorSetLayout();
 			CreateGraphicsPipeline();
 			CreateCommandBuffers(1.f, 0, 0);
+//#ifdef UIIZON
+//			CreateCommandBuffers(0.733333333333f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
+//#else
+//			CreateCommandBuffers(1.f, 0, 0);
+//#endif // UIIZON
+
 			//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
 		}
 		else {
