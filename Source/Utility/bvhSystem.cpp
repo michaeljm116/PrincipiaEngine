@@ -2,6 +2,8 @@
 #include "../pch.h"
 #include "bvhSystem.h"
 #include "timer.h"
+#include <thread>
+#include <future>
 
 namespace Principia {
 	BvhSystem::BvhSystem()
@@ -87,11 +89,53 @@ namespace Principia {
 		prims = std::move(ops);
 		//prims = ops;
 	}
+	void BvhSystem::buildMultiThreaded(TreeType tt, std::vector<artemis::Entity*>& ops)
+	{
+		/*totalNodesMulti = {0, 0, 0, 0};
+		auto size = ops.size();
+		int quartSize = size / 4;
+		int remainder = size % 4;
+		std::array<std::vector<artemis::Entity*>, 4> ordered_prims;
+		for (int i = 0; i < 4; ++i) {
+			if (i != 3)
+				ordered_prims[i].reserve(quartSize);
+			else
+				ordered_prims[i].reserve(quartSize + remainder);
+		}
+
+		//std::thread first(recursiveBuild(0, quartSize, &totalNodesMulti[0], ordered_prims[0]));
+		//std::thread second(recursiveBuild(quartSize, quartSize * 2, &totalNodesMulti[1], ordered_prims[1]));
+		//std::thread third(recursiveBuild(quartSize * 2, quartSize * 3, &totalNodesMulti[2], ordered_prims[2]));
+		//std::thread fourth(recursiveBuild(quartSize * 3, quartSize * 4 + remainder, &totalNodesMulti[3], ordered_prims[3]));
+		//std::thread first(&recursiveBuild, 0, quartSize, &totalNodesMulti[0], ordered_prims[0]);
+		std::array<std::future<std::shared_ptr<BVHNode>>, 4> futures;
+		for (int i = 0; i < 4; ++i) {
+			if (i < 3)
+				futures[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, i * quartSize, (i + 1) * quartSize, &totalNodesMulti[0], ordered_prims[0]);
+			else
+				futures[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, i * quartSize, (i + 1) * quartSize + remainder, &totalNodesMulti[0], ordered_prims[0]);
+		}
+
+		for (int i = 0; i < 4; ++i) {
+			roots[i] = futures[i].get();
+		}
+		for (int i = 0; i < 4; ++i) {
+			ops.emplace(ordered_prims[i].begin(), ordered_prims[i].end());
+		}
+		for (int i = 0; i < 4; ++i) {
+			root->children[i] = std::move(roots[i]);
+		}
+
+		root->bounds.combine(computeBoundsMulti(roots));
+
+		prims = std::move(ops);*/
+	}
+
 	//(Recall that the number of nodes in a BVH is bounded by twice the number of leaf nodes, which in turn is bounded by the number of primitives)
-	std::shared_ptr<BVHNode> BvhSystem::recursiveBuild(int start, int end, int * totalNodes, std::vector<artemis::Entity*> &orderedPrims)
+	BVHNode* BvhSystem::recursiveBuild(int start, int end, int * totalNodes, std::vector<artemis::Entity*> &orderedPrims)
 	{
 		*totalNodes += 1;
-		std::shared_ptr<BVHNode> node(new BVHNode);// std::make_shared<BVHNode>();
+		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
 		BVHBounds bounds = computeBounds(start, end);
 
 		//Check if leaf
@@ -212,6 +256,60 @@ namespace Principia {
 		//return std::unique_ptr<BVHNode>();
 	}
 
+	BVHNode* BvhSystem::hlbvhBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*>& orderedPrims)
+	{
+		// Compute bounding box of all primitive centroids
+		BVHNode* node(new BVHNode);
+		BVHBounds bounds = computeBounds(start, end);
+
+		// Compute Morton indices of primitives
+		std::vector<MortonPrimitive> morton_prims(prims.size());
+#pragma omp parallel for
+		for (int i = 0; i < orderedPrims.size(); ++i) {
+			// Initialize _mortonPrims[i]_ for _i_th primitive
+			constexpr int morton_bits = 10;
+			constexpr int morton_scale = 1 << morton_bits;
+			morton_prims[i].primitive_index = i;
+			glm::vec3 centroid_offset = bounds.Offset(primMapper.get(*prims[i])->center());
+			glm::vec3 offset = centroid_offset * glm::vec3(morton_scale); //TODO: POSSIBLE ERROR
+			morton_prims[i].morton_code = EncodeMorton3(offset.x, offset.y, offset.z);
+		}
+		// Radix sort primitive Morton indices
+		RadixSort(&morton_prims);
+
+		// Create LBVH treelets at bottom of BVH
+		// Find intervals of primitives for each treelet
+		 
+		std::vector<LBVHTreelet> treelets_to_build;
+		for (size_t start = 0, end = 1; end <= morton_prims.size(); ++end) {
+			uint32_t mask = 0b00111111111111000000000000000000;
+			if (end == (int)morton_prims.size() || (morton_prims[start].morton_code & mask) !=
+				(morton_prims[end].morton_code & mask)) {
+				// Add entry to _treeletsToBuild_ for this treelet
+				size_t n_primitives = end - start;
+				int maxBVHNodes = 2 * n_primitives - 1;
+				BVHNode* nodes = nullptr;// TODO ALLOCATE ENOUGH TREELETS TO THE STUFF;
+				treelets_to_build.push_back({start, n_primitives, nodes});
+
+				start = end;
+			}
+
+		}
+
+		// Create LBVHs for treelets in parallel
+		std::atomic<int> ordered_primts_offset(0);
+#pragma omp parallel for
+		for (int i = 0; i < treelets_to_build.size(); ++i) {
+			// Generate _i_th LBVH treelet
+			int nodes_created = 0;
+			const int first_bit_index = 29 - 12;
+			LBVHTreelet& tr = treelets_to_build[i]; //MAKE SURE ALLOCATOR WORKS FIRST
+			tr.build_nodes = ASDF;LKJ
+		}
+		// Create and return SAH BVH from LBVH treelets
+		return nullptr;
+	}
+
 	BVHBounds BvhSystem::computeBounds(int s, int e)
 	{
 		//make an aabb of the entire scene basically
@@ -258,6 +356,14 @@ namespace Principia {
 		if ((c.x > c.y) && (c.x > c.z)) return 0;
 		else if ((c.y > c.x) && (c.y > c.z)) return 1;
 		else return 2;
+	}
+
+	BVHBounds BvhSystem::computeBoundsMulti(std::array<std::shared_ptr<BVHNode>, 4> nodes)
+	{
+		BVHBounds ret;
+		for (int i = 0; i < 4; ++i)
+			ret.combine(nodes[i]->bounds);
+		return ret;
 	}
 
 }
