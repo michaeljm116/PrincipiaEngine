@@ -28,17 +28,21 @@ namespace Principia {
 
 		std::vector<artemis::Entity*> prims;
 		SplitMethod splitMethod = SplitMethod::SAH;
-		std::shared_ptr<BVHNode> root;
+		BVHNode* root;
 		int totalNodes;
+		std::array<int, 4> totalNodesMulti;
+		std::array<std::shared_ptr<BVHNode>,4> roots;
 		bool rebuild = true;
 
 	private:
 		void build(TreeType tt, std::vector<artemis::Entity*> &ops);
-		std::shared_ptr<BVHNode> recursiveBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*> &orderedPrims);
+		void buildMultiThreaded(TreeType tt, std::vector<artemis::Entity*>& ops);
+		BVHNode* recursiveBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*> &orderedPrims);
+		BVHNode* hlbvhBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*>& orderedPrims);
 		BVHBounds computeBounds(int s, int e);
 		BVHBounds computeCentroidBounds(int s, int e);
 		inline int chooseAxis(const glm::vec3& center);
-
+		BVHBounds computeBoundsMulti(std::array<std::shared_ptr<BVHNode>, 4> nodes);
 	};
 
 }

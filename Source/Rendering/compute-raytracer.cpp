@@ -6,14 +6,14 @@
 namespace Principia {
 
 	static int curr_id = 0;	// Id used to identify objects by the ray tracing shader
-	static const int MAX_MATERIALS = 256;
-	static const int MAX_MESHES = 256;
-	static const int MAX_VERTS = 256;
-	static const int MAX_INDS = 256;
-	static const int MAX_OBJS = 512;
-	static const int MAX_LIGHTS = 256;
-	static const int MAX_GUIS = 256;
-	static const int MAX_NODES = 256;
+	static const int MAX_MATERIALS = 2048;
+	static const int MAX_MESHES = 2048;
+	static const int MAX_VERTS = 2048;
+	static const int MAX_INDS = 2048;
+	static const int MAX_OBJS = 4096;
+	static const int MAX_LIGHTS = 2048;
+	static const int MAX_GUIS = 2048;
+	static const int MAX_NODES = 2048;
 
 	ComputeRaytracer::ComputeRaytracer()
 	{
@@ -461,7 +461,7 @@ namespace Principia {
 		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
 	}
 
-	void ComputeRaytracer::UpdateBVH(std::vector<artemis::Entity*>& ordered_prims, std::shared_ptr<BVHNode> root, int num_nodes)
+	void ComputeRaytracer::UpdateBVH(std::vector<artemis::Entity*>& ordered_prims, BVHNode* root, int num_nodes)
 	{	//Principia::NamedTimer nt("BVHUPDATE");
 	//reserve newobjects array
 	//std::vector<ssPrimitive> newObjs;
@@ -495,7 +495,7 @@ namespace Principia {
 		SetRenderUpdate(kUpdateBvh);
 	}
 
-	int ComputeRaytracer::FlattenBVH(std::shared_ptr<BVHNode> node, int* offset, std::vector<ssBVHNode>& bvh)
+	int ComputeRaytracer::FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh)
 	{	
 		//first pusch back a node
 		ssBVHNode* bvhNode = &bvh[*offset];
