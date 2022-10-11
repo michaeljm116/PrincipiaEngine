@@ -52,6 +52,9 @@ namespace Principia {
 		void updateBVH(std::vector<artemis::Entity*>& ordered_prims, BVHNode* root, int num_nodes) {
 			((ComputeRaytracer*)renderer_)->UpdateBVH(ordered_prims, root, num_nodes);
 		}
+		void updateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims) {
+			((ComputeRaytracer*)renderer_)->UpdateBVH(bvh, prims);
+		}
 		ssLight& getLight(int id) { return ((ComputeRaytracer*)renderer_)->getLight(id); };
 
 

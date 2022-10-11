@@ -10,7 +10,7 @@ namespace Principia {
 	class BvhSystem : public artemis::EntityProcessingSystem
 	{
 	private:
-		//artemis::ComponentMapper<NodeComponent> nodeMapper;
+		artemis::ComponentMapper<NodeComponent> nodeMapper;
 		artemis::ComponentMapper<TransformComponent> transMapper;
 		artemis::ComponentMapper<PrimitiveComponent> primMapper;
 	public:
@@ -19,6 +19,8 @@ namespace Principia {
 
 		void initialize();
 		void build();
+		void build_madman();
+		void update(artemis::Entity& e);
 		void processEntity(artemis::Entity &e);
 		void begin();
 		void end();
@@ -33,6 +35,9 @@ namespace Principia {
 		std::array<int, 4> totalNodesMulti;
 		std::array<std::shared_ptr<BVHNode>,4> roots;
 		bool rebuild = true;
+
+		Bvh bvh_;
+		std::vector<BvhPrim> custom_prims;
 
 	private:
 		void build(TreeType tt, std::vector<artemis::Entity*> &ops);

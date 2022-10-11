@@ -495,6 +495,38 @@ namespace Principia {
 		SetRenderUpdate(kUpdateBvh);
 	}
 
+	void ComputeRaytracer::UpdateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims)
+	{
+		size_t num_prims = prims.size();
+		if (num_prims == 0)return;
+		primitives_.clear();
+		primitives_.reserve(num_prims);
+
+		//fill in the new objects array;
+		for (size_t i = 0; i < num_prims; ++i) {
+			PrimitiveComponent* pc = (PrimitiveComponent*)prims[i]->getComponent<PrimitiveComponent>();
+			if (pc) {
+				primitives_.emplace_back(ssPrimitive(pc));
+				//pc->objIndex = newObjs.size() - 1;
+			}
+		}
+
+
+		bvh_.resize(bvh->node_count);
+		for (int i = 0; i < bvh->node_count; ++i) {
+			auto thing = bvh->nodes[i].bounding_box_proxy();
+			auto min = thing.to_bounding_box().min;
+			auto max = thing.to_bounding_box().max;
+			bvh_[i].lower = glm::vec3(min[0], min[1], min[2]);
+			bvh_[i].upper = glm::vec3(max[0], max[1], max[2]);
+			bvh_[i].numChildren = bvh->nodes[i].primitive_count;
+			bvh_[i].offset = bvh->nodes[i].first_child_or_primitive;
+		}
+
+		SetRenderUpdate(kUpdateBvh);
+	}
+
+
 	int ComputeRaytracer::FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh)
 	{	
 		//first pusch back a node

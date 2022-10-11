@@ -5,9 +5,11 @@
 #include <thread>
 #include <future>
 
+
 namespace Principia {
 	BvhSystem::BvhSystem()
 	{
+		addComponentType<NodeComponent>();
 		addComponentType<TransformComponent>();
 		addComponentType<PrimitiveComponent>();
 	}
@@ -18,13 +20,14 @@ namespace Principia {
 
 	void BvhSystem::initialize()
 	{
+		nodeMapper.init(*world);
 		transMapper.init(*world);
 		primMapper.init(*world);
 	}
 
 	void BvhSystem::build()
 	{
-
+		
 		//if (rebuild) {
 		std::vector<artemis::Entity*> orderedPrims;
 
@@ -45,9 +48,41 @@ namespace Principia {
 
 	}
 
+	void BvhSystem::build_madman()
+	{
+		//Build the list of Primitives
+		custom_prims.clear();
+		custom_prims.reserve(prims.size());
+		for (auto* e : prims) {
+			auto* p = primMapper.get(*e);
+			custom_prims.emplace_back(BvhPrim(p));
+		}
+
+		//Convert the prims into something the bvh can use
+		auto [bboxes, centers] = bvh::compute_bounding_boxes_and_centers(custom_prims.data(), custom_prims.size());
+		auto global_bbox = bvh::compute_bounding_boxes_union(bboxes.get(), custom_prims.size());
+		//bvh::LinearBvhBuilder<Bvh, Morton> builder(bvh_);
+		//bvh::SweepSahBuilder<Bvh> builder(bvh_);
+		bvh::LocallyOrderedClusteringBuilder<Bvh, Morton> builder(bvh_);
+		builder.build(global_bbox, bboxes.get(), centers.get(), custom_prims.size());
+
+		//convert the bvh to something the engine can use
+		// - List of Prims
+		// - List of Nodes
+
+	}
+
+	void BvhSystem::update(artemis::Entity& e)
+	{
+	}
+
 	void BvhSystem::processEntity(artemis::Entity & e)
 	{
 		//prims.emplace_back(&e);
+		auto* n = nodeMapper.get(e);
+		if (n->isDynamic) {
+			update(e);
+		}
 
 	}
 
@@ -304,7 +339,7 @@ namespace Principia {
 			int nodes_created = 0;
 			const int first_bit_index = 29 - 12;
 			LBVHTreelet& tr = treelets_to_build[i]; //MAKE SURE ALLOCATOR WORKS FIRST
-			tr.build_nodes = ASDF;LKJ
+			//tr.build_nodes = ASDF;LKJ
 		}
 		// Create and return SAH BVH from LBVH treelets
 		return nullptr;

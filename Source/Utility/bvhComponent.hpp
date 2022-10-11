@@ -6,6 +6,15 @@
 #include "helpers.h"
 #include <assert.h>
 
+#include <bvh/bvh.hpp>
+#include <bvh/vector.hpp>
+#include <bvh/bounding_box.hpp>
+#include <bvh/ray.hpp>
+#include <bvh/linear_bvh_builder.hpp>
+#include <bvh/sweep_sah_builder.hpp>
+#include <bvh/locally_ordered_clustering_builder.hpp>
+#include "../Rendering/Components/renderComponents.hpp"
+
 namespace Principia {
 	enum class TreeType {
 		Recursive,
@@ -185,3 +194,54 @@ namespace Principia {
 			std::swap(*v, tempVector);
 	}
 }
+
+using Scalar = glm::float32_t;
+using Vector3 = bvh::Vector3<Scalar>;
+using Ray = bvh::Ray<Scalar>;
+using Morton = uint32_t;
+using Bvh = bvh::Bvh<Scalar>;
+
+struct BvhPrim {
+	BvhPrim(Principia::PrimitiveComponent* pc) {
+		c = glm_to_bvh_Vec3(pc->center());
+		e = glm_to_bvh_Vec3(pc->world[3]);
+	}
+	//struct Intersection {
+	//	Scalar t;
+
+	//	// Required member: returns the distance along the ray
+	//	Scalar distance() const { return t; }
+	//};
+
+	// Required type: the floating-point type used
+	using ScalarType = Scalar;
+	// Required type: the intersection data type returned by the intersect() method
+	//using IntersectionType = Intersection;
+
+	BvhPrim() = default;
+
+	// Required member: returns the center of the primitive
+	Vector3 center() const {
+		return c;// Vector3(0, 0, 0);
+	}
+
+	// Required member: returns a bounding box for the primitive (tighter is better)
+	bvh::BoundingBox<Scalar> bounding_box() const {
+		return e;// bvh::BoundingBox(Vector3(-1, -1, -1), Vector3(1, 1, 1));
+	}
+
+	// Required member: computes the intersection between a ray and the primitive
+	//std::optional<Intersection> intersect(const Ray& ray) const {
+	//	return std::make_optional<Intersection>(Intersection{ (ray.tmin + ray.tmax) * Scalar(0.5) });
+	//}
+	Vector3 c;
+	bvh::BoundingBox<Scalar> e;
+
+	bvh::Vector3<Scalar> glm_to_bvh_Vec3(glm::vec3 v) {
+		return bvh::Vector3<Scalar>(v.x, v.y, v.z);
+	}
+	bvh::Vector3<Scalar> glm_to_bvh_Vec3(glm::vec4 v) {
+		return bvh::Vector3<Scalar>(v.x, v.y, v.z);
+	}
+};
+

@@ -48,6 +48,7 @@ namespace Principia {
 
 #pragma Compute exclusive Functions
 		void UpdateBVH(std::vector<artemis::Entity*>& ordredPrims, BVHNode* root, int numNodes);
+		void UpdateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims);
 		int FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh);
 #pragma endregion
 
