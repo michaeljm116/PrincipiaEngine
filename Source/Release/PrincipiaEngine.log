@@ -1,3 +1,1 @@
-﻿  renderbase.cpp
-  Input.cpp
-  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Release\Principia Engine.lib
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(630,9): error MSB4030: "Yes (/openmp:llvm)" is an invalid value for the "OpenMPSupport" parameter of the "CL" task. The "OpenMPSupport" parameter is of type "System.Boolean".
