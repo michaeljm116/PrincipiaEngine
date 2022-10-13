@@ -1,1 +1,33 @@
-﻿  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib
+﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  bvhSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(225,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(256,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(259,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(303,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(337,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(146,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(62): message : see reference to function template instantiation 'std::pair<std::unique_ptr<bvh::BoundingBox<Scalar> [],std::default_delete<bvh::BoundingBox<Scalar> []>>,std::unique_ptr<bvh::Vector<Scalar,3> [],std::default_delete<bvh::Vector<Scalar,3> []>>> bvh::compute_bounding_boxes_and_centers<_Ty,BvhPrim::ScalarType>(const Primitive *,size_t)' being compiled
+          with
+          [
+              _Ty=BvhPrim,
+              Primitive=BvhPrim
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(164,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(63): message : see reference to function template instantiation 'bvh::BoundingBox<Scalar> bvh::compute_bounding_boxes_union<Scalar>(const bvh::BoundingBox<Scalar> *,size_t)' being compiled
+  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib
