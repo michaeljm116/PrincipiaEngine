@@ -10,5 +10,11 @@ namespace artemis {
 		for(int i=0; i < bag.getCount(); i++) 
 			{processEntity(*bag.get(i));}
 	}
+	void EntityProcessingSystem::processEntitiesMulti(ImmutableBag<Entity*>& bag) {
+#pragma omp parallel for
+		for (int i = 0; i < bag.getCount(); ++i) {
+			processEntity(*bag.get(i));
+		}
+	}
 
 };

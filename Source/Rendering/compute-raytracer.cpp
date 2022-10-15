@@ -6,13 +6,13 @@
 namespace Principia {
 
 	static int curr_id = 0;	// Id used to identify objects by the ray tracing shader
-	static const int MAX_MATERIALS = 2048;
+	static const int MAX_MATERIALS = 256;
 	static const int MAX_MESHES = 2048;
-	static const int MAX_VERTS = 2048;
-	static const int MAX_INDS = 2048;
+	static const int MAX_VERTS = 32768;
+	static const int MAX_INDS = 16384;
 	static const int MAX_OBJS = 4096;
-	static const int MAX_LIGHTS = 2048;
-	static const int MAX_GUIS = 2048;
+	static const int MAX_LIGHTS = 32;
+	static const int MAX_GUIS = 96;
 	static const int MAX_NODES = 2048;
 
 	ComputeRaytracer::ComputeRaytracer()
@@ -1233,15 +1233,15 @@ namespace Principia {
 		//compute_.storage_buffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
 		//compute_.storage_buffers.meshes.InitStorageBufferCustomSize(vkDevice, meshes, meshes.size(), MAXMESHES);
 
-		gui_textures_[0].path = "../Assets/Levels/Test/Textures/numbers.png";
+		gui_textures_[0].path = "../Assets/Levels/Blacman/Textures/numbers.png";
 		gui_textures_[0].CreateTexture(vkDevice);
-		gui_textures_[1].path = "../Assets/Levels/Test/Textures/title.png";
+		gui_textures_[1].path = "../Assets/Levels/Blacman/Textures/title.png";
 		gui_textures_[1].CreateTexture(vkDevice);
-		gui_textures_[2].path = "../Assets/Levels/Test/Textures/jabby_bird_stuff_4k.png";
+		gui_textures_[2].path = "../Assets/Levels/Blacman/Textures/blacman_stuff_4k.png";
 		gui_textures_[2].CreateTexture(vkDevice);
-		gui_textures_[3].path = "../Assets/Levels/Test/Textures/skybox.png";
+		gui_textures_[3].path = "../Assets/Levels/Blacman/Textures/skybox.png";
 		gui_textures_[3].CreateTexture(vkDevice);
-		gui_textures_[4].path = "../Assets/Levels/Test/Textures/pebbles.png";
+		gui_textures_[4].path = "../Assets/Levels/Blacman/Textures/pebbles.png";
 		gui_textures_[4].CreateTexture(vkDevice);
 	}
 

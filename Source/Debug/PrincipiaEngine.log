@@ -1,4 +1,302 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  pch.cpp
+cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  animateSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  animationSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  poseSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  DelayedEntityProcessingSystem.cpp
+  DelayedEntitySystem.cpp
+  EntityManager.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::Component *>::grow(void)'
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::Component *>::grow(void)' being compiled
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\EntityManager.h(68): message : see reference to class template instantiation 'artemis::Bag<artemis::Component *>' being compiled
+  EntityProcessingSystem.cpp
+  EntitySystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::Entity *>::grow(void)'
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::Entity *>::grow(void)' being compiled
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\EntitySystem.h(69): message : see reference to class template instantiation 'artemis::Bag<artemis::Entity *>' being compiled
+  SystemManager.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(206,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(205): message : while compiling class template member function 'void artemis::Bag<artemis::EntitySystem *>::grow(void)'
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\ImmutableBag.h(65): message : see reference to function template instantiation 'void artemis::Bag<artemis::EntitySystem *>::grow(void)' being compiled
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\ArtemisFrameWork\Artemis\SystemManager.h(30): message : see reference to class template instantiation 'artemis::Bag<artemis::EntitySystem *>' being compiled
+  audioSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  collidedWithSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\script-component.h(158,19): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collidedWithSystem.cpp(55,13): warning C4553: '==': result of expression not used; did you intend '='?
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  collisionSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(50,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<btCollisionShape *>::push_back(const T &)'
+          with
+          [
+              T=btCollisionShape *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(208): message : see reference to function template instantiation 'void btAlignedObjectArray<btCollisionShape *>::push_back(const T &)' being compiled
+          with
+          [
+              T=btCollisionShape *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\Components\physicsComponent.h(8): message : see reference to class template instantiation 'btAlignedObjectArray<btCollisionShape *>' being compiled
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(212,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(211): message : while compiling class template member function 'void btAlignedObjectArray<Value>::resize(int,const T &)'
+          with
+          [
+              Value=btTriangleInfo,
+              T=btTriangleInfo
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h(222): message : see reference to function template instantiation 'void btAlignedObjectArray<Value>::resize(int,const T &)' being compiled
+          with
+          [
+              Value=btTriangleInfo,
+              T=btTriangleInfo
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btHashMap.h(225): message : see reference to class template instantiation 'btAlignedObjectArray<Value>' being compiled
+          with
+          [
+              Value=btTriangleInfo
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h(54): message : see reference to class template instantiation 'btHashMap<btHashInt,btTriangleInfo>' being compiled
+  gravitySystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\Components\gravityComponent.h(6,16): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  gridSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  immovableSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  compute-raytracer.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(201,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(59,18): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(60,19): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(61,20): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(89,47): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(90,49): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(49,9): warning C4068: unknown pragma 'Compute'
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(458,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(460,33): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(516,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(592,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(594,33): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(830,92): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(830,69): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1044,22): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1322,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1343,34): warning C4018: '>': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1354,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1362,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1367,53): warning C4018: '>': signed/unsigned mismatch
+  renderbase.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(201,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+  prefabSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  script-system.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\script-component.h(158,19): warning C4244: 'initializing': conversion from '_Rep' to 'unsigned int', possible loss of data
+          with
+          [
+              _Rep=std::chrono::system_clock::rep
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  selectable-gui-system.cpp
+  Generating Code...
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderbase.cpp(412): warning C4715: 'Principia::RenderBase::findSupportedFormat': not all control paths return a value
+  Compiling...
+  serialize-node.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  Generating Code...
+cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  renderSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(201,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(59,18): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(60,19): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(61,20): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(89,47): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(90,49): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(49,9): warning C4068: unknown pragma 'Compute'
   bvhSystem.cpp
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
@@ -30,4 +328,68 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(62): message
           ]
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(164,23): warning C4018: '<': signed/unsigned mismatch
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(63): message : see reference to function template instantiation 'bvh::BoundingBox<Scalar> bvh::compute_bounding_boxes_union<Scalar>(const bvh::BoundingBox<Scalar> *,size_t)' being compiled
+  resourceManager.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(93,23): warning C4244: '=': conversion from 'int' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+  transformSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(201,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(59,18): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(60,19): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(61,20): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(89,47): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(90,49): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(73,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(79,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(85,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(91,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(97,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(103,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(109,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(115,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(124,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(130,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\vector.hpp(140,1): warning C4141: 'inline': used more than once
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(152,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(49,9): warning C4068: unknown pragma 'Compute'
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,1): warning C5033: 'register' is no longer a supported storage class
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(265): message : while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242): message : see reference to function template instantiation 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)' being compiled
+          with
+          [
+              T=const btCollisionObject *
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116): message : see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  window.cpp
+  Generating Code...
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(61): warning C4715: 'Principia::ComputeRaytracer::getLight': not all control paths return a value
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(356): warning C4715: 'Principia::Resources::SaveMaterials': not all control paths return a value
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(429): warning C4172: returning address of local variable or temporary
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib
