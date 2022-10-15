@@ -19,6 +19,7 @@ namespace artemis {
 			EntityProcessingSystem() {};
 			virtual void processEntity(Entity &e) = 0;
 			virtual void processEntities(ImmutableBag<Entity*> & bag);
+			virtual void processEntitiesMulti(ImmutableBag<Entity*>& bag);
 			virtual bool checkProcessing();
 	};
 };

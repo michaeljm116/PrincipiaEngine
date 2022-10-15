@@ -13,6 +13,8 @@ namespace artemis {
 		protected:
 			virtual void processEntities(ImmutableBag<Entity*> & bag);
 			virtual void processEntities(ImmutableBag<Entity*> & bag, float accumulatedDelta) = 0;
+			virtual void processEntitiesMulti(ImmutableBag<Entity*>& bag);
+			virtual void processEntitiesMulti(ImmutableBag<Entity*>& bag, float accumulatedDelta) = 0;
 			virtual bool checkProcessing();
 	public:
 			DelayedEntitySystem();

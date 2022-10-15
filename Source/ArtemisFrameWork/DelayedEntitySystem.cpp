@@ -9,7 +9,6 @@ namespace artemis {
 		running = false;
 		autoRepeat = false;
 	}
-
 	bool DelayedEntitySystem::checkProcessing() {
 		if(running) {
 			acc += world->getDelta();
@@ -51,6 +50,18 @@ namespace artemis {
 			stop();
 		}
 	}
+
+	void DelayedEntitySystem::processEntitiesMulti(ImmutableBag<Entity*>& bag)
+	{
+		processEntitiesMulti(bag, acc);
+		if (autoRepeat) {
+			start(delay);
+		}
+		else {
+			stop();
+		}
+	}
+
 
 	void DelayedEntitySystem::start(float delay) {
 		this->delay = delay;

@@ -34,11 +34,21 @@ namespace artemis {
 			end();
 		}
 	};
-  
+	void EntitySystem::processMulti() {
+		if (checkProcessing()) {
+			begin();
+			processEntitiesMulti(actives);
+			end();
+		}
+	};
 	void EntitySystem::setWorld(World *world) {
 		this->world = world;
 	};
   
+	void EntitySystem::processEntitiesMulti(ImmutableBag<Entity*>& bag)
+	{
+	}
+
 	void EntitySystem::remove(Entity &e) {
 		actives.remove(&e);
 		e.removeSystemBit(systemBit);

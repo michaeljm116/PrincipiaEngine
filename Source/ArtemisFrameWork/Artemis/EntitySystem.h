@@ -38,6 +38,7 @@ namespace artemis {
     void setWorld(World *world);
     void change(Entity &e);
     void process();
+    void processMulti();
     int getEntityCount();
 	void preRemove(Entity &e);
   protected:
@@ -60,6 +61,7 @@ namespace artemis {
     virtual void added(Entity &e) {};
     //Abstracts
     virtual void processEntities(ImmutableBag<Entity*> & bag) = 0;
+    virtual void processEntitiesMulti(ImmutableBag<Entity*>& bag);
     virtual bool checkProcessing() = 0;
   private:
     std::bitset<BITSIZE> systemBit;
