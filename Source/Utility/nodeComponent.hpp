@@ -58,6 +58,7 @@ namespace Principia {
 		bool isParent = false;
 		bool isHead = false;
 		bool needsDelete = false;
+		bool culled = false;
 		int64_t engineFlags = COMPONENT_NODE;
 		int64_t gameFlags = 0;
 

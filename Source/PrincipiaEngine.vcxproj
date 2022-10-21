@@ -723,7 +723,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OpenMPSupport>Yes (/openmp:llvm)</OpenMPSupport>
+      <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>

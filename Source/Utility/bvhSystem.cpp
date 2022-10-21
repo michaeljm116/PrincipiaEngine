@@ -2,7 +2,6 @@
 #include "../pch.h"
 #include "bvhSystem.h"
 #include "timer.h"
-#include <thread>
 #include <future>
 
 
@@ -43,11 +42,11 @@ namespace Principia {
 		//Principia::NamedTimer bvhTime("BVH Build");
 
 		build(TreeType::Recursive, orderedPrims);
+		//buildMultiThreaded8(TreeType::Recursive, orderedPrims);
 		rebuild = false;
 		//}
 
 	}
-
 	void BvhSystem::build_madman()
 	{
 		//Build the list of Primitives
@@ -79,28 +78,58 @@ namespace Principia {
 	void BvhSystem::processEntity(artemis::Entity & e)
 	{
 		//prims.emplace_back(&e);
-		auto* n = nodeMapper.get(e);
+		/*auto* n = nodeMapper.get(e);
 		if (n->isDynamic) {
 			update(e);
+		}*/
+		auto* transform = transMapper.get(e);
+		auto* node = nodeMapper.get(e);
+		auto dist = glm::sqrt(glm::distance2(transform->TRM[3], cam_pos));
+		if (dist < max_dist) {
+			//culled_prims.push_back(&e);
+			node->culled = true; 
+			cull_count++;
 		}
-
+		else {
+			node->culled = false;
+		}
+		
 	}
 
 	void BvhSystem::begin()
 	{
+		culled_prims.clear();
+		cam_pos = cc->rotM[3];
+		cull_count = 0;
+
 	}
 
 	void BvhSystem::end()
 	{
-		//if (rebuild == true)
-		//	build();
-		//rebuild = false;
+		std::vector<artemis::Entity*> orderedPrims;
+		//size_t count = getEntityCount();
+		//prims.reserve(count);
+		culled_prims.reserve(cull_count);
+		for (auto* e : prims) {
+			if(nodeMapper.get(*e)->culled)
+			{
+				culled_prims.emplace_back(e);
+			}
+		}
+		orderedPrims.reserve(cull_count);
+		if(cull_count > 0)
+			buildCulled(TreeType::Recursive, orderedPrims);//buildMultiThreadedCulled(TreeType::Recursive, orderedPrims);
+		else
+			build(TreeType::Recursive, orderedPrims);
+		rebuild = false;
+		//std::cout << "\nEntities: " << countz0  << " ";
 	}
 
 	void BvhSystem::added(artemis::Entity & e)
 	{
 		rebuild = true;
 		prims.push_back(&e);
+		prim_comps.push_back((PrimitiveComponent*)e.getComponent<PrimitiveComponent>());
 		//primMapper.get(e)->bvhIndex = prims.size();
 	}
 
@@ -113,6 +142,7 @@ namespace Principia {
 			i++;
 		}
 		prims.erase(prims.begin() + i);
+		prim_comps.erase(prim_comps.begin() + i);
 	}
 
 	void BvhSystem::build(TreeType tt, std::vector<artemis::Entity*> &ops)
@@ -124,9 +154,188 @@ namespace Principia {
 		prims = std::move(ops);
 		//prims = ops;
 	}
-	void BvhSystem::buildMultiThreaded(TreeType tt, std::vector<artemis::Entity*>& ops)
+	void BvhSystem::buildCulled(TreeType tt, std::vector<artemis::Entity*>& ops) {
+		totalNodes = 0;
+
+		root = recursiveBuildCulled(0, culled_prims.size(), &totalNodes, ops);
+
+		culled_prims = std::move(ops);
+	}
+
+	void BvhSystem::buildMultiThreaded2(TreeType tt, std::vector<artemis::Entity*>& ops)
 	{
-		/*totalNodesMulti = {0, 0, 0, 0};
+		totalNodes = 0;
+		auto step1 = buildStep(0, prims.size(), &totalNodes);
+
+
+		std::vector<artemis::Entity*> ordered_prims0;
+		std::vector<artemis::Entity*> ordered_prims1;
+		std::array<std::future<BVHNode*>, 2> future_nodes;
+		std::array<BVHNode*, 2 > nodes;
+		std::array<int, 2> total_nodes = { 0,0};
+		std::array<int, 3> ranges = { 0, step1.mid, prims.size() };
+
+
+//#pragma omp parallel for
+//		for (int i = 0; i < 2; ++i) {
+//			//nodes[i] = future_nodes[i].get();
+//			nodes[i] = recursiveBuild(ranges[i], ranges[i + 1], &total_nodes[i], ordered_prims[i]);
+//		}
+
+		//for (int i = 0; i < 2; ++i) {
+		//	future_nodes[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, ranges[i], ranges[i+1], &total_nodes[i], std::ref(ordered_prims[i]));
+		//}
+		future_nodes[0] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, ranges[0], ranges[1], &total_nodes[0], std::ref(ordered_prims0));
+		future_nodes[1] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, ranges[1], ranges[2], &total_nodes[1], std::ref(ordered_prims1));
+
+
+		for (int i = 0; i < 2; ++i) {
+			nodes[i] = future_nodes[i].get();
+		}
+		for (int i = 0; i < 2; ++i) {
+			totalNodes += total_nodes[i];
+			//ops.insert(ops.begin(), ordered_prims[i].begin(), ordered_prims[i].end());
+		}
+		ops.insert(ops.begin(), ordered_prims0.begin(), ordered_prims0.end());
+		ops.insert(ops.end(), ordered_prims1.begin(), ordered_prims1.end());
+
+		prims = std::move(ops);
+
+		step1.node->initInterior(step1.axis, nodes[0], nodes[1]);
+
+		root = step1.node;
+
+		std::cout << "\nNumCores: " << std::thread::hardware_concurrency() << std::endl;
+	}
+
+	void BvhSystem::buildMultiThreadedCulled(TreeType tt, std::vector<artemis::Entity*>& ops)
+	{
+		totalNodes = 0;
+		auto step1 = buildStepCulled(0, culled_prims.size(), &totalNodes);
+
+
+		std::vector<artemis::Entity*> ordered_prims0;
+		std::vector<artemis::Entity*> ordered_prims1;
+		std::array<std::future<BVHNode*>, 2> future_nodes;
+		std::array<BVHNode*, 2 > nodes;
+		std::array<int, 2> total_nodes = { 0,0 };
+		std::array<int, 3> ranges = { 0, step1.mid, culled_prims.size() };
+
+
+		//#pragma omp parallel for
+		//		for (int i = 0; i < 2; ++i) {
+		//			//nodes[i] = future_nodes[i].get();
+		//			nodes[i] = recursiveBuild(ranges[i], ranges[i + 1], &total_nodes[i], ordered_prims[i]);
+		//		}
+
+				//for (int i = 0; i < 2; ++i) {
+				//	future_nodes[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, ranges[i], ranges[i+1], &total_nodes[i], std::ref(ordered_prims[i]));
+				//}
+		future_nodes[0] = std::async(std::launch::async, &BvhSystem::recursiveBuildCulled, this, ranges[0], ranges[1], &total_nodes[0], std::ref(ordered_prims0));
+		future_nodes[1] = std::async(std::launch::async, &BvhSystem::recursiveBuildCulled, this, ranges[1], ranges[2], &total_nodes[1], std::ref(ordered_prims1));
+
+
+		for (int i = 0; i < 2; ++i) {
+			nodes[i] = future_nodes[i].get();
+		}
+		for (int i = 0; i < 2; ++i) {
+			totalNodes += total_nodes[i];
+		}
+		ops.insert(ops.begin(), ordered_prims0.begin(), ordered_prims0.end());
+		ops.insert(ops.end(), ordered_prims1.begin(), ordered_prims1.end());
+
+		culled_prims = std::move(ops);
+
+		step1.node->initInterior(step1.axis, nodes[0], nodes[1]);
+
+		root = step1.node;
+
+		std::cout << "\nNumCores: " << std::thread::hardware_concurrency() << std::endl;
+	}
+
+	void BvhSystem::buildMultiThreaded8(TreeType tt, std::vector<artemis::Entity*>& ops)
+	{
+		totalNodes = 0;
+		std::array<std::future<BvhStepInfo>, 7> build_step_futures;
+		auto step1 = buildStep(0, prims.size(), &totalNodes);
+
+		//int step2LNodes = 0;
+		//std::vector<artemis::Enti
+		//auto step2L_future = std::async(std::launch::async, &BvhSystem::buildStep, this, 0, step1.mid, &step2LNodes);
+
+		auto step2L = buildStep(0, step1.mid, &totalNodes);
+		auto step2R = buildStep(step1.mid, prims.size(), &totalNodes);
+
+		auto step3LL = buildStep(0, step2L.mid, &totalNodes);
+		auto step3LR = buildStep(step2L.mid, step1.mid, &totalNodes);
+		auto step3RL = buildStep(step1.mid, step2R.mid, &totalNodes);
+		auto step3RR = buildStep(step2R.mid, prims.size(), &totalNodes);
+
+
+		std::array<std::vector<artemis::Entity*>, 8> ordered_prims;
+		std::array<std::future<BVHNode*>, 8> future_nodes;
+		std::array<BVHNode*, 8 > nodes;
+		std::array<int, 8> total_nodes = { 0,0,0,0,0,0,0,0 };
+		std::array<int, 9> ranges = { 0, step3LL.mid, step2L.mid, step3LR.mid, step1.mid, step3RL.mid, step2R.mid, step3RR.mid, prims.size() };
+
+		
+		//future_nodes[0] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, 0, step3LL.mid, &total_nodes[0], std::ref(ordered_prims[0]));
+		//future_nodes[1] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step3LL.mid, step2L.mid, &total_nodes[1], std::ref(ordered_prims[1]));
+		//future_nodes[2] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step2L.mid, step3LR.mid, &total_nodes[2], std::ref(ordered_prims[2]));
+		//future_nodes[3] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step3LR.mid, step1.mid, &total_nodes[3], std::ref(ordered_prims[3]));
+		//future_nodes[4] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step1.mid, step3RL.mid, &total_nodes[4], std::ref(ordered_prims[4]));
+		//future_nodes[5] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step3RL.mid, step2R.mid, &total_nodes[5], std::ref(ordered_prims[5]));
+		//future_nodes[6] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step2R.mid, step3RR.mid, &total_nodes[6], std::ref(ordered_prims[6]));
+		//future_nodes[7] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step3RR.mid, prims.size(), &total_nodes[7], std::ref(ordered_prims[7]));
+
+		//for (int i = 0; i < 8; ++i) {
+		//	future_nodes[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, ranges[i], ranges[i+1], &total_nodes[i], std::ref(ordered_prims[i]));
+		//}
+
+		
+#pragma omp parallel for
+		for (int i = 0; i < 8; ++i) {
+			//nodes[i] = future_nodes[i].get();
+			nodes[i] = recursiveBuild(ranges[i], ranges[i + 1], &total_nodes[i], ordered_prims[i]);
+		}
+		
+
+		//for (int i = 0; i < 8; ++i) {
+		//	nodes[i] = future_nodes[i].get();
+		//}
+		for (int i = 0; i < 8; ++i) {
+			totalNodes += total_nodes[i];
+			ops.insert(ops.end(), ordered_prims[i].begin(), ordered_prims[i].end());
+		}
+		prims = std::move(ops);
+
+		step3RR.node->initInterior(step3RR.axis, nodes[6], nodes[7]);
+		step3RL.node->initInterior(step3RL.axis, nodes[4], nodes[5]);
+		step3LR.node->initInterior(step3LR.axis, nodes[2], nodes[3]);
+		step3LL.node->initInterior(step3LL.axis, nodes[0], nodes[1]);
+
+		step2L.node->initInterior(step2L.axis, step3LL.node, step3LR.node);
+		step2R.node->initInterior(step2R.axis, step3RL.node, step3RR.node);
+
+		step1.node->initInterior(step1.axis,step2L.node, step2R.node);
+
+		root = step1.node;
+
+		std::cout << "\nNumCores: " << std::thread::hardware_concurrency() << std::endl;
+		/*
+		future_roots[0] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, 0, step1.mid, &totalNodes, ops);
+		auto b = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, step1.mid, prims.size(), &totalNodes, ops);
+
+		auto tester = std::async(std::launch::async, &BvhSystem::asynctester, this, 0, step1.mid, &totalNodes);
+
+		std::thread at(recursiveBuild(0, step1.mid, &totalNodes, ops));
+		std::thread bt(recursiveBuild(step1.mid, prims.size(), &totalNodes, ops));
+
+		at.join();
+		bt.join();
+
+		
+		totalNodesMulti = {0, 0, 0, 0};
 		auto size = ops.size();
 		int quartSize = size / 4;
 		int remainder = size % 4;
@@ -136,34 +345,152 @@ namespace Principia {
 				ordered_prims[i].reserve(quartSize);
 			else
 				ordered_prims[i].reserve(quartSize + remainder);
-		}
+		}*/
 
 		//std::thread first(recursiveBuild(0, quartSize, &totalNodesMulti[0], ordered_prims[0]));
 		//std::thread second(recursiveBuild(quartSize, quartSize * 2, &totalNodesMulti[1], ordered_prims[1]));
 		//std::thread third(recursiveBuild(quartSize * 2, quartSize * 3, &totalNodesMulti[2], ordered_prims[2]));
 		//std::thread fourth(recursiveBuild(quartSize * 3, quartSize * 4 + remainder, &totalNodesMulti[3], ordered_prims[3]));
 		//std::thread first(&recursiveBuild, 0, quartSize, &totalNodesMulti[0], ordered_prims[0]);
-		std::array<std::future<std::shared_ptr<BVHNode>>, 4> futures;
-		for (int i = 0; i < 4; ++i) {
-			if (i < 3)
-				futures[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, i * quartSize, (i + 1) * quartSize, &totalNodesMulti[0], ordered_prims[0]);
-			else
-				futures[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, i * quartSize, (i + 1) * quartSize + remainder, &totalNodesMulti[0], ordered_prims[0]);
+		//std::array<std::future<BVHNode*>, 4> futures;
+		//for (int i = 0; i < 4; ++i) {
+		//	if (i < 3)
+		//		futures[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, i * quartSize, (i + 1) * quartSize, &totalNodesMulti[0], ordered_prims[0]);
+		//	else
+		//		futures[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, i * quartSize, (i + 1) * quartSize + remainder, &totalNodesMulti[0], ordered_prims[0]);
+		//}
+
+		//for (int i = 0; i < 4; ++i) {
+		//	roots[i] = futures[i].get();
+		//}
+		//for (int i = 0; i < 4; ++i) {
+		//	ops.emplace(ordered_prims[i].begin(), ordered_prims[i].end());
+		//}
+		//for (int i = 0; i < 4; ++i) {
+		//	root->children[i] = std::move(roots[i]);
+		//}
+
+		//root->bounds.combine(computeBoundsMulti(roots));
+
+		//prims = std::move(ops);
+	}
+
+	BvhSystem::BvhStepInfo BvhSystem::buildStep(int start, int end, int* totalNodes)
+	{
+		*totalNodes += 1;
+		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
+		BVHBounds bounds = computeBoundsMulti(start, end);
+
+		//Check if leaf
+		int numPrims = end - start;
+		//int prevOrdered = orderedPrims.size();
+		
+		//Not a leaf, create a new node
+		
+		BVHBounds centroid = computeCentroidBounds(start, end);
+		int axis = chooseAxis(centroid.center);
+		int mid = (start + end) >> 1;
+
+		artemis::ComponentMapper<PrimitiveComponent>* ptm = &primMapper;		
+		//Perform the Surface Area Heuristic
+		constexpr int numBuckets = 12;
+		BVHBucket buckets[numBuckets];
+		for (int i = start; i < end; ++i) {
+			PrimitiveComponent* pc = ptm->get(*prims[i]);
+			BVHBounds tempBounds = BVHBounds(pc->center(), pc->aabbExtents);
+			int b = numBuckets * centroid.Offset(pc->center(), axis);
+			if (b == numBuckets) b--;
+			buckets[b].count++;
+			buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
 		}
 
-		for (int i = 0; i < 4; ++i) {
-			roots[i] = futures[i].get();
-		}
-		for (int i = 0; i < 4; ++i) {
-			ops.emplace(ordered_prims[i].begin(), ordered_prims[i].end());
-		}
-		for (int i = 0; i < 4; ++i) {
-			root->children[i] = std::move(roots[i]);
+		constexpr int nb = numBuckets - 1;
+		float cost[nb];
+		for (int i = 0; i < nb; ++i) {
+			BVHBounds b0, b1;
+			int c0 = 0, c1 = 0;
+
+			for (int j = 0; j <= i; ++j) {
+				b0 = b0.combine(buckets[j].bounds);
+				c0 += buckets[j].count;
+			}
+			for (int j = i + 1; j < numBuckets; ++j) {
+				b1 = b1.combine(buckets[j].bounds);
+				c1 += buckets[j].count;
+			}
+			cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
 		}
 
-		root->bounds.combine(computeBoundsMulti(roots));
+		float minCost = cost[0];
+		int minCostSplitBucket = 0;
+		for (int i = 0; i < nb; ++i) {
+			if (cost[i] < minCost) {
+				minCost = cost[i];
+				minCostSplitBucket = i;
+			}
+		}
+		float leafCost = numPrims;		
+		//node->initInterior(axis, recursiveBuild(start, mid, totalNodes, orderedPrims), recursiveBuild(mid, end, totalNodes, orderedPrims));
+		return BvhStepInfo(node, mid, axis);		
+	}
 
-		prims = std::move(ops);*/
+	BvhSystem::BvhStepInfo BvhSystem::buildStepCulled(int start, int end, int* totalNodes)
+	{
+		*totalNodes += 1;
+		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
+		BVHBounds bounds = computeCulledBounds(start, end);
+
+		//Check if leaf
+		int numPrims = end - start;
+		//int prevOrdered = orderedPrims.size();
+
+		//Not a leaf, create a new node
+
+		BVHBounds centroid = computeCulledBounds(start, end);
+		int axis = chooseAxis(centroid.center);
+		int mid = (start + end) >> 1;
+
+		artemis::ComponentMapper<PrimitiveComponent>* ptm = &primMapper;
+		//Perform the Surface Area Heuristic
+		constexpr int numBuckets = 12;
+		BVHBucket buckets[numBuckets];
+		for (int i = start; i < end; ++i) {
+			PrimitiveComponent* pc = ptm->get(*culled_prims[i]);
+			BVHBounds tempBounds = BVHBounds(pc->center(), pc->aabbExtents);
+			int b = numBuckets * centroid.Offset(pc->center(), axis);
+			if (b == numBuckets) b--;
+			buckets[b].count++;
+			buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
+		}
+
+		constexpr int nb = numBuckets - 1;
+		float cost[nb];
+		for (int i = 0; i < nb; ++i) {
+			BVHBounds b0, b1;
+			int c0 = 0, c1 = 0;
+
+			for (int j = 0; j <= i; ++j) {
+				b0 = b0.combine(buckets[j].bounds);
+				c0 += buckets[j].count;
+			}
+			for (int j = i + 1; j < numBuckets; ++j) {
+				b1 = b1.combine(buckets[j].bounds);
+				c1 += buckets[j].count;
+			}
+			cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
+		}
+
+		float minCost = cost[0];
+		int minCostSplitBucket = 0;
+		for (int i = 0; i < nb; ++i) {
+			if (cost[i] < minCost) {
+				minCost = cost[i];
+				minCostSplitBucket = i;
+			}
+		}
+		float leafCost = numPrims;
+		//node->initInterior(axis, recursiveBuild(start, mid, totalNodes, orderedPrims), recursiveBuild(mid, end, totalNodes, orderedPrims));
+		return BvhStepInfo(node, mid, axis);
 	}
 
 	//(Recall that the number of nodes in a BVH is bounded by twice the number of leaf nodes, which in turn is bounded by the number of primitives)
@@ -291,6 +618,130 @@ namespace Principia {
 		//return std::unique_ptr<BVHNode>();
 	}
 
+	BVHNode* BvhSystem::recursiveBuildCulled(int start, int end, int* totalNodes, std::vector<artemis::Entity*>& orderedPrims)
+	{
+		*totalNodes += 1;
+		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
+		BVHBounds bounds = computeCulledBounds(start, end);
+
+		//Check if leaf
+		int numPrims = end - start;
+		int prevOrdered = orderedPrims.size();
+		if (numPrims < MAX_BVH_OBJECTS) { //create leaf
+			for (int i = start; i < end; ++i)
+				orderedPrims.emplace_back(culled_prims[i]);
+			node->initLeaf(prevOrdered, numPrims, bounds);
+		}
+		//Not a leaf, create a new node
+		else {
+			BVHBounds centroid = computeCulledBounds(start, end);
+			int axis = chooseAxis(centroid.center);
+			int mid = (start + end) >> 1;
+
+			//edgecase
+			if (centroid.max()[axis] == centroid.min()[axis]) {
+				for (int i = start; i < end; ++i)
+					orderedPrims.emplace_back(culled_prims[i]);
+				node->initLeaf(prevOrdered, numPrims, bounds);
+				return node;
+			}
+			else {
+				artemis::ComponentMapper<PrimitiveComponent>* ptm = &primMapper;
+				switch (splitMethod) {
+				case SplitMethod::Middle: {
+					artemis::Entity** midPtr = std::partition(&culled_prims[start], &culled_prims[end - 1] + 1, [axis, centroid, ptm](artemis::Entity* a) {
+						return ptm->get(*a)->center()[axis] < centroid.center[axis];
+						});
+					mid = midPtr - &culled_prims[0];
+				}
+				case SplitMethod::EqualsCounts: {
+					std::nth_element(&culled_prims[start], &culled_prims[mid], &culled_prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
+						return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
+						});
+				}
+				case SplitMethod::SAH: {
+					if (numPrims <= MAX_BVH_OBJECTS) {
+						mid = (start + end) >> 1;
+						std::nth_element(&culled_prims[start], &culled_prims[mid], &culled_prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
+							return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
+							});
+					}
+					else {
+						//initialize the buckets
+						constexpr int numBuckets = 12;
+						BVHBucket buckets[numBuckets];
+						for (int i = start; i < end; ++i) {
+							PrimitiveComponent* pc = ptm->get(*culled_prims[i]);
+							BVHBounds tempBounds = BVHBounds(pc->center(), pc->aabbExtents);
+							int b = numBuckets * centroid.Offset(pc->center(), axis);
+							if (b == numBuckets) b--;
+							buckets[b].count++;
+							buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
+						}
+
+						constexpr int nb = numBuckets - 1;
+						float cost[nb];
+						for (int i = 0; i < nb; ++i) {
+							BVHBounds b0, b1;
+							int c0 = 0, c1 = 0;
+
+							for (int j = 0; j <= i; ++j) {
+								b0 = b0.combine(buckets[j].bounds);
+								c0 += buckets[j].count;
+							}
+							for (int j = i + 1; j < numBuckets; ++j) {
+								b1 = b1.combine(buckets[j].bounds);
+								c1 += buckets[j].count;
+							}
+							cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
+						}
+
+						float minCost = cost[0];
+						int minCostSplitBucket = 0;
+						for (int i = 0; i < nb; ++i) {
+							if (cost[i] < minCost) {
+								minCost = cost[i];
+								minCostSplitBucket = i;
+							}
+						}
+						float leafCost = numPrims;
+						if (numPrims > MAX_BVH_OBJECTS || minCost < leafCost) {
+							artemis::Entity** midPtr = std::partition(&culled_prims[start], &culled_prims[end - 1] + 1, [axis, centroid, ptm, minCostSplitBucket, numBuckets](artemis::Entity* a) {
+								int b = (numBuckets)*centroid.Offset(ptm->get(*a)->center(), axis);
+								if (b == numBuckets) b = numBuckets - 1;
+								return b <= minCostSplitBucket;
+
+								});
+							mid = midPtr - &culled_prims[0];
+							if (mid != start && mid != end)
+								break;
+							else {
+								for (int i = start; i < end; ++i)
+									orderedPrims.emplace_back(culled_prims[i]);
+								node->initLeaf(prevOrdered, numPrims, bounds);
+								return node;
+							}
+
+						}
+						else { //create leaf
+							for (int i = start; i < end; ++i)
+								orderedPrims.emplace_back(culled_prims[i]);
+							node->initLeaf(prevOrdered, numPrims, bounds);
+							return node;
+						}
+					}
+				}
+				default:
+					break;
+				}
+
+				node->initInterior(axis, recursiveBuildCulled(start, mid, totalNodes, orderedPrims), recursiveBuildCulled(mid, end, totalNodes, orderedPrims));
+			}
+		}
+		return node;
+		//return std::unique_ptr<BVHNode>();
+	}
+
 	BVHNode* BvhSystem::hlbvhBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*>& orderedPrims)
 	{
 		// Compute bounding box of all primitive centroids
@@ -366,6 +817,22 @@ namespace Principia {
 		return BVHBounds(c, ex);
 	}
 
+	BVHBounds BvhSystem::computeCulledBounds(int s, int e)
+	{
+		glm::vec3 min(FLT_MAX);
+		glm::vec3 max(-FLT_MAX);
+//#pragma omp parallel for
+		for (int i = s; i < e; ++i) {
+			PrimitiveComponent* pc = primMapper.get(*culled_prims[i]);
+			min = tulip::minV(min, pc->center() - glm::vec3(pc->aabbExtents));
+			max = tulip::maxV(max, pc->center() + glm::vec3(pc->aabbExtents));
+		}
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 ex = max - c;
+
+		return BVHBounds(c, ex);
+	}
+
 	BVHBounds BvhSystem::computeCentroidBounds(int s, int e)
 	{
 		//make an aabb of the entire scene basically
@@ -393,12 +860,44 @@ namespace Principia {
 		else return 2;
 	}
 
-	BVHBounds BvhSystem::computeBoundsMulti(std::array<std::shared_ptr<BVHNode>, 4> nodes)
+	BVHBounds BvhSystem::computeBoundsMulti(int s, int e) 
 	{
-		BVHBounds ret;
-		for (int i = 0; i < 4; ++i)
-			ret.combine(nodes[i]->bounds);
-		return ret;
+		glm::vec3 min(FLT_MAX);
+		glm::vec3 max(-FLT_MAX);
+#pragma omp parallel for
+		for (int i = s; i < e; ++i) {
+			min = tulip::minV(min, prim_comps[i]->center() - prim_comps[i]->aabbExtents);
+			max = tulip::maxV(max, prim_comps[i]->center() + prim_comps[i]->aabbExtents);
+		}
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 ex = max - c;
+
+		return BVHBounds(c, ex);
+	}
+
+	BVHBounds BvhSystem::computeCentroidBoundsMulti(int s, int e) 
+	{
+		glm::vec3 min(FLT_MAX);
+		glm::vec3 max(-FLT_MAX);
+#pragma omp parallel for
+		for (int i = s; i < e; ++i) {
+			min = tulip::minV(min, prim_comps[i]->center() - prim_comps[i]->aabbExtents);
+			max = tulip::maxV(max, prim_comps[i]->center() + prim_comps[i]->aabbExtents);
+		}
+		glm::vec3 c = (max + min) * 0.5f;
+		glm::vec3 ex = max - c;
+
+		return BVHBounds(c, ex);
+	}
+
+
+	void BvhSystem::FrustrumCull(artemis::Entity &e) {
+		/*
+		auto cam_pos = cc->rotM[3];
+#pragma omp parallel for
+		for (int i = 0; i < prims.size(); ++i) {
+			auto diff = glm::distance2(cam_pos)
+		}*/
 	}
 
 }
