@@ -1,15 +1,1 @@
-﻿  main.cpp
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\bvh.hpp(213,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\bvh.hpp(245,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\bvh.hpp(254,13): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\xxhash\xxhash.hpp(665,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Lib\xxhash\xxhash.hpp(671,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\main.cpp(163,38): warning C4101: 'numNodes': unreferenced local variable
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\main.cpp(510,29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\main.cpp(511,24): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\main.cpp(528,40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating code
-  Previous IPDB not found, fall back to full compilation.
-  All 2485 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  Finished generating code
-  ModelConverter.vcxproj -> C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\Release\ModelConverter.exe
+﻿  ModelConverter.vcxproj -> C:\dev\PrincipiumGames\PrincipiaEngine\Tools\ModelConverter\Release\ModelConverter.exe
