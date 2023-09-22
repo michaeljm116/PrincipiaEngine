@@ -172,21 +172,23 @@ namespace Principia {
 		physics->solver = new btSequentialImpulseConstraintSolver;
 		//physics->dynamicsWorld = new btSimpleDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
 		physics->dynamicsWorld = new btDiscreteDynamicsWorld(physics->dispatcher, physics->overlappingPairCache, physics->solver, physics->collisionConfiguration);
-		physics->dynamicsWorld->setGravity(btVector3(0, -10, 0));
+		physics->dynamicsWorld->setGravity(btVector3(0, -100, 0));
 		world->getSingleton()->addComponent(physics);
+
+
 		//Add ground for now
 		//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);// new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
 		//collisionShapes.push_back(groundShape);
 		//btTransform groundTransform;
 		//groundTransform.setIdentity();
-		//groundTransform.setOrigin(btVector3(8, -6 + 1.5f, 8));
+		//groundTransform.setOrigin(btVector3(8, 0, 8));
 		//btScalar mass(0.);
 		//btVector3 localInertia(0, 0, 0);
 		//btDefaultMotionState* myMotionState = new btDefaultMotionState(groundTransform);
 		//btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, groundShape, localInertia);
 		//btRigidBody* body = new btRigidBody(rbInfo);
 
-		//dynamicsWorld->addRigidBody(body);
+		//physics->dynamicsWorld->addRigidBody(body);
 	}
 
 	void CollisionSystem::bulletAdded(artemis::Entity& e)
@@ -202,13 +204,19 @@ namespace Principia {
 		case CollisionType::Sphere:  shape = new btSphereShape(btScalar(col->extents.x)); break;
 		case CollisionType::Capsule: shape = new btCapsuleShape(col->extents.x, col->extents.y); break;
 		case CollisionType::Ghost:	 shape = new btSphereShape(btScalar(col->extents.x)); break;
+		case CollisionType::Plane:	 
+			shape = new btStaticPlaneShape(btVector3(0, 1, 0), 0); mass = 0.f; break;
 		default: break;
 		}
 
 		physics->collisionShapes.push_back(shape);
+		//if (col->type == CollisionType::Plane)
+		//bullet_trans.setOrigin(btVector3(tc->local.position.x, tc->local.position.y + tc->local.scale.y + 0.5f, tc->local.position.z));
 		btDefaultMotionState* ms = new btDefaultMotionState(g2bt(tc->TRM));
 		btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, ms, shape, inertia);
 		btRigidBody* body = new btRigidBody(rbInfo);
+		if(mass == 10.f)
+			body->setGravity(btVector3(0, 0, 0));
 		if(col->type == CollisionType::Ghost)body->setCollisionFlags(btCollisionObject::CO_GHOST_OBJECT);
 
 		auto isDynamic = ((DynamicComponent*)e.getComponent<DynamicComponent>() != nullptr);

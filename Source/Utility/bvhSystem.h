@@ -39,6 +39,7 @@ namespace Principia {
 		std::vector<PrimitiveComponent*> culled_prim_comps;
 		SplitMethod splitMethod = SplitMethod::SAH;
 		BVHNode* root;
+		size_t arena_ptr = 0;
 		int totalNodes;
 		std::array<int, 4> totalNodesMulti;
 		std::array<std::shared_ptr<BVHNode>,4> roots;

@@ -33,12 +33,10 @@ namespace Principia {
 			assert(nc != nullptr);
 			eR = SavePrefab(pc->dir + pc->name, nc);
 		}
-		else
+		else if(pc->load_needed)
 		{
 			eR = LoadPrefab(pc->dir + pc->name, &e);
 		}
-		
-		e.removeComponent<PrefabComponent>();
 	}
 
 	void PrefabSystem::processEntity(artemis::Entity & e)

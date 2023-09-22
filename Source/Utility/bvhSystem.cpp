@@ -11,10 +11,14 @@ namespace Principia {
 		addComponentType<NodeComponent>();
 		addComponentType<TransformComponent>();
 		addComponentType<PrimitiveComponent>();
+
+		root = (BVHNode*)malloc(sizeof(BVHNode) * 0x8000);
 	}
 
 	BvhSystem::~BvhSystem()
 	{
+		if(root)
+		delete(root);
 	}
 
 	void BvhSystem::initialize()
@@ -26,7 +30,9 @@ namespace Principia {
 
 	void BvhSystem::build()
 	{
-		
+		if (!rebuild)
+			//delete root;
+			arena_ptr = 0;
 		//if (rebuild) {
 		std::vector<artemis::Entity*> orderedPrims;
 
@@ -497,7 +503,7 @@ namespace Principia {
 	BVHNode* BvhSystem::recursiveBuild(int start, int end, int * totalNodes, std::vector<artemis::Entity*> &orderedPrims)
 	{
 		*totalNodes += 1;
-		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
+		BVHNode* node = new(root, arena_ptr) BVHNode(); // new BVHNode(root, arena_ptr);//(new BVHNode);// std::make_shared<BVHNode>();
 		BVHBounds bounds = computeBounds(start, end);
 
 		//Check if leaf

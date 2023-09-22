@@ -103,6 +103,15 @@ namespace Principia {
 			splitAxis = axis;
 			nPrims = 0;
 		}
+		
+		void* operator new (size_t s, BVHNode* arena, size_t& curr) {
+			curr += s;
+			return arena + curr - s;
+		}
+
+		void* operator new (size_t s) {
+			return new BVHNode();
+		}
 	};
 
 	struct ssBVHNode {

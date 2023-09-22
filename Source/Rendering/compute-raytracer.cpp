@@ -579,17 +579,17 @@ namespace Principia {
 
 	void ComputeRaytracer::SetStuffUp()
 	{
-		camera_.type = Camera::CameraType::lookat;
-		camera_.setPerspective(13.0f, 1280.f / 720.f, 0.1f, 1256.0f);
-		camera_.setRotation(glm::vec3(35.0f, 90.0f, 45.0f));
-		camera_.setTranslation(glm::vec3(0.0f, 0.0f, -4.0f));
-		camera_.rotationSpeed = 0.0f;
-		camera_.movementSpeed = 7.5f;
+		//camera_.type = Camera::CameraType::lookat;
+		//camera_.setPerspective(13.0f, 1280.f / 720.f, 0.1f, 1256.0f);
+		//camera_.setRotation(glm::vec3(35.0f, 90.0f, 45.0f));
+		//camera_.setTranslation(glm::vec3(0.0f, 0.0f, -4.0f));
+		//camera_.rotationSpeed = 0.0f;
+		//camera_.movementSpeed = 7.5f;
 
-		compute_.ubo.aspect_ratio = camera_.aspect;
+		compute_.ubo.aspect_ratio = 1280.f / 720.f;// camera_.aspect;
 		//compute_.ubo.lookat = glm::vec3(1.f, 1.f, 1.f);// testScript.vData[6];// camera_.rotation;
 		//compute_.ubo.pos = camera_.position * -1.0f;
-		compute_.ubo.fov = glm::tan(camera_.fov * 0.03490658503); //0.03490658503 = pi / 180 / 2
+		compute_.ubo.fov = glm::tan(13.f * 0.03490658503); //0.03490658503 = pi / 180 / 2
 		compute_.ubo.rotM = glm::mat4();
 		compute_.ubo.rand = random_int();
 	}

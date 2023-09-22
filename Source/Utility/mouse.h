@@ -42,7 +42,7 @@ namespace Principia {
 		int prevY;
 
 		int buttons[12];
-		int buttons_prev[12];
+		//int buttons_prev[12];
 
 		double scroll;
 		bool   active;
