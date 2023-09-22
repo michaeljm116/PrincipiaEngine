@@ -2,6 +2,7 @@
 #include "../Physics/Components/collisionComponent.h"
 #include "../Physics/Components/dynamicComponent.h"
 #include "../Physics/Components/staticComponent.h"
+#include "prefabComponent.h"
 
 
 #pragma once
@@ -53,6 +54,27 @@ namespace Principia {
 			pTransform->InsertEndChild(pScale);
 
 			pNode->InsertEndChild(pTransform);
+		}
+		if (parent->engineFlags & COMPONENT_PREFAB) {
+			auto* prefab_component = (PrefabComponent*)parent->data->getComponent<PrefabComponent>();
+			//If you don't want this prefab serialized, make sure it can't be serialized
+			if (!prefab_component->can_serialize) {
+				parent->engineFlags = COMPONENT_TRANSFORM | COMPONENT_PREFAB;
+			}
+			XMLElement* prefab_element = doc->NewElement("Prefab");
+			XMLElement* prefab_file = doc->NewElement("FilePath");
+			XMLElement* prefab_options = doc->NewElement("PrefabOptions");
+
+			prefab_file->SetAttribute("name", prefab_component->name.c_str());
+			prefab_file->SetAttribute("dir", prefab_component->dir.c_str());
+			prefab_options->SetAttribute("save", prefab_component->save);
+			prefab_options->SetAttribute("load", prefab_component->load_needed);
+			prefab_options->SetAttribute("serialize", prefab_component->can_serialize);
+
+			prefab_element->InsertFirstChild(prefab_file);
+			prefab_element->InsertEndChild(prefab_options);
+			
+			pNode->InsertEndChild(prefab_element);
 		}
 		if (parent->engineFlags & COMPONENT_GUI) {
 			GUIComponent* gui;
@@ -191,7 +213,6 @@ namespace Principia {
 
 	void SerializeNode::loadNode(tinyxml2::XMLElement * node, artemis::Entity* e)
 	{
-
 		const char* name;
 		bool hasChildren;
 		int eFlags;
@@ -249,6 +270,22 @@ namespace Principia {
 		else {
 			 e->addComponent(new TransformComponent());
 			n->engineFlags |= COMPONENT_TRANSFORM;
+		}
+		if (eFlags & COMPONENT_PREFAB) {
+			const char* name; const char* dir;
+			bool save; bool load_needed; bool can_serialize;
+			XMLElement* prefab_element  = node->FirstChildElement("Prefab");
+			XMLElement* prefab_file		= prefab_element->FirstChildElement("FilePath");
+			XMLElement* prefab_options	= prefab_element->FirstChildElement("PrefabOptions");
+			
+			prefab_file->QueryStringAttribute("name", &name);
+			prefab_file->QueryStringAttribute("dir", &dir);
+			prefab_options->QueryBoolAttribute("save", &save);
+			prefab_options->QueryBoolAttribute("load", &load_needed);
+			prefab_options->QueryBoolAttribute("serialize", &can_serialize);
+			
+			e->addComponent(new PrefabComponent(name, dir, save, load_needed, can_serialize));
+
 		}
 		if (eFlags & COMPONENT_GUI) {
 			glm::vec2 pos;
@@ -380,6 +417,12 @@ namespace Principia {
 		}
 		if (eFlags & COMPONENT_RIGIDBODY) {
 			//insertRigidBody(n);
+		}
+		if (eFlags & COMPONENT_PREFAB) {
+			XMLElement* prefab = node->FirstChildElement("Prefab");
+			std::string name;
+			std::string dir;
+			bool save; bool load; bool can_serialize;
 		}
 		//if (eFlags & COMPONENT_CCONTROLLER) {
 		//	//XMLElement* cont = node->FirstChildElement("Controller");

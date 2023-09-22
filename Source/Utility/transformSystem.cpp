@@ -58,6 +58,12 @@ namespace Principia {
 	{
 		TransformComponent* tc = transformMapper.get(e);
 		NodeComponent* nc = nodeMapper.get(e);
+		if (nc->name == "Player") { 
+			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
+			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
+			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
+			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
+		}
 		//if (nc->isParent)// && nc->isDynamic)
 		//if (nc->isDynamic)
 			SQTTransform(nc);// recursiveTransform(nc);

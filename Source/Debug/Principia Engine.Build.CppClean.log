@@ -1,18 +1,5 @@
 c:\dev\principiumgames\shinyafroman\debug\principia engine.pdb
 c:\dev\principiumgames\shinyafroman\debug\principia engine.idb
-c:\dev\principiumgames\principiaengine\source\debug\selectable-gui-system.obj
-c:\dev\principiumgames\principiaengine\source\debug\input.obj
-c:\dev\principiumgames\principiaengine\source\debug\compute-raytracer.obj
-c:\dev\principiumgames\principiaengine\source\debug\texture.obj
-c:\dev\principiumgames\principiaengine\source\debug\renderbase.obj
-c:\dev\principiumgames\principiaengine\source\debug\window.obj
-c:\dev\principiumgames\principiaengine\source\debug\bvhsystem.obj
-c:\dev\principiumgames\principiaengine\source\debug\prefabsystem.obj
-c:\dev\principiumgames\principiaengine\source\debug\serialize-node.obj
-c:\dev\principiumgames\principiaengine\source\debug\transformsystem.obj
-c:\dev\principiumgames\principiaengine\source\debug\rendersystem.obj
-c:\dev\principiumgames\principiaengine\source\debug\principia engine.pch
-c:\dev\principiumgames\principiaengine\source\debug\pch.obj
 c:\dev\principiumgames\principiaengine\source\debug\btcompoundcompoundcollisionalgorithm.obj
 c:\dev\principiumgames\principiaengine\source\debug\btcompoundcollisionalgorithm.obj
 c:\dev\principiumgames\principiaengine\source\debug\btcollisionworldimporter.obj
@@ -173,6 +160,7 @@ c:\dev\principiumgames\principiaengine\source\debug\btserializer.obj
 c:\dev\principiumgames\principiaengine\source\debug\btquickprof.obj
 c:\dev\principiumgames\principiaengine\source\debug\btpolardecomposition.obj
 c:\dev\principiumgames\principiaengine\source\debug\btgeometryutil.obj
+c:\dev\principiumgames\principiaengine\source\debug\compute-raytracer.obj
 c:\dev\principiumgames\principiaengine\source\debug\immovablesystem.obj
 c:\dev\principiumgames\principiaengine\source\debug\gridsystem.obj
 c:\dev\principiumgames\principiaengine\source\debug\gravitysystem.obj
@@ -193,16 +181,27 @@ c:\dev\principiumgames\principiaengine\source\debug\delayedentityprocessingsyste
 c:\dev\principiumgames\principiaengine\source\debug\componenttypemanager.obj
 c:\dev\principiumgames\principiaengine\source\debug\componenttype.obj
 c:\dev\principiumgames\principiaengine\source\debug\timer.obj
+c:\dev\principiumgames\principiaengine\source\debug\input.obj
+c:\dev\principiumgames\principiaengine\source\debug\prefabsystem.obj
+c:\dev\principiumgames\principiaengine\source\debug\serialize-node.obj
+c:\dev\principiumgames\principiaengine\source\debug\selectable-gui-system.obj
 c:\dev\principiumgames\principiaengine\source\debug\script-system.obj
+c:\dev\principiumgames\principiaengine\source\debug\texture.obj
+c:\dev\principiumgames\principiaengine\source\debug\renderbase.obj
+c:\dev\principiumgames\principiaengine\source\debug\principia engine.pch
+c:\dev\principiumgames\principiaengine\source\debug\pch.obj
+c:\dev\principiumgames\principiaengine\source\debug\window.obj
+c:\dev\principiumgames\principiaengine\source\debug\transformsystem.obj
 c:\dev\principiumgames\principiaengine\source\debug\resourcemanager.obj
+c:\dev\principiumgames\principiaengine\source\debug\bvhsystem.obj
+c:\dev\principiumgames\principiaengine\source\debug\rendersystem.obj
 c:\dev\principiumgames\principiaengine\source\rendering\shaders\raytracing.comp.spv
 c:\dev\principiumgames\shinyafroman\debug\principia engine.lib
+c:\dev\principiumgames\principiaengine\source\debug\bvhsystem.new.obj.enc
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.command.1.tlog
+c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.items.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.read.1.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.write.1.tlog
-c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\clang-cl.18736.write.1.tlog
-c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\clang-cl.command.1.tlog
-c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\clang-cl.read.1.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\custombuild.command.1.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\custombuild.read.1.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\custombuild.write.1.tlog

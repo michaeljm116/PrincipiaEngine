@@ -41,3 +41,16 @@
 
 Pong\
 Assimp
+
+# mo ish
+Source/.vs/
+Source/x64/
+Source/Debug/
+Source/Release/
+Tools/ModelConverter/Debug/
+Tools/ModelConverter/Release/
+Tools/ModelConverter/x64/
+Tools/SceneTest/Debug/
+Tools/SceneTest/x64/
+Tools/SceneTester/Debug/
+Tools/SceneTester/x64/

@@ -14,7 +14,8 @@ namespace Principia {
 		Box = 0x01, 
 		Capsule = 0x02,
 		Other = 0x03,
-		Ghost = 0x04
+		Ghost = 0x04,
+		Plane = 0x05
 	};
 	
 	//This component is passed to any entity you wish to have collisions with
@@ -27,6 +28,8 @@ namespace Principia {
 		glm::vec3 extents;
 		glm::vec3 position;
 		glm::vec3 local;
+		CollisionComponent(CollisionComponent* cc) : position(cc->position), local(cc->local), extents(cc->extents), type(cc->type),
+													 mass(cc->mass), body(cc->body), id(cc->id), checked(cc->checked) {}
 		CollisionComponent(glm::vec3 p, glm::vec3 l, glm::vec3 e, CollisionType t) : position(p),local(l), extents(e), type(t) { }
 		CollisionComponent(glm::vec3 pos, glm::vec3 e, CollisionType t) : local(pos), extents(e), type(t){ }
 		CollisionComponent(glm::vec4 pos, glm::vec4 e, CollisionType t) : local(glm::vec3(pos)), extents(glm::vec3(e)), type(t) {}
