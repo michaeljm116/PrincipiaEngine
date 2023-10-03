@@ -17,17 +17,17 @@ namespace Principia {
 		Texture(std::string p) : path(p) {};
 		~Texture();
 
-		VkImage image;
-		VkImageView view;
-		VkImageLayout imageLayout;
-		VkDeviceMemory memory;
-		VkSampler sampler;
-		int width, height;
-		uint32_t mipLevels;
-		uint32_t layerCount;
-		VkDescriptorImageInfo descriptor;
-		std::string path;
-		VkDescriptorSet descriptor_set;
+		VkImage image = VkImage();
+		VkImageView view = VkImageView();
+		VkImageLayout imageLayout = VkImageLayout();
+		VkDeviceMemory memory = VkDeviceMemory();
+		VkSampler sampler = VkSampler();
+		int width = 0, height = 0;
+		uint32_t mipLevels = 0;
+		uint32_t layerCount = 0;
+		VkDescriptorImageInfo descriptor = VkDescriptorImageInfo();
+		std::string path = "";
+		VkDescriptorSet descriptor_set = VkDescriptorSet();
 		//VulkanDevice* device;
 
 		void destroy(VkDevice& device);
@@ -36,30 +36,32 @@ namespace Principia {
 	};
 
 	struct PrPixel {
-		unsigned char r, g, b, a = 1;
+		unsigned char r = 0, g = 0, b = 0, a = 1;
 		unsigned char& operator[](int i) {
 			assert(i > -1 && i < 4);
 			return *(&r + i);
 		}
+		PrPixel() {};
 	};
 
 	struct PrImage {
-		int width, height, channels;
-		std::vector<std::vector<PrPixel>> data;
+		int width = 0, height = 0, channels = 0;
+		std::vector<std::vector<PrPixel>> data = std::vector<std::vector<PrPixel>>();
 		PrImage(int image_width, int image_height, int image_channels) : width(image_width), height(image_height), channels(image_channels) {
 			data = std::vector(width, std::vector<PrPixel>(height));
 		}
 		PrImage(std::string txtr_file) {
 			LoadPrImageFromTexture(txtr_file);
 		}
+		PrImage() {};
 		void LoadPrImageFromTexture(std::string txtr_file) {
 			stbi_uc* pixels = stbi_load(txtr_file.c_str(), &width, &height, &channels,0);
 			data = std::vector(width, std::vector<PrPixel>(height));
-			unsigned int i, j, k;
+			int i, j, k;
 			for (k = 0; k < channels; ++k) {
 				for (j = 0; j < height; ++j) {
 					for (i = 0; i < width; ++i) {
-						unsigned int index = k + channels * i + channels * width * j;
+						 int index = k + channels * i + channels * width * j;
 						data[i][j][k] = pixels[index];
 					}
 				}

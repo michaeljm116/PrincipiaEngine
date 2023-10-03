@@ -1,24 +1,10 @@
 #pragma once
-#ifndef RENDERCOMPONENTS_HPP
-#define RENDERCOMPONENTS_HPP
 
 #include <Artemis/Artemis.h>
 #include <glm/glm.hpp>
 #include <vector>
-#include "vulkan/vulkan.h"
 #include <array>
-
-//enum class ObjectType {
-//	Sphere,
-//	Box,
-//	Plane,
-//	Cylinder,
-//	Cone,
-//	Mesh,
-//	Light,
-//	Camera,
-//	None
-//};
+#include "vulkan/vulkan.h"
 
 namespace Principia {
 
@@ -40,121 +26,113 @@ namespace Principia {
 	};
 
 	struct RenderComponent : artemis::Component {
-		RenderType type;
+		RenderType type = RENDER_NONE;
 		RendererType renderer = kComputeRaytracer;
-		RenderComponent() {};
-		RenderComponent(RenderType t) : type(t) {};
+		RenderComponent() = default;
+		RenderComponent(RenderType t) : type(t) {}
 	};
 
 	struct SphereComponent : artemis::Component {
-		float radius;
-		int sphereIndex;
-
-		SphereComponent() {};
-		SphereComponent(float r) { radius = r; };
+		float radius = 0.0f;
+		int sphereIndex = 0;
+		SphereComponent() = default;
+		SphereComponent(float r) : radius(r) {}
 	};
 
 	struct BoxComponent : artemis::Component {
-		glm::vec3 center;
-		glm::vec3 extents;
-		int boxIndex;
-
-		BoxComponent() {};
-		BoxComponent(glm::vec3 c, glm::vec3 e) : center(c), extents(e) {};
+		glm::vec3 center{};
+		glm::vec3 extents{};
+		int boxIndex = 0;
+		BoxComponent() = default;
+		BoxComponent(glm::vec3 c, glm::vec3 e) : center(c), extents(e) {}
 	};
 
 	struct CylinderComponent : artemis::Component {
-		glm::vec3 top;
-		glm::vec3 bottom; 
-		float radius;
-		int cylinderIndex;
-
-		CylinderComponent() {};
-		CylinderComponent(glm::vec3 t, glm::vec3 b, float r) : top(t), bottom(b), radius(r) {};
+		glm::vec3 top{};
+		glm::vec3 bottom{};
+		float radius = 0.0f;
+		int cylinderIndex = 0;
+		CylinderComponent() = default;
+		CylinderComponent(const glm::vec3& t, const glm::vec3& b, float r) : top(t), bottom(b), radius(r) {}
 	};
 
-	struct  PlaneComponent : artemis::Component {
-		glm::vec3 normal;
-		float distance;
-		int planeIndex;
-
-		PlaneComponent() {};
-		PlaneComponent(glm::vec3 n, float d) :normal(n), distance(d) {};
+	struct PlaneComponent : artemis::Component {
+		glm::vec3 normal{};
+		float distance = 0.0f;
+		int planeIndex = 0;
+		PlaneComponent() = default;
+		PlaneComponent(const glm::vec3& n, float d) : normal(n), distance(d) {}
 	};
 
 	struct MeshComponent : artemis::Component {
-		int meshIndex;
-		int meshModelID;
-		int meshResourceIndex;
-		int uniqueID;
-
-		MeshComponent() {};
-		MeshComponent(int si) { meshIndex = si; };
-		MeshComponent(int id, int ri) : meshModelID(id), meshResourceIndex(ri) {};
+		int meshIndex = 0;
+		int meshModelID = 0;
+		int meshResourceIndex = 0;
+		int uniqueID = 0;
+		MeshComponent() = default;
+		explicit MeshComponent(int si) : meshIndex(si) {}
+		MeshComponent(int id, int ri) : meshModelID(id), meshResourceIndex(ri) {}
 	};
 
 	struct PrimitiveComponent : artemis::Component {
-		glm::mat4 world; //64bytes
-		glm::vec3 extents; //12bytes
-		glm::vec3 aabbExtents; //12bytes
-		int numChildren = 0; //4bytes;
-		
-		int id; //4bytes
-		int matId; //4bytes
+		glm::mat4 world{};
+		glm::vec3 extents{};
+		glm::vec3 aabbExtents{};
+		int numChildren = 0;
+		int id = 0;
+		int matId = 0;
 		int startIndex = 0;
 		int endIndex = 0;
-
-
-		PrimitiveComponent() {};
-		PrimitiveComponent(int i) : id(i) {};
-		inline glm::vec3 center() { return glm::vec3(world[3].x, world[3].y, world[3].z); };
+		PrimitiveComponent() = default;
+		explicit PrimitiveComponent(int i) : id(i) {}
+		inline glm::vec3 center() const { return glm::vec3(world[3].x, world[3].y, world[3].z); }
 	};
 
 	struct ModelComponent : artemis::Component {
-		int modelIndex;
-		int modelUniqueID;
-
-		ModelComponent() {};
-		ModelComponent(int n) { modelUniqueID = n; };
-		ModelComponent(int n, int id) { modelIndex = n; modelUniqueID = id; };
+		int modelIndex = 0;
+		int modelUniqueID = 0;
+		ModelComponent() = default;
+		explicit ModelComponent(int n) : modelUniqueID(n) {}
+		ModelComponent(int n, int id) : modelIndex(n), modelUniqueID(id) {}
 	};
 
 	enum class SelectableState {
-		Unselected, 
-		Released, 
-		Held, 
+		Unselected,
+		Released,
+		Held,
 		Pressed
 	};
+
 	struct Cmp_Selectable : artemis::Component {
-		SelectableState state;
+		SelectableState state = SelectableState::Unselected;
 		bool active = false;
 		bool reset = false;
 	};
 
 	struct GUIComponent : artemis::Component {
-		glm::vec2 min;
-		glm::vec2 extents;
-		glm::vec2 alignMin;
-		glm::vec2 alignExt;
-		int layer;
-		int id;
-		int ref;
+		glm::vec2 min{};
+		glm::vec2 extents{};
+		glm::vec2 alignMin{};
+		glm::vec2 alignExt{};
+		int layer = 0;
+		int id = 0;
+		int ref = 0;
 		float alpha = 0.f;
 		bool update = true;
-		//bool visible;
-		GUIComponent() {};
-		GUIComponent(glm::vec2 m, glm::vec2 e, glm::vec2 amin, glm::vec2 ae, int l, int i, float a) :
-			min(m), extents(e), alignMin(amin), alignExt(ae), layer(l), id(i), alpha(a) {};
+		GUIComponent() = default;
+		GUIComponent(const glm::vec2& m, const glm::vec2& e, const glm::vec2& amin, const glm::vec2& ae, int l, int i, float a) :
+			min(m), extents(e), alignMin(amin), alignExt(ae), layer(l), id(i), alpha(a) {}
 	};
+
 	struct GUINumberComponent : GUIComponent {
 		int number = 0;
 		int highest_active_digit_index = 0;
 		std::vector<int> shaderReferences;
-		GUINumberComponent() {};
-		GUINumberComponent(glm::vec2 m, glm::vec2 e, int n) { min = m; extents = e; number = n; alignMin = glm::vec2(0.0f, 0.0f); alignExt = glm::vec2(0.1f, 1.f); layer = 0; id = 0; };
-		GUINumberComponent(glm::vec2 m, glm::vec2 e, int n, float a) { min = m; extents = e; number = n; alignMin = glm::vec2(0.0f, 0.0f); alignExt = glm::vec2(0.1f, 1.f); layer = 0; id = 0; alpha = a; };
-
+		GUINumberComponent() = default;
+		GUINumberComponent(const glm::vec2& m, const glm::vec2& e, int n) : GUIComponent(m, e, glm::vec2(0.0f), glm::vec2(0.1f, 1.f), 0, 0, 0.f), number(n) {}
+		GUINumberComponent(const glm::vec2& m, const glm::vec2& e, int n, float a) : GUIComponent(m, e, glm::vec2(0.0f), glm::vec2(0.1f, 1.f), 0, 0, a), number(n) {}
 	};
+
 
 	struct Vertex {
 		glm::vec3 pos;
@@ -202,5 +180,3 @@ namespace Principia {
 	};
 
 }
-
-#endif // !GEOMETRY

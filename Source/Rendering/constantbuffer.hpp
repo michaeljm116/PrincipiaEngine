@@ -175,13 +175,13 @@ namespace Principia {
 
 	private:
 		VBuffer(const VBuffer<T>& rhs);
-		VBuffer<T>& operator=(const VBuffer<T>& rhs);
+		VBuffer<T>& operator=(const VBuffer<T>& rhs) {};
 
 	public:
-		bool mInitialized;
+		bool mInitialized = false;
 
-		VkBuffer buffer;
-		VkDeviceMemory bufferMemory;
+		VkBuffer buffer = {};
+		VkDeviceMemory bufferMemory = {};
 		VkDescriptorBufferInfo bufferInfo = {};
 	};
 

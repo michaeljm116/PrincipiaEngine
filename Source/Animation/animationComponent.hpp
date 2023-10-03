@@ -57,7 +57,7 @@ namespace Principia {
 		uint32_t startSet : 1;
 		uint32_t endSet : 1;
 
-		AnimFlags() {};
+		AnimFlags() { id = 0; loop = 0; forceStart = 0; forceEnd = 0; startSet = 0; endSet = 0; _pad = 0; };
 		//id, loop 1 = true, forcestart 1 = true, force end 1 = true
 		AnimFlags(int i, int l, int fs, int fe) {
 			id = i; loop = l; forceStart = fs; forceEnd = fe;

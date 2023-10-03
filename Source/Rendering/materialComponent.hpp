@@ -16,8 +16,8 @@ namespace Principia {
 		float		transparency;
 		float		refractiveIndex;*/
 
-		int			matID;
-		int			matUnqiueID;
+		int			matID = 0;
+		int			matUnqiueID = 0;
 
 		MaterialComponent() {};
 		MaterialComponent(int i) { matID = i; };

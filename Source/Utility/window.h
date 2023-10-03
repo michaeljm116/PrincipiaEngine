@@ -22,7 +22,13 @@ namespace Principia {
 			return instance;
 		}
 	private:
-		Window() {}
+		Window() {
+			window = nullptr;
+			primary = nullptr;
+			height = 720;
+			width = 1280;
+			maximized = false;
+		}
 
 	public:
 		void init();
@@ -48,7 +54,7 @@ namespace Principia {
 		int			height;
 		int			width;
 		bool		maximized;
-		const GLFWvidmode* mode;
+		const GLFWvidmode* mode = {};
 	};
 
 }

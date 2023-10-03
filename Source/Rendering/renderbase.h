@@ -16,14 +16,14 @@ namespace Principia {
 	};
 
 	struct VkDeviceInfo {
-		VulkanDevice *device;
-		VkQueue copyQueue;
-		VkRenderPass renderPass;
+		VulkanDevice* device = nullptr;
+		VkQueue copyQueue = VK_NULL_HANDLE;
+		VkRenderPass renderPass = VK_NULL_HANDLE;
 		std::vector<VkFramebuffer> framebuffers;
-		VkFormat colorFormat;
-		VkFormat depthFormat;
-		uint32_t width;
-		uint32_t height;
+		VkFormat colorFormat = VK_FORMAT_UNDEFINED;
+		VkFormat depthFormat = VK_FORMAT_UNDEFINED;
+		uint32_t width = 0;
+		uint32_t height = 0;
 	};
 
 	class RenderBase {
@@ -45,34 +45,33 @@ namespace Principia {
 			RenderBase* app = reinterpret_cast<RenderBase*>(glfwGetWindowUserPointer(window));
 			app->recreateSwapChain();
 		}
-		VulkanDevice vkDevice;
+		VulkanDevice vkDevice = {};
 
 	protected:
-		VkSurfaceKHR surface;
+		VkSurfaceKHR surface = VK_NULL_HANDLE;
+		VkImage depthImage = VK_NULL_HANDLE;
+		VkDeviceMemory depthImageMemory = VK_NULL_HANDLE;
+		VkImageView depthImageView = VK_NULL_HANDLE;
 
-		VkImage depthImage;
-		VkDeviceMemory depthImageMemory;
-		VkImageView depthImageView;
+		VkQueue graphicsQueue = VK_NULL_HANDLE;
+		VkQueue presentQueue = VK_NULL_HANDLE;
+		VkQueue computeQueue = VK_NULL_HANDLE;
 
-		VkQueue graphicsQueue;
-		VkQueue presentQueue;
-		VkQueue computeQueue;
-		
-		VkRenderPass renderPass;
-		VkPipelineCache	pipelineCache;
+		VkRenderPass renderPass = VK_NULL_HANDLE;
+		VkPipelineCache pipelineCache = VK_NULL_HANDLE;
 
-		VkSwapchainKHR swapChain;
+		VkSwapchainKHR swapChain = VK_NULL_HANDLE;
 		std::vector<VkImage> swapChainImages;
-		VkFormat swapChainImageFormat;
-		VkExtent2D swapChainExtent;
+		VkFormat swapChainImageFormat = VK_FORMAT_UNDEFINED;
+		VkExtent2D swapChainExtent = {};
 
 		std::vector<VkImageView> swapChainImageViews;
 		std::vector<VkFramebuffer> swapChainFramebuffers;
 		std::vector<VkCommandBuffer> commandBuffers;
-		VkCommandPool commandPool;
+		VkCommandPool commandPool = VK_NULL_HANDLE;
 
-		VkSemaphore imageAvailableSemaphore;
-		VkSemaphore renderFinishedSemaphore;
+		VkSemaphore imageAvailableSemaphore = VK_NULL_HANDLE;
+		VkSemaphore renderFinishedSemaphore = VK_NULL_HANDLE;
 
 	private:
 		void createInstance();

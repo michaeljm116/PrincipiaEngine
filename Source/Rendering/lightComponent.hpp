@@ -4,8 +4,8 @@
 
 namespace Principia {
 	struct LightComponent : public artemis::Component {
-		glm::vec3 color;
-		float intensity;
+		glm::vec3 color = glm::vec3(0);
+		float intensity = 0.f;
 		int id = 0;
 
 		LightComponent() {};

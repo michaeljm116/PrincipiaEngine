@@ -57,10 +57,10 @@ namespace Principia {
 
 		double x, y;
 		glfwGetCursorPos(window, &x, &y);
-		mouse.x = x;
-		mouse.prevX = x;
-		mouse.y = y;
-		mouse.prevY = y;
+		mouse.x = static_cast<int>(x);
+		mouse.prevX = static_cast<int>(x);
+		mouse.y = static_cast<int>(y);
+		mouse.prevY = static_cast<int>(y);
 
 		//set up timer
 		static auto startTime = std::chrono::high_resolution_clock::now();

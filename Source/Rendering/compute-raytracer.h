@@ -46,7 +46,7 @@ namespace Principia {
 		void TogglePlayMode(bool b) override;
 #pragma endregion 
 
-#pragma Compute exclusive Functions
+#pragma region Compute exclusive Functions
 		void UpdateBVH(std::vector<artemis::Entity*>& ordredPrims, BVHNode* root, int numNodes);
 		void UpdateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims);
 		int FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh);
@@ -58,6 +58,7 @@ namespace Principia {
 				if (i == l.id)
 					return l;
 			}
+			return lights_[0];
 		}
 
 		std::vector<int> intToArrayOfInts(const int& a) {
@@ -90,10 +91,10 @@ namespace Principia {
 
 		VkDescriptorPool descriptor_pool_;
 		struct {
-			VkDescriptorSetLayout descriptor_set_layout;
-			VkDescriptorSet descriptor_set;
-			VkPipelineLayout pipeline_layout;
-			VkPipeline pipeline;
+			VkDescriptorSetLayout descriptor_set_layout = VK_NULL_HANDLE;
+			VkDescriptorSet descriptor_set = VK_NULL_HANDLE;
+			VkPipelineLayout pipeline_layout = VK_NULL_HANDLE;
+			VkPipeline pipeline = VK_NULL_HANDLE;
 		}graphics_;
 
 		struct
@@ -114,19 +115,19 @@ namespace Principia {
 
 			} storage_buffers;
 
-			VkQueue queue;								// Separate queue for compute commands (queue family may differ from the one used for graphics)
-			VkCommandPool command_pool;					// Use a separate command pool (queue family may differ from the one used for graphics)
-			VkCommandBuffer command_buffer;				// Command buffer storing the dispatch commands and barriers
-			VkFence fence;								// Synchronization fence to avoid rewriting compute CB if still in use
-			VkDescriptorSetLayout descriptor_set_layout;	// Compute shader binding layout
-			VkDescriptorSet descriptor_set;				// Compute shader bindings
-			VkPipelineLayout pipeline_layout;			// Layout of the compute pipeline
-			VkPipeline pipeline;						// Compute raytracing pipeline
-			struct UBOCompute {							// Compute shader uniform block object
+			VkQueue queue = VK_NULL_HANDLE;
+			VkCommandPool command_pool = VK_NULL_HANDLE;
+			VkCommandBuffer command_buffer = VK_NULL_HANDLE;
+			VkFence fence = VK_NULL_HANDLE;
+			VkDescriptorSetLayout descriptor_set_layout = VK_NULL_HANDLE;
+			VkDescriptorSet descriptor_set = VK_NULL_HANDLE;
+			VkPipelineLayout pipeline_layout = VK_NULL_HANDLE;
+			VkPipeline pipeline = VK_NULL_HANDLE;
+			struct UBOCompute {
 				glm::mat4 rotM = glm::mat4(1);
 				float fov = 10.0f;
-				float aspect_ratio;
-				int rand;
+				float aspect_ratio = 1.0f; // Assuming 1.0 as default aspect ratio
+				int rand = 0;  // Assuming 0 as default random value
 			} ubo;
 			VBuffer<UBOCompute> uniform_buffer;			// Uniform buffer object containing scene data
 		} compute_;

@@ -455,9 +455,9 @@ namespace Principia {
 	void ComputeRaytracer::UpdateCamera(CameraComponent* c)
 	{
 		compute_.ubo.aspect_ratio = c->aspectRatio;
-		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503);
+		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503f);
 		compute_.ubo.rotM = c->rotM;
-		compute_.ubo.rand = random_int();
+		compute_.ubo.rand = static_cast<int>(random_int());
 		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
 	}
 
@@ -513,7 +513,7 @@ namespace Principia {
 
 
 		bvh_.resize(bvh->node_count);
-		for (int i = 0; i < bvh->node_count; ++i) {
+		for (size_t i = 0; i < bvh->node_count; ++i) {
 			auto thing = bvh->nodes[i].bounding_box_proxy();
 			auto min = thing.to_bounding_box().min;
 			auto max = thing.to_bounding_box().max;
@@ -589,9 +589,9 @@ namespace Principia {
 		compute_.ubo.aspect_ratio = 1280.f / 720.f;// camera_.aspect;
 		//compute_.ubo.lookat = glm::vec3(1.f, 1.f, 1.f);// testScript.vData[6];// camera_.rotation;
 		//compute_.ubo.pos = camera_.position * -1.0f;
-		compute_.ubo.fov = glm::tan(13.f * 0.03490658503); //0.03490658503 = pi / 180 / 2
+		compute_.ubo.fov = glm::tan(13.f * 0.03490658503f); //0.03490658503 = pi / 180 / 2
 		compute_.ubo.rotM = glm::mat4();
-		compute_.ubo.rand = random_int();
+		compute_.ubo.rand = static_cast<int>(random_int());
 	}
 
 	void ComputeRaytracer::CreateGraphicsPipeline()
@@ -827,7 +827,7 @@ namespace Principia {
 
 			vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
-			VkViewport viewport = vks::initializers::viewport(swapChainExtent.width, swapChainExtent.height, 0.0f, 1.0f);
+			VkViewport viewport = vks::initializers::viewport(static_cast<float>(swapChainExtent.width), static_cast<float>(swapChainExtent.height), 0.0f, 1.0f);
 			vkCmdSetViewport(commandBuffers[i], 0, 1, &viewport);
 
 			VkRect2D scissor = vks::initializers::rect2D(swapChainExtent.width, swapChainExtent.height, 0, 0);
@@ -991,10 +991,10 @@ namespace Principia {
 	{
 		RenderType t = ((RenderComponent*)e.getComponent<RenderComponent>())->type;// renderMapper.get(e)->type;
 
-		if (t == RENDER_MATERIAL) {
+		if (t & RENDER_MATERIAL) {
 
 		}
-		if (t == RENDER_PRIMITIVE) {
+		if (t & RENDER_PRIMITIVE) {
 			PrimitiveComponent* primComp = (PrimitiveComponent*)e.getComponent<PrimitiveComponent>();
 			//AABBComponent* aabb = (AABBComponent*)e.getComponent<AABBComponent>();
 			MaterialComponent* mat = (MaterialComponent*)e.getComponent<MaterialComponent>();
@@ -1011,7 +1011,7 @@ namespace Principia {
 
 			SetRenderUpdate(RenderUpdate::kUpdateObject);
 		}
-		if (t == RENDER_LIGHT) {
+		if (t & RENDER_LIGHT) {
 
 			LightComponent* lightComp = (LightComponent*)e.getComponent<LightComponent>();
 			TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
@@ -1030,7 +1030,7 @@ namespace Principia {
 			compute_.storage_buffers.lights.UpdateAndExpandBuffers(vkDevice, lights_, lights_.size());
 			//UpdateDescriptors();
 		}
-		if (t == RENDER_GUI) {
+		if (t & RENDER_GUI) {
 			GUIComponent* gc = (GUIComponent*)e.getComponent<GUIComponent>();
 			ssGUI gui = ssGUI(gc->min, gc->extents, gc->alignMin, gc->alignExt, gc->layer, gc->id);
 			gc->ref = guis_.size();
@@ -1038,10 +1038,11 @@ namespace Principia {
 			guis_.push_back(gui);
 			SetRenderUpdate(kUpdateGui);
 		}
-		if (t == RENDER_GUINUM) {
+		if (t & RENDER_GUINUM) {
 			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
 			std::vector<int> nums = intToArrayOfInts(gnc->number);
-			for (int i = 0; i < nums.size(); ++i) {
+			int num_size = static_cast<int>(nums.size());
+			for (int i = 0; i < num_size; ++i) {
 				ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
 				gnc->shaderReferences.push_back(guis_.size());
 				gui.alpha = gnc->alpha;
@@ -1050,7 +1051,7 @@ namespace Principia {
 			gnc->ref = gnc->shaderReferences[0];
 			SetRenderUpdate(kUpdateGui);
 		}
-		if (t == RENDER_CAMERA) {
+		if (t & RENDER_CAMERA) {
 			CameraComponent* cam = (CameraComponent*)e.getComponent<CameraComponent>();
 			TransformComponent* transComp = (TransformComponent*)e.getComponent<TransformComponent>();
 			compute_.ubo.aspect_ratio = cam->aspectRatio;
@@ -1063,7 +1064,7 @@ namespace Principia {
 	{
 		RenderType t = ((RenderComponent*)e.getComponent<RenderComponent>())->type;// renderMapper.get(e)->type;
 
-		if (t == RENDER_LIGHT) {
+		if (t & RENDER_LIGHT) {
 			if (lights_.size() == 1) {
 				lights_.clear();
 				light_comps_.clear();
@@ -1332,7 +1333,8 @@ namespace Principia {
 	void ComputeRaytracer::UpdateGuiNumber(GUINumberComponent* gnc)
 	{
 		std::vector<int> nums = intToArrayOfInts(gnc->number);
-		bool change_occured = nums.size() != gnc->highest_active_digit_index + 1;
+		int num_size = static_cast<int>(nums.size());
+		bool change_occured = num_size != gnc->highest_active_digit_index + 1;
 		if (change_occured == false) {
 			for (int i = 0; i < gnc->highest_active_digit_index + 1; ++i) {
 				guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
@@ -1340,34 +1342,34 @@ namespace Principia {
 			}
 		}
 		else {
- 			bool increased = nums.size() > gnc->highest_active_digit_index + 1;
+ 			bool increased = num_size > gnc->highest_active_digit_index + 1;
 			if (increased) {
-				bool needs_shader_ref = nums.size() > gnc->shaderReferences.size();
+				bool needs_shader_ref = num_size > gnc->shaderReferences.size();
 				if (needs_shader_ref) {
-					for (int i = nums.size() - gnc->shaderReferences.size(); i > 0; --i) {
-						ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[nums.size() - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
+					for (int i = num_size - gnc->shaderReferences.size(); i > 0; --i) {
+						ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[num_size - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
 						gnc->shaderReferences.push_back(guis_.size());
 						guis_.push_back(gui);
 					}
 					compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
 				}
-				for (int i = 0; i < nums.size(); ++i) {
+				for (int i = 0; i < num_size; ++i) {
 					guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
 					guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
-					guis_[gnc->shaderReferences[i]].min.x = gnc->min.x - ((nums.size() - 1 - i) * gnc->extents.x);
+					guis_[gnc->shaderReferences[i]].min.x = gnc->min.x - ((num_size - 1 - i) * gnc->extents.x);
 				}
-				gnc->highest_active_digit_index = nums.size() - 1;
+				gnc->highest_active_digit_index = num_size - 1;
 			}
 			else { //decreased
-				for (int i = 0; i < nums.size(); ++i) {
+				for (int i = 0; i < num_size; ++i) {
 					guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);
 					guis_[gnc->shaderReferences[i]].alpha = gnc->alpha;
-					guis_[gnc->shaderReferences[i]].min.x = gnc->min.x - ((nums.size() - 1 -  i) * gnc->extents.x);
+					guis_[gnc->shaderReferences[i]].min.x = gnc->min.x - ((num_size - 1 -  i) * gnc->extents.x);
 				}
-				for (int i = gnc->highest_active_digit_index; i > nums.size() - 1; --i) {
+				for (int i = gnc->highest_active_digit_index; i > num_size - 1; --i) {
 					guis_[gnc->shaderReferences[i]].alpha = 0;
 				}
-				gnc->highest_active_digit_index = nums.size() - 1;
+				gnc->highest_active_digit_index = num_size - 1;
 			}
 		}
 
