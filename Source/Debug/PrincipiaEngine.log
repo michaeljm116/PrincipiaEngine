@@ -1,51 +1,20 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
   compute-raytracer.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(201,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(59,18): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(60,19): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(61,20): warning C4018: '<': signed/unsigned mismatch
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(89,47): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(90,49): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(49,9): warning C4068: unknown pragma 'Compute'
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(458,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(460,33): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(516,21): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(592,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(594,33): warning C4244: '=': conversion from 'uint64_t' to 'int', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(830,92): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(830,69): warning C4244: 'argument': conversion from 'uint32_t' to 'float', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1044,22): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1322,21): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1343,34): warning C4018: '>': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1354,23): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1362,23): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1367,53): warning C4018: '>': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1323,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1347,38): warning C4018: '>': signed/unsigned mismatch
   Input.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(60,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(61,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(62,13): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp(63,17): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   selectable-gui-system.cpp
   Generating Code...
 cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
   renderSystem.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(201,17): warning C4244: 'initializing': conversion from 'std::streamoff' to 'size_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\vulkanbase.h(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(59,18): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(60,19): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.h(61,20): warning C4018: '<': signed/unsigned mismatch
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(89,47): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderer.h(90,49): warning C4244: '=': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(49,9): warning C4068: unknown pragma 'Compute'
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib

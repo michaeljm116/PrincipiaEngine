@@ -86,8 +86,8 @@ namespace Principia {
 			dev_info_.height = WINDOW.getHeight();
 		}
 		void UpdateSwapScale(float f) {
-			scaled_swap_.width = swapChainExtent.width * f;
-			scaled_swap_.height = swapChainExtent.height * f;
+			scaled_swap_.width = static_cast<uint32_t>((float)swapChainExtent.width * f);
+			scaled_swap_.height = static_cast<uint32_t>((float)swapChainExtent.height * f);
 		}
 		virtual void UpdateCamera(CameraComponent* c) = 0;
 		virtual void TogglePlayMode(bool b) = 0;

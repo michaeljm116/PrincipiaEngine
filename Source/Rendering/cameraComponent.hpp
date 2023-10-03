@@ -4,9 +4,9 @@
 
 namespace Principia {
 	struct CameraComponent : public artemis::Component {
-		float aspectRatio;
-		float fov;
-		glm::mat4 rotM;
+		float aspectRatio = 0.f;
+		float fov = 0.f;
+		glm::mat4 rotM = glm::mat4();
 
 		//float far;
 		//float near;
@@ -37,14 +37,14 @@ namespace Principia {
 	class Camera
 	{
 	public:
-		float fov;
+		float fov = 0;
 	private:
-		float znear, zfar;
+		float znear = 0, zfar = 1000;
 
 		void updateViewMatrix()
 		{
 			glm::mat4 rotM = glm::mat4(1.0f);
-			glm::mat4 transM;
+			glm::mat4 transM = glm::mat4();
 
 			rotM = glm::rotate(rotM, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 			rotM = glm::rotate(rotM, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -71,12 +71,12 @@ namespace Principia {
 		float rotationSpeed = 1.0f;
 		float movementSpeed = 1.0f;
 
-		float aspect;
+		float aspect = 0.f;
 
 		struct
 		{
-			glm::mat4 perspective;
-			glm::mat4 view;
+			glm::mat4 perspective = glm::mat4();
+			glm::mat4 view = glm::mat4();
 		} matrices;
 
 		bool moving()

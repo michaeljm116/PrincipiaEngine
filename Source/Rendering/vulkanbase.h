@@ -192,13 +192,13 @@ namespace Principia {
 			return shaderStage;
 		}
 
-		VkShaderModule loadShader(const char *fileName)//, VkDevice device)
+		[[nodiscard]] VkShaderModule loadShader(const char *fileName)//, VkDevice device)
 		{
 			std::ifstream is(fileName, std::ios::binary | std::ios::in | std::ios::ate);
 
 			if (is.is_open())
 			{
-				size_t size = is.tellg();
+				size_t size = static_cast<size_t>(is.tellg());
 				is.seekg(0, std::ios::beg);
 				char* shaderCode = new char[size];
 				is.read(shaderCode, size);
@@ -211,9 +211,6 @@ namespace Principia {
 				moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
 				moduleCreateInfo.codeSize = size;
 				moduleCreateInfo.pCode = (uint32_t*)shaderCode;
-
-				std::string bob = shaderCode;
-				bob.at(0);
 
 				VK_CHECKRESULT(vkCreateShaderModule(logicalDevice, &moduleCreateInfo, NULL, &shaderModule), "CREATE SHADER MODULE");
 

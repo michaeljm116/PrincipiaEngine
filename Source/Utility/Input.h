@@ -112,20 +112,19 @@ namespace Principia {
 	public:
 		void init();
 		void update();
-		void updateAxis(int key, bool pressed);
 
 		//bool up, down, left, right;
 		//bool pressed, held, released;
-		Mouse mouse;
-		int keys[348];
-		int pad[8][14];
+		Mouse mouse = Mouse();
+		int keys[348] = {};
+		int pad[8][14] = {};
 
-		float deltaTime;
-		float time;
-		float renderTime;
-		bool pressed;
-		bool hold;
-		bool showFPS;
+		float deltaTime = 0.f;
+		float time = 0.f;
+		float renderTime = 0.f;
+		bool pressed = false;
+		bool hold = false;
+		bool showFPS = false;
 		bool maximized = false;
 		bool displayUI = false;
 		bool playToggled = false;

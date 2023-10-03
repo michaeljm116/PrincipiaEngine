@@ -26,7 +26,7 @@ namespace Principia {
 		int pad = 0;
 		float alpha = 1.f;
 
-		ssGUI() {};
+		ssGUI() { min = glm::vec2(); extents = glm::vec2(); alignMin = glm::vec2(); alignExt = glm::vec2(); layer = 0; id = 0; pad = 0; alpha = 1.f; };
 		ssGUI(glm::vec2 min, glm::vec2 max, glm::vec2 aMin, glm::vec2 aExt, int l, int i) : min(min), extents(max), alignMin(aMin), alignExt(aExt), layer(l), id(i) {};
 	};
 	//
@@ -40,7 +40,7 @@ namespace Principia {
 		int startIndex = 0;
 		int endIndex = 0;
 
-		ssPrimitive() {};
+		ssPrimitive() { world = glm::mat4(); extents = glm::vec3(); id = 0; matId = 0; };
 		ssPrimitive(PrimitiveComponent* pc) : world(pc->world), extents(pc->extents), numChildren(pc->numChildren),
 			id(pc->id), matId(pc->matId), startIndex(pc->startIndex), endIndex(pc->endIndex)
 		{};
@@ -52,21 +52,21 @@ namespace Principia {
 		float u;
 		glm::vec3 norm;
 		float v;
-		ssVert() {};
+		ssVert() { pos = glm::vec3(); norm = glm::vec3(); u = 0; v = 0; };
 		ssVert(const glm::vec3 &p, const glm::vec3 &n, const float &u, const float &v) : pos(p), norm(n), u(u), v(v) { };
 	};
 
 	struct ssTriangleIndex {
 		glm::ivec3 v;	//12bytes
 		int id;			//4bytes
-		ssTriangleIndex() {};
+		ssTriangleIndex() { v = glm::ivec3(); id = 0; };
 		ssTriangleIndex(glm::ivec3 v, int id) : v(v), id(id) {};
 		ssTriangleIndex(int v0, int v1, int v2, int id) : id(id) { v[0] = v0; v[1] = v1; v[2] = v2; };
 	}; //Total = 16 bytes
 
 	struct ssIndex {
 		glm::ivec4 v; //16bytes
-		ssIndex() {};
+		ssIndex() { v = glm::ivec4(); };
 		ssIndex(const glm::ivec4 &face) : v(face) {};
 	};
 
@@ -75,7 +75,7 @@ namespace Principia {
 		int matID = 0;
 		glm::vec3 extents;
 		int type;
-		ssShape() {};
+		ssShape() { center = glm::vec3(); extents = glm::vec3(); type = 0; };
 		ssShape(const glm::vec3& c, const glm::vec3 e, int t) : center(c), extents(e), type(t) {};
 	}; //Total = 16bytes
 
@@ -87,7 +87,7 @@ namespace Principia {
 		float transparency;
 		float refractiveIndex;
 		int	  textureID;
-		ssMaterial() {};
+		ssMaterial() { diffuse = glm::vec3(); reflective = 0; roughness = 0; transparency = 0; refractiveIndex = 0; textureID = 0; };
 		//ssMaterial(glm::vec3 d, float m, float r) { diffuse = d, metallic = m; roughness = r; };
 		ssMaterial(glm::vec3 d, float rfl, float ruf, float trn, float rfr, int ti) { diffuse = d; reflective = rfl; roughness = ruf; transparency = trn; refractiveIndex = rfr; textureID = ti; };
 		//ssMaterial(glm::vec3 d, float m, float r, bool t, int id) { diffuse = d; metallic = m; roughness = r; hasTexture = b; textureID = id; };
@@ -98,6 +98,7 @@ namespace Principia {
 		float intensity;
 		glm::vec3 color;
 		int id;
+		ssLight() { pos = glm::vec3(); intensity = 0; color = glm::vec3(); id = 0; };
 	};
 
 	/*

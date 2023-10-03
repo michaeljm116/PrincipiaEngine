@@ -292,7 +292,7 @@ namespace Principia {
 		VkPipelineCacheCreateInfo createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_CACHE_CREATE_INFO;
 		if (vkCreatePipelineCache(vkDevice.logicalDevice, &createInfo, nullptr, &pipelineCache) != VK_SUCCESS)
-			std::runtime_error("failed to create pipelinecache!");
+			throw std::runtime_error("failed to create pipelinecache!");
 	}
 	void RenderBase::createDepthResources() {
 		VkFormat depthFormat = findDepthFormat();
@@ -562,8 +562,8 @@ namespace Principia {
 		//first find a compute-only queue
 		bool computeOnly = false;
 		uint32_t i = 0;
-		for (auto qfam : queueFams) {
-			if (qfam.queueCount > 0 && qfam.queueFlags == VK_QUEUE_COMPUTE_BIT) {
+		for (const auto qfam : queueFams) {
+			if (qfam.queueCount > 0 && (qfam.queueFlags & VK_QUEUE_COMPUTE_BIT)) {
 				vkDevice.qFams.computeFamily = i;
 				computeOnly = true;
 				break;
