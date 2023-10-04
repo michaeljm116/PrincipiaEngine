@@ -66,6 +66,15 @@ namespace Principia {
 			//global.position = local.position;
 			//global.scale = local.scale;
 		};
+		TransformComponent(const TransformComponent& tc) : world(tc.world), TRM(tc.TRM), local(tc.local), global(tc.global) {};
+
+		TransformComponent operator=(const TransformComponent& tc) {
+			this->world = tc.world;
+			this->TRM = tc.TRM;
+			this->local = tc.local;
+			this->global = tc.global;
+			return *this;
+		}
 	};
 }
 
