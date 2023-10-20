@@ -191,11 +191,12 @@ c:\dev\principiumgames\principiaengine\source\release\script-system.obj
 c:\dev\principiumgames\principiaengine\source\release\texture.obj
 c:\dev\principiumgames\principiaengine\source\release\animatesystem.obj
 c:\dev\principiumgames\principiaengine\source\release\window.obj
-c:\dev\principiumgames\principiaengine\source\release\rendersystem.obj
 c:\dev\principiumgames\principiaengine\source\release\resourcemanager.obj
 c:\dev\principiumgames\principiaengine\source\release\bvhsystem.obj
+c:\dev\principiumgames\principiaengine\source\release\rendersystem.obj
 c:\dev\principiumgames\shinyafroman\release\principia engine.lib
 c:\dev\principiumgames\principiaengine\source\release\principia engine.tlog\cl.command.1.tlog
+c:\dev\principiumgames\principiaengine\source\release\principia engine.tlog\cl.items.tlog
 c:\dev\principiumgames\principiaengine\source\release\principia engine.tlog\cl.read.1.tlog
 c:\dev\principiumgames\principiaengine\source\release\principia engine.tlog\cl.write.1.tlog
 c:\dev\principiumgames\principiaengine\source\release\principia engine.tlog\lib-link.read.1.tlog

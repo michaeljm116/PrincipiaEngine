@@ -1,5 +1,7 @@
+c:\dev\principiumgames\principiaengine\source\debug\principia engine.pch
 c:\dev\principiumgames\shinyafroman\debug\principia engine.pdb
 c:\dev\principiumgames\shinyafroman\debug\principia engine.idb
+c:\dev\principiumgames\principiaengine\source\debug\pch.obj
 c:\dev\principiumgames\principiaengine\source\debug\btcompoundcompoundcollisionalgorithm.obj
 c:\dev\principiumgames\principiaengine\source\debug\btcompoundcollisionalgorithm.obj
 c:\dev\principiumgames\principiaengine\source\debug\btcollisionworldimporter.obj
@@ -188,8 +190,6 @@ c:\dev\principiumgames\principiaengine\source\debug\selectable-gui-system.obj
 c:\dev\principiumgames\principiaengine\source\debug\script-system.obj
 c:\dev\principiumgames\principiaengine\source\debug\texture.obj
 c:\dev\principiumgames\principiaengine\source\debug\renderbase.obj
-c:\dev\principiumgames\principiaengine\source\debug\principia engine.pch
-c:\dev\principiumgames\principiaengine\source\debug\pch.obj
 c:\dev\principiumgames\principiaengine\source\debug\window.obj
 c:\dev\principiumgames\principiaengine\source\debug\transformsystem.obj
 c:\dev\principiumgames\principiaengine\source\debug\resourcemanager.obj
@@ -197,7 +197,6 @@ c:\dev\principiumgames\principiaengine\source\debug\bvhsystem.obj
 c:\dev\principiumgames\principiaengine\source\debug\rendersystem.obj
 c:\dev\principiumgames\principiaengine\source\rendering\shaders\raytracing.comp.spv
 c:\dev\principiumgames\shinyafroman\debug\principia engine.lib
-c:\dev\principiumgames\principiaengine\source\debug\bvhsystem.new.obj.enc
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.command.1.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.items.tlog
 c:\dev\principiumgames\principiaengine\source\debug\principia engine.tlog\cl.read.1.tlog
