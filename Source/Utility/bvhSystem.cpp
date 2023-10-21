@@ -12,7 +12,7 @@ namespace Principia {
 		addComponentType<TransformComponent>();
 		addComponentType<PrimitiveComponent>();
 
-		root = (BVHNode*)malloc(sizeof(BVHNode) * 0x8000);
+		root = (BVHNode*)malloc(sizeof(BVHNode) * 0x20000);
 	}
 
 	BvhSystem::~BvhSystem()
