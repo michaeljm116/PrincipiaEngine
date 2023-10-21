@@ -1,20 +1,47 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  compute-raytracer.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  bvhSystem.cpp
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1323,21): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1347,38): warning C4018: '>': signed/unsigned mismatch
-  Input.cpp
-  selectable-gui-system.cpp
-  Generating Code...
-cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  renderSystem.cpp
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(182,57): warning C4838: conversion from 'unsigned int' to '_Ty' requires a narrowing conversion
+          with
+          [
+              _Ty=int
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(228,64): warning C4838: conversion from 'unsigned int' to '_Ty' requires a narrowing conversion
+          with
+          [
+              _Ty=int
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(285,133): warning C4838: conversion from 'unsigned int' to '_Ty' requires a narrowing conversion
+          with
+          [
+              _Ty=int
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(407,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(438,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(466,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(497,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(506,48): warning C4291: 'void *Principia::BVHNode::operator new(size_t,Principia::BVHNode *,size_t &)': no matching operator delete found; memory will not be freed if initialization throws an exception
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(107,9): message : see declaration of 'Principia::BVHNode::operator new'
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(558,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(589,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(592,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(682,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(713,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(716,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(760,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(794,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(146,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(67,33): message : see reference to function template instantiation 'std::pair<std::unique_ptr<bvh::BoundingBox<Scalar> [],std::default_delete<bvh::BoundingBox<Scalar> []>>,std::unique_ptr<bvh::Vector<Scalar,3> [],std::default_delete<bvh::Vector<Scalar,3> []>>> bvh::compute_bounding_boxes_and_centers<_Ty,BvhPrim::ScalarType>(const Primitive *,size_t)' being compiled
+          with
+          [
+              _Ty=BvhPrim,
+              Primitive=BvhPrim
+          ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(164,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(68,27): message : see reference to function template instantiation 'bvh::BoundingBox<Scalar> bvh::compute_bounding_boxes_union<Scalar>(const bvh::BoundingBox<Scalar> *,size_t)' being compiled
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(114): warning C4717: 'Principia::BVHNode::operator new': recursive on all control paths, function will cause runtime stack overflow
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib
