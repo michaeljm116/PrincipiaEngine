@@ -1236,7 +1236,7 @@ namespace Principia {
 
 		gui_textures_[0].path = "../Assets/Levels/Blacman/Textures/numbers.png";
 		gui_textures_[0].CreateTexture(vkDevice);
-		gui_textures_[1].path = "../Assets/Levels/Blacman/Textures/title.png";
+		gui_textures_[1].path = "../Assets/Levels/Blacman/Textures/screamjam.png";
 		gui_textures_[1].CreateTexture(vkDevice);
 		gui_textures_[2].path = "../Assets/Levels/Blacman/Textures/blacman_stuff_4k.png";
 		gui_textures_[2].CreateTexture(vkDevice);
