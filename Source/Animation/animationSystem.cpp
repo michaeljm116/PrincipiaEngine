@@ -31,7 +31,7 @@ void Principia::AnimationSystem::processEntity(artemis::Entity & e)
 		if (ac->transTime == 0.f)
 			transition(e);
 		else
-			ac->transTime += world->getDelta();
+			ac->transTime += world->getGameTick();
 		if (ac->transTime > ac->time) {
 			ac->start = ac->trans;
 			ac->end = ac->transEnd;

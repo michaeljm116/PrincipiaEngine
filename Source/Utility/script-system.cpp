@@ -26,5 +26,5 @@ void Principia::Sys_Scripting::removed(artemis::Entity& e)
 
 void Principia::Sys_Scripting::processEntity(artemis::Entity& e)
 {
-	scriptMapper.get(e)->process(world->getDelta());
+	scriptMapper.get(e)->process(world->getGameTick());
 }

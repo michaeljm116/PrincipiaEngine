@@ -41,7 +41,7 @@ void Principia::ImmovableSystem::processEntity(artemis::Entity & e)
 		for (auto cw : colc->collidedWith) {
 			//cw.position += cw.normal * world->getDelta() * 10.f;
 			TransformComponent* tc = (TransformComponent*)world->getEntity(cw.id).getComponent<TransformComponent>();
-			tc->local.position += glm::vec4(cw.normal * world->getDelta() * 10.f, 0.f);
+			tc->local.position += glm::vec4(cw.normal * world->getGameTick() * 10.f, 0.f);
 			glm::vec4 clamper = glm::vec4(cw.colpoint + (cw.normal * EPSILON), 0.f);
 			//tc->local.position = cw.colpoint + (cw.normal * EPSILON);
 			clamper.y = tc->local.position.y;
