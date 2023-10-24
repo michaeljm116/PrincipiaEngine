@@ -43,9 +43,9 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	TransformComponent* tc = transMapper.get(e);
 
 	//Increment time
-	auto x = glm::clamp(world->getDelta() / ac->time, 0.f, 1.f);
+	auto x = glm::clamp(world->getGameTick() / ac->time, 0.f, 1.f);
 	glm::vec4  dt = glm::vec4(x);
-	ac->currTime += world->getDelta();
+	ac->currTime += world->getGameTick();
 
 	//Interpolate dat ish
 	if(!ac->flags.pf)tc->local.position = glm::mix(tc->local.position, ac->end.position, dt);

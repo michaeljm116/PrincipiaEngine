@@ -28,6 +28,7 @@ namespace Principia {
 		glm::vec3 extents;
 		glm::vec3 position;
 		glm::vec3 local;
+		CollisionComponent() {};
 		CollisionComponent(CollisionComponent* cc) : position(cc->position), local(cc->local), extents(cc->extents), type(cc->type),
 													 mass(cc->mass), body(cc->body), id(cc->id), checked(cc->checked) {}
 		CollisionComponent(glm::vec3 p, glm::vec3 l, glm::vec3 e, CollisionType t) : position(p),local(l), extents(e), type(t) { }

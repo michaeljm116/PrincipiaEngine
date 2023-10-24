@@ -88,7 +88,7 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 	}
 	else
 		// otherwise Process the collisions
-		script->OnCollisionStay(world->getDelta());
+		script->OnCollisionStay(world->getGameTick());
 
 }
 

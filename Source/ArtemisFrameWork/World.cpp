@@ -25,6 +25,12 @@ namespace artemis {
 	float World::getDelta() {
 		return this->delta;
 	}
+	float World::getGameTick() {
+		return this->gameTick;
+	}
+	void World::setGameTick(float tick) {
+		this->gameTick = tick;
+	}
   
 	SystemManager* World::getSystemManager() {
 		return systemManager;

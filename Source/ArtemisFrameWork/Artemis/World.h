@@ -29,6 +29,8 @@ namespace artemis {
     GroupManager * getGroupManager();
     float getDelta();
     void setDelta(float delta);
+    float getGameTick();
+    void setGameTick(float tick);
     void deleteEntity(Entity& e);
     void refreshEntity(Entity& e);
     Entity& createEntity();
@@ -46,6 +48,7 @@ namespace artemis {
     TagManager * tagManager;
     GroupManager * groupManager;
     float delta;
+    float gameTick;
     Bag<Entity*> refreshed;
     Bag<Entity*> deleted;
 	Entity* singleton;

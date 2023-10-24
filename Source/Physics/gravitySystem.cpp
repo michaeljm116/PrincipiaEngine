@@ -43,7 +43,7 @@ void Principia::SysGravity::processEntity(artemis::Entity & e)
 	auto* gc = gravMapper.get(e);
 
 	//lower it and check if grounded
-	tc->local.position.y -= gc->gforce * world->getDelta();
+	tc->local.position.y -= gc->gforce * world->getGameTick();
 	if (tc->local.position.y < gc->diff) {
 		tc->local.position.y = gc->diff;
 		gc->grounded = true;

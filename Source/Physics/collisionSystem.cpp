@@ -177,17 +177,23 @@ namespace Principia {
 
 
 		//Add ground for now
+		//artemis::Entity* ground_entity = &world->getEntityManager()->create();
+		//ground_entity->addComponent(new CollisionComponent());
+		//auto* ground_component = (CollisionComponent*)ground_entity->getComponent<CollisionComponent>();
+		//ground_entity->addComponent(new TransformComponent(glm::vec3(0), glm::vec3(24.0, 0, 24.0)));
+
 		//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 0);// new btBoxShape(btVector3(btScalar(50.), btScalar(1.), btScalar(50.)));
-		//collisionShapes.push_back(groundShape);
 		//btTransform groundTransform;
 		//groundTransform.setIdentity();
-		//groundTransform.setOrigin(btVector3(8, 0, 8));
+		//groundTransform.setOrigin(btVector3(24, 0, 24));
 		//btScalar mass(0.);
 		//btVector3 localInertia(0, 0, 0);
 		//btDefaultMotionState* myMotionState = new btDefaultMotionState(groundTransform);
 		//btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, myMotionState, groundShape, localInertia);
 		//btRigidBody* body = new btRigidBody(rbInfo);
 
+		//ground_component->body = body;
+		//physics->collisionShapes.push_back(groundShape);
 		//physics->dynamicsWorld->addRigidBody(body);
 	}
 
