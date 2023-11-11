@@ -45,7 +45,8 @@ namespace Principia {
 		SPHERE = 1,
 		BOX = 2,
 		CYLINDER = 3,
-		PLANE = 4
+		PLANE = 4,
+		DISK = 5
 	};
 
 	//typedef unsigned long ComponentFlag;
