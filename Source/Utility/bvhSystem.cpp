@@ -17,8 +17,10 @@ namespace Principia {
 
 	BvhSystem::~BvhSystem()
 	{
-		if(root)
-		delete(root);
+		if (root) {
+			free(root);
+			root = nullptr;
+		}
 	}
 
 	void BvhSystem::initialize()
