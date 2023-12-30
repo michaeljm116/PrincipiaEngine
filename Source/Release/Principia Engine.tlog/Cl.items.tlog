@@ -189,6 +189,7 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\serialize-node.cpp;C:\dev\
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\prefabSystem.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\prefabSystem.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\resourceManager.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\Input.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\Input.obj
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\state-machine-system.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\state-machine-system.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\timer.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\timer.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\transformSystem.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\transformSystem.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\window.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Release\window.obj

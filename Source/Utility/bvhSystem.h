@@ -1,11 +1,11 @@
-#pragma once
+#pragma once	
 #include "bvhComponent.hpp"
 //#include "../Utility/transformComponent.hpp"
 //#include "../Rendering/Components/renderComponents.hpp"
 #include "componentIncludes.h"
 
 namespace Principia {
-	static const int MAX_BVH_OBJECTS = 4;
+	static const int MAX_BVH_OBJECTS = 8;
 
 	class BvhSystem : public artemis::EntityProcessingSystem
 	{
