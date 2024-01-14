@@ -45,7 +45,9 @@ namespace Principia {
 		}
 	}
 
-	//Animation flags 4 bytes
+	// Animation flags 4 bytes
+	// pf, rf, sf = positionflag, rotationflag, scaleflag
+	// I thinks to make sure you only animate the things you want to animate?
 	struct AnimFlags {
 		uint32_t id : 8;
 		uint32_t loop : 1;
@@ -93,7 +95,7 @@ namespace Principia {
 		float time = 1.005f;
 		int start = 0;
 		int end = 0;
-		int prefabName;
+		int prefabName = 0;
 
 		float transTime = 0;
 		int trans = 0;
@@ -118,12 +120,10 @@ namespace Principia {
 			num = n; prefabName = p; start = s; end = e;
 		};
 
-		///as dfas dfa jsdfa dsf;l 
-		//asdfasdf ads
 		AnimationComponent(float t, const int p, const int s, const int e, AnimFlags f) :
 			flags(f) {
 			num = 2; prefabName = p; start = s; end = e; time = t;
 		};
-		//asfas dfas dfa sdf asd f
+		AnimationComponent() {};
 	};
 }
