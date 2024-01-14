@@ -1,11 +1,4 @@
-﻿  test_bvh_system.cpp
-  test_scene.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  SceneTest.cpp
+﻿  SceneTest.cpp
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
@@ -87,5 +80,11 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Tools\SceneTest\SceneTest.cpp(130,16): me
               Scalar=Scalar
           ]
 C:\dev\PrincipiumGames\PrincipiaEngine\Tools\SceneTest\SceneTest.cpp(129,27): message : see the first reference to 'bvh::Vector<Scalar,3>::Vector' in 'main2'
+  test_scene.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
   Generating Code...
   SceneTest.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\SceneTest.exe

@@ -12,15 +12,16 @@ namespace Principia {
 		addComponentType<TransformComponent>();
 		addComponentType<PrimitiveComponent>();
 
-		root = (BVHNode*)malloc(sizeof(BVHNode) * 0x20000);
+		root = new BVHNode[0x20000];
 	}
 
 	BvhSystem::~BvhSystem()
 	{
-		if (root) {
-			free(root);
-			root = nullptr;
-		}
+		//if (root) {
+		//	delete[] root;
+		//	free(root);
+		//	root = nullptr;
+		//}
 	}
 
 	void BvhSystem::initialize()
