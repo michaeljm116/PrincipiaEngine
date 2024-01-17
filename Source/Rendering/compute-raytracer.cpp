@@ -982,7 +982,7 @@ namespace Principia {
 		compute_submit_info.pCommandBuffers = &compute_.command_buffer;// &computeCommandBuffer;
 
 		if (vkQueueSubmit(computeQueue, 1, &compute_submit_info, compute_.fence) != VK_SUCCESS)
-			throw std::runtime_error("failed to submit compute commadn buffer!");
+			throw std::runtime_error("failed to submit compute command buffer!");
 		render_time_.End();
 		pINPUT.renderTime = render_time_.ms;
 	}
