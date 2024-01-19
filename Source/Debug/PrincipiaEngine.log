@@ -1,73 +1,62 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  Texture.cpp
-  compute-raytracer.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
-  (compiling source file 'Rendering/compute-raytracer.cpp')
+  collisionSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(50,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  (compiling source file 'Physics/collisionSystem.cpp')
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-  (compiling source file 'Rendering/compute-raytracer.cpp')
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:             T=float
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:         ]
+  (compiling source file 'Physics/collisionSystem.cpp')
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file 'Rendering/compute-raytracer.cpp')
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:             T=float
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         ]
+  (compiling source file 'Physics/collisionSystem.cpp')
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file 'Rendering/compute-raytracer.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file 'Rendering/compute-raytracer.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1323,21): warning C4018: '<': signed/unsigned mismatch
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1347,38): warning C4018: '>': signed/unsigned mismatch
-  renderbase.cpp
-  Generating Code...
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderbase.cpp(412): warning C4715: 'Principia::RenderBase::findSupportedFormat': not all control paths return a value
-cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  renderSystem.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
-  (compiling source file '/Rendering/renderSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-  (compiling source file '/Rendering/renderSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file '/Rendering/renderSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file '/Rendering/renderSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file '/Rendering/renderSystem.cpp')
-  
-  transformSystem.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
-  (compiling source file '/Utility/transformSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
-  (compiling source file '/Utility/transformSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file '/Utility/transformSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file '/Utility/transformSystem.cpp')
-  
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
-  (compiling source file '/Utility/transformSystem.cpp')
-  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(46,17): warning C4129: 'L': unrecognized character escape sequence
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9): warning C5033: 'register' is no longer a supported storage class
-  (compiling source file '/Utility/transformSystem.cpp')
+  (compiling source file 'Physics/collisionSystem.cpp')
   C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9):
   the template instantiation context (the oldest one first) is
-  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116,49):
-  	see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\Components\physicsComponent.h(8,43):
+  	see reference to class template instantiation 'btAlignedObjectArray<btCollisionShape *>' being compiled
   	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(264,25):
-  	while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+  	while compiling class template member function 'void btAlignedObjectArray<btCollisionShape *>::push_back(const T &)'
           with
           [
-              T=const btCollisionObject *
+              T=btCollisionShape *
           ]
-  		C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242,44):
-  		see the first reference to 'btAlignedObjectArray<const btCollisionObject *>::push_back' in 'btCollisionObject::setIgnoreCollisionCheck'
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(220,37):
+  		see the first reference to 'btAlignedObjectArray<btCollisionShape *>::push_back' in 'Principia::CollisionSystem::bulletAdded'
   
-  Generating Code...
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(212,9): warning C5033: 'register' is no longer a supported storage class
+  (compiling source file 'Physics/collisionSystem.cpp')
+  C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(212,9):
+  the template instantiation context (the oldest one first) is
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h(53,35):
+  	see reference to class template instantiation 'btHashMap<btHashInt,btTriangleInfo>' being compiled
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btHashMap.h(225,30):
+  	see reference to class template instantiation 'btAlignedObjectArray<Value>' being compiled
+          with
+          [
+              Value=btTriangleInfo
+          ]
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(210,25):
+  	while compiling class template member function 'void btAlignedObjectArray<Value>::resize(int,const T &)'
+          with
+          [
+              Value=btTriangleInfo,
+              T=btTriangleInfo
+          ]
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h(222,21):
+  		see the first reference to 'btAlignedObjectArray<Value>::resize' in 'btTriangleInfoMap::deSerialize'
+          with
+          [
+              Value=btTriangleInfo
+          ]
+  
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib

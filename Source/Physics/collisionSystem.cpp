@@ -42,6 +42,8 @@ namespace Principia {
 
 	void CollisionSystem::processEntity(artemis::Entity & e)
 	{
+		if (e.getId() == 49)
+			std::cout << "\Linear Velocity X: " << colMapper.get(e)->body->getLinearVelocity().x() << " Y: " << colMapper.get(e)->body->getLinearVelocity().y() << " Z: " << colMapper.get(e)->body->getLinearVelocity().z();
 		bulletProcessEntity(e);
 
 		/*
