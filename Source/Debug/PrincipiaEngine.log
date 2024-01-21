@@ -17,7 +17,6 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): w
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         ]
   (compiling source file 'Physics/collisionSystem.cpp')
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(46,17): warning C4129: 'L': unrecognized character escape sequence
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9): warning C5033: 'register' is no longer a supported storage class
   (compiling source file 'Physics/collisionSystem.cpp')
   C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9):
@@ -30,7 +29,7 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArr
           [
               T=btCollisionShape *
           ]
-  		C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(220,37):
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(218,37):
   		see the first reference to 'btAlignedObjectArray<btCollisionShape *>::push_back' in 'Principia::CollisionSystem::bulletAdded'
   
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(212,9): warning C5033: 'register' is no longer a supported storage class
