@@ -49,7 +49,7 @@ namespace Principia {
 	// pf, rf, sf = positionflag, rotationflag, scaleflag
 	// I thinks to make sure you only animate the things you want to animate?
 	struct AnimFlags {
-		uint32_t id : 8;
+		uint32_t idPo : 8;
 		uint32_t loop : 1;
 		uint32_t forceStart : 1;
 		uint32_t forceEnd : 1;
@@ -59,10 +59,10 @@ namespace Principia {
 		uint32_t startSet : 1;
 		uint32_t endSet : 1;
 
-		AnimFlags() { id = 0; loop = 0; forceStart = 0; forceEnd = 0; startSet = 0; endSet = 0; _pad = 0; };
+		AnimFlags() { idPo = 0; loop = 0; forceStart = 0; forceEnd = 0; startSet = 0; endSet = 0; _pad = 0; };
 		//id, loop 1 = true, forcestart 1 = true, force end 1 = true
 		AnimFlags(int i, int l, int fs, int fe) {
-			id = i; loop = l; forceStart = fs; forceEnd = fe;
+			idPo = i; loop = l; forceStart = fs; forceEnd = fe;
 			startSet = 0; endSet = 0;
 		}
 	private:
