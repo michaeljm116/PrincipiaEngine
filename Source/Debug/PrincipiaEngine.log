@@ -1,61 +1,289 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  collisionSystem.cpp
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(50,19): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'Physics/collisionSystem.cpp')
+  animateSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Animation/animateSystem.cpp')
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:         with
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:         [
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:             T=float
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(97,23): warning C4244:         ]
-  (compiling source file 'Physics/collisionSystem.cpp')
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Animation/animateSystem.cpp')
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         with
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         [
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:             T=float
-C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionTests.h(99,23): warning C4244:         ]
-  (compiling source file 'Physics/collisionSystem.cpp')
+  animationSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Animation/animationSystem.cpp')
   
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Animation/animationSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Animation/animationSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Animation/animationSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Animation/animationSystem.cpp')
+  
+  poseSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Animation/poseSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Animation/poseSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Animation/poseSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Animation/poseSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Animation/poseSystem.cpp')
+  
+  audioSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Audio/audioSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Audio/audioSystem.cpp')
+  
+  compute-raytracer.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1323,21): warning C4018: '<': signed/unsigned mismatch
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1347,38): warning C4018: '>': signed/unsigned mismatch
+  prefabSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Utility/prefabSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Utility/prefabSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/prefabSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/prefabSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/prefabSystem.cpp')
+  
+  serialize-node.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file 'Utility/serialize-node.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file 'Utility/serialize-node.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/serialize-node.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/serialize-node.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/serialize-node.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\serialize-node.cpp(425,31): warning C4101: 'can_serialize': unreferenced local variable
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\serialize-node.cpp(425,20): warning C4101: 'load': unreferenced local variable
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\serialize-node.cpp(425,9): warning C4101: 'save': unreferenced local variable
 C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9): warning C5033: 'register' is no longer a supported storage class
-  (compiling source file 'Physics/collisionSystem.cpp')
+  (compiling source file 'Utility/serialize-node.cpp')
   C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9):
   the template instantiation context (the oldest one first) is
-  	C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\Components\physicsComponent.h(8,43):
-  	see reference to class template instantiation 'btAlignedObjectArray<btCollisionShape *>' being compiled
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116,49):
+  	see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
   	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(264,25):
-  	while compiling class template member function 'void btAlignedObjectArray<btCollisionShape *>::push_back(const T &)'
+  	while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
           with
           [
-              T=btCollisionShape *
+              T=const btCollisionObject *
           ]
-  		C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\collisionSystem.cpp(218,37):
-  		see the first reference to 'btAlignedObjectArray<btCollisionShape *>::push_back' in 'Principia::CollisionSystem::bulletAdded'
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242,44):
+  		see the first reference to 'btAlignedObjectArray<const btCollisionObject *>::push_back' in 'btCollisionObject::setIgnoreCollisionCheck'
   
-C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(212,9): warning C5033: 'register' is no longer a supported storage class
-  (compiling source file 'Physics/collisionSystem.cpp')
-  C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(212,9):
+  Generating Code...
+cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  renderSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file '/Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file '/Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Rendering/renderSystem.cpp')
+  
+  bvhSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(185,57): warning C4838: conversion from 'unsigned int' to '_Ty' requires a narrowing conversion
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(185,57): warning C4838:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(185,57): warning C4838:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(185,57): warning C4838:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(185,57): warning C4838:         ]
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(231,64): warning C4838: conversion from 'unsigned int' to '_Ty' requires a narrowing conversion
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(231,64): warning C4838:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(231,64): warning C4838:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(231,64): warning C4838:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(231,64): warning C4838:         ]
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(288,133): warning C4838: conversion from 'unsigned int' to '_Ty' requires a narrowing conversion
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(288,133): warning C4838:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(288,133): warning C4838:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(288,133): warning C4838:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(288,133): warning C4838:         ]
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(410,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(441,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(469,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(500,18): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(509,47): warning C4291: 'void *Principia::BVHNode::operator new(size_t,Principia::BVHNode *,size_t &)': no matching operator delete found; memory will not be freed if initialization throws an exception
+  (compiling source file '/Utility/bvhSystem.cpp')
+  C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(107,9):
+  see declaration of 'Principia::BVHNode::operator new'
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(561,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(592,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(595,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(685,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(716,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(719,15): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(763,21): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(797,21): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/Utility/bvhSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(146,23): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/Utility/bvhSystem.cpp')
+  C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(146,23):
   the template instantiation context (the oldest one first) is
-  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h(53,35):
-  	see reference to class template instantiation 'btHashMap<btHashInt,btTriangleInfo>' being compiled
-  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btHashMap.h(225,30):
-  	see reference to class template instantiation 'btAlignedObjectArray<Value>' being compiled
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(70,33):
+  	see reference to function template instantiation 'std::pair<std::unique_ptr<bvh::BoundingBox<Scalar> [],std::default_delete<bvh::BoundingBox<Scalar> []>>,std::unique_ptr<bvh::Vector<Scalar,3> [],std::default_delete<bvh::Vector<Scalar,3> []>>> bvh::compute_bounding_boxes_and_centers<_Ty,BvhPrim::ScalarType>(const Primitive *,size_t)' being compiled
           with
           [
-              Value=btTriangleInfo
-          ]
-  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(210,25):
-  	while compiling class template member function 'void btAlignedObjectArray<Value>::resize(int,const T &)'
-          with
-          [
-              Value=btTriangleInfo,
-              T=btTriangleInfo
-          ]
-  		C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionShapes\btTriangleInfoMap.h(222,21):
-  		see the first reference to 'btAlignedObjectArray<Value>::resize' in 'btTriangleInfoMap::deSerialize'
-          with
-          [
-              Value=btTriangleInfo
+              _Ty=BvhPrim,
+              Primitive=BvhPrim
           ]
   
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(164,23): warning C4018: '<': signed/unsigned mismatch
+  (compiling source file '/Utility/bvhSystem.cpp')
+  C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bvh\include\bvh\utilities.hpp(164,23):
+  the template instantiation context (the oldest one first) is
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp(71,27):
+  	see reference to function template instantiation 'bvh::BoundingBox<Scalar> bvh::compute_bounding_boxes_union<Scalar>(const bvh::BoundingBox<Scalar> *,size_t)' being compiled
+  
+  resourceManager.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file '/Utility/resourceManager.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file '/Utility/resourceManager.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/resourceManager.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/resourceManager.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/resourceManager.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(93,23): warning C4244: '=': conversion from 'int' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(93,23): warning C4244:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(93,23): warning C4244:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(93,23): warning C4244:             _Ty=float
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(93,23): warning C4244:         ]
+  (compiling source file '/Utility/resourceManager.cpp')
+  
+  transformSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(668,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash32_t,5>::size_type', possible loss of data
+  (compiling source file '/Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\xxhash.hpp(674,22): warning C4244: 'argument': conversion from 'int64_t' to 'std::array<xxh::hash64_t,5>::size_type', possible loss of data
+  (compiling source file '/Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(161,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file '/Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9): warning C5033: 'register' is no longer a supported storage class
+  (compiling source file '/Utility/transformSystem.cpp')
+  C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(266,9):
+  the template instantiation context (the oldest one first) is
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(116,49):
+  	see reference to class template instantiation 'btAlignedObjectArray<const btCollisionObject *>' being compiled
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\LinearMath\btAlignedObjectArray.h(264,25):
+  	while compiling class template member function 'void btAlignedObjectArray<const btCollisionObject *>::push_back(const T &)'
+          with
+          [
+              T=const btCollisionObject *
+          ]
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Lib\bullet3\BulletCollision\CollisionDispatch\btCollisionObject.h(242,44):
+  		see the first reference to 'btAlignedObjectArray<const btCollisionObject *>::push_back' in 'btCollisionObject::setIgnoreCollisionCheck'
+  
+  Generating Code...
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(356): warning C4715: 'Principia::Resources::SaveMaterials': not all control paths return a value
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.cpp(429): warning C4172: returning address of local variable or temporary
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(114): warning C4717: 'Principia::BVHNode::operator new': recursive on all control paths, function will cause runtime stack overflow
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Debug\Principia Engine.lib
