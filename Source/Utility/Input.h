@@ -63,8 +63,6 @@ namespace Principia {
 				io.KeysDown[key] = false;
 			}
 #endif // 
-
-
 		}
 
 		static void char_callback(GLFWwindow*, unsigned int c)
