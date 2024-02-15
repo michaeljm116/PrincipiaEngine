@@ -89,7 +89,7 @@ namespace Principia {
 	};
 
 	struct AnimationComponent : artemis::Component {
-		int num = 0;
+		int num_poses = 0;
 		AnimFlags flags = AnimFlags(0, 0, 0, 0);
 
 		float time = 1.005f;
@@ -102,27 +102,27 @@ namespace Principia {
 		int transEnd = 0;
 
 		AnimationComponent(int n, std::string&& p, std::string&& s, std::string&& e, AnimFlags f) :
-			num(n), flags(f) {
+			num_poses(n), flags(f) {
 			prefabName = xxh::xxhash<32, char>(p.c_str());
 			start = xxh::xxhash<32, char>(s.c_str());
 			end = xxh::xxhash<32, char>(e.c_str());
 		};
 		AnimationComponent(int n, std::string&& p, std::string&& e, AnimFlags f) :
-			num(n), flags(f) {
+			num_poses(n), flags(f) {
 			prefabName = xxh::xxhash<32, char>(p.c_str());
 			start = 0;
 			end = xxh::xxhash<32, char>(e.c_str());
 		}
 		AnimationComponent(int n, const int p, const int e, AnimFlags f) :
-			num(n), prefabName(p), end(e), flags(f) {};
+			num_poses(n), prefabName(p), end(e), flags(f) {};
 		AnimationComponent(int n, const int p, const int s, const int e, AnimFlags f) :
 			flags(f) {
-			num = n; prefabName = p; start = s; end = e;
+			num_poses = n; prefabName = p; start = s; end = e;
 		};
 
 		AnimationComponent(float t, const int p, const int s, const int e, AnimFlags f) :
 			flags(f) {
-			num = 2; prefabName = p; start = s; end = e; time = t;
+			num_poses = 2; prefabName = p; start = s; end = e; time = t;
 		};
 		AnimationComponent() {};
 	};
