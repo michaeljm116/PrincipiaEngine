@@ -16,11 +16,12 @@ void Principia::PoseSystem::initialize()
 	poseMapper.init(*world);
 }
 
+// Adding a pose component to an entity will create/modify an animation file
 void Principia::PoseSystem::added(artemis::Entity & e)
 {
 	PoseComponent*	pose = poseMapper.get(e);
 
-	//Initialize fariables
+	//Initialize variables
 	std::string	filename = pose->fileName + ".anim";
 	XMLDocument	doc;
 	XMLElement*	pNode;

@@ -49,7 +49,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 
 	//If there's only 1 pose, then it'll only be the end pose 
 	auto& endPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->end);
-	if (ac->num == 1) {
+	if (ac->num_poses == 1) {
 		for (auto p : endPose.pose) {
 			AnimateComponent* a = new AnimateComponent();
 			a->flags = ac->flags;
@@ -132,7 +132,7 @@ void Principia::AnimationSystem::preRemoved(artemis::Entity & e)
 		comp.insert(p.first);
 	}
 	//Then if there's a start pose remove that too
-	if (ac->num > 1) {
+	if (ac->num_poses > 1) {
 		auto& startPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->start);
 		for (const auto& p : startPose.pose) {
 			if (comp.find(p.first) != comp.end()) {
@@ -146,7 +146,9 @@ void Principia::AnimationSystem::preRemoved(artemis::Entity & e)
 	change(e);
 }
 
+// Combined-List Tuple
 using cltuple = std::pair<int, std::tuple<Principia::sqt, Principia::sqt, Principia::AnimFlags>>;
+
 //On Transition, unused parts go back to normal, and similar parts transition
 void Principia::AnimationSystem::transition(artemis::Entity& e)
 {
