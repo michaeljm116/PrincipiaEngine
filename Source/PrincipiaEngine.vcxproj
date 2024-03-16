@@ -198,6 +198,7 @@
     <ClInclude Include="Utility\helpers.h" />
     <ClInclude Include="Utility\kdtree.hpp" />
     <ClInclude Include="Utility\key.h" />
+    <ClInclude Include="Utility\memory-arena.h" />
     <ClInclude Include="Utility\script-component.h" />
     <ClInclude Include="Utility\script-system.h" />
     <ClInclude Include="Utility\selectable-gui-system.h" />

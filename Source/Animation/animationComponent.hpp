@@ -53,30 +53,20 @@ namespace Principia {
 		uint32_t loop : 1;
 		uint32_t forceStart : 1;
 		uint32_t forceEnd : 1;
-		uint32_t pf : 1;
-		uint32_t rf : 1;
-		uint32_t sf : 1;
+		uint32_t pos_flag : 1;
+		uint32_t rot_flag : 1;
+		uint32_t sca_flag : 1;
 		uint32_t startSet : 1;
 		uint32_t endSet : 1;
 
 		AnimFlags() { idPo = 0; loop = 0; forceStart = 0; forceEnd = 0; startSet = 0; endSet = 0; _pad = 0; };
-		//id, loop 1 = true, forcestart 1 = true, force end 1 = true
+		//id, loop 1 = true, forceStart 1 = true, forceEnd 1 = true
 		AnimFlags(int i, int l, int fs, int fe) {
 			idPo = i; loop = l; forceStart = fs; forceEnd = fe;
 			startSet = 0; endSet = 0;
 		}
 	private:
 		uint32_t _pad : 16; //O snap i can just make this 16 bits?
-	};
-
-	struct AnimateComponent : artemis::Component {
-		float currTime = 0.f;
-		float time = 1.f;
-		AnimFlags flags;
-
-		sqt start;
-		sqt end;
-		AnimateComponent() {};
 	};
 
 	struct PoseComponent : artemis::Component {
@@ -94,7 +84,7 @@ namespace Principia {
 
 		float time = 1.005f;
 		int start = 0;
-		int end = 0;
+	int end = 0;
 		int prefabName = 0;
 
 		float transTime = 0;
@@ -126,4 +116,16 @@ namespace Principia {
 		};
 		AnimationComponent() {};
 	};
+
+	struct AnimateComponent : artemis::Component {
+		float currTime = 0.f;
+		float time = 1.f;
+		AnimFlags flags;
+
+		sqt start;
+		sqt end;
+		AnimationComponent* parent = nullptr;
+		AnimateComponent() {};
+	};
+
 }
