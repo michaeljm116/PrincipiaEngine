@@ -5,7 +5,8 @@
 #include "../Utility/nodeComponent.hpp"
 #include "animationComponent.hpp"
 #include <Artemis/ComponentMapper.h>
-#include "animateSystem.h"
+
+//#include "../Utility/memory-arena.h"
 
 namespace Principia {
 	class AnimationSystem : public artemis::EntityProcessingSystem
@@ -26,8 +27,6 @@ namespace Principia {
 	private:
 		artemis::ComponentMapper<AnimationComponent> animMapper;
 		artemis::ComponentMapper<BFGraphComponent> bfgMapper;
-
-		AnimateSystem* sys_Animate;
 
 		void transition(artemis::Entity& e);
 	};

@@ -42,15 +42,19 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	AnimateComponent*	ac = animMapper.get(e);
 	TransformComponent* tc = transMapper.get(e);
 
+	////Remove if parent is deleted
+	//if (ac->parent == nullptr)
+	//	e.removeComponent<AnimateComponent>();
+
 	//Increment time
 	auto x = glm::clamp(world->getGameTick() / ac->time, 0.f, 1.f);
 	glm::vec4  dt = glm::vec4(x);
 	ac->currTime += world->getGameTick();
 
 	//Interpolate dat ish
-	if(!ac->flags.pf)tc->local.position = glm::mix(tc->local.position, ac->end.position, dt);
-	if(!ac->flags.sf)tc->local.scale	= glm::mix(tc->local.scale, ac->end.scale, dt);
-	if(!ac->flags.rf)tc->local.rotation = glm::lerp(tc->local.rotation, ac->end.rotation, dt.x);
+	if(!ac->flags.pos_flag)tc->local.position = glm::mix(tc->local.position, ac->end.position, dt);
+	if(!ac->flags.sca_flag)tc->local.scale	= glm::mix(tc->local.scale, ac->end.scale, dt);
+	if(!ac->flags.rot_flag)tc->local.rotation = glm::slerp(tc->local.rotation, ac->end.rotation, dt.x);
 
 	/*if (CheckIfFinished(tc->local, ac)) {
 		ac->flags.pf = 0; ac->flags.rf = 0; ac->flags.sf = 0;
@@ -102,10 +106,10 @@ inline bool Principia::AnimateSystem::CheckIfFinished(const sqt & curr, AnimateC
 	glm::bvec4 r = glm::epsilonEqual(curr.rotation, ac->end.rotation, ep);
 	glm::bvec4 s = glm::epsilonEqual(curr.scale, ac->end.scale, ep);
 
-	ac->flags.pf = p.x & p.y & p.z;
-	ac->flags.rf = r.x & r.y & r.z;
-	ac->flags.sf = s.x & s.y & s.z;
-	uint_fast8_t animFinished = (ac->flags.pf | (ac->flags.rf << 1) | (ac->flags.sf << 2));
+	ac->flags.pos_flag = p.x & p.y & p.z;
+	ac->flags.rot_flag = r.x & r.y & r.z;
+	ac->flags.sca_flag = s.x & s.y & s.z;
+	uint_fast8_t animFinished = (ac->flags.pos_flag | (ac->flags.rot_flag << 1) | (ac->flags.sca_flag << 2));
 
 	return (animFinished == 7);
 }

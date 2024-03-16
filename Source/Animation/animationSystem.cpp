@@ -21,7 +21,6 @@ void Principia::AnimationSystem::initialize()
 {
 	animMapper.init(*world);
 	bfgMapper.init(*world);
-	sys_Animate = (AnimateSystem*)world->getSystemManager()->getSystem<AnimateSystem>();
 }
 
 void Principia::AnimationSystem::processEntity(artemis::Entity & e)
@@ -55,6 +54,13 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 			a->flags = ac->flags;
 			a->time = ac->time;
 			a->end = p.second;
+			a->parent = ac;
+			
+			//the issue here is it takes ONLY the that this new thing uses and not the full previous transform
+			//Its confirmed that this is a bug by nature of the else statement
+			//So now you need a way to get the previous animation
+			//or just do a full reset of everything
+
 			a->start = ((TransformComponent*)bfg->nodes[p.first]->data->getComponent<TransformComponent>())->local;
 			bfg->nodes[p.first]->data->addComponent(a);
 			bfg->nodes[p.first]->data->refresh();
@@ -78,6 +84,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 			a->flags.startSet = 1;
 			a->time = ac->time;
 			a->start = p.second;
+			a->parent = ac; 
 			comps.insert(std::make_pair(p.first, a));
 		}
 
@@ -94,6 +101,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 				an->flags.endSet = 1;
 				an->time = ac->time;
 				an->end = p.second;
+				an->parent = ac;
 				comps.insert(std::make_pair(p.first, an));
 			}
 		}
@@ -149,8 +157,11 @@ void Principia::AnimationSystem::preRemoved(artemis::Entity & e)
 // Combined-List Tuple
 using cltuple = std::pair<int, std::tuple<Principia::sqt, Principia::sqt, Principia::AnimFlags>>;
 
-//On Transition, unused parts go back to normal, and similar parts transition
-void Principia::AnimationSystem::transition(artemis::Entity& e)
+//On Transition, 
+// - unused parts go back to normal, and 
+// - similar parts transition
+// - New parts go to the new pose
+void Principia::AnimationSystem::transition(artemis::Entity& e) 
 {
 	auto* ac = animMapper.get(e);
 	auto* bfg = bfgMapper.get(e);
@@ -159,9 +170,6 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 	auto& transPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->trans);
 
 	//First place every Previous Pose in a hashset
-	//std::byte stackBuff[2048];
-	//std::pmr::monotonic_buffer_resource rsrc(stackBuff, sizeof stackBuff);
-	//auto prevPose = std::pmr::unordered_set<int>(0, &rsrc);// (startPose.pose.begin()->first, startPose.pose.end()->first);
 	std::unordered_set<int> prevPose;
 
 	for (auto& s : startPose.pose)	prevPose.insert(s.first);
@@ -196,6 +204,7 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 		an->start = std::get<0>(t.second);// .first;
 		an->end = std::get<1>(t.second);// .second;
 		an->flags = std::get<2>(t.second);
+		an->parent = ac;
 		
 		bfg->nodes[t.first]->data->addComponent(an);
 		bfg->nodes[t.first]->data->refresh();

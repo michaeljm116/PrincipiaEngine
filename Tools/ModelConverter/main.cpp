@@ -576,7 +576,7 @@ bool LoadDirectory(std::string directory, bool triangulate)
 			ModelScaler(mod);
 
 			//Build the bvh
-			Build(mod);
+			//Build(mod);
 
 			if (triangulate)
 				mod.name += "_t";

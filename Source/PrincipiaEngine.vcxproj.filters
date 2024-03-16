@@ -498,6 +498,9 @@
     <ClInclude Include="Utility\selectable-gui-system.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Utility\memory-arena.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.h">
