@@ -23,15 +23,16 @@ void Principia::AnimationSystem::initialize()
 	bfgMapper.init(*world);
 }
 
+// This keeps track of the transitions
 void Principia::AnimationSystem::processEntity(artemis::Entity & e)
 {
 	auto* ac = animMapper.get(e);
 	if (ac->trans != 0) {
-		if (ac->transTime == 0.f)
+		if (ac->trans_timer == 0.f)
 			transition(e);
 		else
-			ac->transTime += world->getGameTick();
-		if (ac->transTime > ac->time) {
+			ac->trans_timer += world->getGameTick();
+		if (ac->trans_timer > ac->trans_time) {
 			ac->start = ac->trans;
 			ac->end = ac->transEnd;
 			ac->trans = 0;
@@ -122,7 +123,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 	}
 
 	// make sure it not in trans
-	ac->transTime = 0.001f;
+	ac->trans_timer = 0.001f;
 }
 
 //On remove, it makes sure all the animate components are also removed
@@ -210,7 +211,7 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 		bfg->nodes[t.first]->data->refresh();
 	}
 
-	//Turn off transform;
-	ac->transTime = 0.0001f;
+	//Turn off transition;
+	ac->trans_timer = 0.0001f;
 
 }
