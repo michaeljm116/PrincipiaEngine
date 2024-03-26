@@ -78,16 +78,34 @@ namespace Principia {
 			poseName(n), fileName(f), pose(p) {};
 	};
 
+	/* You want all animations to go from :
+	 * CurrPose -> Transition -> StartPose
+	 * StartPose -> Transition -> EndPose
+	 *	 If Loop Then Reverse ^
+	 * EndPose -> Transition -> DefaultPose
+	 * 
+	*/
+	enum class AnimationState {
+		
+		Initiated,
+		
+		Begin,
+		Start,
+		End,
+		Default
+	};
+
 	struct AnimationComponent : artemis::Component {
 		int num_poses = 0;
 		AnimFlags flags = AnimFlags(0, 0, 0, 0);
 
-		float time = 1.005f;
+		float time = 0.005f;
 		int start = 0;
-	int end = 0;
+		int end = 0;
 		int prefabName = 0;
 
-		float transTime = 0;
+		float trans_timer = 0.f;
+		float trans_time = 0.1f;
 		int trans = 0;
 		int transEnd = 0;
 
