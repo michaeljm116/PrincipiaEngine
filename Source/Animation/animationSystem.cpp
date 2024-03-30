@@ -7,6 +7,60 @@
 #include "../Utility/resourceManager.h"
 
 
+#pragma region helper lambdas
+auto display_animation_state = [](artemis::Entity& e, Principia::AnimationState state) {
+	auto name = ((Principia::NodeComponent*)e.getComponent<Principia::NodeComponent>())->name;
+
+	switch (state) {
+	case Principia::AnimationState::Default:
+		std::cout << "\nAnimationState: " << "Default" << " - " << name << "\n";
+		break;
+	case Principia::AnimationState::Transition:
+		std::cout << "\nAnimationState: " << "Transition" << " - " << name << "\n";
+		break;
+	case Principia::AnimationState::TransitionToStart:
+		std::cout << "\nAnimationState: " << "TransitionToStart" << " - " << name << "\n";
+		break;
+	case Principia::AnimationState::Start:
+		std::cout << "\nAnimationState: " << "Start" << " - " << name << "\n";
+		break;
+	case Principia::AnimationState::TransitionToEnd:
+		std::cout << "\nAnimationState: " << "TransitionToEnd" << " - " << name << "\n";
+		break;
+	case Principia::AnimationState::End:
+		std::cout << "\nAnimationState: " << "End" << " - " << name << "\n";
+		break;
+	default:
+		std::cout << "\nAnimationState: " << "Unknown state" << " - " << name << "\n";
+		break;
+	}
+};
+
+std::vector<std::string> names = {
+		"walkStart", "walkEnd", "idleStart", "idleEnd",
+		"runStart", "runEnd", "jumpStart", "jumpEnd",
+		"stabStart", "stabEnd"
+};
+auto get_animation_name = [](int name_hash) -> std::string {
+	for(auto name : names) {
+		if (xxh::xxhash<32, char>(name.c_str()) == name_hash)
+			return name;
+	}
+	return "Unknown";	
+};
+
+auto display_animation_names = [](Principia::AnimationComponent* ac) {
+	auto start = get_animation_name(ac->start);
+	auto end = get_animation_name(ac->end);
+	auto trans = get_animation_name(ac->trans);
+	auto transEnd = get_animation_name(ac->transEnd);
+
+	std::cout << "\nAnimation: " << start << " -> " << end << " -> " << trans << " -> " << transEnd << "\n";
+};
+
+#pragma endregion helper lambdas
+
+
 Principia::AnimationSystem::AnimationSystem()
 {
 	addComponentType<AnimationComponent>();
@@ -24,21 +78,55 @@ void Principia::AnimationSystem::initialize()
 }
 
 // This keeps track of the transitions
+// Default state = you are free to animate
+// End State = a single-frame trigger 
+// Transition takes the start and end from previous pose and transitions to the new pose
+// Start performs the animation
+// TransitionToStart/End times the animations
 void Principia::AnimationSystem::processEntity(artemis::Entity & e)
 {
 	auto* ac = animMapper.get(e);
-	if (ac->trans != 0) {
-		if (ac->trans_timer == 0.f)
+	//display_animation_state(e, ac->state);
+	//display_animation_names(ac);
+
+
+	switch (ac->state) {
+	case AnimationState::Default:
+		break; 
+	case AnimationState::Transition: {
+		if (ac->trans != 0)
 			transition(e);
-		else
-			ac->trans_timer += world->getGameTick();
+		ac->state = AnimationState::TransitionToStart;
+		break;
+	}
+	case AnimationState::TransitionToStart: {
+		ac->trans_timer += world->getGameTick();
 		if (ac->trans_timer > ac->trans_time) {
-			ac->start = ac->trans;
-			ac->end = ac->transEnd;
-			ac->trans = 0;
-			ac->transEnd = 0;
-			added(e);
+			ac->state = AnimationState::Start;
 		}
+		break;
+	}
+	case AnimationState::Start: {
+		ac->start = ac->trans;
+		ac->end = ac->transEnd;
+		ac->trans_timer = 0.f;
+		ac->state = AnimationState::TransitionToEnd;
+		added(e);
+		break;
+	}
+	case AnimationState::TransitionToEnd: {
+		ac->trans_timer += world->getGameTick();
+		if (ac->trans_timer > ac->time) {
+			ac->state = AnimationState::End;
+		}
+		break;
+	}
+	case AnimationState::End: {
+		ac->state = AnimationState::Default;
+		break;
+	}
+	default:
+		break;
 	}
 }
 
