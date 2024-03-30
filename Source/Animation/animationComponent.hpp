@@ -86,13 +86,12 @@ namespace Principia {
 	 * 
 	*/
 	enum class AnimationState {
-		
-		Initiated,
-		
-		Begin,
+		Default,
+		Transition,
+		TransitionToStart,
 		Start,
-		End,
-		Default
+		TransitionToEnd,
+		End
 	};
 
 	struct AnimationComponent : artemis::Component {
@@ -108,6 +107,8 @@ namespace Principia {
 		float trans_time = 0.1f;
 		int trans = 0;
 		int transEnd = 0;
+
+		AnimationState state = AnimationState::Default;
 
 		AnimationComponent(int n, std::string&& p, std::string&& s, std::string&& e, AnimFlags f) :
 			num_poses(n), flags(f) {
