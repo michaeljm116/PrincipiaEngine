@@ -86,8 +86,8 @@ void Principia::AnimationSystem::initialize()
 void Principia::AnimationSystem::processEntity(artemis::Entity & e)
 {
 	auto* ac = animMapper.get(e);
-	//display_animation_state(e, ac->state);
-	//display_animation_names(ac);
+	display_animation_state(e, ac->state);
+	display_animation_names(ac);
 
 
 	switch (ac->state) {
