@@ -45,6 +45,16 @@ namespace Principia {
 		}
 	}
 
+	inline void set_pose(BFGraphComponent* graph, const std::vector<std::pair<int, sqt>>& pose) {
+		for (const auto& p : pose) {
+			//graph->transforms[p.first] = p.second;
+			auto* tc = (TransformComponent*)graph->nodes[p.first]->data->getComponent<TransformComponent>();
+			tc->local.position = p.second.position;
+			tc->local.rotation = p.second.rotation;
+			tc->local.scale = p.second.scale;
+		}
+	}
+
 	// Animation flags 4 bytes
 	// pf, rf, sf = positionflag, rotationflag, scaleflag
 	// I thinks to make sure you only animate the things you want to animate?
