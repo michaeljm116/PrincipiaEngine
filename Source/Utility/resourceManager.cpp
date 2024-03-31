@@ -429,6 +429,25 @@ namespace Principia {
 		return rPose();
 	}
 
+	const rPose& Resources::getPose(const std::string& prefabName, const std::string& poseName) {
+		int prefN = xxh::xxhash<32, char>(prefabName);
+		int poseN = xxh::xxhash<32, char>(poseName);
+		return getPose(prefN, poseN);
+	}
+
+	const std::vector<rPose>& Resources::getPoses(const int prefN) {
+		for (auto& pr : poses) {
+			if (pr.hashVal == prefN)
+				return pr.poses;
+		}
+		return std::vector<rPose>();
+	}
+
+	const std::vector<rPose>& Resources::getPoses(const std::string& prefabName) {
+		int prefN = xxh::xxhash<32, char>(prefabName);
+		return getPoses(prefN);
+	}
+
 	tinyxml2::XMLError Resources::loadScript(const char* file) {
 		tinyxml2::XMLDocument doc;
 		tinyxml2::XMLError eResult = doc.LoadFile(file);

@@ -86,8 +86,8 @@ void Principia::AnimationSystem::initialize()
 void Principia::AnimationSystem::processEntity(artemis::Entity & e)
 {
 	auto* ac = animMapper.get(e);
-	display_animation_state(e, ac->state);
-	display_animation_names(ac);
+	//display_animation_state(e, ac->state);
+	//display_animation_names(ac);
 
 
 	switch (ac->state) {
@@ -261,8 +261,12 @@ void Principia::AnimationSystem::transition(artemis::Entity& e)
 	//First place every Previous Pose in a hashset
 	std::unordered_set<int> prevPose;
 
-	for (auto& s : startPose.pose)	prevPose.insert(s.first);
-	for (auto& e : endPose.pose)	prevPose.insert(e.first);
+	assert(startPose.pose.size() < 1000);
+	assert(endPose.pose.size() < 1000);
+	assert(transPose.pose.size() < 1000);
+	
+	for (auto& s : startPose.pose) prevPose.insert(s.first);
+	for (auto& e : endPose.pose) prevPose.insert(e.first);
 
 	//Create a list that combines everything
 	//auto combinedList = std::pmr::unordered_map<int, std::tuple<sqt, sqt, AnimFlags>>(0, &rsrc);
