@@ -1,15 +1,45 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
   animationSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\transform.hpp(23,1): error C1189: #error:  "GLM: GLM_GTX_transform is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Animation/animationSystem.cpp')
+  
   poseSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\transform.hpp(23,1): error C1189: #error:  "GLM: GLM_GTX_transform is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Animation/poseSystem.cpp')
+  
   audioSystem.cpp
-  compute-raytracer.cpp
-  prefabSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\transform.hpp(23,1): error C1189: #error:  "GLM: GLM_GTX_transform is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Audio/audioSystem.cpp')
+  
+  collidedWithSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\component_wise.hpp(22,1): error C1189: #error:  "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Physics/collidedWithSystem.cpp')
+  
+  collisionSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\component_wise.hpp(22,1): error C1189: #error:  "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Physics/collisionSystem.cpp')
+  
+  gravitySystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\component_wise.hpp(22,1): error C1189: #error:  "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Physics/gravitySystem.cpp')
+  
+  gridSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\component_wise.hpp(22,1): error C1189: #error:  "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Physics/gridSystem.cpp')
+  
+  immovableSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\component_wise.hpp(22,1): error C1189: #error:  "GLM: GLM_GTX_component_wise is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Physics/immovableSystem.cpp')
+  
+  script-system.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\transform.hpp(23,1): error C1189: #error:  "GLM: GLM_GTX_transform is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Utility/script-system.cpp')
+  
   serialize-node.cpp
-  transformSystem.cpp
-cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  animateSystem.cpp
-cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  renderSystem.cpp
-  bvhSystem.cpp
-  resourceManager.cpp
-  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Release\Principia Engine.lib
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\transform.hpp(23,1): error C1189: #error:  "GLM: GLM_GTX_transform is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Utility/serialize-node.cpp')
+  
+  prefabSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Lib\glm\glm\gtx\transform.hpp(23,1): error C1189: #error:  "GLM: GLM_GTX_transform is an experimental extension and may change in the future. Use #define GLM_ENABLE_EXPERIMENTAL before including it, if you really want to use it."
+  (compiling source file 'Utility/prefabSystem.cpp')
+  

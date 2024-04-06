@@ -55,6 +55,15 @@ namespace Principia {
 		}
 	}
 
+	inline void reset_pose(BFGraphComponent* graph) {
+		for (int i = 0; i < graph->nodes.size(); ++i) {
+			auto* tc = (TransformComponent*) graph->nodes[i]->data->getComponent<TransformComponent>();
+			tc->local.position = graph->transforms[i].position;
+			tc->local.rotation = graph->transforms[i].rotation;
+			tc->local.scale = graph->transforms[i].scale;
+		}
+	}
+
 	// Animation flags 4 bytes
 	// pf, rf, sf = positionflag, rotationflag, scaleflag
 	// I thinks to make sure you only animate the things you want to animate?

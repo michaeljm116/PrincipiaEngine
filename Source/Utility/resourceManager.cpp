@@ -440,7 +440,7 @@ namespace Principia {
 			if (pr.hashVal == prefN)
 				return pr.poses;
 		}
-		return std::vector<rPose>();
+		return {};// std::vector<rPose>();
 	}
 
 	const std::vector<rPose>& Resources::getPoses(const std::string& prefabName) {

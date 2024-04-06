@@ -13,6 +13,9 @@
 #define GLFW_INCLUE_VULKAN
 #endif
 
+#ifndef GLM_ENABLE_EXPERIMENTAL
+#define GLM_ENABLE_EXPERIMENTAL
+#endif
 
 #include <array>
 #include <vector>
