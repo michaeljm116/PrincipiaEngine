@@ -18,6 +18,8 @@ the way things work is, you translate using components
 and the system does thing automatically
 */
 
+#define UIIZON
+
 namespace Principia {
 	TransformSystem::TransformSystem()
 	{
@@ -52,18 +54,26 @@ namespace Principia {
 		//}
 	}
 
+	auto display_transform = [](NodeComponent* n, TransformComponent* t) {
+		std::cout << "\nEntity Name: " << n->name << std::endl;
+		std::cout << "Transform Details:" << std::endl;
+
+		glm::vec3 euler_angles = glm::degrees(glm::eulerAngles(t->local.rotation));
+
+		std::cout << "Rotation: (" << euler_angles.x << ", " << euler_angles.y << ", " << euler_angles.z << ")" << std::endl;
+		std::cout << "Position: (" << t->local.position.x << ", " << t->local.position.y << ", " << t->local.position.z << ")" << std::endl;
+		std::cout << "Scale: (" << t->local.scale.x << ", " << t->local.scale.y << ", " << t->local.scale.z << ")" << std::endl;
+	};
 
 
 	void TransformSystem::processEntity(artemis::Entity & e)
 	{
 		TransformComponent* tc = transformMapper.get(e);
 		NodeComponent* nc = nodeMapper.get(e);
-		if (nc->name == "Player") { 
-			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
-			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
-			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
-			std::cout << "\n\n Player TRANSFORM: X(" << tc->local.position.x << "), Y(" << tc->local.position.y << "), Z(" << tc->local.position.x << "\n\n";
-		}
+		
+		//display_transform(nc, tc);
+
+
 		//if (nc->isParent)// && nc->isDynamic)
 		//if (nc->isDynamic)
 			SQTTransform(nc);// recursiveTransform(nc);
@@ -86,7 +96,12 @@ namespace Principia {
 		//Transform matrices
 		auto local = glm::translate(glm::vec3(tc->local.position)) *  glm::toMat4(tc->local.rotation);
 		auto scaleM = glm::scale(glm::vec3(tc->local.scale));
-		
+
+#ifdef UIIZON
+		tc->eulerRotation = glm::eulerAngles(tc->local.rotation);
+		tc->eulerRotation = glm::vec3(glm::degrees(tc->eulerRotation.x), glm::degrees(tc->eulerRotation.y), glm::degrees(tc->eulerRotation.z));
+#endif // UIIZON
+
 		//combine them into 1 and multiply by parent if u haz parent;
 		if (hasParent) {
 			auto pt = (TransformComponent*)pc->data->getComponent<TransformComponent>();

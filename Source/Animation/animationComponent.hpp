@@ -117,7 +117,7 @@ namespace Principia {
 		int num_poses = 0;
 		AnimFlags flags = AnimFlags(0, 0, 0, 0);
 
-		float time = 0.005f;
+		float time = 0.25f;
 		int start = 0;
 		int end = 0;
 		int prefabName = 0;
@@ -131,6 +131,13 @@ namespace Principia {
 
 		AnimationComponent(int n, std::string&& p, std::string&& s, std::string&& e, AnimFlags f) :
 			num_poses(n), flags(f) {
+			prefabName = xxh::xxhash<32, char>(p.c_str());
+			start = xxh::xxhash<32, char>(s.c_str());
+			end = xxh::xxhash<32, char>(e.c_str());
+		};
+		AnimationComponent(float t, int n, std::string&& p, std::string&& s, std::string&& e, AnimFlags f) :
+			num_poses(n), flags(f) {
+			time  = t;
 			prefabName = xxh::xxhash<32, char>(p.c_str());
 			start = xxh::xxhash<32, char>(s.c_str());
 			end = xxh::xxhash<32, char>(e.c_str());

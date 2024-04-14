@@ -1,7 +1,83 @@
 #include "Input.h"
 #include "window.h"
 #include <chrono>
+
+//#define UIIZON
+
 namespace Principia {
+
+#pragma region Input
+	static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+	{
+		pINPUT.keys[key] = action;
+		switch (action)
+		{
+		case GLFW_PRESS:
+			pINPUT.pressed = true;
+			break;
+		case GLFW_REPEAT:
+			pINPUT.pressed = true;
+			break;
+		case GLFW_RELEASE:
+			pINPUT.pressed = false;
+			break;
+		default:
+			break;
+		}
+
+#ifdef UIIZON
+		ImGuiIO& io = ImGui::GetIO();
+		if (action == GLFW_PRESS || action == GLFW_REPEAT) {
+			io.KeysDown[key] = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			io.KeysDown[key] = false;
+		}
+#endif // 
+	}
+
+	static void char_callback(GLFWwindow*, unsigned int c)
+	{
+#ifdef UIIZON
+		ImGuiIO& io = ImGui::GetIO();
+		io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
+		io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
+		io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
+		if (c > 0 && c < 0x10000)
+			io.AddInputCharacter((unsigned short)c);
+#endif // UIIZON
+	}
+
+	static void cursor_position_callback(GLFWwindow* window, double xpos, double ypos) {
+		pINPUT.mouse.updatePosition((int)xpos, (int)ypos);
+	}
+
+
+	//static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
+	//	/*if (action == GLFW_PRESS || action == GLFW_REPEAT)
+	//		INPUT.mouse.updateButton(button, true);
+	//	else
+	//		INPUT.mouse.updateButton(button, false);*/
+	//	INPUT.mouse.buttons[button] = action;
+	//	//INPUT.mouse.updateButton(button, (bool)action);
+	//}
+
+	static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+		pINPUT.mouse.updateScroll(yoffset);
+	}
+
+	static void joystick_callback(int jid, int event) {
+		if (event == GLFW_CONNECTED)
+		{
+			// The joystick was connected
+		}
+		else if (event == GLFW_DISCONNECTED)
+		{
+			// The joystick was disconnected
+		}
+	}
+#pragma endregion Callbacks
+
 	Input::~Input()
 	{
 	}
@@ -10,13 +86,13 @@ namespace Principia {
 
 		//set up callbacks
 		window = Window::get().getWindow();
-		glfwSetKeyCallback(window, Input::key_callback);
-		glfwSetCharCallback(window, Input::char_callback);
-		glfwSetCursorPosCallback(window, Input::cursor_position_callback);
+		glfwSetKeyCallback(window, key_callback);
+		glfwSetCharCallback(window, char_callback);
+		glfwSetCursorPosCallback(window, cursor_position_callback);
 		//glfwSetMouseButtonCallback(window, Input::mouse_button_callback);
 		glfwSetInputMode(window, GLFW_STICKY_KEYS, true);
-		glfwSetScrollCallback(window, Input::scroll_callback);
-		glfwSetJoystickCallback(Input::joystick_callback);
+		glfwSetScrollCallback(window, scroll_callback);
+		glfwSetJoystickCallback(joystick_callback);
 		
 		for (int i = 0; i < 16; ++i) {
 			if (glfwJoystickPresent(i)) {
@@ -40,9 +116,6 @@ namespace Principia {
 				printf("\n%u is a %s aka %s it has %u Axes and %u buttons\n", i, name, game_pad_name, axesCount, buttonCount);
 			}
 		}
-
-
-
 
 		/*
 		Q, E, R, F, V
