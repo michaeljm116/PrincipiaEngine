@@ -46,6 +46,7 @@ namespace Principia {
 
 		tinyxml2::XMLError  SaveMaterials();
 		tinyxml2::XMLError LoadMaterials(const char* file);
+		tinyxml2::XMLError LoadMaterials(std::string file);
 
 		rConfig& getConfig() { return config; };
 

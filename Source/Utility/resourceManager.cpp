@@ -398,6 +398,10 @@ namespace Principia {
 		return eResult;
 	}
 
+	tinyxml2::XMLError Resources::LoadMaterials(std::string file) {
+		return LoadMaterials(file.c_str());
+	}
+
 	//const rPose & Resources::getPose(const std::string& prefabName, const std::string& poseName)
 	//{      
 	//	//Get da hashes
