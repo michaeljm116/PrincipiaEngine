@@ -34,3 +34,5 @@
 
 #include <Artemis/Artemis.h>
 #include <GLFW/glfw3.h>
+
+static const std::string active_directory = "../Assets/Levels/1_Jungle/";
