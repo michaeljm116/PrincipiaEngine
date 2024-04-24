@@ -2,7 +2,7 @@
 #include "window.h"
 #include <chrono>
 
-//#define UIIZON
+#define UIIZON
 
 namespace Principia {
 
