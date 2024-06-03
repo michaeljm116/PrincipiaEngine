@@ -125,6 +125,8 @@ namespace Principia {
         std::string name;
         std::vector<std::pair<int, sqt>> pose;
         int hashVal = 0;
+
+        ~rPose() = default;
     };
 
     struct rPoseList {

@@ -135,6 +135,10 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 	AnimationComponent* ac = animMapper.get(e);
 	BFGraphComponent* bfg = bfgMapper.get(e);
 
+	// Get the node component and display the name
+	auto* node = (NodeComponent*)e.getComponent<NodeComponent>();
+	std::cout << "\nAdding: " << node->name << " Animation";
+
 	//If there's only 1 pose, then it'll only be the end pose 
 	auto& endPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->end);
 	if (ac->num_poses == 1) {
@@ -165,7 +169,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 		std::unordered_map<int, AnimateComponent*> comps;
 		// breakpoint check for walk: ac->start == -1164222069 && ac->end == -1142104506
 		auto& startPose = RESOURCEMANAGER.getPose(ac->prefabName, ac->start);
-
+		std::cout << "\nStart Pose: " << startPose.name.c_str() << "\n";
 		// Just straight up insert all the starts
 		for (auto p : startPose.pose) {
 			AnimateComponent* a = new AnimateComponent();
@@ -177,6 +181,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 			comps.insert(std::make_pair(p.first, a));
 		}
 
+		std::cout <<"End Pose: " << endPose.name.c_str() << "\n";
 		// For the endFirst make sure there's no duplicates, then insert
 		for (auto& p : endPose.pose) {
 			const auto& a = comps.find(p.first);
@@ -210,6 +215,7 @@ void Principia::AnimationSystem::added(artemis::Entity & e)
 		}
 	}
 
+	std::cout << "Done\n";
 	// make sure it not in trans
 	ac->trans_timer = 0.001f;
 }

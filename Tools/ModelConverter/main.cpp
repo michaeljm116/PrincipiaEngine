@@ -327,7 +327,6 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	}
 	m.name = m.name.substr(0, indexico);
 	
-
 	if(hasAnim)
 	LoadBones(pScene, tds);
 
@@ -349,8 +348,7 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 	for (size_t i = 0; i < pScene->mNumMeshes; ++i) {
 		Mesh subset;
 		aiMesh* paiMesh = pScene->mMeshes[i];
-
-
+		
 		//blender does this stupid thing where it chagnes the name from EX: Pants to Pants.001
 		//so you have to deprecate the .001 cause they just HAVE to be annoying
 		subset.name = paiMesh->mName.C_Str();
@@ -369,17 +367,19 @@ bool DoTheImportThing(const std::string& pFile, PrincipiaModel& m, PrincipiaSkel
 			aiVector3D vert = paiMesh->mVertices[v];
 			aiVector3D norm = aiVector3D();// paiMesh->mNormals[v];
 			aiVector3D* txtr = nullptr;
+			aiVector3D tang = aiVector3D(); 
 			if (paiMesh->HasTextureCoords(v))
 				txtr = paiMesh->mTextureCoords[v];
 			if (paiMesh->HasNormals())
 				norm = paiMesh->mNormals[v];
-
+			
+			
 			//Transform the verts;
 			//auto node = sceneChildren[subset.name];
 			//vert *= node->mTransformation.Transpose();
 
 			//subset.vertices.push_back(glm::vec3(paiMesh->mVertices[v].x, paiMesh->mVertices[v].y, paiMesh->mVertices[v].z));
-			paiMesh->HasTextureCoords(v) ? subset.vertices.push_back(Vertex(vert, norm, txtr->x, txtr->y)) : subset.vertices.push_back(Vertex(vert, norm));
+			paiMesh->HasTextureCoords(v) ? subset.vertices.push_back(Vertex(vert, norm, tang, txtr->x, txtr->y)) : subset.vertices.push_back(Vertex(vert, norm));
 			maxVert.x = maxVal(maxVert.x, vert.x);
 			maxVert.y = maxVal(maxVert.y, vert.y);
 			maxVert.z = maxVal(maxVert.z, vert.z);

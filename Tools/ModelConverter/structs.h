@@ -101,11 +101,13 @@ struct JointObject {
 struct Vertex {
 	glm::vec3 position;
 	glm::vec3 normal;
+	glm::vec3 tangent;
 	glm::vec2 uv;
 	Vertex() {};
 	Vertex(glm::vec3 p) { position = p; };
 	Vertex(aiVector3D p, aiVector3D n) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); }
-	Vertex(const aiVector3D &p, const aiVector3D &n, const ai_real &u, const ai_real &v) { position = glm::vec3(p.x, p.y, p.z); normal = glm::vec3(n.x, n.y, n.z); uv = glm::vec2(u, v); }
+	Vertex(const aiVector3D& p, const aiVector3D& n, const aiVector3D& t, const ai_real& u, const ai_real& v) :
+		position(p.x, p.y, p.z), normal(n.x, n.y, n.z), tangent(t.x, t.y, t.z), uv(u, v) {};
 };
 
 struct Face : public kBounds {
@@ -145,6 +147,7 @@ struct Mesh {
 	std::string originalName;
 	std::vector<Face> faces;
 	std::vector<Vertex> vertices;
+	std::vector<Vertex64> vertices64;
 	std::vector<flatBVHNode> bvh;
 	glm::vec3 extent;
 	glm::vec3 center;

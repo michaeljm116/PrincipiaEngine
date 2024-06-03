@@ -29,6 +29,8 @@ namespace Principia {
 		nodeMapper.init(*world);
 		transMapper.init(*world);
 		primMapper.init(*world);
+
+		//splitMethod = SplitMethod::EqualsCounts;
 	}
 
 	void BvhSystem::build()
@@ -538,6 +540,7 @@ namespace Principia {
 						return ptm->get(*a)->center()[axis] < centroid.center[axis];
 					});
 					mid = midPtr - &prims[0];
+					break;
 				}
 				case SplitMethod::EqualsCounts: {
 					std::nth_element(&prims[start], &prims[mid], &prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
@@ -615,7 +618,8 @@ namespace Principia {
 							return node;
 						}
 					}
-				}
+					break;
+				}									
 				default:
 					break;
 				}
@@ -662,11 +666,13 @@ namespace Principia {
 						return ptm->get(*a)->center()[axis] < centroid.center[axis];
 						});
 					mid = midPtr - &culled_prims[0];
+					break;
 				}
 				case SplitMethod::EqualsCounts: {
 					std::nth_element(&culled_prims[start], &culled_prims[mid], &culled_prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
 						return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
 						});
+					break;
 				}
 				case SplitMethod::SAH: {
 					if (numPrims <= MAX_BVH_OBJECTS) {
@@ -739,6 +745,7 @@ namespace Principia {
 							return node;
 						}
 					}
+					break;
 				}
 				default:
 					break;
