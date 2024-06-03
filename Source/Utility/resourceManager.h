@@ -90,6 +90,7 @@ namespace Principia {
 		const rPose& getPose(const std::string& prefabName, const std::string& poseName);
 		const std::vector<rPose>& getPoses(const int prefabName);
 		const std::vector<rPose>& getPoses(const std::string& prefabName);
+		bool has_pose(std::string&& prefabName);
 #pragma region materials
 		inline rMaterial& getMaterial(int i) { return materials[i]; };
 		inline rMaterial getMaterial(std::string n) {

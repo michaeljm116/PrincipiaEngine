@@ -281,7 +281,7 @@ namespace Principia {
 		pRoot = doc.FirstChildElement("Root");
 
 		//Iterate through the poses
-		rPoseList pl; pl.name = prefabName; pl.hashVal = xxh::xxhash<32, char>(prefabName.c_str(), 0);
+		rPoseList pl; pl.name = prefabName; pl.hashVal = xxh::xxhash<32, char>(prefabName.c_str());
 		tinyxml2::XMLElement* poseElement = pRoot->FirstChildElement("Pose");
 
 		while (poseElement != nullptr) {
@@ -430,7 +430,7 @@ namespace Principia {
 				}
 			}
 		}
-		return rPose();
+		return {};
 	}
 
 	const rPose& Resources::getPose(const std::string& prefabName, const std::string& poseName) {
@@ -450,6 +450,16 @@ namespace Principia {
 	const std::vector<rPose>& Resources::getPoses(const std::string& prefabName) {
 		int prefN = xxh::xxhash<32, char>(prefabName);
 		return getPoses(prefN);
+	}
+
+	bool Resources::has_pose(std::string&& prefab_name)
+	{
+		int prefab_hash = xxh::xxhash<32, char>(prefab_name);
+		for (auto& pr : poses) {
+			if (pr.hashVal == prefab_hash)
+				return true;
+		}
+		return false;
 	}
 
 	tinyxml2::XMLError Resources::loadScript(const char* file) {

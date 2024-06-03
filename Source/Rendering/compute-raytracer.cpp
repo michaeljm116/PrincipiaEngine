@@ -1196,8 +1196,6 @@ namespace Principia {
 				int prevIndSize = faces.size();
 				int prevBlasSize = blas.size();
 
-
-				//////////////////////////////////////THISshould be reserve+emplacedbackinstead/////////////////////////////////////
 				//load up ze vertices;
 				verts.reserve(prevVertSize + rmesh.verts.size());
 				for (std::vector<rVertex>::const_iterator itr = rmesh.verts.begin(); itr != rmesh.verts.end(); ++itr) {
