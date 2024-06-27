@@ -147,7 +147,7 @@ struct Mesh {
 	std::string originalName;
 	std::vector<Face> faces;
 	std::vector<Vertex> vertices;
-	std::vector<Vertex64> vertices64;
+	//std::vector<Vertex64> vertices64;
 	std::vector<flatBVHNode> bvh;
 	glm::vec3 extent;
 	glm::vec3 center;
