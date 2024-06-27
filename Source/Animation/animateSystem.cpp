@@ -38,6 +38,8 @@ void Principia::AnimateSystem::added(artemis::Entity & e)
 
 void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 {	
+	if (&e == nullptr) 
+		return;
 	//Get the Components
 	AnimateComponent*	ac = animMapper.get(e);
 	TransformComponent* tc = transMapper.get(e);
