@@ -88,50 +88,18 @@ namespace Principia {
 
 	void BvhSystem::processEntity(artemis::Entity & e)
 	{
-		//prims.emplace_back(&e);
-		/*auto* n = nodeMapper.get(e);
-		if (n->isDynamic) {
-			update(e);
-		}*/
-		auto* transform = transMapper.get(e);
-		auto* node = nodeMapper.get(e);
-		auto dist = glm::sqrt(glm::distance2(transform->TRM[3], cam_pos));
-		if (dist < max_dist) {
-			//culled_prims.push_back(&e);
-			node->culled = true; 
-			cull_count++;
-		}
-		else {
-			node->culled = false;
-		}
-		
+	
 	}
 
 	void BvhSystem::begin()
 	{
-		culled_prims.clear();
-		cam_pos = cc->rotM[3];
-		cull_count = 0;
 
 	}
 
 	void BvhSystem::end()
 	{
 		std::vector<artemis::Entity*> orderedPrims;
-		//size_t count = getEntityCount();
-		//prims.reserve(count);
-		culled_prims.reserve(cull_count);
-		for (auto* e : prims) {
-			if(nodeMapper.get(*e)->culled)
-			{
-				culled_prims.emplace_back(e);
-			}
-		}
-		orderedPrims.reserve(cull_count);
-		if(cull_count > 0)
-			buildCulled(TreeType::Recursive, orderedPrims);//buildMultiThreadedCulled(TreeType::Recursive, orderedPrims);
-		else
-			build(TreeType::Recursive, orderedPrims);
+		build(TreeType::Recursive, orderedPrims);
 		rebuild = false;
 		//std::cout << "\nEntities: " << countz0  << " ";
 	}
@@ -164,13 +132,6 @@ namespace Principia {
 
 		prims = std::move(ops);
 		//prims = ops;
-	}
-	void BvhSystem::buildCulled(TreeType tt, std::vector<artemis::Entity*>& ops) {
-		totalNodes = 0;
-
-		root = recursiveBuildCulled(0, culled_prims.size(), &totalNodes, ops);
-
-		culled_prims = std::move(ops);
 	}
 
 	void BvhSystem::buildMultiThreaded2(TreeType tt, std::vector<artemis::Entity*>& ops)
@@ -211,51 +172,6 @@ namespace Principia {
 		ops.insert(ops.end(), ordered_prims1.begin(), ordered_prims1.end());
 
 		prims = std::move(ops);
-
-		step1.node->initInterior(step1.axis, nodes[0], nodes[1]);
-
-		root = step1.node;
-
-		std::cout << "\nNumCores: " << std::thread::hardware_concurrency() << std::endl;
-	}
-
-	void BvhSystem::buildMultiThreadedCulled(TreeType tt, std::vector<artemis::Entity*>& ops)
-	{
-		totalNodes = 0;
-		auto step1 = buildStepCulled(0, culled_prims.size(), &totalNodes);
-
-
-		std::vector<artemis::Entity*> ordered_prims0;
-		std::vector<artemis::Entity*> ordered_prims1;
-		std::array<std::future<BVHNode*>, 2> future_nodes;
-		std::array<BVHNode*, 2 > nodes;
-		std::array<int, 2> total_nodes = { 0,0 };
-		std::array<int, 3> ranges = { 0, step1.mid, culled_prims.size() };
-
-
-		//#pragma omp parallel for
-		//		for (int i = 0; i < 2; ++i) {
-		//			//nodes[i] = future_nodes[i].get();
-		//			nodes[i] = recursiveBuild(ranges[i], ranges[i + 1], &total_nodes[i], ordered_prims[i]);
-		//		}
-
-				//for (int i = 0; i < 2; ++i) {
-				//	future_nodes[i] = std::async(std::launch::async, &BvhSystem::recursiveBuild, this, ranges[i], ranges[i+1], &total_nodes[i], std::ref(ordered_prims[i]));
-				//}
-		future_nodes[0] = std::async(std::launch::async, &BvhSystem::recursiveBuildCulled, this, ranges[0], ranges[1], &total_nodes[0], std::ref(ordered_prims0));
-		future_nodes[1] = std::async(std::launch::async, &BvhSystem::recursiveBuildCulled, this, ranges[1], ranges[2], &total_nodes[1], std::ref(ordered_prims1));
-
-
-		for (int i = 0; i < 2; ++i) {
-			nodes[i] = future_nodes[i].get();
-		}
-		for (int i = 0; i < 2; ++i) {
-			totalNodes += total_nodes[i];
-		}
-		ops.insert(ops.begin(), ordered_prims0.begin(), ordered_prims0.end());
-		ops.insert(ops.end(), ordered_prims1.begin(), ordered_prims1.end());
-
-		culled_prims = std::move(ops);
 
 		step1.node->initInterior(step1.axis, nodes[0], nodes[1]);
 
@@ -445,65 +361,6 @@ namespace Principia {
 		return BvhStepInfo(node, mid, axis);		
 	}
 
-	BvhSystem::BvhStepInfo BvhSystem::buildStepCulled(int start, int end, int* totalNodes)
-	{
-		*totalNodes += 1;
-		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
-		BVHBounds bounds = computeCulledBounds(start, end);
-
-		//Check if leaf
-		int numPrims = end - start;
-		//int prevOrdered = orderedPrims.size();
-
-		//Not a leaf, create a new node
-
-		BVHBounds centroid = computeCulledBounds(start, end);
-		int axis = chooseAxis(centroid.center);
-		int mid = (start + end) >> 1;
-
-		artemis::ComponentMapper<PrimitiveComponent>* ptm = &primMapper;
-		//Perform the Surface Area Heuristic
-		constexpr int numBuckets = 12;
-		BVHBucket buckets[numBuckets];
-		for (int i = start; i < end; ++i) {
-			PrimitiveComponent* pc = ptm->get(*culled_prims[i]);
-			BVHBounds tempBounds = BVHBounds(pc->center(), pc->aabbExtents);
-			int b = numBuckets * centroid.Offset(pc->center(), axis);
-			if (b == numBuckets) b--;
-			buckets[b].count++;
-			buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
-		}
-
-		constexpr int nb = numBuckets - 1;
-		float cost[nb];
-		for (int i = 0; i < nb; ++i) {
-			BVHBounds b0, b1;
-			int c0 = 0, c1 = 0;
-
-			for (int j = 0; j <= i; ++j) {
-				b0 = b0.combine(buckets[j].bounds);
-				c0 += buckets[j].count;
-			}
-			for (int j = i + 1; j < numBuckets; ++j) {
-				b1 = b1.combine(buckets[j].bounds);
-				c1 += buckets[j].count;
-			}
-			cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
-		}
-
-		float minCost = cost[0];
-		int minCostSplitBucket = 0;
-		for (int i = 0; i < nb; ++i) {
-			if (cost[i] < minCost) {
-				minCost = cost[i];
-				minCostSplitBucket = i;
-			}
-		}
-		float leafCost = numPrims;
-		//node->initInterior(axis, recursiveBuild(start, mid, totalNodes, orderedPrims), recursiveBuild(mid, end, totalNodes, orderedPrims));
-		return BvhStepInfo(node, mid, axis);
-	}
-
 	//(Recall that the number of nodes in a BVH is bounded by twice the number of leaf nodes, which in turn is bounded by the number of primitives)
 	BVHNode* BvhSystem::recursiveBuild(int start, int end, int * totalNodes, std::vector<artemis::Entity*> &orderedPrims)
 	{
@@ -631,133 +488,6 @@ namespace Principia {
 		//return std::unique_ptr<BVHNode>();
 	}
 
-	BVHNode* BvhSystem::recursiveBuildCulled(int start, int end, int* totalNodes, std::vector<artemis::Entity*>& orderedPrims)
-	{
-		*totalNodes += 1;
-		BVHNode* node(new BVHNode);// std::make_shared<BVHNode>();
-		BVHBounds bounds = computeCulledBounds(start, end);
-
-		//Check if leaf
-		int numPrims = end - start;
-		int prevOrdered = orderedPrims.size();
-		if (numPrims < MAX_BVH_OBJECTS) { //create leaf
-			for (int i = start; i < end; ++i)
-				orderedPrims.emplace_back(culled_prims[i]);
-			node->initLeaf(prevOrdered, numPrims, bounds);
-		}
-		//Not a leaf, create a new node
-		else {
-			BVHBounds centroid = computeCulledBounds(start, end);
-			int axis = chooseAxis(centroid.center);
-			int mid = (start + end) >> 1;
-
-			//edgecase
-			if (centroid.max()[axis] == centroid.min()[axis]) {
-				for (int i = start; i < end; ++i)
-					orderedPrims.emplace_back(culled_prims[i]);
-				node->initLeaf(prevOrdered, numPrims, bounds);
-				return node;
-			}
-			else {
-				artemis::ComponentMapper<PrimitiveComponent>* ptm = &primMapper;
-				switch (splitMethod) {
-				case SplitMethod::Middle: {
-					artemis::Entity** midPtr = std::partition(&culled_prims[start], &culled_prims[end - 1] + 1, [axis, centroid, ptm](artemis::Entity* a) {
-						return ptm->get(*a)->center()[axis] < centroid.center[axis];
-						});
-					mid = midPtr - &culled_prims[0];
-					break;
-				}
-				case SplitMethod::EqualsCounts: {
-					std::nth_element(&culled_prims[start], &culled_prims[mid], &culled_prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
-						return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
-						});
-					break;
-				}
-				case SplitMethod::SAH: {
-					if (numPrims <= MAX_BVH_OBJECTS) {
-						mid = (start + end) >> 1;
-						std::nth_element(&culled_prims[start], &culled_prims[mid], &culled_prims[end - 1] + 1, [axis, ptm](artemis::Entity* a, artemis::Entity* b) {
-							return ptm->get(*a)->center()[axis] < ptm->get(*b)->center()[axis];
-							});
-					}
-					else {
-						//initialize the buckets
-						constexpr int numBuckets = 12;
-						BVHBucket buckets[numBuckets];
-						for (int i = start; i < end; ++i) {
-							PrimitiveComponent* pc = ptm->get(*culled_prims[i]);
-							BVHBounds tempBounds = BVHBounds(pc->center(), pc->aabbExtents);
-							int b = numBuckets * centroid.Offset(pc->center(), axis);
-							if (b == numBuckets) b--;
-							buckets[b].count++;
-							buckets[b].bounds = buckets[b].bounds.combine(tempBounds);
-						}
-
-						constexpr int nb = numBuckets - 1;
-						float cost[nb];
-						for (int i = 0; i < nb; ++i) {
-							BVHBounds b0, b1;
-							int c0 = 0, c1 = 0;
-
-							for (int j = 0; j <= i; ++j) {
-								b0 = b0.combine(buckets[j].bounds);
-								c0 += buckets[j].count;
-							}
-							for (int j = i + 1; j < numBuckets; ++j) {
-								b1 = b1.combine(buckets[j].bounds);
-								c1 += buckets[j].count;
-							}
-							cost[i] = .125f + (c0 * b0.SurfaceArea() + c1 * b1.SurfaceArea()) / bounds.SurfaceArea();
-						}
-
-						float minCost = cost[0];
-						int minCostSplitBucket = 0;
-						for (int i = 0; i < nb; ++i) {
-							if (cost[i] < minCost) {
-								minCost = cost[i];
-								minCostSplitBucket = i;
-							}
-						}
-						float leafCost = numPrims;
-						if (numPrims > MAX_BVH_OBJECTS || minCost < leafCost) {
-							artemis::Entity** midPtr = std::partition(&culled_prims[start], &culled_prims[end - 1] + 1, [axis, centroid, ptm, minCostSplitBucket, numBuckets](artemis::Entity* a) {
-								int b = (numBuckets)*centroid.Offset(ptm->get(*a)->center(), axis);
-								if (b == numBuckets) b = numBuckets - 1;
-								return b <= minCostSplitBucket;
-
-								});
-							mid = midPtr - &culled_prims[0];
-							if (mid != start && mid != end)
-								break;
-							else {
-								for (int i = start; i < end; ++i)
-									orderedPrims.emplace_back(culled_prims[i]);
-								node->initLeaf(prevOrdered, numPrims, bounds);
-								return node;
-							}
-
-						}
-						else { //create leaf
-							for (int i = start; i < end; ++i)
-								orderedPrims.emplace_back(culled_prims[i]);
-							node->initLeaf(prevOrdered, numPrims, bounds);
-							return node;
-						}
-					}
-					break;
-				}
-				default:
-					break;
-				}
-
-				node->initInterior(axis, recursiveBuildCulled(start, mid, totalNodes, orderedPrims), recursiveBuildCulled(mid, end, totalNodes, orderedPrims));
-			}
-		}
-		return node;
-		//return std::unique_ptr<BVHNode>();
-	}
-
 	BVHNode* BvhSystem::hlbvhBuild(int start, int end, int* totalNodes, std::vector<artemis::Entity*>& orderedPrims)
 	{
 		// Compute bounding box of all primitive centroids
@@ -833,22 +563,6 @@ namespace Principia {
 		return BVHBounds(c, ex);
 	}
 
-	BVHBounds BvhSystem::computeCulledBounds(int s, int e)
-	{
-		glm::vec3 min(FLT_MAX);
-		glm::vec3 max(-FLT_MAX);
-//#pragma omp parallel for
-		for (int i = s; i < e; ++i) {
-			PrimitiveComponent* pc = primMapper.get(*culled_prims[i]);
-			min = tulip::minV(min, pc->center() - glm::vec3(pc->aabbExtents));
-			max = tulip::maxV(max, pc->center() + glm::vec3(pc->aabbExtents));
-		}
-		glm::vec3 c = (max + min) * 0.5f;
-		glm::vec3 ex = max - c;
-
-		return BVHBounds(c, ex);
-	}
-
 	BVHBounds BvhSystem::computeCentroidBounds(int s, int e)
 	{
 		//make an aabb of the entire scene basically
@@ -904,16 +618,6 @@ namespace Principia {
 		glm::vec3 ex = max - c;
 
 		return BVHBounds(c, ex);
-	}
-
-
-	void BvhSystem::FrustrumCull(artemis::Entity &e) {
-		/*
-		auto cam_pos = cc->rotM[3];
-#pragma omp parallel for
-		for (int i = 0; i < prims.size(); ++i) {
-			auto diff = glm::distance2(cam_pos)
-		}*/
 	}
 
 }
