@@ -36,9 +36,12 @@ namespace artemis {
     Entity& createEntity();
     Entity& getEntity(int entityId);
     void loopStart();
-	void setSingleton(Entity* e) { singleton = e; };
-	Entity* getSingleton() { return singleton; };
+	inline void setSingleton(Entity* e) { singleton = e; };
+	inline Entity* getSingleton() { return singleton; };
 	
+    inline void setScene(Entity* e) { scene = e; };
+    inline Entity* getScene() { return scene; };
+
 	void setShutdown() { shutdown = true; };
 	bool getShutdown() { return shutdown; };
     
@@ -52,6 +55,8 @@ namespace artemis {
     Bag<Entity*> refreshed;
     Bag<Entity*> deleted;
 	Entity* singleton;
+    Entity* scene;
+
 	bool shutdown = false;
 	};
 };
