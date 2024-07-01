@@ -51,10 +51,10 @@ namespace Principia {
 
 	//typedef unsigned long ComponentFlag;
 	struct NodeComponent : artemis::Component {
-		artemis::Entity* data;
-		NodeComponent*	 parent;
-		std::vector<NodeComponent*> children;
-		std::string name;
+		artemis::Entity* data = {};
+		NodeComponent* parent = {};
+		std::vector<NodeComponent*> children = {};
+		std::string name = "";
 		bool clicked = false;
 		bool isDynamic = false;
 		bool isParent = false;

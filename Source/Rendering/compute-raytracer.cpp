@@ -1066,15 +1066,14 @@ namespace Principia {
 
 		if (t & RENDER_LIGHT) {
 			if (lights_.size() == 1) {
+				assert(lights_.at(0).id == light_comps_.at(0)->id);
 				lights_.clear();
 				light_comps_.clear();
 			}
 			else {
 				auto* lc = (LightComponent*)e.getComponent<LightComponent>();
-				for (auto it = lights_.begin(); it != lights_.end(); ++it) {
-					if (lc->id == it->id)
-						lights_.erase(it);
-				}
+				std::erase_if(lights_, [lc](ssLight l) {return lc->id == l.id;});
+				std::erase_if(light_comps_, [lc](LightComponent* l) {return lc->id == l->id; });
 			}
 		}
 		/*else if (t == RENDER_GUINUM) {

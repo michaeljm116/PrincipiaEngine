@@ -1,28 +1,12 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  pch.cpp
-cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
   animationSystem.cpp
   poseSystem.cpp
-  Component.cpp
-  DelayedEntitySystem.cpp
-  Entity.cpp
-  EntityManager.cpp
-  EntitySystem.cpp
-  SystemManager.cpp
-  World.cpp
   audioSystem.cpp
   collidedWithSystem.cpp
   collisionSystem.cpp
-  gravitySystem.cpp
-  gridSystem.cpp
-  immovableSystem.cpp
   compute-raytracer.cpp
-  renderbase.cpp
-  Input.cpp
   prefabSystem.cpp
   script-system.cpp
-  Compiling...
-  selectable-gui-system.cpp
   serialize-node.cpp
   transformSystem.cpp
 cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
@@ -31,5 +15,4 @@ cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
   renderSystem.cpp
   bvhSystem.cpp
   resourceManager.cpp
-  window.cpp
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Release\Principia Engine.lib
