@@ -1,4 +1,3 @@
 ﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
-  compute-raytracer.cpp
   Input.cpp
   PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\Release\Principia Engine.lib
