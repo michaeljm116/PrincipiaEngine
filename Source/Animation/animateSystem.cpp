@@ -44,6 +44,19 @@ void Principia::AnimateSystem::processEntity(artemis::Entity & e)
 	AnimateComponent*	ac = animMapper.get(e);
 	TransformComponent* tc = transMapper.get(e);
 
+	if (ac == nullptr) {
+		std::cout << "ERROR NULL ANIM MAPPER ON " << e.getId();
+		NodeComponent* nc = (NodeComponent*)e.getComponent<NodeComponent>();
+		if (nc != nullptr) std::cout << " Name: " << nc->name << std::endl;	
+		return;
+	};
+	if (tc == nullptr){
+		std::cout << "ERROR NULL ANIM MAPPER ON " << e.getId();
+		NodeComponent* nc = (NodeComponent*)e.getComponent<NodeComponent>();
+		if (nc != nullptr) std::cout << " Name: " << nc->name << std::endl;
+		return;
+	}
+
 	////Remove if parent is deleted
 	//if (ac->parent == nullptr)
 	//	e.removeComponent<AnimateComponent>();
