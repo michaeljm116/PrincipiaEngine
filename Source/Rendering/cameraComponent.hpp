@@ -15,6 +15,7 @@ namespace Principia {
 		CameraComponent() {};
 		CameraComponent(float ar, float f) :aspectRatio(ar), fov(f) {};
 	};
+
 	//struct Plane {
 	//	glm::vec3 normal;
 	//	float distance;

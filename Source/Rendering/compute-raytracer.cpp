@@ -455,7 +455,7 @@ namespace Principia {
 	void ComputeRaytracer::UpdateCamera(CameraComponent* c)
 	{
 		compute_.ubo.aspect_ratio = c->aspectRatio;
-		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503f);
+		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503f);	
 		compute_.ubo.rotM = c->rotM;
 		compute_.ubo.rand = static_cast<int>(random_int());
 		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
