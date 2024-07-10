@@ -54,6 +54,12 @@
     <Filter Include="Source Files\Physics\bullet3">
       <UniqueIdentifier>{2a80be16-ca66-4f2f-933c-7650a97bf6ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="imgui\backends">
+      <UniqueIdentifier>{0df72315-25a5-4881-ae8a-a3ab1bfa85e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\backends\vulkan">
+      <UniqueIdentifier>{63473e07-aeb3-4cb4-97f0-974796fb4f98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering\Texture.cpp">
@@ -188,6 +194,12 @@
     <ClCompile Include="Utility\selectable-gui-system.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="..\Lib\imgui\backends\imgui_impl_glfw.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Lib\imgui\backends\imgui_impl_vulkan.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -246,6 +258,15 @@
     </None>
     <None Include="Rendering\Shaders\instancing.frag">
       <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="..\Lib\imgui\backends\vulkan\generate_spv.sh">
+      <Filter>imgui\backends\vulkan</Filter>
+    </None>
+    <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.frag">
+      <Filter>imgui\backends\vulkan</Filter>
+    </None>
+    <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.vert">
+      <Filter>imgui\backends\vulkan</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -500,6 +521,12 @@
     </ClInclude>
     <ClInclude Include="Utility\memory-arena.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\backends\imgui_impl_glfw.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Lib\imgui\backends\imgui_impl_vulkan.h">
+      <Filter>imgui\backends</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

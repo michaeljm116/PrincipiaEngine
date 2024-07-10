@@ -27,6 +27,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Lib\imgui\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="..\Lib\imgui\backends\imgui_impl_vulkan.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_demo.cpp" />
     <ClCompile Include="..\Lib\imgui\imgui_draw.cpp" />
@@ -128,6 +130,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Lib\imgui\backends\vulkan\generate_spv.sh" />
+    <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.frag" />
+    <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.vert" />
     <None Include="ArtemisFrameWork\zzReadMe.md" />
     <None Include="Rendering\Shaders\basic.frag" />
     <None Include="Rendering\Shaders\basic.vert" />
@@ -160,6 +165,8 @@
     <None Include="Rendering\Shaders\texture.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Lib\imgui\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="..\Lib\imgui\backends\imgui_impl_vulkan.h" />
     <ClInclude Include="..\Lib\imgui\imconfig.h" />
     <ClInclude Include="..\Lib\imgui\imgui.h" />
     <ClInclude Include="..\Lib\imgui\imgui_internal.h" />
@@ -325,30 +332,30 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath);..\Lib\imgui</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath);..\Lib\imgui</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath);..\Lib\imgui</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath);..\Lib\imgui</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Editor|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath);..\Lib\imgui</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath)</IncludePath>
+    <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath);..\Lib\imgui</IncludePath>
     <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
