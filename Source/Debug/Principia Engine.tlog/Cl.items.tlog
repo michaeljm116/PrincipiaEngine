@@ -31,6 +31,7 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\gravitySystem.cpp;C:\dev\P
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\gridSystem.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\gridSystem.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Physics\immovableSystem.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\immovableSystem.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\compute-raytracer.obj
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\imgui-renderer.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\imgui-renderer.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\renderSystem.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderbase.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\renderbase.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\Texture.obj

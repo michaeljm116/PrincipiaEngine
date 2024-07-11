@@ -406,95 +406,6 @@ namespace Principia {
 		vkDestroyCommandPool(vkDevice.logicalDevice, compute_.command_pool, nullptr);
 	}
 
-	void ComputeRaytracer::initImGui()
-	{
-		//create the imgui descriptor pool
-		VkDescriptorPoolSize pool_sizes[] = { { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
-		{ VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
-		{ VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
-		{ VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
-		{ VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 } };
-
-		VkDescriptorPoolCreateInfo pool_info = {};
-		pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-		pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-		pool_info.maxSets = 1000;
-		pool_info.poolSizeCount = (uint32_t)std::size(pool_sizes);
-		pool_info.pPoolSizes = pool_sizes;
-
-		VkDescriptorPool imguiPool;
-		VK_CHECKRESULT(vkCreateDescriptorPool(vkDevice.logicalDevice, &pool_info, nullptr, &imguiPool), "CREATING IMGUI DESCRIPTOR POOL");
-
-		// Setup Dear ImGui context
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO();
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
-
-		// Setup Platform/Renderer backends
-		
-		ImGui_ImplGlfw_InitForVulkan(WINDOW.getWindow(), true);
-		ImGui_ImplVulkan_InitInfo init_info = {};
-		init_info.Instance = vkDevice.instance;
-		init_info.PhysicalDevice = vkDevice.physicalDevice;
-		init_info.Device = vkDevice.logicalDevice;
-		init_info.QueueFamily = vkDevice.qFams.graphicsFamily;
-		init_info.Queue = graphicsQueue;
-		init_info.PipelineCache = pipelineCache;
-		init_info.DescriptorPool = imguiPool;
-		init_info.Subpass = 0;
-		init_info.MinImageCount = 2;
-		init_info.ImageCount = 2;
-		init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-		init_info.Allocator = VK_NULL_HANDLE;
-		init_info.CheckVkResultFn = check_vk_result;
-		init_info.RenderPass = renderPass;
-		ImGui_ImplVulkan_Init(&init_info);// , wd->RenderPass);
-		// (this gets a bit more complicated, see example app for full reference)
-		//ImGui_ImplVulkan_CreateFontsTexture(YOUR_COMMAND_BUFFER);
-		// (your code submit a queue)
-		//ImGui_ImplVulkan_DestroyFontUploadObjects();
-		
-	}
-
-	void ComputeRaytracer::startDrawImGui()
-	{
-		// (Where your code calls SDL_PollEvent())
-		//ImGui_ImplSDL2_ProcessEvent(&event); // Forward your event to backend
-		//ImGui_ImplGlfw_
-		// (After event loop)
-		// Start the Dear ImGui frame
-		ImGui_ImplVulkan_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-		ImGui::ShowDemoWindow(); // Show demo window! :)
-	}
-
-	void ComputeRaytracer::endDrawImGui(int i)
-	{
-		// Rendering
-// (Your code clears your framebuffer, renders your other stuff etc.)
-		ImGui::Render();
-		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffers[i]);
-		// (Your code calls vkCmdEndRenderPass, vkQueueSubmit, vkQueuePresentKHR etc.)
-	}
-
-	void ComputeRaytracer::destroyImGui()
-	{
-		ImGui_ImplVulkan_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
-	}
-
-
 	VkDescriptorSetLayoutBinding DescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptor_type, uint32_t descriptor_count, VkShaderStageFlags flags)
 	{
 		VkDescriptorSetLayoutBinding dslb;
@@ -1007,7 +918,6 @@ namespace Principia {
 		UpdateDescriptors();
 
 		//setupUI();
-		initImGui();
 		prepared_ = true;
 	}
 
@@ -1226,7 +1136,6 @@ namespace Principia {
 	{
 		vkDeviceWaitIdle(vkDevice.logicalDevice);
 		CleanUpSwapChain();
-		destroyImGui();
 
 		DestroyCompute();
 

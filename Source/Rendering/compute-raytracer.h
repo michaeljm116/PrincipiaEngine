@@ -3,19 +3,9 @@
 
 #include "../Utility/bvhComponent.hpp"
 #include <unordered_map>
-#include <imgui.h>
-#include <backends/imgui_impl_glfw.h>
-#include <backends/imgui_impl_vulkan.h>
 
 
-static void check_vk_result(VkResult err)
-{
-	if (err == 0)
-		return;
-	fprintf(stderr, "[vulkan] Error: VkResult = %d\n", err);
-	if (err < 0)
-		abort();
-}
+
 
 namespace Principia {
 
@@ -176,11 +166,5 @@ namespace Principia {
 		VkDescriptorSetLayoutBinding DescriptorSetLayoutBinding(uint32_t binding, VkDescriptorType descriptorType, uint32_t descriptorCount, VkShaderStageFlags flags);
 		std::vector<VkWriteDescriptorSet> compute_write_descriptor_sets_;
 
-		void initImGui();
-		void destroyImGui();
-
-		public: 
-		void startDrawImGui();
-		void endDrawImGui(int i);
 	};
 }

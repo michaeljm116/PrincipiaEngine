@@ -77,6 +77,7 @@
     <ClCompile Include="Physics\gridSystem.cpp" />
     <ClCompile Include="Physics\immovableSystem.cpp" />
     <ClCompile Include="Rendering\compute-raytracer.cpp" />
+    <ClCompile Include="Rendering\imgui-renderer.cpp" />
     <ClCompile Include="Rendering\renderSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">Use</PrecompiledHeader>
@@ -216,6 +217,7 @@
     <ClInclude Include="Rendering\cameraComponent.hpp" />
     <ClInclude Include="Rendering\Components\renderComponents.hpp" />
     <ClInclude Include="Rendering\constantbuffer.hpp" />
+    <ClInclude Include="Rendering\imgui-renderer.h" />
     <ClInclude Include="Rendering\lightComponent.hpp" />
     <ClInclude Include="Rendering\materialComponent.hpp" />
     <ClInclude Include="Rendering\compute-raytracer.h" />

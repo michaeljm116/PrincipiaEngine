@@ -47,11 +47,12 @@ namespace Principia {
 		}
 		VulkanDevice vkDevice = {};
 
-	protected:
+	public:
 		VkSurfaceKHR surface = VK_NULL_HANDLE;
 		VkImage depthImage = VK_NULL_HANDLE;
 		VkDeviceMemory depthImageMemory = VK_NULL_HANDLE;
 		VkImageView depthImageView = VK_NULL_HANDLE;
+		VkFormat depthFormat = VK_FORMAT_UNDEFINED;
 
 		VkQueue graphicsQueue = VK_NULL_HANDLE;
 		VkQueue presentQueue = VK_NULL_HANDLE;

@@ -200,6 +200,9 @@
     <ClCompile Include="..\Lib\imgui\backends\imgui_impl_vulkan.cpp">
       <Filter>imgui\backends</Filter>
     </ClCompile>
+    <ClCompile Include="Rendering\imgui-renderer.cpp">
+      <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Rendering\Shaders\basic.frag">
@@ -527,6 +530,9 @@
     </ClInclude>
     <ClInclude Include="..\Lib\imgui\backends\imgui_impl_vulkan.h">
       <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering\imgui-renderer.h">
+      <Filter>Source Files\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
