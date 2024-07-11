@@ -14,7 +14,6 @@ namespace Principia {
 		create_descriptor_pool();
 		create_render_pass();
 		create_command_pool();
-		create_command_buffers();
 
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
@@ -51,6 +50,10 @@ namespace Principia {
 		VkSemaphoreCreateInfo semaphoreInfo = {};
 		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
 		VK_CHECKRESULT(vkCreateSemaphore(renderer->vkDevice.logicalDevice, &semaphoreInfo, nullptr, &ui_semaphore), " FAILED TO CREATE SEMAPHORE");
+
+
+		create_command_buffers();
+		copy_queue = renderer->GetDeviceInfo().copyQueue;
 	}
 	void ImGuiRenderer::destroyImGui()
 	{
@@ -64,7 +67,7 @@ namespace Principia {
 		vkFreeCommandBuffers(renderer->vkDevice.logicalDevice, command_pool, static_cast<uint32_t>(command_buffers.size()), command_buffers.data());
 		vkDestroyCommandPool(renderer->vkDevice.logicalDevice, command_pool, nullptr);
 	}
-	void ImGuiRenderer::DrawImGui(VkSubmitInfo* submitInfo, int ii)
+	void ImGuiRenderer::DrawImGui(VkSubmitInfo* submitInfo, int image_index)
 	{
 		VkPipelineStageFlags flags = 0x00000200;
 		const VkPipelineStageFlags* cf = &flags;
@@ -77,28 +80,13 @@ namespace Principia {
 		submitInfo->signalSemaphoreCount = 1;
 		submitInfo->pSignalSemaphores = &ui_semaphore;
 		submitInfo->commandBufferCount = 1;
-		submitInfo->pCommandBuffers = &command_buffers[ii];
+		submitInfo->pCommandBuffers = &command_buffers[image_index];
 		submitInfo->pWaitDstStageMask = cf;
 
 
-		ImGui_ImplVulkan_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-		ImGui::ShowDemoWindow(); // Show demo window! :)
-		// (Your code clears your framebuffer, renders your other stuff etc.)
-		VkViewport viewport = vks::initializers::viewport(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y, 0.0f, 1.0f);
-		vkCmdSetViewport(command_buffers[ii], 0, 1, &viewport);
+		update_command_buffers(image_index);
 
-		VkRect2D scissor = vks::initializers::rect2D((int32_t)ImGui::GetIO().DisplaySize.x, (int32_t)ImGui::GetIO().DisplaySize.y, 0, 0);
-		vkCmdSetScissor(command_buffers[ii], 0, 1, &scissor);
-
-
-		ImGui::Render();
-		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), command_buffers[ii]);
-		// (Your code calls vkCmdEndRenderPass, vkQueueSubmit, vkQueuePresentKHR etc.)
-
-		vkCmdEndRenderPass(command_buffers[ii]);
-		VK_CHECKRESULT(vkEndCommandBuffer(command_buffers[ii]), "END UI COMMAND BUFFER");
+		VK_CHECKRESULT(vkQueueSubmit(renderer->GetDeviceInfo().copyQueue, 1, submitInfo, VK_NULL_HANDLE), "UI QUEUE SUBMIT");
 
 	}
 	void ImGuiRenderer::create_descriptor_pool()
@@ -217,6 +205,94 @@ namespace Principia {
 		vks::initializers::commandBufferAllocateInfo(command_pool, VK_COMMAND_BUFFER_LEVEL_PRIMARY, static_cast<uint32_t>(command_buffers.size()));
 		VK_CHECKRESULT(vkAllocateCommandBuffers(renderer->vkDevice.logicalDevice, &cmdBufAllocateInfo, command_buffers.data()), "ALLOCATE UI COMMADN BUFFERS");
 
+		clearValues[0].color = { 0.0f, 0.0f, 0.0f, 1.0f }; //derp
+		clearValues[1].depthStencil = { 1.0f, 0 }; //1.0 = farplane, 0.0 = nearplane HELP
 
+		VkCommandBufferBeginInfo cmdBufInfo = vks::initializers::commandBufferBeginInfo();
+
+		VkRenderPassBeginInfo renderPassBeginInfo = vks::initializers::renderPassBeginInfo();
+		renderPassBeginInfo.renderPass = render_pass;
+		renderPassBeginInfo.renderArea.extent.width = renderer->swapChainExtent.width;
+		renderPassBeginInfo.renderArea.extent.height = renderer->swapChainExtent.height;
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+		renderPassBeginInfo.pClearValues = clearValues.data();
+
+		ImGuiIO& io = ImGui::GetIO();
+
+		for (size_t i = 0; i < command_buffers.size(); ++i) {
+			renderPassBeginInfo.framebuffer = renderer->GetFrameBuffers()[i];
+
+			VK_CHECKRESULT(vkBeginCommandBuffer(command_buffers[i], &cmdBufInfo), "BEGIN UI COMMAND BUFFER");
+
+			vkCmdBeginRenderPass(command_buffers[i], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+
+
+			ImGui_ImplVulkan_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+			ImGui::ShowDemoWindow(); // Show demo window! :)
+			// (Your code clears your framebuffer, renders your other stuff etc.)
+			VkViewport viewport = vks::initializers::viewport(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y, 0.0f, 1.0f);
+			vkCmdSetViewport(command_buffers[i], 0, 1, &viewport);
+
+			VkRect2D scissor = vks::initializers::rect2D((int32_t)ImGui::GetIO().DisplaySize.x, (int32_t)ImGui::GetIO().DisplaySize.y, 0, 0);
+			vkCmdSetScissor(command_buffers[i], 0, 1, &scissor);
+
+
+			ImGui::Render();
+			ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), command_buffers[i]);
+			// (Your code calls vkCmdEndRenderPass, vkQueueSubmit, vkQueuePresentKHR etc.)
+
+
+
+
+
+
+
+			vkCmdEndRenderPass(command_buffers[i]);
+			VK_CHECKRESULT(vkEndCommandBuffer(command_buffers[i]), "END UI COMMAND BUFFER");
+		}
+		
+	}
+	void ImGuiRenderer::update_command_buffers(int ii)
+	{
+		VkCommandBufferBeginInfo cmdBufInfo = vks::initializers::commandBufferBeginInfo();
+
+		VkRenderPassBeginInfo renderPassBeginInfo = vks::initializers::renderPassBeginInfo();
+		renderPassBeginInfo.renderPass = render_pass;
+		renderPassBeginInfo.renderArea.extent.width = renderer->swapChainExtent.width;
+		renderPassBeginInfo.renderArea.extent.height = renderer->swapChainExtent.height;
+		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
+		renderPassBeginInfo.pClearValues = clearValues.data();
+
+		ImGuiIO& io = ImGui::GetIO();
+
+		renderPassBeginInfo.framebuffer = renderer->GetFrameBuffers()[ii];
+		VK_CHECKRESULT(vkBeginCommandBuffer(command_buffers[ii], &cmdBufInfo), "BEGIN UI COMMAND BUFFER");
+		vkCmdBeginRenderPass(command_buffers[ii], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+
+
+		ImGui_ImplVulkan_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		static bool show = true;
+		ImGui::ShowDemoWindow(&show); // Show demo window! :)
+		// (Your code clears your framebuffer, renders your other stuff etc.)
+		VkViewport viewport = vks::initializers::viewport(ImGui::GetIO().DisplaySize.x, ImGui::GetIO().DisplaySize.y, 0.0f, 1.0f);
+		vkCmdSetViewport(command_buffers[ii], 0, 1, &viewport);
+
+		VkRect2D scissor = vks::initializers::rect2D((int32_t)ImGui::GetIO().DisplaySize.x, (int32_t)ImGui::GetIO().DisplaySize.y, 0, 0);
+		vkCmdSetScissor(command_buffers[ii], 0, 1, &scissor);
+
+
+		ImGui::Render();
+		ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), command_buffers[ii]);
+		// (Your code calls vkCmdEndRenderPass, vkQueueSubmit, vkQueuePresentKHR etc.)
+
+
+		vkCmdEndRenderPass(command_buffers[ii]);
+		VK_CHECKRESULT(vkEndCommandBuffer(command_buffers[ii]), "END UI COMMAND BUFFER");
 	}
 }

@@ -33,11 +33,15 @@ namespace Principia {
 		std::vector<VkCommandBuffer> command_buffers;
 		VkCommandPool command_pool;
 		VkSemaphore ui_semaphore;
+		VkQueue copy_queue;
+
+		std::array<VkClearValue, 2> clearValues = {};
 
 		void create_descriptor_pool();
 		void create_render_pass();
 		void create_command_pool();
 		void create_command_buffers();
+		void update_command_buffers(int ii);
 	};
 
 }
