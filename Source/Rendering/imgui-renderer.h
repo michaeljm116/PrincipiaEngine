@@ -24,7 +24,8 @@ namespace Principia {
 		void initImGui();
 		void destroyImGui();
 
-		void DrawImGui(VkSubmitInfo* submitInfo, int image_index);
+		void start_draw(VkSubmitInfo* submitInfo, int image_index);
+		void end_draw(VkSubmitInfo* submitInfo, int ii);
 
 	private:
 		Renderer* renderer;
@@ -41,7 +42,6 @@ namespace Principia {
 		void create_render_pass();
 		void create_command_pool();
 		void create_command_buffers();
-		void update_command_buffers(int ii);
 	};
 
 }

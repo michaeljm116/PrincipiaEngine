@@ -101,6 +101,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Utility\debug-system.cpp" />
     <ClCompile Include="Utility\script-system.cpp" />
     <ClCompile Include="Utility\selectable-gui-system.cpp" />
     <ClCompile Include="Utility\serialize-node.cpp" />
@@ -233,6 +234,8 @@
     <ClInclude Include="Utility\bvhComponent.hpp" />
     <ClInclude Include="Utility\bvhSystem.h" />
     <ClInclude Include="Utility\componentIncludes.h" />
+    <ClInclude Include="Utility\debug-component.hpp" />
+    <ClInclude Include="Utility\debug-system.h" />
     <ClInclude Include="Utility\helpers.h" />
     <ClInclude Include="Utility\kdtree.hpp" />
     <ClInclude Include="Utility\key.h" />

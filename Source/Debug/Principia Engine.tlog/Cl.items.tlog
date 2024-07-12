@@ -36,6 +36,7 @@ C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderSystem.cpp;C:\dev\
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\renderbase.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\renderbase.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\Texture.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\Texture.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhSystem.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\bvhSystem.obj
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\debug-system.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\debug-system.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\script-system.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\script-system.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\selectable-gui-system.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\selectable-gui-system.obj
 C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\serialize-node.cpp;C:\dev\PrincipiumGames\PrincipiaEngine\Source\Debug\serialize-node.obj
