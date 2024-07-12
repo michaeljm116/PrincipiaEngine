@@ -40,6 +40,7 @@ namespace Principia {
 		ImGui::Text(d->message.c_str());
 		ImGui::Text("Position X: %f, Y: %f, Z: %f", t->local.position.x, t->local.position.y, t->local.position.z);
 		ImGui::Text("Rotation X: %f, Y: %f, Z: %f", t->eulerRotation.x, t->eulerRotation.y, t->eulerRotation.z);
+		ImGui::Text("Quat_Rot X: %f, Y: %f, Z: %f, W: %f", t->local.rotation.x, t->local.rotation.y, t->local.rotation.z, t->local.rotation.w);
 		ImGui::Text("Scale X: %f, Y: %f, Z: %f", t->local.scale.x, t->local.scale.y, t->local.scale.z);
 
 		ImGui::Separator();

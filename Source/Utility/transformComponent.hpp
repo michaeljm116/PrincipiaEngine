@@ -37,6 +37,11 @@ namespace Principia {
 		return (ret == 7);
 	}
 
+	inline glm::vec2 move_2D_XZ(glm::quat rot) {
+		auto yaw = glm::yaw(rot);
+		return glm::vec2(glm::cos(yaw), glm::sin(yaw));
+	}
+
 	struct TransformComponent : public artemis::Component {
 		glm::mat4 world; //	translation rotation scale matrix
 		glm::mat4 TRM;  // note: this is a Translation+Rotation Matrix, scale is left separate

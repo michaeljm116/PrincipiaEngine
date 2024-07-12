@@ -98,8 +98,8 @@ namespace Principia {
 		auto scaleM = glm::scale(glm::vec3(tc->local.scale));
 
 #ifdef UIIZON
-		tc->eulerRotation = glm::eulerAngles(tc->local.rotation);
-		tc->eulerRotation = glm::vec3(glm::degrees(tc->eulerRotation.x), glm::degrees(tc->eulerRotation.y), glm::degrees(tc->eulerRotation.z));
+		//tc->eulerRotation = glm::eulerAngles(tc->local.rotation);
+		//tc->eulerRotation = glm::vec3(glm::degrees(tc->eulerRotation.x), glm::degrees(tc->eulerRotation.y), glm::degrees(tc->eulerRotation.z));
 #endif // UIIZON
 
 		//combine them into 1 and multiply by parent if u haz parent;
