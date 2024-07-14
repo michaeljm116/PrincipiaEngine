@@ -338,37 +338,37 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath);..\Lib\imgui</IncludePath>
-    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath);..\Lib\embree\lib</LibraryPath>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">
     <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath);..\Lib\imgui</IncludePath>
-    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath);..\Lib\embree\lib</LibraryPath>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;$(IncludePath);..\Lib\imgui</IncludePath>
-    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x86;..\Lib\bullet3;$(LibraryPath);..\Lib\embree\lib</LibraryPath>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath);..\Lib\imgui</IncludePath>
-    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath);..\Lib\embree\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Editor|x64'">
     <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath);..\Lib\imgui</IncludePath>
-    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath);..\Lib\embree\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>ArtemisFrameWork;..\Lib\glfw\include;..\Lib\SDL2\include;..\Lib\bvh\include;..\Lib\bullet3;$(IncludePath);..\Lib\imgui</IncludePath>
-    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\Lib\glfw\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet3;$(LibraryPath);..\Lib\embree\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet;..\Lib\bvh\include;%(AdditionalIncludeDirectories);..\Lib\embree\include</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
@@ -394,7 +394,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet;..\Lib\bvh\include;%(AdditionalIncludeDirectories);..\Lib\embree\include</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
@@ -420,7 +420,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories);..\Lib\embree\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -439,7 +439,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories);..\Lib\embree\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UIIZON;GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -460,7 +460,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet;..\Lib\bvh\include;%(AdditionalIncludeDirectories);..\Lib\embree\include</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AssemblerOutput>NoListing</AssemblerOutput>
@@ -484,7 +484,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Lib\gli;..\Lib\glm;C:\VulkanSDK\1.3.216.0\Include;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\lib-vc2022;..\Lib\bullet3;..\Lib\bvh\include;%(AdditionalIncludeDirectories);..\Lib\embree\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
