@@ -114,6 +114,17 @@ namespace Principia {
 		}
 	};
 
+	struct LinearBVHNode {
+		BVHBounds bounds;
+		union {
+			int primitivesOffset;    // leaf
+			int secondChildOffset;   // interior
+		};
+		uint16_t nPrimitives;  // 0 -> interior node
+		uint8_t axis;          // split axis
+		uint8_t pad[1];        // ensure 32 byte total size
+	};
+
 	struct ssBVHNode {
 		glm::vec3 upper;
 		int offset;

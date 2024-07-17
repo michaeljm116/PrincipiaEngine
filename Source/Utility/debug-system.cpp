@@ -36,6 +36,7 @@ namespace Principia {
 		auto* n = nodeMapper.get(e);
 		auto* t = transformMapper.get(e);
 
+		
 		ImGui::Text("Entity(%i): %s", e.getId(), n->name.c_str());
 		ImGui::Text(d->message.c_str());
 		ImGui::Text("Position X: %f, Y: %f, Z: %f", t->local.position.x, t->local.position.y, t->local.position.z);
