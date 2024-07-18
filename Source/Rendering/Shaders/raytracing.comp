@@ -6,303 +6,306 @@
 #extension GL_ARB_shading_language_420pack : enable
 #extension GL_GOOGLE_include_directive : enable
 
-layout (local_size_x = 16, local_size_y = 16) in;
-layout (binding = 0, rgba8) uniform writeonly image2D resultImage;
+layout(local_size_x = 16, local_size_y = 16) in;
+layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 
 #define EPSILON 0.0001
 #define MAXLEN 1000.0
 #define RAYBOUNCES 4
-#define REFLECTIONS true 
+#define REFLECTIONS true
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
-
 
 #include "rt/pbr.glsl"
 #include "rt/structs.glsl"
 #include "rt/intersect_main.glsl"
 
-void fresnel(in vec3 I, in vec3 N, in float ior, inout float kr) 
-{ 
-    float cosi = clamp(-1, 1, dot(I, N)); 
-    float etai = 1, etat = ior; 
+void fresnel(in vec3 I, in vec3 N, in float ior, inout float kr)
+{
+    float cosi = clamp(-1, 1, dot(I, N));
+    float etai = 1, etat = ior;
     if (cosi > 0) { //SWAP
-		float temp = etai;
-		etai = etat;
-		etat = temp;
-	} 
+        float temp = etai;
+        etai = etat;
+        etat = temp;
+    }
     // Compute sini using Snell's law
-    float sint = etai / etat * sqrt(max(0.f, 1 - cosi * cosi)); 
+    float sint = etai / etat * sqrt(max(0.f, 1 - cosi * cosi));
     // Total internal reflection
-    if (sint >= 1) { 
-        kr = 1; 
-    } 
-    else { 
-        float cost = sqrt(max(0.f, 1 - sint * sint)); 
-        cosi = abs(cosi); 
-        float Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost)); 
-        float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost)); 
-        kr = (Rs * Rs + Rp * Rp) / 2; 
-    } 
+    if (sint >= 1) {
+        kr = 1;
+    }
+    else {
+        float cost = sqrt(max(0.f, 1 - sint * sint));
+        cosi = abs(cosi);
+        float Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost));
+        float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
+        kr = (Rs * Rs + Rp * Rp) / 2;
+    }
     // As a consequence of the conservation of energy, transmittance is given by:
     // kt = 1 - kr;
-} 
+}
 
 // Lighting =========================================================
 
-float lightDiffuse(vec3 normal, vec3 lightDir) 
+float lightDiffuse(vec3 normal, vec3 lightDir)
 {
-	return clamp(dot(normal, lightDir), 0.1, 1.0);
+    return clamp(dot(normal, lightDir), 0.1, 1.0);
 }
 
 float lightSpecular(vec3 normal, vec3 lightDir, float specularFactor)
 {
-	vec3 viewVec = normalize(ubo.rotM[3].xyz);
-	vec3 halfVec = normalize(lightDir + viewVec);
-	return pow(clamp(dot(normal, halfVec), 0.0, 1.0), specularFactor);
+    vec3 viewVec = normalize(ubo.rotM[3].xyz);
+    vec3 halfVec = normalize(lightDir + viewVec);
+    return pow(clamp(dot(normal, halfVec), 0.0, 1.0), specularFactor);
 }
 
 finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 {
-	finalmaterial fMat;
-	fMat.color = vec3(0.0);
-	fMat.reflection = 0.0;
-	fMat.refraction = 1.0;
-	fMat.transparency = 0.0f;
+    finalmaterial fMat;
+    fMat.color = vec3(0.0);
+    fMat.reflection = 0.0;
+    fMat.refraction = 1.0;
+    fMat.transparency = 0.0f;
 
-	ray.t = MAXLEN;
-	ray.tbvh = MAXLEN;
-	
-	// Get intersected primitive ID
-	iSectID intersectID = intersectMBVH(ray, norm);
-	
-	//if it doesn't interset anything, return the material
-	if (intersectID.faceID == -1){
-//		fMat.color = vec3(0.99f, 0.99f, 1.0f);
-		fMat.color = vec3(0.f, 0.f, 0.f);
+    ray.t = MAXLEN;
+    ray.tbvh = MAXLEN;
+    vec2 uv = vec2(0.0);
+    // Get intersected primitive ID
+    iSectID intersectID = intersectMBVH(ray, norm, uv);
 
-		/*ivec2 dim = imageSize(resultImage);
-		vec2 uv = vec2(gl_GlobalInvocationID.x, dim.y - gl_GlobalInvocationID.y + 180) / dim;
+    //if it doesn't interset anything, return the material
+    if (intersectID.faceID == -1) {
+        //		fMat.color = vec3(0.99f, 0.99f, 1.0f);
+        fMat.color = vec3(0.f, 0.f, 0.f);
 
-		fMat.color = texture(guiTest[3], uv).xyz;*/
-		return fMat; 
-	}
-	
-	#ifdef DEBUGLINES
-	//do an intersection test with the bvh node
-	if (bvhBoundsIntersect(ray, 1/ray.d, bvhNodes[intersectID.nodeID])){
-		fMat.color = vec3(0, 1, 0);
-		return fMat;
-	}
-	#endif
-	
-	vec3 pos = ray.o + ray.t * ray.d;
-	vec3 normal;
-	vec3 txtr;
-	
-	/////////////////SWAP HERE FOR DEBUG///////////////////////
-	// For debug lines, you want the id of the prim u isect //
-	//////////////////////////////////////////////////////////
-	Material mat = materials[primitives[intersectID.faceID].matID];
-	//Material mat = materials[primitives[intersectID.pId].matID];
+        /*ivec2 dim = imageSize(resultImage);
+                        		vec2 uv = vec2(gl_GlobalInvocationID.x, dim.y - gl_GlobalInvocationID.y + 180) / dim;
 
-	switch(intersectID.primType){
-		case TYPE_PLANE:{
-			break;
-		}
-		case TYPE_DISK:{
-			normal = vec3(0,1,0);
-			break;
-		}
-		case TYPE_SPHERE:{
-			normal = sphereNormal(pos, primitives[intersectID.faceID]);
-			break;
-		}
-		case TYPE_BOX:{
-			normal = norm;
-			if(mat.textureID > 0)
-			txtr = boxTexture(pos, normal, primitives[intersectID.faceID], guiTest[mat.textureID]);
-			break;
-		}
-		case TYPE_CYLINDER:{
-			normal = norm;
-			break;
-		}
-		case TYPE_MESH:{
-			//normal = triNormalUV(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
-			normal = quadNormal(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
-			mat = materials[primitives[intersectID.primID].matID];
-			txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
-			//if(mat.textureID > 0)
-			//	fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz;
-			break; 
-		}
-	}
+                        		fMat.color = texture(guiTest[3], uv).xyz;*/
+        return fMat;
+    }
 
-	float shadow = 0;
-	float power = 0;
-	//float shadow = 1;
+    #ifdef DEBUGLINES
+    //do an intersection test with the bvh node
+    if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[intersectID.nodeID])) {
+        fMat.color = vec3(0, 1, 0);
+        return fMat;
+    }
+    #endif
 
-	////////////////////////////////////paste here if messup////////////////////////////
-	/*
-	float diffuse = 0;
-	float specular = 0;
-	for(int i = 0; i < lights.length(); ++i){
-		vec3 distance = lights[i].pos - pos;
-		vec3 lightVec = normalize(distance);
-		float ld = length(distance);
-		diffuse += lightDiffuse(normal, lightVec);
-		specular += lightSpecular(normal, lightVec, 32.0f);
-		power += lights[i].intensity / (ld * ld);
-		if (power > 0.1){
-			Ray shadowRay = Ray(pos, ld, lightVec, 0);
-			shadow += calcShadowBVH(shadowRay);
-		}
-	}
-	if (power > 1) power = 1;
+    vec3 pos = ray.o + ray.t * ray.d;
+    vec3 normal;
+    vec3 txtr;
 
-	
-	if(mat.textureID > 0)
-		fMat.color = txtr + mat.diffuse * diffuse + specular;
-	else
-		fMat.color = diffuse * mat.diffuse + specular;	
-	
-	*/
-	vec3 View = normalize(ubo.rotM[3].xyz - pos);
-	for(int i = 0; i < lights.length(); ++i){
-		vec3 F0 = vec3(0.04);
-		F0 = mix(F0, mat.diffuse, mat.reflective);
-		vec3 distance = lights[i].pos - pos;
-		float ld = length(distance);
-		power = lights[i].intensity / (ld * ld);
-		vec3 lightDirection = normalize(distance);
-		if(power > 0.1f){
-			if(mat.textureID > 0)
-				fMat.color += specularContribution(lightDirection, View, normal, F0, txtr + mat.diffuse, mat.reflective, mat.roughness) * power;
-			else
-				fMat.color += specularContribution(lightDirection, View, normal, F0, mat.diffuse, mat.reflective, mat.roughness) * power;
-				
+    /////////////////SWAP HERE FOR DEBUG///////////////////////
+    // For debug lines, you want the id of the prim u isect //
+    //////////////////////////////////////////////////////////
+    Material mat = materials[primitives[intersectID.faceID].matID];
+    //Material mat = materials[primitives[intersectID.pId].matID];
 
-			if(shadow < 0.9f){
-				Ray shadowRay = Ray(pos, length(distance), lightDirection, 0);
-				shadow += calcShadowBVH(shadowRay);
-			}
-		//	if(shadow >= 0.9f){
-		//		shadow = 1;
-		//	}
-		}
-	}
-	//if (power > 8) power = 8;
+    switch (intersectID.primType) {
+        case TYPE_PLANE:
+        {
+            break;
+        }
+        case TYPE_DISK:
+        {
+            normal = vec3(0, 1, 0);
+            break;
+        }
+        case TYPE_SPHERE:
+        {
+            normal = sphereNormal(pos, primitives[intersectID.faceID]);
+            break;
+        }
+        case TYPE_BOX:
+        {
+            normal = norm;
+            if (mat.textureID > 0)
+                txtr = boxTexture(pos, normal, primitives[intersectID.faceID], guiTest[mat.textureID]);
+            break;
+        }
+        case TYPE_QUAD:
+        {
+            normal = norm;
+            if (mat.textureID > 0) {
+                txtr = texture(guiTest[mat.textureID], uv).xyz;
+            }
+        }
+        case TYPE_CYLINDER:
+        {
+            normal = norm;
+            break;
+        }
+        case TYPE_MESH:
+        {
+            //normal = triNormalUV(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
+            normal = quadNormal(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
+            mat = materials[primitives[intersectID.primID].matID];
+            txtr = texture(guiTest[mat.textureID], norm.xy).xyz;
+            //if(mat.textureID > 0)
+            //	fMat.color = vec3(texture(guiTest[mat.textureID], vec2(norm).xy)).xyz;
+            break;
+        }
+    }
+
+    float shadow = 0;
+    float power = 0;
+    //float shadow = 1;
+
+    ////////////////////////////////////paste here if messup////////////////////////////
+    /*
+            	float diffuse = 0;
+            	float specular = 0;
+            	for(int i = 0; i < lights.length(); ++i){
+            		vec3 distance = lights[i].pos - pos;
+            		vec3 lightVec = normalize(distance);
+            		float ld = length(distance);
+            		diffuse += lightDiffuse(normal, lightVec);
+            		specular += lightSpecular(normal, lightVec, 32.0f);
+            		power += lights[i].intensity / (ld * ld);
+            		if (power > 0.1){
+            			Ray shadowRay = Ray(pos, ld, lightVec, 0);
+            			shadow += calcShadowBVH(shadowRay);
+            		}
+            	}
+            	if (power > 1) power = 1;
 
 
+            	if(mat.textureID > 0)
+            		fMat.color = txtr + mat.diffuse * diffuse + specular;
+            	else
+            		fMat.color = diffuse * mat.diffuse + specular;
 
-	//if (shadow > 1) shadow = 1;
-	shadow = shadow * float(shadow < 0.9f) + float(shadow >= .9f);
+            	*/
+    vec3 View = normalize(ubo.rotM[3].xyz - pos);
+    for (int i = 0; i < lights.length(); ++i) {
+        vec3 F0 = vec3(0.04);
+        F0 = mix(F0, mat.diffuse, mat.reflective);
+        vec3 distance = lights[i].pos - pos;
+        float ld = length(distance);
+        power = lights[i].intensity / (ld * ld);
+        vec3 lightDirection = normalize(distance);
+        if (power > 0.1f) {
+            if (mat.textureID > 0)
+                fMat.color += specularContribution(lightDirection, View, normal, F0, txtr + mat.diffuse, mat.reflective, mat.roughness) * power;
+            else
+                fMat.color += specularContribution(lightDirection, View, normal, F0, mat.diffuse, mat.reflective, mat.roughness) * power;
 
-	fMat.color *=  shadow;
-	fMat.reflection = mat.reflective;
-	fMat.refraction = mat.refractiveIndex;
-	fMat.transparency = mat.transparency;
-		
-	// Reflect ray for next render pass
-	/*if(fMat.transparency > EPSILON){
-		fMat.refraction /= ri;
-		fresnel(ray.d, normal, fMat.refraction, fMat.reflection);
-	}*/
+            if (shadow < 0.9f) {
+                Ray shadowRay = Ray(pos, length(distance), lightDirection, 0);
+                shadow += calcShadowBVH(shadowRay);
+            }
+            //	if(shadow >= 0.9f){
+            //		shadow = 1;
+            //	}
+        }
+    }
+    //if (power > 8) power = 8;
 
-	//generate random number
-	/*int help = ubo.rand % int(gl_GlobalInvocationID.x);
-	float randx = mod(float(ubo.rand), float(gl_GlobalInvocationID.x + 1))/float(gl_GlobalInvocationID.x);
-	float randy = mod(float(ubo.rand), float(gl_GlobalInvocationID.y + 1))/float(gl_GlobalInvocationID.y);
-	//float randz = mod(float(ubo.rand), float(gl_GlobalInvocationID.x + gl_GlobalInvocationID.y + 1)) / float(gl_GlobalInvocationID.x + gl_GlobalInvocationID.y);
-	vec3 randVec = vec3(randx, randy, 0);
-	vec3 target = pos + normal + randVec;
-	ray.d = target - pos;*/
+    //if (shadow > 1) shadow = 1;
+    shadow = shadow * float(shadow < 0.9f) + float(shadow >= .9f);
 
-	ray.d = reflect(ray.d, normal);
+    fMat.color *= shadow;
+    fMat.reflection = mat.reflective;
+    fMat.refraction = mat.refractiveIndex;
+    fMat.transparency = mat.transparency;
 
+    // Reflect ray for next render pass
+    /*if(fMat.transparency > EPSILON){
+            		fMat.refraction /= ri;
+            		fresnel(ray.d, normal, fMat.refraction, fMat.reflection);
+            	}*/
 
-	ray.o = pos;	
-	
-	return fMat;
+    //generate random number
+    /*int help = ubo.rand % int(gl_GlobalInvocationID.x);
+            	float randx = mod(float(ubo.rand), float(gl_GlobalInvocationID.x + 1))/float(gl_GlobalInvocationID.x);
+            	float randy = mod(float(ubo.rand), float(gl_GlobalInvocationID.y + 1))/float(gl_GlobalInvocationID.y);
+            	//float randz = mod(float(ubo.rand), float(gl_GlobalInvocationID.x + gl_GlobalInvocationID.y + 1)) / float(gl_GlobalInvocationID.x + gl_GlobalInvocationID.y);
+            	vec3 randVec = vec3(randx, randy, 0);
+            	vec3 target = pos + normal + randVec;
+            	ray.d = target - pos;*/
+
+    ray.d = reflect(ray.d, normal);
+
+    ray.o = pos;
+
+    return fMat;
 }
 
 void main()
 {
-	vec3 combinedColor = vec3(0);
-	vec4 txt = vec4(0);
-	for(int samp = 0; samp < SAMPLES; ++samp){
-		
-		ivec2 dim = imageSize(resultImage);
-		vec2 uv;
-		if(SAMPLES == 1)
-			uv = vec2(gl_GlobalInvocationID.xy) / dim;
-		else
-			uv = vec2(gl_GlobalInvocationID.xy + SampleTable[samp]) / dim;
+    vec3 combinedColor = vec3(0);
+    vec4 txt = vec4(0);
+    for (int samp = 0; samp < SAMPLES; ++samp) {
+        ivec2 dim = imageSize(resultImage);
+        vec2 uv;
+        if (SAMPLES == 1)
+            uv = vec2(gl_GlobalInvocationID.xy) / dim;
+        else
+            uv = vec2(gl_GlobalInvocationID.xy + SampleTable[samp]) / dim;
 
-		///////////////////////////////GUI CHECK///////////////////////////////
-		//uv = uv of whole screen
-		//guv = uv relative to the selected box
-		//txt = combined texture result, rgba
-		//		vec4 txt = texture(guiTest[1], uv);
-		//		if(txt.w > 0 && gl_GlobalInvocationID.y > .5f)
-		//			imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
-	
-		//vec4 txt = vec4(0);
-		for(int i = 0; i < guis.length(); ++i){
-			if(guis[i].alpha > 0.f){
-				vec2 diff = uv - guis[i].min;
-				if((diff.x > 0) && (diff.y > 0)){
-					if((diff.x < guis[i].extents.x) && (diff.y < guis[i].extents.y)){
-						vec2 guv = diff/guis[i].extents;
-						guv.y = -guv.y;
-						vec2 fin = guis[i].alignMin + guv * guis[i].alignExt;
-						vec4 temp_txtr = texture(guiTest[guis[i].id], fin);
-						txt += temp_txtr * temp_txtr.a;
-					}
-				}
-			}
-		}
-		if(txt.a > .99f)
-			imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);		
-		else{
+        ///////////////////////////////GUI CHECK///////////////////////////////
+        //uv = uv of whole screen
+        //guv = uv relative to the selected box
+        //txt = combined texture result, rgba
+        //		vec4 txt = texture(guiTest[1], uv);
+        //		if(txt.w > 0 && gl_GlobalInvocationID.y > .5f)
+        //			imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
 
-			vec3 ps;
-			Ray ray;
-			ps.x = (2 * uv.x - 1) * ubo.aspectRatio * ubo.fov;
-			ps.y = (2 * uv.y - 1) * ubo.fov;
-			ps.z = -1;
+        //vec4 txt = vec4(0);
+        for (int i = 0; i < guis.length(); ++i) {
+            if (guis[i].alpha > 0.f) {
+                vec2 diff = uv - guis[i].min;
+                if ((diff.x > 0) && (diff.y > 0)) {
+                    if ((diff.x < guis[i].extents.x) && (diff.y < guis[i].extents.y)) {
+                        vec2 guv = diff / guis[i].extents;
+                        guv.y = -guv.y;
+                        vec2 fin = guis[i].alignMin + guv * guis[i].alignExt;
+                        vec4 temp_txtr = texture(guiTest[guis[i].id], fin);
+                        txt += temp_txtr * temp_txtr.a;
+                    }
+                }
+            }
+        }
+        if (txt.a > .99f)
+            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
+        else {
+            vec3 ps;
+            Ray ray;
+            ps.x = (2 * uv.x - 1) * ubo.aspectRatio * ubo.fov;
+            ps.y = (2 * uv.y - 1) * ubo.fov;
+            ps.z = -1;
 
-			ps = ps * mat3(ubo.rotM);
-	
+            ps = ps * mat3(ubo.rotM);
 
-			ray.d = normalize(ps.xzy);
-			ray.o = ubo.rotM[3].xyz;// * inverse(ubo.rotM);
+            ray.d = normalize(ps.xzy);
+            ray.o = ubo.rotM[3].xyz; // * inverse(ubo.rotM);
 
-			vec3 normal = vec3(0.f, 0.f, 0.f);		
-			// Basic color path
-			float refractiveIndex = 1.0; //assuming its air
-			finalmaterial finalColor = renderScene(ray, normal, refractiveIndex);
-	
-			// Reflection
-			if (REFLECTIONS)
-			{
-				float reflectionStrength = finalColor.reflection;//REFLECTIONSTRENGTH;
-				float refractionStrength = 1 - reflectionStrength;
-				for (float i = 0; i < RAYBOUNCES; i++)
-				{
-					float fallmul = (i+1) * (i+1);
-					if(reflectionStrength > 0.05F){
-						finalmaterial reflectionColor = renderScene(ray, normal, finalColor.refraction);
-						finalColor.color = (1.0 - reflectionStrength) * finalColor.color + reflectionStrength * mix(reflectionColor.color, finalColor.color, 1.0 - reflectionStrength);			
-						reflectionStrength *= (REFLECTIONFALLOFF / fallmul) * reflectionColor.reflection;
-					}
-				}
-			}
-			combinedColor += finalColor.color / SAMPLES;
-		imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1-txt.a), 0.0));
-		}
-	}
-	//imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), texture(guiTest[1], uv));
+            vec3 normal = vec3(0.f, 0.f, 0.f);
+            // Basic color path
+            float refractiveIndex = 1.0; //assuming its air
+            finalmaterial finalColor = renderScene(ray, normal, refractiveIndex);
+
+            // Reflection
+            if (REFLECTIONS)
+            {
+                float reflectionStrength = finalColor.reflection; //REFLECTIONSTRENGTH;
+                float refractionStrength = 1 - reflectionStrength;
+                for (float i = 0; i < RAYBOUNCES; i++)
+                {
+                    float fallmul = (i + 1) * (i + 1);
+                    if (reflectionStrength > 0.05F) {
+                        finalmaterial reflectionColor = renderScene(ray, normal, finalColor.refraction);
+                        finalColor.color = (1.0 - reflectionStrength) * finalColor.color + reflectionStrength * mix(reflectionColor.color, finalColor.color, 1.0 - reflectionStrength);
+                        reflectionStrength *= (REFLECTIONFALLOFF / fallmul) * reflectionColor.reflection;
+                    }
+                }
+            }
+            combinedColor += finalColor.color / SAMPLES;
+            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1 - txt.a), 0.0));
+        }
+    }
+    //imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), texture(guiTest[1], uv));
 }
-
-	
