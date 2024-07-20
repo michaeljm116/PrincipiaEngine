@@ -15,6 +15,7 @@ namespace Principia {
 	public:
 		Texture();
 		Texture(std::string p) : path(p) {};
+		Texture(std::string p, VulkanDevice& device);
 		~Texture();
 
 		VkImage image = VkImage();

@@ -97,6 +97,7 @@ namespace Principia {
 			throw std::runtime_error("failed to create window surface!");
 		}
 	}
+
 	void RenderBase::createLogicalDevice() {
 
 		vkDevice.qFams = findQueueFamilies(vkDevice.physicalDevice);
@@ -124,15 +125,27 @@ namespace Principia {
 		}
 
 		//The set of device features we'll be using
-		VkPhysicalDeviceFeatures deviceFeatures = {};
-		deviceFeatures.samplerAnisotropy = VK_TRUE;
+		//VkPhysicalDeviceFeatures deviceFeatures = {};
+
+		//add bindless support if it has it
+		VkPhysicalDeviceDescriptorIndexingFeatures indexing_features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES, nullptr };
+		VkPhysicalDeviceFeatures2 device_features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &indexing_features };
+		VkPhysicalDeviceFeatures2 physical_features { VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &device_features };
+		vkGetPhysicalDeviceFeatures2(vkDevice.physicalDevice, &device_features);
+		vkGetPhysicalDeviceFeatures2(vkDevice.physicalDevice, &physical_features);
+
+		bool bindless_supported = indexing_features.descriptorBindingPartiallyBound && indexing_features.runtimeDescriptorArray;
+		if (bindless_supported)
+			physical_features.pNext = &indexing_features;
+		device_features.features.samplerAnisotropy = VK_TRUE;
 
 		//Creating the logical device now yo
 		VkDeviceCreateInfo createInfo = {};
 		createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		createInfo.pQueueCreateInfos = queueCreateInfos.data();
 		createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
-		createInfo.pEnabledFeatures = &deviceFeatures;
+		createInfo.pEnabledFeatures = &device_features.features;
+		createInfo.pNext = &physical_features;
 
 		//enable extensions
 		createInfo.enabledExtensionCount = static_cast<uint32_t>(vkDevice.deviceExtensions.size());
@@ -146,6 +159,9 @@ namespace Principia {
 		else {
 			createInfo.enabledLayerCount = 0;
 		}
+
+
+
 
 		//CREATE DAT DERR DEVICE OVA YONDER YA HEARD?
 		if (vkCreateDevice(vkDevice.physicalDevice, &createInfo, nullptr, &vkDevice.logicalDevice) != VK_SUCCESS) {
@@ -190,7 +206,7 @@ namespace Principia {
 		uint32_t queueFamilyIndices[] = { (uint32_t)indices.graphicsFamily, (uint32_t)indices.presentFamily };
 
 		if (indices.graphicsFamily != indices.presentFamily) {
-			createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT; //multiple queues can be @COMPUTEHERE, need to share 
+			createInfo.imageSharingMode = VK_SHARING_MODE_CONCURRENT; //multiple queues can be @COMPUTEHERE, need to share
 			createInfo.queueFamilyIndexCount = 2;
 			createInfo.pQueueFamilyIndices = queueFamilyIndices;
 		}

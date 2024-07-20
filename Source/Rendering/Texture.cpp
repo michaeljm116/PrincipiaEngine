@@ -11,6 +11,11 @@ namespace Principia {
 	}
 
 
+	Texture::Texture(std::string p, VulkanDevice& device) : path(p)
+	{
+		CreateTexture(device);
+	}
+
 	Texture::~Texture()
 	{
 		//destroy(device->logicalDevice);

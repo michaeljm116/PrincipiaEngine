@@ -158,6 +158,7 @@ namespace Principia {
 
 		Texture compute_texture_;
 		Texture gui_textures_[MAX_TEXTURES];
+		std::vector<Texture> bindless_textures;
 
 		void CreateComputeCommandBuffer();
 		void PrepareCompute();

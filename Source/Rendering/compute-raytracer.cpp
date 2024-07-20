@@ -1,4 +1,5 @@
 #include "../pch.h"
+#include "VulkanInitializers.hpp"
 #include "compute-raytracer.h"
 #include <set>
 #include "../Utility/resourceManager.h"
@@ -14,6 +15,7 @@ namespace Principia {
 	static const int MAX_LIGHTS = 32;
 	static const int MAX_GUIS = 96;
 	static const int MAX_NODES = 2048;
+	static const int MAX_BINDLESS_TEXTURES = 256;
 
 	ComputeRaytracer::ComputeRaytracer()
 	{
@@ -38,7 +40,7 @@ namespace Principia {
 		//compute_.storage_buffers.verts.InitStorageBufferCustomSize(vkDevice, verts, verts.size(), MAXVERTS);
 		//compute_.storage_buffers.indices.InitStorageBufferCustomSize(vkDevice, indices, indices.size(), MAXINDS);
 
-		//these are changable 
+		//these are changable
 		//std::vector<PrimitiveComponent> temp;
 		//temp.push_back(PrimitiveComponent());
 		compute_.storage_buffers.primitives.InitStorageBufferCustomSize(vkDevice, primitives_, primitives_.size(), MAX_OBJS);
@@ -74,7 +76,7 @@ namespace Principia {
 	{
 		// Get device properties for the requested texture format
 		VkFormatProperties formatProperties;
-		
+
 		vkGetPhysicalDeviceFormatProperties(vkDevice.physicalDevice, format, &formatProperties);
 		// Check if requested image format supports image storage operations
 		assert(formatProperties.optimalTilingFeatures & VK_FORMAT_FEATURE_STORAGE_IMAGE_BIT);
@@ -237,13 +239,29 @@ namespace Principia {
 			vks::initializers::descriptorSetLayoutBinding(
 				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
 				VK_SHADER_STAGE_COMPUTE_BIT,
-				11, MAX_TEXTURES)
-		};
+				11, MAX_TEXTURES),
+			vks::initializers::descriptorSetLayoutBinding(
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+				VK_SHADER_STAGE_COMPUTE_BIT,
+				12, MAX_BINDLESS_TEXTURES)
+		};		
 
 		VkDescriptorSetLayoutCreateInfo descriptorLayout =
 			vks::initializers::descriptorSetLayoutCreateInfo(
 				setLayoutBindings.data(),
 				setLayoutBindings.size());
+		descriptorLayout.flags = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT;
+		VkDescriptorBindingFlags bindless_flags = 
+			VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT |
+			VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT;
+		VkDescriptorSetLayoutBindingFlagsCreateInfoEXT extended_flags_info{
+			VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
+			nullptr
+		};
+		extended_flags_info.bindingCount = 1;
+		extended_flags_info.pBindingFlags = &bindless_flags;
+		descriptorLayout.pNext = &extended_flags_info;
+
 
 		VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &compute_.descriptor_set_layout), "CREATE COMPUTE DSL");
 
@@ -269,6 +287,13 @@ namespace Principia {
 			gui_textures_[3].descriptor,
 			gui_textures_[4].descriptor
 		};
+		std::vector<VkDescriptorImageInfo> bindless_image_infos;
+		auto num_textures = bindless_textures.size();
+		bindless_image_infos.reserve(num_textures);
+		for (auto t : bindless_textures) {
+			bindless_image_infos.push_back(t.descriptor);
+		}
+
 		compute_write_descriptor_sets_ =
 		{
 			// Binding 0: Output storage image
@@ -342,7 +367,12 @@ namespace Principia {
 				compute_.descriptor_set,
 				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
 				11,
-				textureimageinfos, MAX_TEXTURES)
+				textureimageinfos, MAX_TEXTURES),
+			vks::initializers::writeDescriptorSet(
+				compute_.descriptor_set,
+				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
+				12,
+				bindless_image_infos.data(), num_textures)
 		};
 
 		vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
@@ -397,7 +427,9 @@ namespace Principia {
 		compute_texture_.destroy(vkDevice.logicalDevice);
 		for (int i = 0; i < MAX_TEXTURES; ++i)
 			gui_textures_[i].destroy(vkDevice.logicalDevice);
-
+		for (auto& t : bindless_textures) {
+			t.destroy(vkDevice.logicalDevice);
+		}
 		vkDestroyPipelineCache(vkDevice.logicalDevice, pipelineCache, nullptr);
 		vkDestroyPipeline(vkDevice.logicalDevice, compute_.pipeline, nullptr);
 		vkDestroyPipelineLayout(vkDevice.logicalDevice, compute_.pipeline_layout, nullptr);
@@ -455,7 +487,7 @@ namespace Principia {
 	void ComputeRaytracer::UpdateCamera(CameraComponent* c)
 	{
 		compute_.ubo.aspect_ratio = c->aspectRatio;
-		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503f);	
+		compute_.ubo.fov = glm::tan(c->fov * 0.03490658503f);
 		compute_.ubo.rotM = c->rotM;
 		compute_.ubo.rand = static_cast<int>(random_int());
 		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
@@ -528,7 +560,7 @@ namespace Principia {
 
 
 	int ComputeRaytracer::FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh)
-	{	
+	{
 		//first pusch back a node
 		ssBVHNode* bvhNode = &bvh[*offset];
 		bvhNode->upper = node->bounds.center + node->bounds.extents;
@@ -707,6 +739,7 @@ namespace Principia {
 			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1),				// Storage image for ray traced image output
 			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 9),			// Storage buffer for the scene primitives
 			//vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1)
+			vks::initializers::descriptorPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, MAX_BINDLESS_TEXTURES)
 		};
 
 		VkDescriptorPoolCreateInfo descriptorPoolInfo =
@@ -714,7 +747,7 @@ namespace Principia {
 				poolSizes.size(),
 				poolSizes.data(),
 				3);
-
+		descriptorPoolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT;
 		VK_CHECKRESULT(vkCreateDescriptorPool(vkDevice.logicalDevice, &descriptorPoolInfo, nullptr, &descriptor_pool_), "CREATE DESCRIPTOR POOL");
 
 	}
@@ -1083,7 +1116,7 @@ namespace Principia {
 			//gnc->
 
 		}*/
-		
+
 	}
 
 	void ComputeRaytracer::ProcessEntity(artemis::Entity& e)
@@ -1106,7 +1139,7 @@ namespace Principia {
 			UpdateGui(gui);
 			break; }
 		case RENDER_GUINUM: {
-			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();			
+			GUINumberComponent* gnc = (GUINumberComponent*)e.getComponent<GUINumberComponent>();
 			//if (gnc->number > 9) {
 			//	/*auto* nodular = (NodeComponent*)e.getComponent<NodeComponent>();
 			//	std::cout << nodular->name + ": " << gnc->number;*/
@@ -1243,6 +1276,12 @@ namespace Principia {
 		gui_textures_[3].CreateTexture(vkDevice);
 		gui_textures_[4].path = "../Assets/Levels/1_Jungle/Textures/debugr.png";
 		gui_textures_[4].CreateTexture(vkDevice);
+
+		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/numbers.png", vkDevice));
+		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/title.png", vkDevice));
+		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/ARROW.png", vkDevice));
+		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/debugr.png", vkDevice));
+		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/circuit.jpg", vkDevice));
 	}
 
 	void ComputeRaytracer::AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri)
@@ -1257,7 +1296,7 @@ namespace Principia {
 	{
 		if (node->engineFlags & COMPONENT_MODEL) {
 			return;
-		}	
+		}
 		if (node->engineFlags & COMPONENT_LIGHT) {
 			return;
 			LightComponent* lightComp = (LightComponent*)node->data->getComponent<LightComponent>();
@@ -1415,8 +1454,8 @@ namespace Principia {
 		//		compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
 		//	}
 		//}
-		
-		
+
+
 		SetRenderUpdate(kUpdateGui);
 	}
 }
