@@ -70,13 +70,13 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
     fMat.transparency = 0.0f;
 
     ray.t = MAXLEN;
-    ray.tbvh = MAXLEN;
+    ray.t2 = MAXLEN;
     vec2 uv = vec2(0.0);
     // Get intersected primitive ID
-    iSectID intersectID = intersectMBVH(ray, norm, uv);
+    iSectID intersectID[2] = intersectMBVH(ray, norm, uv);
 
     //if it doesn't interset anything, return the material
-    if (intersectID.faceID == -1) {
+    if (intersectID[0].faceID == -1) {
         //		fMat.color = vec3(0.99f, 0.99f, 1.0f);
         fMat.color = vec3(0.f, 0.f, 0.f);
 
@@ -89,7 +89,7 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 
     #ifdef DEBUGLINES
     //do an intersection test with the bvh node
-    if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[intersectID.nodeID])) {
+    if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[intersectID[0].nodeID])) {
         fMat.color = vec3(0, 1, 0);
         return fMat;
     }
@@ -98,14 +98,14 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
     vec3 pos = ray.o + ray.t * ray.d;
     vec3 normal;
     vec3 txtr;
-
+    vec4 txtr2;
     /////////////////SWAP HERE FOR DEBUG///////////////////////
     // For debug lines, you want the id of the prim u isect //
     //////////////////////////////////////////////////////////
-    Material mat = materials[primitives[intersectID.faceID].matID];
-    //Material mat = materials[primitives[intersectID.pId].matID];
+    Material mat = materials[primitives[intersectID[0].faceID].matID];
+    //Material mat = materials[primitives[intersectID[0].pId].matID];
 
-    switch (intersectID.primType) {
+    switch (intersectID[0].primType) {
         case TYPE_PLANE:
         {
             break;
@@ -117,21 +117,29 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
         }
         case TYPE_SPHERE:
         {
-            normal = sphereNormal(pos, primitives[intersectID.faceID]);
+            normal = sphereNormal(pos, primitives[intersectID[0].faceID]);
             break;
         }
         case TYPE_BOX:
         {
             normal = norm;
             if (mat.textureID > 0)
-                txtr = boxTexture(pos, normal, primitives[intersectID.faceID], bindless_textures[nonuniformEXT(mat.textureID)]);
+                txtr = boxTexture(pos, normal, primitives[intersectID[0].faceID], bindless_textures[nonuniformEXT(mat.textureID)]);
             break;
         }
         case TYPE_QUAD:
         {
             normal = norm;
             if (mat.textureID > 0) {
-                txtr = texture(bindless_textures[nonuniformEXT(mat.textureID)], uv).xyz;
+                txtr2 = texture(bindless_textures[nonuniformEXT(mat.textureID)], uv);
+                if(txtr2.a < 0.1){
+                    intersectID[0] = intersectID[1];
+                    ray.t = ray.t2;
+                }
+                else
+                {
+                    txtr = txtr2.rgb;
+                }
             }
         }
         case TYPE_CYLINDER:
@@ -141,9 +149,9 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
         }
         case TYPE_MESH:
         {
-            //normal = triNormalUV(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
-            normal = quadNormal(primitives[intersectID.primID], faces[intersectID.faceID], norm.x, norm.y);
-            mat = materials[primitives[intersectID.primID].matID];
+            //normal = triNormalUV(primitives[intersectID[0].primID], faces[intersectID[0].faceID], norm.x, norm.y);
+            normal = quadNormal(primitives[intersectID[0].primID], faces[intersectID[0].faceID], norm.x, norm.y);
+            mat = materials[primitives[intersectID[0].primID].matID];
             txtr = texture(bindless_textures[nonuniformEXT(mat.textureID)], norm.xy).xyz;
             //if(mat.textureID > 0)
             //	fMat.color = vec3(texture(bindless_textures[nonuniformEXT(mat.textureID)], vec2(norm).xy)).xyz;

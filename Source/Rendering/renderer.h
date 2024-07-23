@@ -21,6 +21,7 @@
 
 namespace Principia {
 	static const int MAX_TEXTURES = 5;
+	static int NUM_BINDLESS_TEXTURES = 6;
 
 	class Renderer : public RenderBase {
 	public:

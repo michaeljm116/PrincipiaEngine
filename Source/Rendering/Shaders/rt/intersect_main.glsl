@@ -33,8 +33,9 @@ void insertSectID(iSectID[3] ids, iSectID id) {
     // Else, compare the values, the smallest goes to the highest etc..
 }
 
-iSectID intersectMBVH(inout Ray ray, inout vec3 norm, inout vec2 uv) {
+iSectID[2] intersectMBVH(inout Ray ray, inout vec3 norm, inout vec2 uv) {
     iSectID id = iSectID(0, -1, -1, -1);
+    iSectID id2 = iSectID(0, -1, -1, -1);
     int stack[16];
     int sp = 0; //stack pointer
     stack[0] = 0;
@@ -106,9 +107,16 @@ iSectID intersectMBVH(inout Ray ray, inout vec3 norm, inout vec2 uv) {
                         vec4 tQuadTex = quadTexIntersect(ray, primitives[i], uv);
                         if (tQuadTex.x > 0) {
                             if ((tQuadTex.x > EPSILON) && (tQuadTex.x < ray.t)) {
+                                id2 = id;
+                                ray.t2 = ray.t;
                                 id = iSectID(TYPE_QUAD, i, -1, offset);
                                 ray.t = tQuadTex.x;
                                 norm = tQuadTex.yzw;
+                            }
+                            else if((tQuadTex.x > EPSILON) && (tQuadTex.x < ray.t2)){
+                                id2 = iSectID(TYPE_QUAD, i, -1, offset);
+                                ray.t2 = tQuadTex.x;
+                                //norm = tQuadTex.yzw;
                             }
                         }
                         break;
@@ -153,8 +161,10 @@ iSectID intersectMBVH(inout Ray ray, inout vec3 norm, inout vec2 uv) {
             }
         }
     }
-
-    return id;
+    iSectID[2] ret;
+    ret[0] = id;
+    ret[1] = id2;
+    return ret;//{id,id2};
 }
 
 //rayO = pos, rayD = light, primitiveId = duh, t = t = length(lights[0].pos - pos);

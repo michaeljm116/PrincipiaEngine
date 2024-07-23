@@ -1268,7 +1268,7 @@ namespace Principia {
 
 		gui_textures_[0].path = "../Assets/Levels/1_Jungle/Textures/numbers.png";
 		gui_textures_[0].CreateTexture(vkDevice);
-		gui_textures_[1].path = "../Assets/Levels/1_Jungle/Textures/title.png";
+		gui_textures_[1].path = "../Assets/Levels/1_Jungle/Textures/pause.png";
 		gui_textures_[1].CreateTexture(vkDevice);
 		gui_textures_[2].path = "../Assets/Levels/1_Jungle/Textures/circuit.jpg";
 		gui_textures_[2].CreateTexture(vkDevice);
@@ -1279,9 +1279,11 @@ namespace Principia {
 
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/numbers.png", vkDevice));
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/title.png", vkDevice));
+		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/pause.png", vkDevice));
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/ARROW.png", vkDevice));
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/debugr.png", vkDevice));
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/circuit.jpg", vkDevice));
+		NUM_BINDLESS_TEXTURES = bindless_textures.size();
 	}
 
 	void ComputeRaytracer::AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri)

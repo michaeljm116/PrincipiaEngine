@@ -8,7 +8,7 @@ struct Ray {
 	vec3 o;
 	float t;
 	vec3 d;
-	float tbvh;
+	float t2;
 };
 
 struct Primitive
