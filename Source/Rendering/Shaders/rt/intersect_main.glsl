@@ -9,7 +9,7 @@
 #include "intersect_disk.glsl"
 #include "intersect_bvh.glsl"
 
-#define TRIINTERSECT true
+#define TRIINTERSECT false
 #define SHADOW 0.2
 //#define DEBUGLINES
 
@@ -54,89 +54,86 @@ iSectID intersectMBVH(inout Ray ray, inout vec3 norm, inout vec2 uv) {
         //if its a leaf do the regular intersection
         if (node.numChildren > 0) {
             for (int i = node.offset; i < node.offset + node.numChildren; ++i) {
-                if (primitives[i].id > 10) {
-                    mat4 invWorld = inverse(primitives[i].world);
-                    Ray r;
-                    r.d = (invWorld * vec4(ray.d, 0.0)).xyz; // / primitives[i].extents;
-                    r.o = (invWorld * vec4(ray.o, 1.0)).xyz; // / primitives[i].extents;
-                    flool tMesh = boundsIntersect(r); // , vec3(1, 1, 1));// primitives[i].extents);
-                    if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
-                        int startIndex = primitives[i].startIndex;
-                        int endIndex = primitives[i].endIndex;
-                        for (int f = startIndex; f < endIndex; f++) {
-                            vec4 tQuad = quadIntersect(r, faces[f]);
-                            if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
-                                id = iSectID(TYPE_MESH, f, i, offset);
-                                ray.t = tQuad.x;
-                                norm.x = tQuad.y;
-                                norm.y = tQuad.z;
+                switch(primitives[i].id)
+                {
+                    case -1:
+                    {
+                        float tSphere = sphereIntersect(ray, primitives[i]);
+                        if ((tSphere > EPSILON) && (tSphere < ray.t)){
+                            id = iSectID(TYPE_SPHERE, i, -1, offset);
+                            ray.t = tSphere;
+                        }
+                        break;
+                    }
+                    case -2:{
+                        vec4 tBox = boxIntersect(ray, primitives[i]);
+                        if (tBox.x > 0) {
+                            if ((tBox.x > EPSILON) && (tBox.x < ray.t)) {
+                                id = iSectID(TYPE_BOX, i, -1, offset);
+                                ray.t = tBox.x;
+                                norm = tBox.yzw;
                             }
-                            /*vec3 triSect = triIntersectUV(r, faces[f]);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                							if((triSect.x > 0) && (triSect.x > EPSILON) && (triSect.x < ray.t))
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                							{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                								id = iSectID(TYPE_MESH, f, i, offset);
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                								ray.t = triSect.x;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                								norm.x = triSect.y;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                								norm.y = triSect.z;
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                							}*/
                         }
-                        //sectID temp = intersectPrimBVH(ray, norm, r, primitives[i].startIndex, primitives[i].endIndex);
-                        //if (temp.id != -1) {
-                        //	id = temp;
-                        //	id.pId = i;
-                        //}
+                        break;
                     }
-                } //id > 0
+                    case -3:{
+                        vec4 tCylinder = cylinderIntersect(ray, primitives[i]);
+                        if ((tCylinder.x > EPSILON) && (tCylinder.x < ray.t)) {
+                            id = iSectID(TYPE_CYLINDER, i, -1, offset);
+                            ray.t = tCylinder.x;
+                            norm = tCylinder.yzw;
+                        }
+                        break;
+                    }
+                    case -4:{
+                        float tplane = planeIntersect(ray, primitives[i]);
+                        if ((tplane > EPSILON) && (tplane < ray.t))
+                        {
+                            id = iSectID(TYPE_PLANE, i, -1, offset);
+                            ray.t = tplane;
+                        }
+                        break;
+                    }
+                    case -5:{
+                        float tDisk = diskIntersect(ray, primitives[i]);
+                        if ((tDisk > EPSILON) && (tDisk < ray.t)) {
+                            id = iSectID(TYPE_DISK, i, -1, offset);
+                            ray.t = tDisk;
+                        }
+                        break;
+                    }
+                    case -6:{
+                        vec4 tQuadTex = quadTexIntersect(ray, primitives[i], uv);
+                        if (tQuadTex.x > 0) {
+                            if ((tQuadTex.x > EPSILON) && (tQuadTex.x < ray.t)) {
+                                id = iSectID(TYPE_QUAD, i, -1, offset);
+                                ray.t = tQuadTex.x;
+                                norm = tQuadTex.yzw;
+                            }
+                        }
+                        break;
+                    }
+                    default:{
+                        mat4 invWorld = inverse(primitives[i].world);
+                        Ray r;
+                        r.d = (invWorld * vec4(ray.d, 0.0)).xyz; // / primitives[i].extents;
+                        r.o = (invWorld * vec4(ray.o, 1.0)).xyz; // / primitives[i].extents;
+                        flool tMesh = boundsIntersect(r); // , vec3(1, 1, 1));// primitives[i].extents);
+                        if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
+                            int startIndex = primitives[i].startIndex;
+                            int endIndex = primitives[i].endIndex;
+                            for (int f = startIndex; f < endIndex; f++) {
+                                vec4 tQuad = quadIntersect(r, faces[f]);
+                                if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
+                                    id = iSectID(TYPE_MESH, f, i, offset);
+                                    ray.t = tQuad.x;
+                                    norm.x = tQuad.y;
+                                    norm.y = tQuad.z;
+                                }
 
-                else if (primitives[i].id == -1) { //SPHERE INTERSECT
-                    float tSphere = sphereIntersect(ray, primitives[i]);
-                    if ((tSphere > EPSILON) && (tSphere < ray.t))
-                    {
-                        id = iSectID(TYPE_SPHERE, i, -1, offset);
-                        ray.t = tSphere;
-                    }
-                }
-                else if (primitives[i].id == -2) { //BOX INTERSECT
-                    vec4 tBox = boxIntersect(ray, primitives[i]);
-                    if (tBox.x > 0) {
-                        if ((tBox.x > EPSILON) && (tBox.x < ray.t)) {
-                            id = iSectID(TYPE_BOX, i, -1, offset);
-                            ray.t = tBox.x;
-                            norm = tBox.yzw;
+                            }
                         }
-                    }
-                }
-                else if (primitives[i].id == -3) { //CYLINDER INTERSECT
-                    vec4 tCylinder = cylinderIntersect(ray, primitives[i]);
-                    if ((tCylinder.x > EPSILON) && (tCylinder.x < ray.t)) {
-                        id = iSectID(TYPE_CYLINDER, i, -1, offset);
-                        ray.t = tCylinder.x;
-                        norm = tCylinder.yzw;
-                    }
-                }
-                else if (primitives[i].id == -4) { //PLANE INTERSECT
-                    float tplane = planeIntersect(ray, primitives[i]);
-                    if ((tplane > EPSILON) && (tplane < ray.t))
-                    {
-                        id = iSectID(TYPE_PLANE, i, -1, offset);
-                        ray.t = tplane;
-                    }
-                }
-                else if (primitives[i].id == -5) { //DISK INTERSECT
-                    float tDisk = diskIntersect(ray, primitives[i]);
-                    if ((tDisk > EPSILON) && (tDisk < ray.t)) {
-                        id = iSectID(TYPE_DISK, i, -1, offset);
-                        ray.t = tDisk;
-                    }
-                }
-                else if (primitives[i].id == -6) {
-                    vec4 tQuadTex = quadTexIntersect(ray, primitives[i], uv);
-                    if (tQuadTex.x > 0) {
-                        if ((tQuadTex.x > EPSILON) && (tQuadTex.x < ray.t)) {
-                            id = iSectID(TYPE_QUAD, i, -1, offset);
-                            ray.t = tQuadTex.x;
-                            norm = tQuadTex.yzw;
-                        }
+                        break;
                     }
                 }
             }
@@ -177,84 +174,82 @@ float calcShadowBVH(inout Ray ray) {
         //if its a leaf do the regular intersection
         if (node.numChildren > 0) {
             for (int i = node.offset; i < node.offset + node.numChildren; ++i) {
-                if (primitives[i].id > 10) {
-                    mat4 invWorld = inverse(primitives[i].world);
-                    Ray r;
-                    r.d = (invWorld * vec4(ray.d, 0.0)).xyz; // / primitives[i].extents;
-                    r.o = (invWorld * vec4(ray.o, 1.0)).xyz; // / primitives[i].extents;
-                    flool tMesh = boundsIntersect(r); // , vec3(1, 1, 1));// primitives[i].extents);
-                    if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
-                        //Mesh m = meshes[primitives[i].id];
-                        //id.pId = i;
-                        //rdd /= primitives[i].extents;
-                        //roo /= primitives[i].extents;
-                        int startIndex = primitives[i].startIndex;
-                        int endIndex = primitives[i].endIndex;
-                        for (int f = startIndex; f < endIndex; f++) {
-                            vec4 tQuad = quadIntersect(r, faces[f]);
-                            if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
+                switch(primitives[i].id){
+                    case -1:{
+                        float tSphere = sphereIntersect(ray, primitives[i]);
+                        if ((tSphere > EPSILON) && (tSphere < ray.t))
+                        {
+                            return SHADOW;
+                            ray.t = tSphere;
+                        }
+                        break;
+                    }
+                    case -2:{
+                        vec4 tBox = boxIntersect(ray, primitives[i]);
+                        if (tBox.x > 0) {
+                            if ((tBox.x > EPSILON) && (tBox.x < ray.t)) {
                                 return SHADOW;
-                                ray.t = tQuad.x;
+                                ray.t = tBox.x;
                             }
                         }
+                        break;
                     }
-                } //id > 0
-
-                else if (primitives[i].id == -1) { //SPHERE INTERSECT
-                    float tSphere = sphereIntersect(ray, primitives[i]);
-                    if ((tSphere > EPSILON) && (tSphere < ray.t))
-                    {
-                        return SHADOW;
-                        ray.t = tSphere;
-                    }
-                }
-                else if (primitives[i].id == -2) { //BOX INTERSECT
-                    vec4 tBox = boxIntersect(ray, primitives[i]);
-                    if (tBox.x > 0) {
-                        if ((tBox.x > EPSILON) && (tBox.x < ray.t)) {
+                    case -3:{
+                        vec4 tCylinder = cylinderIntersect(ray, primitives[i]);
+                        if ((tCylinder.x > EPSILON) && (tCylinder.x < ray.t)) {
                             return SHADOW;
-                            ray.t = tBox.x;
+                            ray.t = tCylinder.x;
+                        }
+                        break;
+                    }
+                    case -4:{
+                        float tplane = planeIntersect(ray, primitives[i]);
+                        if ((tplane > EPSILON) && (tplane < ray.t))
+                        {
+                            return SHADOW;
+                            ray.t = tplane;
+                        }
+                        break;
+                    }
+                    case -5:{
+                        float tDisk = diskIntersect(ray, primitives[i]);
+                        if ((tDisk > EPSILON) && (tDisk < ray.t)) {
+                            return SHADOW;
+                            ray.t = tDisk;
+                        }
+                        break;
+                    }
+                    case -6:{
+                        float tQuadTex = quadTexIntersectS(ray, primitives[i]).x;
+                        if (tQuadTex > EPSILON) {
+                            ray.t = tQuadTex;
+                            return SHADOW;
                         }
                     }
-                }
-                else if (primitives[i].id == -3) { //CYLINDER INTERSECT
-                    vec4 tCylinder = cylinderIntersect(ray, primitives[i]);
-                    if ((tCylinder.x > EPSILON) && (tCylinder.x < ray.t)) {
-                        return SHADOW;
-                        ray.t = tCylinder.x;
+                    default:{
+                        mat4 invWorld = inverse(primitives[i].world);
+                        Ray r;
+                        r.d = (invWorld * vec4(ray.d, 0.0)).xyz; // / primitives[i].extents;
+                        r.o = (invWorld * vec4(ray.o, 1.0)).xyz; // / primitives[i].extents;
+                        flool tMesh = boundsIntersect(r); // , vec3(1, 1, 1));// primitives[i].extents);
+                        if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
+                            //Mesh m = meshes[primitives[i].id];
+                            //id.pId = i;
+                            //rdd /= primitives[i].extents;
+                            //roo /= primitives[i].extents;
+                            int startIndex = primitives[i].startIndex;
+                            int endIndex = primitives[i].endIndex;
+                            for (int f = startIndex; f < endIndex; f++) {
+                                vec4 tQuad = quadIntersect(r, faces[f]);
+                                if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
+                                    return SHADOW;
+                                    ray.t = tQuad.x;
+                                }
+                            }
+                        }
+                        break;
                     }
                 }
-                else if (primitives[i].id == -4) { //PLANE INTERSECT
-                    float tplane = planeIntersect(ray, primitives[i]);
-                    if ((tplane > EPSILON) && (tplane < ray.t))
-                    {
-                        return SHADOW;
-                        ray.t = tplane;
-                    }
-                }
-                else if (primitives[i].id == -5) { //DISK INTERSECT
-                    float tDisk = diskIntersect(ray, primitives[i]);
-                    if ((tDisk > EPSILON) && (tDisk < ray.t)) {
-                        return SHADOW;
-                        ray.t = tDisk;
-                    }
-                }
-                else if (primitives[i].id == -6) {
-                    float tQuadTex = quadTexIntersectS(ray, primitives[i]).x;
-                    if (tQuadTex > EPSILON) {
-                        ray.t = tQuadTex;
-                        return SHADOW;
-                    }
-                }
-                /*else if (primitives[i].id == -6) { //QUAD INTERSECT
-                                                                                                                                                                                                                                                                    vec4 tQuadTex = quadTexIntersect(ray, primitives[i]);
-                                                                                                                                                                                                                                                                    if (tQuadTex.x > 0) {
-                                                                                                                                                                                                                                                                        if ((tQuadTex.x > EPSILON) && (tQuadTex.x < ray.t)) {
-                                                                                                                                                                                                                                                                            return SHADOW;
-                                                                                                                                                                                                                                                                            ray.t = tQuad.x;
-                                                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                                                                }*/
             }
         }
         //It's a node
@@ -272,74 +267,7 @@ float calcShadowBVH(inout Ray ray) {
             }
         }
     }
-
     return 1.f;
-}
-
-float calcShadow(inout Ray r, in sectID primitiveId)
-{
-    /*
-                                                                                	for (int i = 0; i < primitives.length(); ++i) {
-                                                                                		if (primitives[i].id > -1) {/////-----MESH-----|||||
-                                                                                			mat4 invWorld = inverse(primitives[i].world);
-                                                                                			vec3 rdd = (invWorld*vec4(rayD, 0.0)).xyz;// / primitives[i].extents;
-                                                                                			vec3 roo = (invWorld*vec4(rayO, 1.0)).xyz;// / primitives[i].extents;
-
-                                                                                			flool tMesh = boundsIntersect(roo, rdd);// , vec3(1, 1, 1));// primitives[i].extents);
-                                                                                			if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < t)) {
-                                                                                				int startIndex = primitives[i].startIndex;
-                                                                                				int endIndex = primitives[i].endIndex;
-                                                                                				for (int j = startIndex; j < endIndex; j++) {
-                                                                                					vec4 tQuad = quadIntersect(roo, rdd, faces[j]);
-                                                                                					if (tQuad.x > 0) {
-                                                                                						if ((tQuad.x > EPSILON) && (tQuad.x < t)) {
-                                                                                							t = tQuad.x;
-                                                                                							return SHADOW;
-                                                                                						}
-                                                                                					}
-                                                                                				}
-                                                                                			}
-                                                                                		}
-                                                                                		else if (primitives[i].id == --1) { /////-----SPHERE-----|||||
-                                                                                			float tSphere = sphereIntersect(rayO, rayD, primitives[i]);
-                                                                                			if ((tSphere > EPSILON) && (tSphere < t)) {
-                                                                                				t = tSphere;
-                                                                                				return SHADOW;
-                                                                                			}
-                                                                                		}
-                                                                                		else if (primitives[i].id == --2) { /////-----BOX-----|||||
-                                                                                			float tBox = boxIntersect(rayO, rayD, primitives[i]).x;
-                                                                                			if ((tBox > EPSILON) && (tBox < t))
-                                                                                			{
-                                                                                				t = tBox;
-                                                                                				return SHADOW;
-                                                                                			}
-                                                                                		}
-                                                                                		else if (primitives[i].id == --3) { /////-----CYLINDER-----|||||
-                                                                                			float tcylinder = cylinderIntersect(rayO, rayD, primitives[i]).x;
-                                                                                			if ((tcylinder > EPSILON) && (tcylinder < t))
-                                                                                			{
-                                                                                				t = tcylinder;
-                                                                                				return SHADOW;
-                                                                                			}
-                                                                                		}*/
-    /*
-                                                                                		else if(primitives[i].id == --4){ /////-----PLANE-----|||||
-                                                                                			float tPlane = planeIntersect(rayO, rayD, primitives[i]);
-                                                                                			if((tPlane > EPSILON) && (tPlane < t)){
-                                                                                				t = tPlane;
-                                                                                				return SHADOW;
-                                                                                			}
-                                                                                		}
-                                                                                		else if(primitives[i].id == --5){ /////-----DISK-----|||||
-                                                                                			float tDisk = diskIntersect(rayO,rayD, primitives[i]);
-                                                                                			if((tDisk > EPSILON) && (tDisk < t)){
-                                                                                				t = tDisk;
-                                                                                				return SHADOW;
-                                                                                			}
-                                                                                		}*/
-    //}
-    return 1.0;
 }
 
 #endif
