@@ -6,6 +6,7 @@
 
 
 namespace Principia {
+	static const int MAX_BVH_OBJECTS = 2;
 	BvhSystem::BvhSystem()
 	{
 		addComponentType<NodeComponent>();
@@ -618,6 +619,20 @@ namespace Principia {
 		glm::vec3 ex = max - c;
 
 		return BVHBounds(c, ex);
+	}
+	void BvhSystem::print()
+	{
+		print(root);
+	}
+	void BvhSystem::print(BVHNode* n)
+	{
+		if (!n) return;
+		std::cout << "\nCenter X: " << n->bounds.center.x << " Center Y: " << n->bounds.center.y << " Center Z: " << n->bounds.center.z;
+		std::cout << "\nExtent X: " << n->bounds.extents.x << " Extent Y: " << n->bounds.extents.y << " Extent Z: " << n->bounds.extents.z;
+
+		for (size_t i = 0; i < 2; ++i) {
+			print(n->children[i]);
+		}
 	}
 
 }

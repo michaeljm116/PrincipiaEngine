@@ -16,6 +16,7 @@ layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 #define REFLECTIONS true
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
+#define DEBUGLINES
 
 #include "rt/pbr.glsl"
 #include "rt/structs.glsl"
@@ -73,8 +74,8 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
     ray.t2 = MAXLEN;
     vec2 uv = vec2(0.0);
     // Get intersected primitive ID
-    iSectID intersectID[2] = intersectMBVH(ray, norm, uv);
-
+    //iSectID intersectID[2] = intersectMBVH(ray, norm, uv);
+    iSectID intersectID[2] = intersectEmbreeBvh(ray, norm, uv);
     //if it doesn't interset anything, return the material
     if (intersectID[0].faceID == -1) {
         //		fMat.color = vec3(0.99f, 0.99f, 1.0f);

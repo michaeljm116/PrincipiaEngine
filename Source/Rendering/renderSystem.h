@@ -39,6 +39,7 @@ namespace Principia {
 		//This could probably all be inlined, although private renderer hmm
 		//maybe change them all to getrenderer()->dothething();
 		Renderer* getRenderer() { return renderer_; }
+		ComputeRaytracer* getComputeRaytracer() { return (ComputeRaytracer*)renderer_; }
 		void setRenderUpdate(Renderer::RenderUpdate flags) {renderer_->SetRenderUpdate(flags);}
 		void updateObjectMemory() {renderer_->UpdateDescriptors();}
 		void addNode(NodeComponent* node) {renderer_->AddNode(node);}

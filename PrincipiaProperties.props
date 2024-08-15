@@ -3,12 +3,12 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>..\..\PrincipiaEngine\Lib\glfw\include;..\..\PrincipiaEngine\Lib\SDL2\include;..\..\PrincipiaEngine\Lib\bullet3;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\PrincipiaEngine\Lib\glfw\lib-vc2015;..\..\PrincipiaEngine\Lib\SDL2\lib\x86;..\..\PrincipiaEngine\Lib\bullet3;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\PrincipiaEngine\Lib\glfw\include;..\..\PrincipiaEngine\Lib\SDL2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\PrincipiaEngine\Lib\glfw\lib-vc2022;..\..\PrincipiaEngine\Lib\SDL2\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\VulkanSDK\1.3.204.1\Include;..\..\PrincipiaEngine\Lib\gli;..\..\PrincipiaEngine\Lib\glm;..\..\PrincipiaEngine\Lib\stb;..\..\PrincipiaEngine\Lib\glfw\lib-vc2015;..\..\PrincipiaEngine\Source\ArtemisFrameWork;..\..\PrincipiaEngine\Source\;..\..\PrincipiaEngine\Lib\bullet3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\VulkanSDK\1.3.204.1\Include;..\..\PrincipiaEngine\Lib\gli;..\..\PrincipiaEngine\Lib\glm;..\..\PrincipiaEngine\Lib\stb;..\..\PrincipiaEngine\Lib\glfw\lib-vc2022;..\..\PrincipiaEngine\Source\ArtemisFrameWork;..\..\PrincipiaEngine\Source\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

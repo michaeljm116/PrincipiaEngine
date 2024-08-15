@@ -1,106 +1,77 @@
-﻿  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btVector3.h:19:
-..\Lib\bullet3\LinearMath/btScalar.h(325,16): error : overloaded 'operator+' must have at least one parameter of class or enumeration type
-..\Lib\bullet3\LinearMath/btScalar.h(330,16): error : overloaded 'operator-' must have at least one parameter of class or enumeration type
-..\Lib\bullet3\LinearMath/btScalar.h(335,16): error : overloaded 'operator*' must have at least one parameter of class or enumeration type
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:23:
-..\Lib\bullet3\BulletCollision\BroadphaseCollision/btOverlappingPairCache.h(237,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(111,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(429,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(437,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(451,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(460,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(580,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-  In file included from ..\Lib\bullet3\LinearMath/btMatrix3x3.h:19:
-..\Lib\bullet3\LinearMath/btQuaternion.h(590,4): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:22:
-  In file included from ..\Lib\bullet3\LinearMath/btTransform.h:18:
-..\Lib\bullet3\LinearMath/btMatrix3x3.h(1075,2): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:23:
-..\Lib\bullet3\LinearMath/btAabbUtil2.h(184,2): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:23:
-..\Lib\bullet3\LinearMath/btAabbUtil2.h(185,2): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:27:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btDbvtBroadphase.h:20:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btDbvt.h:23:
-..\Lib\bullet3\LinearMath/btAabbUtil2.h(186,2): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp(25,2): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp(32,2): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:23:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btOverlappingPairCache.h:23:
-..\Lib\bullet3\LinearMath/btAlignedObjectArray.h(177,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision\btAxisSweep3.cpp:19:
-  In file included from ..\Lib\bullet3\BulletCollision\BroadphaseCollision/btAxisSweep3.h:23:
-  In file included from ..\Lib\bullet3\BulletCollision/BroadphaseCollision/btOverlappingPairCache.h:23:
-..\Lib\bullet3\LinearMath/btAlignedObjectArray.h(178,3): error : no matching literal operator for call to 'operator""__FILE__' with arguments of types 'const char *' and 'unsigned long long', and no matching literal operator template
-..\Lib\bullet3\LinearMath/btScalar.h(127,51): message : expanded from macro 'btAssert'
-  fatal error: too many errors emitted, stopping now [-ferror-limit=]
+﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  compute-raytracer.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(224,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(224,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(224,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(82,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(72,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(79,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(106,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(121,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(57,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(252,27): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(375,34): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(378,85): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(731,29): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(778,52): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(803,19): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(831,74): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(849,27): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(971,85): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1127,24): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1138,47): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1138,47): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1138,47): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1138,47): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1138,47): warning C4267:         ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1285,22): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1286,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1287,22): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1310,33): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1342,49): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1421,46): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1421,46): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1421,46): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1421,46): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1421,46): warning C4267:         ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1445,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1447,49): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1447,49): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1447,49): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1447,49): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1447,49): warning C4267:         ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:             _Ty2=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:         ]
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54):
+  the template instantiation context (the oldest one first) is
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1310,59):
+  	see reference to function template instantiation 'std::pair<int,int>::pair<int&,unsigned __int64,0>(_Other1,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int &,
+              _Other2=unsigned __int64
+          ]
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1310,38):
+  		see the first reference to 'std::pair<int,int>::pair' in 'Principia::ComputeRaytracer::LoadResources'
+  
+  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\x64\Debug\Principia Engine.lib

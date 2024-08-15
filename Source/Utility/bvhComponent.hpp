@@ -13,9 +13,60 @@
 #include <bvh/linear_bvh_builder.hpp>
 #include <bvh/sweep_sah_builder.hpp>
 #include <bvh/locally_ordered_clustering_builder.hpp>
+
+#include <embree4/rtcore.h>
+#include <embree4/rtcore_common.h>
+#include <embree4/rtcore_builder.h>
 #include "../Rendering/Components/renderComponents.hpp"
 
 namespace Principia {
+
+#pragma region embree
+
+	struct EmBox {
+		glm::vec3 lower = {};
+		glm::vec3 upper = {};
+		EmBox() {};
+		EmBox(const glm::vec3& a, const glm::vec3& b) : lower(a), upper(b) {};
+	};
+	struct EmNode {
+		bool isLeaf = false;
+		virtual float sah() = 0;
+		inline EmBox merge(const EmBox& a, const EmBox& b) {
+			return EmBox(glm::min(a.lower, b.lower), glm::max(a.upper, b.upper));
+		}
+		inline float area(const EmBox& a) {
+			glm::vec3 te = a.upper - a.lower;
+			return 2 * madd(te.x, (te.y + te.z), te.y * te.z);
+			//return te.x * te.y + te.y * te.z + te.z * te.x;
+		}
+		__forceinline float madd(const float a, const float b, const float c) { return a * b + c; }
+	};
+
+	struct InnerEmNode : public EmNode
+	{
+		EmBox bounds[2];
+		EmNode* children[2];
+		InnerEmNode() {
+			bounds[0] = bounds[1] = {};
+			children[0] = children[1] = nullptr;
+		}
+		float sah() override {
+			return 1.0f + (area(bounds[0]) * children[0]->sah() + area(bounds[1]) * children[1]->sah()) / area(merge(bounds[0], bounds[1]));
+		}
+	};
+
+	struct LeafEmNode : public EmNode
+	{
+		unsigned id;
+		EmBox bounds;
+		LeafEmNode(unsigned id, const EmBox& bounds) : id(id), bounds(bounds) { isLeaf = true; }
+		float sah() { return 1.0f; }
+	};
+
+#pragma endregion
+
+
 	enum class TreeType {
 		Recursive,
 		HLBVH
@@ -112,6 +163,7 @@ namespace Principia {
 		void* operator new (size_t s) {
 			return new BVHNode();
 		}
+
 	};
 
 	struct LinearBVHNode {

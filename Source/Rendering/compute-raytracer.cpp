@@ -558,6 +558,36 @@ namespace Principia {
 		SetRenderUpdate(kUpdateBvh);
 	}
 
+	void ComputeRaytracer::UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, EmNode* root)
+	{
+		size_t num_prims = ordered_prims.size();
+		if (num_prims == 0)return;
+		primitives_.clear();
+		primitives_.reserve(num_prims);
+
+		//fill in the new objects array;
+		for (size_t i = 0; i < num_prims; ++i) {
+			auto* prim = prims[ordered_prims[i].primID];
+			PrimitiveComponent* pc = (PrimitiveComponent*)prim->getComponent<PrimitiveComponent>();
+			if (pc) {
+				primitives_.emplace_back(ssPrimitive(pc));
+			}
+		}
+
+		int offset = 0;
+		auto num_nodes = 2 * ordered_prims.size() - 1;
+		bvh_.resize(num_nodes);
+		//EmBox bounds = ((InnerEmNode*)root)->bounds;
+		//FlattenBVH(root, EmBox(), &offset, bvh_);
+
+		auto* inner = (InnerEmNode*)root;
+		offset = FlattenBVH(inner->children[0], inner->bounds[0], &offset, bvh_);
+		FlattenBVH(inner->children[1], inner->bounds[1], &offset, bvh_);
+
+
+		SetRenderUpdate(kUpdateBvh);
+	}
+
 
 	int ComputeRaytracer::FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh)
 	{
@@ -584,6 +614,32 @@ namespace Principia {
 			//bvhNode->numChildren |= (node->splitAxis << 29);
 			//bvh[index].numChildren |= (node->splitAxis << 29);
 
+		}
+		return myOffset;
+	}
+
+	int ComputeRaytracer::FlattenBVH(EmNode* node, const EmBox& bounds, int* offset, std::vector<ssBVHNode>& bvh)
+	{
+		ssBVHNode* bvh_node = &bvh[*offset];
+		int myOffset = (*offset)++;
+
+		if (node->isLeaf) {
+			auto* leaf = (LeafEmNode*)node;	
+			bvh_node->upper = leaf->bounds.upper;
+			bvh_node->lower = leaf->bounds.lower;
+			bvh_node->numChildren = 0;
+			bvh_node->offset = leaf->id; //TODO THIS IS UGH.... I FORGOT ABOUT THIS....FIRSTPRIMOFFSET
+		}
+		else 
+		{
+			auto* inner = (InnerEmNode*)node;
+			bvh_node->upper = bounds.upper;
+			bvh_node->lower = bounds.lower;
+			bvh_node->numChildren = 2;
+			//bvh_node->offset = myOffset;
+
+			FlattenBVH(inner->children[0], inner->bounds[0], offset, bvh);
+			bvh_node->offset = FlattenBVH(inner->children[1], inner->bounds[1], offset, bvh);	
 		}
 		return myOffset;
 	}

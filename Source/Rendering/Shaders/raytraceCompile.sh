@@ -1,4 +1,4 @@
-glslangvalidator -V raytracing.comp -o raytracing.comp.spv
+glslangvalidator -V raytracing.comp -o ../../../../ShinyAfroMan/Assets/Shaders/raytracing.comp.spv
 
 if [ $? -ne 0 ]; then
 	cmd /k

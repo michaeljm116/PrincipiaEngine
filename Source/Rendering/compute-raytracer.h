@@ -52,7 +52,9 @@ namespace Principia {
 #pragma region Compute exclusive Functions
 		void UpdateBVH(std::vector<artemis::Entity*>& ordredPrims, BVHNode* root, int numNodes);
 		void UpdateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims);
+		void UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, EmNode* root);
 		int FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh);
+		int FlattenBVH(EmNode* node, const EmBox& bounds, int* offset, std::vector<ssBVHNode>& bvh);
 #pragma endregion
 
 		bool editor_ = true;

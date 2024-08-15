@@ -5,7 +5,6 @@
 #include "componentIncludes.h"
 
 namespace Principia {
-	static const int MAX_BVH_OBJECTS = 8;
 
 	class BvhSystem : public artemis::EntityProcessingSystem
 	{
@@ -64,7 +63,9 @@ namespace Principia {
 		inline int chooseAxis(const glm::vec3& center);
 		BVHBounds computeBoundsMulti(int s, int e);
 		BVHBounds computeCentroidBoundsMulti(int s, int e);
-
+	public:
+		void print();
+		void print(BVHNode* n);
 	};
 
 }
