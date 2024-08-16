@@ -25,13 +25,15 @@ namespace Principia {
 
 	struct EmBox {
 		glm::vec3 lower = {};
+		int _pad = 0;
 		glm::vec3 upper = {};
+		int _pad2 = 0;
 		EmBox() {};
 		EmBox(const glm::vec3& a, const glm::vec3& b) : lower(a), upper(b) {};
 	};
 	struct EmNode {
-		bool isLeaf = false;
 		virtual float sah() = 0;
+		virtual bool isLeaf() const = 0;
 		inline EmBox merge(const EmBox& a, const EmBox& b) {
 			return EmBox(glm::min(a.lower, b.lower), glm::max(a.upper, b.upper));
 		}
@@ -54,14 +56,17 @@ namespace Principia {
 		float sah() override {
 			return 1.0f + (area(bounds[0]) * children[0]->sah() + area(bounds[1]) * children[1]->sah()) / area(merge(bounds[0], bounds[1]));
 		}
+
+		bool isLeaf() const override { return false; }
 	};
 
 	struct LeafEmNode : public EmNode
 	{
 		unsigned id;
 		EmBox bounds;
-		LeafEmNode(unsigned id, const EmBox& bounds) : id(id), bounds(bounds) { isLeaf = true; }
+		LeafEmNode(unsigned id, const EmBox& bounds) : id(id), bounds(bounds) {}
 		float sah() { return 1.0f; }
+		bool isLeaf() const override { return true; }
 	};
 
 #pragma endregion

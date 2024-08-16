@@ -582,8 +582,8 @@ namespace Principia {
 
 		auto* inner = (InnerEmNode*)root;
 		offset = FlattenBVH(inner->children[0], inner->bounds[0], &offset, bvh_);
+		offset = bvh_.at(0).offset;
 		FlattenBVH(inner->children[1], inner->bounds[1], &offset, bvh_);
-
 
 		SetRenderUpdate(kUpdateBvh);
 	}
@@ -623,7 +623,7 @@ namespace Principia {
 		ssBVHNode* bvh_node = &bvh[*offset];
 		int myOffset = (*offset)++;
 
-		if (node->isLeaf) {
+		if (node->isLeaf()) {
 			auto* leaf = (LeafEmNode*)node;	
 			bvh_node->upper = leaf->bounds.upper;
 			bvh_node->lower = leaf->bounds.lower;
