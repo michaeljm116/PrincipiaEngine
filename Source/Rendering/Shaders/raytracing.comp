@@ -16,7 +16,8 @@ layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 #define REFLECTIONS true
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
-#define DEBUGLINES
+//#define DEBUGLINES
+#define USE_EMBREE
 
 #include "rt/pbr.glsl"
 #include "rt/structs.glsl"

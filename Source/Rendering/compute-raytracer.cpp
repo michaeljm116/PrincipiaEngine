@@ -2,6 +2,7 @@
 #include "VulkanInitializers.hpp"
 #include "compute-raytracer.h"
 #include <set>
+#include <unordered_map>
 #include "../Utility/resourceManager.h"
 #include "../Utility/Input.h"
 namespace Principia {
@@ -565,21 +566,24 @@ namespace Principia {
 		SetRenderUpdate(kUpdateBvh);
 	}
 
-	void ComputeRaytracer::UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, EmNode* root)
+	void ComputeRaytracer::UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, EmNode* root, int num_nodes)
 	{
 		size_t num_prims = ordered_prims.size();
 		if (num_prims == 0)return;
 		primitives_.clear();
 		primitives_.reserve(num_prims);
 
-		std::vector<NodeComponent*> debug_original_prims;
-		std::vector<NodeComponent*> debug_ordered_prims;
+		std::vector<std::string> debug_original_prims;
+		std::vector<std::string> debug_ordered_prims;
 
 		debug_ordered_prims.reserve(num_prims);
 		debug_original_prims.reserve(num_prims);
 
-		//fill in the new objects array;
+		//fill in the new objects array; 
+		ordered_prims_map.clear();
+		ordered_prims_map.resize(num_prims);
 		for (size_t i = 0; i < num_prims; ++i) {
+			ordered_prims_map[ordered_prims[i].primID] = i;
 			auto* prim = prims[ordered_prims[i].primID];
 			PrimitiveComponent* pc = (PrimitiveComponent*)prim->getComponent<PrimitiveComponent>();
 			if (pc) {
@@ -587,13 +591,12 @@ namespace Principia {
 				NodeComponent* nc = (NodeComponent*)prim->getComponent<NodeComponent>();
 				NodeComponent* nc2 = (NodeComponent*)prims[i]->getComponent<NodeComponent>();
 				
-				debug_ordered_prims.emplace_back(nc);
-				debug_original_prims.emplace_back(nc2);
+				debug_ordered_prims.emplace_back(nc->name);
+				debug_original_prims.emplace_back(nc2->name);
 			}
 		}
 
 		int offset = 0;
-		auto num_nodes = 2 * ordered_prims.size() - 1;
 		bvh_.resize(num_nodes);
 		auto root_box = ((InnerEmNode*)root)->bounds[0];
 		FlattenBVH(root, root_box, &offset, bvh_);
@@ -646,7 +649,7 @@ namespace Principia {
 			bvh_node->upper = leaf->bounds.upper;
 			bvh_node->lower = leaf->bounds.lower;
 			bvh_node->numChildren = 0;
-			bvh_node->offset = leaf->id; //TODO THIS IS UGH.... I FORGOT ABOUT THIS....FIRSTPRIMOFFSET
+			bvh_node->offset =  ordered_prims_map[leaf->id]; //TODO THIS IS UGH.... I FORGOT ABOUT THIS....FIRSTPRIMOFFSET
 		}
 		else 
 		{

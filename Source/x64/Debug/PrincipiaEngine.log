@@ -1,1 +1,121 @@
-﻿  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\x64\Debug\Principia Engine.lib
+﻿cl : command line  warning D9025: overriding '/openmp' with '/openmp:llvm'
+  compute-raytracer.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(83,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(72,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(79,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(106,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(121,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(58,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(253,27): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(376,34): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(379,85): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(586,49): warning C4267: '=': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(586,49): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(586,49): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(586,49): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(586,49): warning C4267:         ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(752,29): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(799,52): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(824,19): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(852,74): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(870,27): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(992,85): warning C4267: 'argument': conversion from 'size_t' to 'uint32_t', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1148,24): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1159,47): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1159,47): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1159,47): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1159,47): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1159,47): warning C4267:         ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1306,22): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1307,21): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1308,22): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1331,33): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1363,49): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1442,46): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1442,46): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1442,46): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1442,46): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1442,46): warning C4267:         ]
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1466,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1468,49): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1468,49): warning C4267:         with
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1468,49): warning C4267:         [
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1468,49): warning C4267:             _Ty=int
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1468,49): warning C4267:         ]
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267: 'initializing': conversion from 'size_t' to '_Ty2', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:             _Ty2=int
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54): warning C4267:         ]
+  (compiling source file 'Rendering/compute-raytracer.cpp')
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\utility(250,54):
+  the template instantiation context (the oldest one first) is
+  	C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1331,59):
+  	see reference to function template instantiation 'std::pair<int,int>::pair<int&,unsigned __int64,0>(_Other1,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int &,
+              _Other2=unsigned __int64
+          ]
+  		C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.cpp(1331,38):
+  		see the first reference to 'std::pair<int,int>::pair' in 'Principia::ComputeRaytracer::LoadResources'
+  
+  renderSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(83,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(72,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(79,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(106,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\resourceManager.h(121,13): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Rendering/renderSystem.cpp')
+  
+  transformSystem.cpp
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,22): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,45): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Utility\bvhComponent.hpp(229,67): warning C4244: 'argument': conversion from 'float' to 'uint32_t', possible loss of data
+  (compiling source file 'Utility/transformSystem.cpp')
+  
+C:\dev\PrincipiumGames\PrincipiaEngine\Source\Rendering\compute-raytracer.h(83,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  (compiling source file 'Utility/transformSystem.cpp')
+  
+  Generating Code...
+  PrincipiaEngine.vcxproj -> C:\dev\PrincipiumGames\ShinyAfroMan\x64\Debug\Principia Engine.lib
