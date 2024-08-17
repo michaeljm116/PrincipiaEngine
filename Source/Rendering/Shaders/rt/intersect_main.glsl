@@ -442,5 +442,122 @@ float calcShadowBVH(inout Ray ray) {
     }
     return 1.f;
 }
+float calcShadowEmbreeBVH(inout Ray ray) {
+    int stack[16];
+    int sp = 0; //stack pointer
+    stack[0] = 0;
+    vec3 invDir = 1 / ray.d;
 
+    while (sp > -1) {
+        int offset = stack[sp];
+        BVHNode node = bvhNodes[offset];
+        sp--;
+        //int numChildren = node.numChildren & BIT_000_MAX;
+        //int axis = node.numChildren >> 29;
+
+        //if its a leaf do the regular intersection
+        if (node.numChildren == 0) {
+            int i = node.offset;
+            switch (primitives[i].id) 
+            {
+                case -1:
+                {
+                    float tSphere = sphereIntersect(ray, primitives[i]);
+                    if ((tSphere > EPSILON) && (tSphere < ray.t))
+                    {
+                        return SHADOW;
+                        ray.t = tSphere;
+                    }
+                    break;
+                }
+                case -2:
+                {
+                    vec4 tBox = boxIntersect(ray, primitives[i]);
+                    if (tBox.x > 0) {
+                        if ((tBox.x > EPSILON) && (tBox.x < ray.t)) {
+                            return SHADOW;
+                            ray.t = tBox.x;
+                        }
+                    }
+                    break;
+                }
+                case -3:
+                {
+                    vec4 tCylinder = cylinderIntersect(ray, primitives[i]);
+                    if ((tCylinder.x > EPSILON) && (tCylinder.x < ray.t)) {
+                        return SHADOW;
+                        ray.t = tCylinder.x;
+                    }
+                    break;
+                }
+                case -4:
+                {
+                    float tplane = planeIntersect(ray, primitives[i]);
+                    if ((tplane > EPSILON) && (tplane < ray.t))
+                    {
+                        return SHADOW;
+                        ray.t = tplane;
+                    }
+                    break;
+                }
+                case -5:
+                {
+                    float tDisk = diskIntersect(ray, primitives[i]);
+                    if ((tDisk > EPSILON) && (tDisk < ray.t)) {
+                        return SHADOW;
+                        ray.t = tDisk;
+                    }
+                    break;
+                }
+                case -6:
+                {
+                    float tQuadTex = quadTexIntersectS(ray, primitives[i]).x;
+                    if (tQuadTex > EPSILON) {
+                        ray.t = tQuadTex;
+                        return SHADOW;
+                    }
+                }
+                default:
+                {
+                    mat4 invWorld = inverse(primitives[i].world);
+                    Ray r;
+                    r.d = (invWorld * vec4(ray.d, 0.0)).xyz; // / primitives[i].extents;
+                    r.o = (invWorld * vec4(ray.o, 1.0)).xyz; // / primitives[i].extents;
+                    flool tMesh = boundsIntersect(r); // , vec3(1, 1, 1));// primitives[i].extents);
+                    if (tMesh.b && (tMesh.t > EPSILON) && (tMesh.t < ray.t)) { //hits the boundingbox, doesnt necessarily mean tri hit
+                        //Mesh m = meshes[primitives[i].id];
+                        //id.pId = i;
+                        //rdd /= primitives[i].extents;
+                        //roo /= primitives[i].extents;
+                        int startIndex = primitives[i].startIndex;
+                        int endIndex = primitives[i].endIndex;
+                        for (int f = startIndex; f < endIndex; f++) {
+                            vec4 tQuad = quadIntersect(r, faces[f]);
+                            if ((tQuad.x > 0) && (tQuad.x > EPSILON) && (tQuad.x < ray.t)) {
+                                return SHADOW;
+                                ray.t = tQuad.x;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        //It's a node
+        else {
+            offset = offset + 1;
+            if (mbvhIntersect(ray, invDir, bvhNodes[offset])) {
+                sp++;
+                stack[sp] = offset;
+            }
+            if (node.offset < bvhNodes.length()) {
+                if (mbvhIntersect(ray, invDir, bvhNodes[node.offset])) {
+                    sp++;
+                    stack[sp] = node.offset;
+                }
+            }
+        }
+    }
+    return 1.f;
+}
 #endif

@@ -492,7 +492,14 @@ namespace Principia {
 		compute_.ubo.rand = static_cast<int>(random_int());
 		compute_.uniform_buffer.ApplyChanges(vkDevice, compute_.ubo);
 	}
+	auto print_bvh_nodes = [](std::vector<ssBVHNode> bvh) {
+		int i = 0;
+		for (auto n : bvh) {
 
+				std::cout << "(" << i++ << ") Lower X:" << n.lower.x << " Y:" << n.lower.y << " Z:" << n.lower.z << " Upper X:" << n.upper.x << " Y:" << n.upper.y << " Z:" << n.upper.z
+				<< " Offset: " << n.offset << " Children: " << n.numChildren << std::endl;
+			}
+		};
 	void ComputeRaytracer::UpdateBVH(std::vector<artemis::Entity*>& ordered_prims, BVHNode* root, int num_nodes)
 	{	//Principia::NamedTimer nt("BVHUPDATE");
 	//reserve newobjects array
@@ -523,7 +530,7 @@ namespace Principia {
 
 		//compute_.storage_buffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives_, primitives_.size());
 		//compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh_, bvh_.size());
-
+		//print_bvh_nodes(bvh_);
 		SetRenderUpdate(kUpdateBvh);
 	}
 
@@ -565,26 +572,37 @@ namespace Principia {
 		primitives_.clear();
 		primitives_.reserve(num_prims);
 
+		std::vector<NodeComponent*> debug_original_prims;
+		std::vector<NodeComponent*> debug_ordered_prims;
+
+		debug_ordered_prims.reserve(num_prims);
+		debug_original_prims.reserve(num_prims);
+
 		//fill in the new objects array;
 		for (size_t i = 0; i < num_prims; ++i) {
 			auto* prim = prims[ordered_prims[i].primID];
 			PrimitiveComponent* pc = (PrimitiveComponent*)prim->getComponent<PrimitiveComponent>();
 			if (pc) {
 				primitives_.emplace_back(ssPrimitive(pc));
+				NodeComponent* nc = (NodeComponent*)prim->getComponent<NodeComponent>();
+				NodeComponent* nc2 = (NodeComponent*)prims[i]->getComponent<NodeComponent>();
+				
+				debug_ordered_prims.emplace_back(nc);
+				debug_original_prims.emplace_back(nc2);
 			}
 		}
 
 		int offset = 0;
 		auto num_nodes = 2 * ordered_prims.size() - 1;
 		bvh_.resize(num_nodes);
-		//EmBox bounds = ((InnerEmNode*)root)->bounds;
-		//FlattenBVH(root, EmBox(), &offset, bvh_);
+		auto root_box = ((InnerEmNode*)root)->bounds[0];
+		FlattenBVH(root, root_box, &offset, bvh_);
 
-		auto* inner = (InnerEmNode*)root;
-		offset = FlattenBVH(inner->children[0], inner->bounds[0], &offset, bvh_);
-		offset = bvh_.at(0).offset;
-		FlattenBVH(inner->children[1], inner->bounds[1], &offset, bvh_);
-
+		//auto* inner = (InnerEmNode*)root;
+		//offset = FlattenBVH(inner->children[0], inner->bounds[0], &offset, bvh_);
+		//offset = bvh_.at(0).offset;
+		//FlattenBVH(inner->children[1], inner->bounds[1], &offset, bvh_);
+		//print_bvh_nodes(bvh_);
 		SetRenderUpdate(kUpdateBvh);
 	}
 

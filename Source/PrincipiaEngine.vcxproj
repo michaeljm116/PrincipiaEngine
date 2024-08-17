@@ -451,6 +451,7 @@
       <PreprocessToFile>false</PreprocessToFile>
       <OpenMPSupport>true</OpenMPSupport>
       <AdditionalOptions>-openmp:llvm</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>

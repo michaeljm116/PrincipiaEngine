@@ -74,8 +74,14 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
     ray.t2 = MAXLEN;
     vec2 uv = vec2(0.0);
     // Get intersected primitive ID
-    //iSectID intersectID[2] = intersectMBVH(ray, norm, uv);
-    iSectID intersectID[2] = intersectEmbreeBvh(ray, norm, uv);
+
+
+    #ifdef USE_EMBREE
+        iSectID intersectID[2] = intersectEmbreeBvh(ray, norm, uv);
+    #else
+        iSectID intersectID[2] = intersectMBVH(ray, norm, uv);
+    #endif
+
     //if it doesn't interset anything, return the material
     if (intersectID[0].faceID == -1) {
         //		fMat.color = vec3(0.99f, 0.99f, 1.0f);
@@ -177,7 +183,11 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
                     		power += lights[i].intensity / (ld * ld);
                     		if (power > 0.1){
                     			Ray shadowRay = Ray(pos, ld, lightVec, 0);
-                    			shadow += calcShadowBVH(shadowRay);
+                                #ifdef USE_EMBREE
+                    			    shadow += calcShadowEmbreeBVH(shadowRay);
+                                #else
+                                    shadow += calcShadowBVH(shadowRay);
+                                #endif
                     		}
                     	}
                     	if (power > 1) power = 1;
@@ -205,7 +215,12 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 
             if (shadow < 0.9f) {
                 Ray shadowRay = Ray(pos, length(distance), lightDirection, 0);
-                shadow += calcShadowBVH(shadowRay);
+                #ifdef USE_EMBREE
+                    shadow += calcShadowEmbreeBVH(shadowRay);
+                #else
+                    shadow += calcShadowBVH(shadowRay);
+                #endif
+                                
             }
             //	if(shadow >= 0.9f){
             //		shadow = 1;
