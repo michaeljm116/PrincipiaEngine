@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "prefabSystem.h"
 //#include "serialize-node.h"
 

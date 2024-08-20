@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "immovableSystem.h"
 
 Principia::ImmovableSystem::ImmovableSystem()

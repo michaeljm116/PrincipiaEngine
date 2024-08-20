@@ -33,6 +33,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <Artemis/Artemis.h>
+#include "Utility/nodeComponent.hpp"
+#include "Utility/transformComponent.hpp"
 #include <GLFW/glfw3.h>
 
 static const std::string active_directory = "../Assets/Levels/1_Jungle/";

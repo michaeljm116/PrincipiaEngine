@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "renderbase.h"
 namespace Principia {
 	void RenderBase::initWindow() {

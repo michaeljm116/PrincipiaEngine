@@ -50,11 +50,8 @@ namespace Principia {
 #pragma endregion 
 
 #pragma region Compute exclusive Functions
-		void UpdateBVH(std::vector<artemis::Entity*>& ordredPrims, BVHNode* root, int numNodes);
-		void UpdateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims);
-		void UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, EmNode* root, int num_nodes);
-		int FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh);
-		int FlattenBVH(EmNode* node, const EmBox& bounds, int* offset, std::vector<ssBVHNode>& bvh);
+		void UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, BvhNode* root, int num_nodes);
+		int FlattenBVH(BvhNode* node, const BvhBounds& bounds, int* offset, std::vector<ssBVHNode>& bvh);
 		std::vector<int> ordered_prims_map;
 #pragma endregion
 

@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "serialize-node.h"
 #include "../Physics/Components/collisionComponent.h"
 #include "../Physics/Components/dynamicComponent.h"

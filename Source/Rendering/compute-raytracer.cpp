@@ -501,83 +501,13 @@ namespace Principia {
 				<< " Offset: " << n.offset << " Children: " << n.numChildren << std::endl;
 			}
 		};
-	void ComputeRaytracer::UpdateBVH(std::vector<artemis::Entity*>& ordered_prims, BVHNode* root, int num_nodes)
-	{	//Principia::NamedTimer nt("BVHUPDATE");
-	//reserve newobjects array
-	//std::vector<ssPrimitive> newObjs;
-		size_t num_prims = ordered_prims.size();
-		if (num_prims == 0)return;
-		primitives_.clear();
-		primitives_.reserve(num_prims);
 
-		//fill in the new objects array;
-		for (size_t i = 0; i < num_prims; ++i) {
-			PrimitiveComponent* pc = (PrimitiveComponent*)ordered_prims[i]->getComponent<PrimitiveComponent>();
-			if (pc) {
-				primitives_.emplace_back(ssPrimitive(pc));
-				//pc->objIndex = newObjs.size() - 1;
-			}
-		}
-
-		//replace objects with it
-		//primitives = std::move(newObjs);
-
-		//now that the objs are ordered relative to the BVH, you can flatten the BVH;
-		int offset = 0;
-		//bvh.reserve(numNodes);
-		bvh_.resize(num_nodes);
-		FlattenBVH(root, &offset, bvh_);
-		//vkWaitForFences(vkDevice.logicalDevice, 1, &compute_.fence, VK_TRUE, UINT64_MAX);
-
-		//compute_.storage_buffers.primitives.UpdateAndExpandBuffers(vkDevice, primitives_, primitives_.size());
-		//compute_.storage_buffers.bvh.UpdateAndExpandBuffers(vkDevice, bvh_, bvh_.size());
-		//print_bvh_nodes(bvh_);
-		SetRenderUpdate(kUpdateBvh);
-	}
-
-	void ComputeRaytracer::UpdateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims)
-	{
-		size_t num_prims = prims.size();
-		if (num_prims == 0)return;
-		primitives_.clear();
-		primitives_.reserve(num_prims);
-
-		//fill in the new objects array;
-		for (size_t i = 0; i < num_prims; ++i) {
-			PrimitiveComponent* pc = (PrimitiveComponent*)prims[i]->getComponent<PrimitiveComponent>();
-			if (pc) {
-				primitives_.emplace_back(ssPrimitive(pc));
-				//pc->objIndex = newObjs.size() - 1;
-			}
-		}
-
-
-		bvh_.resize(bvh->node_count);
-		for (size_t i = 0; i < bvh->node_count; ++i) {
-			auto thing = bvh->nodes[i].bounding_box_proxy();
-			auto min = thing.to_bounding_box().min;
-			auto max = thing.to_bounding_box().max;
-			bvh_[i].lower = glm::vec3(min[0], min[1], min[2]);
-			bvh_[i].upper = glm::vec3(max[0], max[1], max[2]);
-			bvh_[i].numChildren = bvh->nodes[i].primitive_count;
-			bvh_[i].offset = bvh->nodes[i].first_child_or_primitive;
-		}
-
-		SetRenderUpdate(kUpdateBvh);
-	}
-
-	void ComputeRaytracer::UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, EmNode* root, int num_nodes)
+	void ComputeRaytracer::UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, BvhNode* root, int num_nodes)
 	{
 		size_t num_prims = ordered_prims.size();
 		if (num_prims == 0)return;
 		primitives_.clear();
 		primitives_.reserve(num_prims);
-
-		std::vector<std::string> debug_original_prims;
-		std::vector<std::string> debug_ordered_prims;
-
-		debug_ordered_prims.reserve(num_prims);
-		debug_original_prims.reserve(num_prims);
 
 		//fill in the new objects array; 
 		ordered_prims_map.clear();
@@ -588,64 +518,24 @@ namespace Principia {
 			PrimitiveComponent* pc = (PrimitiveComponent*)prim->getComponent<PrimitiveComponent>();
 			if (pc) {
 				primitives_.emplace_back(ssPrimitive(pc));
-				NodeComponent* nc = (NodeComponent*)prim->getComponent<NodeComponent>();
-				NodeComponent* nc2 = (NodeComponent*)prims[i]->getComponent<NodeComponent>();
-				
-				debug_ordered_prims.emplace_back(nc->name);
-				debug_original_prims.emplace_back(nc2->name);
 			}
 		}
 
 		int offset = 0;
 		bvh_.resize(num_nodes);
-		auto root_box = ((InnerEmNode*)root)->bounds[0];
+		auto* first_node = (InnerBvhNode*)root;
+		auto root_box = first_node->merge(first_node->bounds[0], first_node->bounds[1]);
 		FlattenBVH(root, root_box, &offset, bvh_);
-
-		//auto* inner = (InnerEmNode*)root;
-		//offset = FlattenBVH(inner->children[0], inner->bounds[0], &offset, bvh_);
-		//offset = bvh_.at(0).offset;
-		//FlattenBVH(inner->children[1], inner->bounds[1], &offset, bvh_);
-		//print_bvh_nodes(bvh_);
 		SetRenderUpdate(kUpdateBvh);
 	}
 
-
-	int ComputeRaytracer::FlattenBVH(BVHNode* node, int* offset, std::vector<ssBVHNode>& bvh)
-	{
-		//first pusch back a node
-		ssBVHNode* bvhNode = &bvh[*offset];
-		bvhNode->upper = node->bounds.center + node->bounds.extents;
-		bvhNode->lower = node->bounds.center - node->bounds.extents;
-		//bvhNode.splitAxis = node->splitAxis;
-
-		//increment the offset
-		int myOffset = (*offset)++;
-
-		//check if leaf
-		if (node->nPrims > 0) {
-			bvhNode->numChildren = node->nPrims;
-			//bvhNode->numChildren |= (node->splitAxis << 29);
-			//bvh[index].numChildren |= (node->splitAxis << 29);
-			bvhNode->offset = node->firstPrimOffset;
-		} //else make new node
-		else {
-			FlattenBVH(node->children[0], offset, bvh);
-			bvhNode->offset = FlattenBVH(node->children[1], offset, bvh);
-			bvhNode->numChildren = 0;
-			//bvhNode->numChildren |= (node->splitAxis << 29);
-			//bvh[index].numChildren |= (node->splitAxis << 29);
-
-		}
-		return myOffset;
-	}
-
-	int ComputeRaytracer::FlattenBVH(EmNode* node, const EmBox& bounds, int* offset, std::vector<ssBVHNode>& bvh)
+	int ComputeRaytracer::FlattenBVH(BvhNode* node, const BvhBounds& bounds, int* offset, std::vector<ssBVHNode>& bvh)
 	{
 		ssBVHNode* bvh_node = &bvh[*offset];
 		int myOffset = (*offset)++;
 
 		if (node->isLeaf()) {
-			auto* leaf = (LeafEmNode*)node;	
+			auto* leaf = (LeafBvhNode*)node;	
 			bvh_node->upper = leaf->bounds.upper;
 			bvh_node->lower = leaf->bounds.lower;
 			bvh_node->numChildren = 0;
@@ -653,7 +543,7 @@ namespace Principia {
 		}
 		else 
 		{
-			auto* inner = (InnerEmNode*)node;
+			auto* inner = (InnerBvhNode*)node;
 			bvh_node->upper = bounds.upper;
 			bvh_node->lower = bounds.lower;
 			bvh_node->numChildren = 2;
@@ -673,13 +563,6 @@ namespace Principia {
 			CreateDescriptorSetLayout();
 			CreateGraphicsPipeline();
 			CreateCommandBuffers(1.f, 0, 0);
-//#ifdef UIIZON
-//			CreateCommandBuffers(0.733333333333f, (int32_t)(WINDOW.getWidth() * 0.16666666666f), 36);
-//#else
-//			CreateCommandBuffers(1.f, 0, 0);
-//#endif // UIIZON
-
-			//ui->resize(swapChainExtent.width, swapChainExtent.height, swapChainFramebuffers);
 		}
 		else {
 			recreateSwapChain();

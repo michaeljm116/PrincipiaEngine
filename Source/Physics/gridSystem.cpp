@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "gridSystem.h"
 #include "Components/immovableComponent.h"
 Principia::GridSystem::GridSystem()

@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "Texture.h"
 #ifndef STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_IMPLEMENTATION

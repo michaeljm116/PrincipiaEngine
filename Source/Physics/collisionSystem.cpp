@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "collisionSystem.h"
 #include "collisionTests.h"
 #include "../Utility/helpers.h"

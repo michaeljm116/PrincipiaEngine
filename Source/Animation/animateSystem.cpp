@@ -1,3 +1,4 @@
+#include "../pch.h"
 #include "animateSystem.h"
 #define GLM_FORCE_SSE2
 #define GLM_FORCE_ALIGN

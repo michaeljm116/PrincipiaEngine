@@ -50,12 +50,7 @@ namespace Principia {
 		//Compute Raytracer functions
 		void updateGui(GUIComponent* gui) {((ComputeRaytracer*)renderer_)->UpdateGui(gui);}		
 		void updateGuiNumber(GUINumberComponent* gnc) { ((ComputeRaytracer*)renderer_)->UpdateGuiNumber(gnc); }
-		void updateBVH(std::vector<artemis::Entity*>& ordered_prims, BVHNode* root, int num_nodes) {
-			((ComputeRaytracer*)renderer_)->UpdateBVH(ordered_prims, root, num_nodes);
-		}
-		void updateBVH(const Bvh* bvh, const std::vector<artemis::Entity*>& prims) {
-			((ComputeRaytracer*)renderer_)->UpdateBVH(bvh, prims);
-		}
+		
 		ssLight& getLight(int id) { return ((ComputeRaytracer*)renderer_)->getLight(id); };
 
 
