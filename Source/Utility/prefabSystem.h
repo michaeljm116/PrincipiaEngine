@@ -3,8 +3,10 @@
 #include <Artemis/ComponentMapper.h>
 #include "nodeComponent.hpp"
 #include "prefabComponent.h"
-#include "serialize-node.h"
+//#include "serialize-node.h"
 //#include "resourceManager.h"
+
+#include "../tinyxml2/tinyxml2.h"
 
 namespace Principia {
 	class PrefabSystem : public artemis::EntityProcessingSystem {

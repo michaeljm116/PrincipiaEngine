@@ -4,6 +4,8 @@
 #define GLM_FORCE_ALIGN
 #include <glm/simd/common.h>
 #include <glm/gtc/epsilon.hpp>
+#include "../Utility/transformComponent.hpp"
+#include "animationComponent.hpp"
 //#include <omp.h>
 Principia::AnimateSystem::AnimateSystem()
 {

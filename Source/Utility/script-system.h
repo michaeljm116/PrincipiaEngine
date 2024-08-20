@@ -1,7 +1,8 @@
 #pragma once
 #include <Artemis/EntityProcessingSystem.h>
-#include "script-component.h"
 namespace Principia {
+
+	class ScriptComponent;
 
 	class Sys_Scripting : public artemis::EntityProcessingSystem {
 	private:

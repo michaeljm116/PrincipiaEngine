@@ -1,14 +1,6 @@
 //#include "componentIncludes.h"
 #pragma once
 #include <glm/glm.hpp>
-#include <memory>
-#include "helpers.h"
-#include <assert.h>
-
-#include <embree4/rtcore.h>
-#include <embree4/rtcore_common.h>
-#include <embree4/rtcore_builder.h>
-#include "../Rendering/Components/renderComponents.hpp"
 
 namespace Principia {
 

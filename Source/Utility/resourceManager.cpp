@@ -2,6 +2,8 @@
 #include "resourceManager.h"
 #include "window.h"
 #include "xxhash.hpp"
+#include "bvhComponent.hpp"
+#include "../Rendering/shaderStructures.hpp"
 
 namespace Principia {
 #ifndef XMLCheckResult

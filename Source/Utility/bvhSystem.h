@@ -1,8 +1,12 @@
 #pragma once	
 #include "bvhComponent.hpp"
-#include "componentIncludes.h"
+#include <embree4/rtcore.h>
 
 namespace Principia {
+
+	class NodeComponent;
+	class TransformComponent;
+	class PrimitiveComponent;
 
 	class BvhSystem : public artemis::EntityProcessingSystem
 	{

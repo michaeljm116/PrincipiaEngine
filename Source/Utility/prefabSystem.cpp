@@ -1,6 +1,6 @@
 #include "../pch.h"
 #include "prefabSystem.h"
-//#include "serialize-node.h"
+#include "serialize-node.h"
 
 #ifndef XMLCheckResult
 #define XMLCheckResult(a_eResult) if (a_eResult != tinyxml2::XML_SUCCESS) { printf("Error: %i\n", a_eResult); return a_eResult; }

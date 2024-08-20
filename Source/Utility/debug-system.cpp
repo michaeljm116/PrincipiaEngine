@@ -1,5 +1,10 @@
 #include "../pch.h"
 #include "debug-system.h"
+#include "debug-component.hpp"
+#include "../Rendering/imgui-renderer.h"
+
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_vulkan.h>
 
 namespace Principia {
 	Sys_Debug::Sys_Debug()

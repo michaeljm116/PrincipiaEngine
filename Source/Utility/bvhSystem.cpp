@@ -1,8 +1,9 @@
 
 #include "../pch.h"
 #include "bvhSystem.h"
-#include "timer.h"
-#include <future>
+#include "timer.hpp"
+#include <assert.h>
+#include "componentIncludes.h"
 
 
 namespace Principia {

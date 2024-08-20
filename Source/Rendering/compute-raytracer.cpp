@@ -5,6 +5,9 @@
 #include <unordered_map>
 #include "../Utility/resourceManager.h"
 #include "../Utility/Input.h"
+#include <embree4/rtcore.h>
+#include <embree4/rtcore_builder.h>
+#include "../Utility/helpers.h"
 namespace Principia {
 
 	static int curr_id = 0;	// Id used to identify objects by the ray tracing shader
@@ -916,7 +919,7 @@ namespace Principia {
 
 	void ComputeRaytracer::StartFrame(uint32_t& image_index)
 	{
-		render_time_.Start();
+		render_time_.start();
 
 		//startDrawImGui();
 		//endDrawImGui(image_index);
@@ -978,8 +981,8 @@ namespace Principia {
 		if (vkQueueSubmit(computeQueue, 1, &compute_submit_info, compute_.fence) != VK_SUCCESS)
 			throw std::runtime_error("failed to submit compute command buffer!");
 
-		render_time_.End();
-		pINPUT.renderTime = render_time_.ms;
+		render_time_.end();
+		pINPUT.renderTime = render_time_.get_msecs();
 	}
 
 	void ComputeRaytracer::Added(artemis::Entity& e)

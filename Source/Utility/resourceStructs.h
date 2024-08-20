@@ -2,10 +2,6 @@
 just a bunch of structures used for
 the resource manager
 */
-#pragma once
-#include <array>
-#include <string>
-#include "bvhComponent.hpp"
 //#include <glm/glm.hpp>
 //#include "../pch.h"
 
@@ -16,10 +12,14 @@ the resource manager
 #include <vector>
 #include <string>
 #include <array>
-#include <cassert>  // For the assert function
+#include <iostream>
 #include <glm/glm.hpp>
+#include "bvhComponent.hpp"
 
 namespace Principia {
+
+    struct ssMaterial;
+    struct sqt;
 
     const float BONE_EPSILON = 0.05f;
 

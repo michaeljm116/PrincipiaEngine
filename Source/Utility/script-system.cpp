@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include "script-system.h"
+#include "script-component.h"
 
 Principia::Sys_Scripting::Sys_Scripting()
 {

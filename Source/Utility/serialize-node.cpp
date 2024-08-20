@@ -4,7 +4,8 @@
 #include "../Physics/Components/dynamicComponent.h"
 #include "../Physics/Components/staticComponent.h"
 #include "prefabComponent.h"
-
+#include "resourceManager.h"
+#include "componentIncludes.h"
 
 #pragma once
 using namespace tinyxml2;

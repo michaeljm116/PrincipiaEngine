@@ -11,7 +11,7 @@ much rework but brotha aint got time fo dat
 #include "../Game/script.hpp"
 #include "../Utility/window.h"
 #include "../Utility/bvhComponent.hpp"
-#include "../Utility/timer.h"
+#include "../Utility/timer.hpp"
 
 #include "../Utility/componentIncludes.h"
 #include <unordered_map>

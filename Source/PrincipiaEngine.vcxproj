@@ -390,14 +390,6 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Editor|x64'">../pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Utility\timer.cpp">
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Editor|x64'">../pch.h</PrecompiledHeaderFile>
-      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../pch.h</PrecompiledHeaderFile>
-    </ClCompile>
     <ClCompile Include="Utility\transformSystem.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">Use</PrecompiledHeader>
@@ -526,7 +518,6 @@
     <ClInclude Include="Utility\debug-component.hpp" />
     <ClInclude Include="Utility\debug-system.h" />
     <ClInclude Include="Utility\helpers.h" />
-    <ClInclude Include="Utility\kdtree.hpp" />
     <ClInclude Include="Utility\key.h" />
     <ClInclude Include="Utility\memory-arena.h" />
     <ClInclude Include="Utility\script-component.h" />
@@ -540,7 +531,7 @@
     <ClInclude Include="Utility\resourceManager.h" />
     <ClInclude Include="Utility\resourceStructs.h" />
     <ClInclude Include="Utility\Input.h" />
-    <ClInclude Include="Utility\timer.h" />
+    <ClInclude Include="Utility\timer.hpp" />
     <ClInclude Include="Utility\transformComponent.hpp" />
     <ClInclude Include="Utility\transformSystem.h" />
     <ClInclude Include="Utility\window.h" />

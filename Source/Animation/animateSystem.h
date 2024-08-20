@@ -5,12 +5,13 @@
 
 #include <Artemis/ComponentMapper.h>
 #include <Artemis/ImmutableBag.h>
-#include "../Utility/transformComponent.hpp"
-#include "../Utility/timer.h"
-#include "animationComponent.hpp"
+#include "../Utility/timer.hpp"
 #include <omp.h>
 
 namespace Principia {
+	class TransformComponent;
+	class AnimateComponent;
+
 	class AnimateSystem : public artemis::EntityProcessingSystem {
 	public:
 		AnimateSystem();

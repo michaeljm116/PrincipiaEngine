@@ -1,5 +1,8 @@
 #include "../pch.h"
 #include "selectable-gui-system.h"
+#include "../Rendering/Components/renderComponents.hpp"
+#include "input.h"
+#include "window.h"
 
 Principia::Sys_Selectable_GUI::Sys_Selectable_GUI()
 {
@@ -47,4 +50,11 @@ void Principia::Sys_Selectable_GUI::update()
 	if (pINPUT.mouse.buttons[GLFW_MOUSE_BUTTON_LEFT] & MOUSE_BUTTON_CHANGED) {
 		process();
 	}
+}
+
+glm::ivec2 Principia::Sys_Selectable_GUI::ConvertUnitToPixel(const glm::vec2& percentage)
+{
+	int x = int(percentage.x * WINDOW.getWidth());
+	int y = int(percentage.y * WINDOW.getHeight());
+	return glm::ivec2(x, y);
 }

@@ -1,10 +1,12 @@
 #pragma once
 
-#include "resourceManager.h"
-#include "nodeComponent.hpp"
 #include "Artemis/EntityManager.h"
-
+#include "../tinyxml2/tinyxml2.h"
+#include <vector>
 namespace Principia {
+
+	struct NodeComponent;
+
 
 #define SERIALIZENODE SerializeNode::get()
 
@@ -18,8 +20,8 @@ namespace Principia {
 	class SerializeNode {
 	private:
 		SerializeNode() {};
-		artemis::EntityManager* em;
-		SerializeGameNode* gameData;
+		artemis::EntityManager* em = {};
+		SerializeGameNode* gameData = {};
 
 	public:
 		~SerializeNode() {};
@@ -29,8 +31,8 @@ namespace Principia {
 		}
 		SerializeNode(SerializeNode const&) = delete;
 		void operator=(SerializeNode const&) = delete;
-		void SetEntityManager(artemis::EntityManager* e) { em = e; }
-		void SetGameData(SerializeGameNode* gd) { gameData = gd; }
+		inline void SetEntityManager(artemis::EntityManager* e) { em = e; }
+		inline void SetGameData(SerializeGameNode* gd) { gameData = gd; }
 		tinyxml2::XMLElement* saveNode(NodeComponent* parent, tinyxml2::XMLDocument* doc);
 		NodeComponent* loadNode(tinyxml2::XMLElement* node);
 		void loadNode(tinyxml2::XMLElement* node, artemis::Entity* e);

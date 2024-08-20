@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include "poseSystem.h"
+#include "../tinyxml2/tinyxml2.h"
 
 using namespace tinyxml2;
 

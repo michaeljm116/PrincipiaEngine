@@ -4,7 +4,6 @@
 
 #include <Artemis/Artemis.h>
 #include <vector>
-#include <queue>
 namespace Principia {
 
 	enum ComponentFlag {

@@ -7,17 +7,12 @@ has a list of all the resources
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-//#include <xxhash.hpp>
 #include "../tinyxml2/tinyxml2.h"
-#include "../Utility/componentIncludes.h"
 #include <filesystem>
-#include "../Rendering/shaderStructures.hpp"
 #include "resourceStructs.h"
-#include "helpers.h"
+
 namespace Principia {
 #define RESOURCEMANAGER Resources::get()
-
-	//namespace fs = std::filesystem;
 
 	class Resources
 	{

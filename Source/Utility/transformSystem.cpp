@@ -1,6 +1,8 @@
 #include "../pch.h"
 #include "transformSystem.h"
-
+#include "../Rendering/renderSystem.h"
+#include "../Physics/Components/collisionComponent.h"
+#include "helpers.h"
 /*
 So when you translate something, it's either going to be a...
 camera
@@ -23,8 +25,6 @@ and the system does thing automatically
 namespace Principia {
 	TransformSystem::TransformSystem()
 	{
-		//addComponentType<RigidBodyComponent>();
-		//addComponentType<Principia::CollisionComponent>();
 		addComponentType<TransformComponent>();
 		addComponentType<NodeComponent>();
 		addComponentType<HeadNodeComponent>();
@@ -38,20 +38,14 @@ namespace Principia {
 	{
 		transformMapper.init(*world);
 		nodeMapper.init(*world);
-
-		em = world->getEntityManager();
-		sm = world->getSystemManager();
-		rs = (RenderSystem*)sm->getSystem<RenderSystem>();
+		rs = (RenderSystem*)world->getSystemManager()->getSystem<RenderSystem>();
 
 	}
 
 	void TransformSystem::added(artemis::Entity & e)
 	{
 		NodeComponent* nc = nodeMapper.get(e);
-		//if (nc->isParent) {
-			//recursiveTransform(nc);
-			SQTTransform(nc);
-		//}
+		SQTTransform(nc);
 	}
 
 	auto display_transform = [](NodeComponent* n, TransformComponent* t) {
@@ -68,22 +62,7 @@ namespace Principia {
 
 	void TransformSystem::processEntity(artemis::Entity & e)
 	{
-		TransformComponent* tc = transformMapper.get(e);
-		NodeComponent* nc = nodeMapper.get(e);
-		
-		//display_transform(nc, tc);
-
-
-		//if (nc->isParent)// && nc->isDynamic)
-		//if (nc->isDynamic)
-			SQTTransform(nc);// recursiveTransform(nc);
-		//size_t numChildren = nc->children.size();
-		//for (int c = 0; c < numChildren; c++) {
-		//	SQTTransform(nc, tc->local);
-		//}
-		//if (numChildren == 0 && nc->isParent) {
-		//	recursiveTransform(nc);
-		//}
+		SQTTransform(nodeMapper.get(e));
 	}
 
 	void TransformSystem::SQTTransform(NodeComponent * nc)
@@ -216,38 +195,6 @@ namespace Principia {
 		}
 	}
 
-//	glm::vec3 TransformSystem::rotateAABB(const glm::quat & m, const glm::vec3 & extents)
-//	{
-//
-//		//set up cube
-//		glm::vec3 v[8];
-//		v[0] = extents;
-//		v[1] = glm::vec3(extents.x, extents.y, -extents.z);
-//		v[2] = glm::vec3(extents.x, -extents.y, -extents.z);
-//		v[3] = glm::vec3(extents.x, -extents.y, extents.z);
-//		v[4] = glm::vec3(-extents);
-//		v[5] = glm::vec3(-extents.x, -extents.y, extents.z);
-//		v[6] = glm::vec3(-extents.x, extents.y, -extents.z);
-//		v[7] = glm::vec3(-extents.x, extents.y, extents.z);
-//
-//		//transform them
-//#pragma omp parallel for
-//		for (int i = 0; i < 8; ++i) {
-//			v[i] = abs(m * v[i]);// glm::vec4(v[i], 1.f));
-//
-//		}
-//
-//		//compare them
-//		glm::vec3 vmax = glm::vec3(FLT_MIN);
-//		for (int i = 0; i < 8; ++i) {
-//			vmax.x = tulip::max(vmax.x, v[i].x);
-//			vmax.y = tulip::max(vmax.y, v[i].y);
-//			vmax.z = tulip::max(vmax.z, v[i].z);
-//		}
-//
-//		return vmax;
-//	}
-
 	glm::vec3 TransformSystem::rotateAABB(const glm::mat3& m)
 	{
 		//set up cube
@@ -294,32 +241,3 @@ namespace Principia {
 		}
 	}
 }
-
-/*
-bool hasParent = nc->parent == nullptr ? false : true;
-
-	TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
-
-
-	glm::mat4 rotationM;
-	rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-	rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-	rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
-	tc->local.rotation = glm::toQuat(rotationM);
-
-	tc->global = tc->local;
-	if (hasParent) {
-		TransformComponent* ptc = (TransformComponent*)nc->parent->data->getComponent<TransformComponent>();
-		tc->global.position = ptc->global.position + tc->local.position;
-		//tc->global.position = glm::rotate(ptc->global.rotation, ptc->global.position - tc->local.position);
-		//tc->global.position += tc->local.position;
-		tc->global.rotation =  tc->local.rotation *  ptc->global.rotation;
-		tc->global.scale = ptc->global.scale * tc->local.scale;
-	}
-
-
-	tc->world = glm::toMat4(tc->global.rotation);
-
-	tc->world[3] = glm::vec4(tc->global.position, 1.f);
-*/

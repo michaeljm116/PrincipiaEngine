@@ -167,9 +167,6 @@
     <ClCompile Include="Physics\gravitySystem.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Utility\timer.cpp">
-      <Filter>Source Files\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\script-system.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -417,9 +414,6 @@
     <ClInclude Include="Utility\bvhSystem.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\kdtree.hpp">
-      <Filter>Source Files\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\bvhComponent.hpp">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
@@ -486,7 +480,7 @@
     <ClInclude Include="Physics\gravitySystem.h">
       <Filter>Source Files\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\timer.h">
+    <ClInclude Include="Utility\timer.hpp">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Utility\script-component.h">

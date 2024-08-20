@@ -3,14 +3,17 @@
 	And renders them on ImGui
 */
 
-#include "debug-component.hpp"
-#include "nodeComponent.hpp"
-#include "transformComponent.hpp"
-#include "../Rendering/imgui-renderer.h"
 #include "Artemis/EntityProcessingSystem.h"
 #include "Artemis/ComponentMapper.h"
+#include <imgui.h>
 
 namespace Principia {
+
+	struct Cmp_Debug;
+	struct NodeComponent;
+	struct TransformComponent;
+	class ImGuiRenderer;
+	
 
 	class Sys_Debug : public artemis::EntityProcessingSystem
 	{

@@ -6,9 +6,12 @@ probably should be a system instead */
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <GLFW/glfw3.h>
 
 //#define UI_ENABLED
+
+struct GLFWwindow;
+struct GLFWmonitor;
+struct GLFWvidmode;
 
 namespace Principia {
 #define WINDOW Window::get()

@@ -13,7 +13,7 @@
 #include "shaderStructures.hpp"
 
 #include "../Game/script.hpp"
-#include "../Utility/timer.h"
+#include "../Utility/timer.hpp"
 #include "../Utility/window.h"
 
 #include "../Utility/componentIncludes.h"
@@ -51,7 +51,7 @@ namespace Principia {
 		const std::vector<VkFramebuffer> GetFrameBuffers() const { return swapChainFramebuffers; }
 		const VkExtent2D GetSwapChainExtent() const { return swapChainExtent; }
 		VkDeviceInfo& GetDeviceInfo() { return dev_info_; }
-		const float GetRenderTime() const { return render_time_.ms; }
+		const float GetRenderTime() const { return render_time_.get_msecs(); }
 		VkSubmitInfo& GetSubmitInfo() { return submit_info_; }
 		Camera& GetCamera() { return camera_; }
 

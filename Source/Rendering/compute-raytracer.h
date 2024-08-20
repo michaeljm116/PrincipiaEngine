@@ -5,7 +5,7 @@
 #include <unordered_map>
 
 
-
+struct RTCBuildPrimitive;
 
 namespace Principia {
 
