@@ -1,8 +1,8 @@
 #ifndef NODECOMPONENT_H_
 #define NODECOMPONENT_H_
 
-
-#include <Artemis/Artemis.h>
+#include <Artemis/Component.h>
+#include <Artemis/Entity.h>
 #include <vector>
 namespace Principia {
 

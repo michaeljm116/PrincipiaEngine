@@ -1,5 +1,6 @@
 #include "../pch.h"
 #include "audioSystem.h"
+#include <SDL_mixer.h>
 
 namespace Principia {
 	AudioSystem::AudioSystem()

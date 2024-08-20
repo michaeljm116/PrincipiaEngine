@@ -3,6 +3,11 @@
 #include "collisionTests.h"
 #include "../Utility/helpers.h"
 #include "../Utility/nodeComponent.hpp"
+#include <btBulletCollisionCommon.h>
+#include <btBulletDynamicsCommon.h>
+#include <set>
+#include <thread>
+
 
 namespace Principia {
 	CollisionSystem::CollisionSystem()

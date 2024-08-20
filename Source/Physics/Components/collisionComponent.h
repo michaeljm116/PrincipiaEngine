@@ -1,5 +1,5 @@
 #pragma once
-#include "Artemis/Component.h"
+#include <Artemis/Component.h>
 #include <glm/glm.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <unordered_map>

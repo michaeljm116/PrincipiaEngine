@@ -6,6 +6,7 @@
 #include "../Utility/window.h"
 #include "../ArtemisFrameWork/Artemis/Artemis.h"
 #include<array>
+#include <GLFW/glfw3.h>
 
 namespace Principia {
 

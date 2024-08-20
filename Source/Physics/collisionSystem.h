@@ -1,18 +1,13 @@
 #pragma once
 #include "Components/collisionComponent.h"
 #include "Components/dynamicComponent.h"
-#include "Components/gridComponent.h"
-#include "Artemis/EntityProcessingSystem.h"
-#include "Artemis/ComponentMapper.h"
-#include "Artemis/Entity.h"
+#include "Components/physicsComponent.h"
+
+
+#include <Artemis/EntityProcessingSystem.h>
+#include <Artemis/ComponentMapper.h>
 //#include "../Game/Gameplay/Components/gameObjectTypeComponent.h"
 #include "../Utility/transformComponent.hpp"
-#include <set>
-
-#include <btBulletCollisionCommon.h>
-#include <btBulletDynamicsCommon.h>
-#include "Components/physicsComponent.h"
-#include <thread>
 
 namespace Principia {
 	class CollisionSystem : public artemis::EntityProcessingSystem {

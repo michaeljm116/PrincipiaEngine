@@ -1,8 +1,10 @@
 #pragma once
 #include <Artemis/Artemis.h>
-#include <SDL_mixer.h>
+
+struct Mix_Chunk;
 
 namespace Principia {
+
 	enum class AudioType {
 		SoundEffect, Music
 	};

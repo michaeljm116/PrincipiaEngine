@@ -1,5 +1,5 @@
 #pragma once
-#include <Artemis/Artemis.h>
+#include <Artemis/Component.h>
 #include <glm/glm.hpp>
 
 namespace Principia {

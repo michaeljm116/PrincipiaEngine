@@ -1,6 +1,5 @@
 #pragma once
 #include <Artemis/Artemis.h>
-#include <Artemis/Entity.h>
 #include <functional>
 #include <random>
 #include <chrono>

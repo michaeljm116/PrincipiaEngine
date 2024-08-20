@@ -6,7 +6,8 @@
 #include <glm/gtc/epsilon.hpp>
 #include "../Utility/transformComponent.hpp"
 #include "animationComponent.hpp"
-//#include <omp.h>
+#include <omp.h>
+
 Principia::AnimateSystem::AnimateSystem()
 {
 	addComponentType<TransformComponent>();

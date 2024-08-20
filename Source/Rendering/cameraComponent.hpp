@@ -1,5 +1,5 @@
 #pragma once
-#include <Artemis/Artemis.h>
+#include <Artemis/Component.h>
 #include <glm/glm.hpp>
 
 namespace Principia {
@@ -8,32 +8,10 @@ namespace Principia {
 		float fov = 0.f;
 		glm::mat4 rotM = glm::mat4();
 
-		//float far;
-		//float near;
-		//Frustum frustum;
 
 		CameraComponent() {};
 		CameraComponent(float ar, float f) :aspectRatio(ar), fov(f) {};
 	};
-
-	//struct Plane {
-	//	glm::vec3 normal;
-	//	float distance;
-	//};
-
-	//struct Frustum {
-	//	Plane far;
-	//	Plane near;
-	//	Plane top;
-	//	Plane bottom;
-	//	Plane right;
-	//	Plane left;
-
-	//	Frustum() {};
-	//	void Update(float aspect, float fov, float near, float far) {
-	//		
-	//	}
-	//};
 
 	class Camera
 	{

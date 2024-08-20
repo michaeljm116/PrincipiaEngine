@@ -4,6 +4,8 @@
 #include "../Utility/transformComponent.hpp"
 #include "../Utility/nodeComponent.hpp"
 #include "../Utility/xxhash.hpp"
+#include <Artemis/Component.h>
+#include <Artemis/Entity.h>
 
 #define ANIM_FLAG_RESET 0b11111111111000000000000000000000
 namespace Principia {

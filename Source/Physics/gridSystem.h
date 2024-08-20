@@ -4,10 +4,10 @@ Mike Murrell 2019 Grid System
 Any time a static object is created it's placed on a grid
 */
 
-#include "Artemis/Artemis.h"
+#include <Artemis/EntityProcessingSystem.h>
+#include <Artemis/ComponentMapper.h>
 #include "Components/staticComponent.h"
 #include "Components/collisionComponent.h"
-#include "Components/gridComponent.h"
 
 namespace Principia {
 	class GridSystem : public artemis::EntityProcessingSystem {

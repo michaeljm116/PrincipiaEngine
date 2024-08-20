@@ -1,7 +1,6 @@
 #pragma once
-#include "Artemis/Entity.h"
-#include "Artemis/ComponentMapper.h"
-#include "Artemis/EntityProcessingSystem.h"
+#include <Artemis/EntityProcessingSystem.h>
+#include <Artemis/ComponentMapper.h>
 #include "Components/collisionComponent.h"
 #include "../Utility/nodeComponent.hpp"
 #include "../Utility/script-component.h"

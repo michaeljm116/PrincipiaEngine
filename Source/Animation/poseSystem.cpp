@@ -1,6 +1,9 @@
 #include "../pch.h"
 #include "poseSystem.h"
 #include "../tinyxml2/tinyxml2.h"
+#include "../Utility/nodeComponent.hpp"
+#include "../Utility/serialize-node.h"
+#include "animationComponent.hpp"
 
 using namespace tinyxml2;
 

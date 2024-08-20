@@ -2,7 +2,8 @@
 #include "Components/immovableComponent.h"
 #include "Components/collisionComponent.h"
 #include "../Utility/transformComponent.hpp"
-#include "Artemis/Artemis.h"
+#include <Artemis/EntityProcessingSystem.h>
+#include <Artemis/ComponentMapper.h>
 
 namespace Principia {
 

@@ -2,9 +2,9 @@
 /* Animation System Copyright (C) by Mike Murrell 2020
  * Hopefully the final revamp (prolly not tho lol) */
 
-#include "../Utility/nodeComponent.hpp"
 #include "animationComponent.hpp"
 #include <Artemis/ComponentMapper.h>
+#include <Artemis/EntityProcessingSystem.h>
 
 //#include "../Utility/memory-arena.h"
 

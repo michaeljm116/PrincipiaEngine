@@ -6,7 +6,6 @@
 #include <Artemis/ComponentMapper.h>
 #include <Artemis/ImmutableBag.h>
 #include "../Utility/timer.hpp"
-#include <omp.h>
 
 namespace Principia {
 	class TransformComponent;

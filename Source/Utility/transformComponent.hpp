@@ -15,7 +15,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/simd/common.h>
-#include <Artemis/Artemis.h>
+#include <Artemis/Component.h>
 #include <vector>
 #include <queue>
 

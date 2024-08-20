@@ -2,6 +2,7 @@
 #ifndef MATERIALCOMPONENT_HPP
 #define MATERIALCOMPONENT_HPP
 
+#include <Artemis/Component.h>
 
 namespace Principia {
 	struct MaterialComponent : public artemis::Component {

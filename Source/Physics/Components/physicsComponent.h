@@ -1,7 +1,15 @@
 #pragma once
-#include <btBulletCollisionCommon.h>
-#include <btBulletDynamicsCommon.h>
-#include "Artemis/Component.h"
+#include <Artemis/Component.h>
+
+template <typename T>
+class btAlignedObjectArray;
+class btCollisionShape;
+class btDefaultCollisionConfiguration;
+class btCollisionDispatcher;
+class btBroadphaseInterface;
+class btSequentialImpulseConstraintSolver;
+class btDiscreteDynamicsWorld;
+class btManifoldPoint;
 
 namespace Principia {
 	struct Cmp_Physics : public artemis::Component {

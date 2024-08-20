@@ -432,9 +432,6 @@
     <ClInclude Include="Physics\Components\dynamicComponent.h">
       <Filter>Source Files\Physics\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Physics\Components\gridComponent.h">
-      <Filter>Source Files\Physics\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Physics\gridSystem.h">
       <Filter>Source Files\Physics</Filter>
     </ClInclude>
