@@ -1,2 +1,0 @@
-C:\Users\Mike\Desktop\PrincipiumGames\ShinyAfroMan\x64\Debug\Principia Engine.pdb
-C:\Users\Mike\Desktop\PrincipiumGames\PrincipiaEngine\Source\x64\Debug\Principia Engine.pdb
