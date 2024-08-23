@@ -255,15 +255,19 @@ namespace Principia {
 				setLayoutBindings.data(),
 				setLayoutBindings.size());
 		descriptorLayout.flags = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT;
+		
 		VkDescriptorBindingFlags bindless_flags = 
 			VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT |
 			VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT;
+		VkDescriptorBindingFlags binding_flags[13] = {};
+		binding_flags[12] = bindless_flags;
+
 		VkDescriptorSetLayoutBindingFlagsCreateInfoEXT extended_flags_info{
 			VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
 			nullptr
 		};
-		extended_flags_info.bindingCount = 1;
-		extended_flags_info.pBindingFlags = &bindless_flags;
+		extended_flags_info.bindingCount = setLayoutBindings.size();
+		extended_flags_info.pBindingFlags = binding_flags;
 		descriptorLayout.pNext = &extended_flags_info;
 
 

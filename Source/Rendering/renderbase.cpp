@@ -134,7 +134,7 @@ namespace Principia {
 		VkPhysicalDeviceFeatures2 physical_features { VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &device_features };
 		vkGetPhysicalDeviceFeatures2(vkDevice.physicalDevice, &device_features);
 		vkGetPhysicalDeviceFeatures2(vkDevice.physicalDevice, &physical_features);
-
+		
 		bool bindless_supported = indexing_features.descriptorBindingPartiallyBound && indexing_features.runtimeDescriptorArray;
 		if (bindless_supported)
 			physical_features.pNext = &indexing_features;
@@ -145,7 +145,7 @@ namespace Principia {
 		createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
 		createInfo.pQueueCreateInfos = queueCreateInfos.data();
 		createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
-		createInfo.pEnabledFeatures = &device_features.features;
+		createInfo.pEnabledFeatures = nullptr;// &device_features.features;
 		createInfo.pNext = &physical_features;
 
 		//enable extensions
