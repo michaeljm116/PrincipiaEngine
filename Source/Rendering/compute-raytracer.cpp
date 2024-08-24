@@ -173,9 +173,9 @@ namespace Principia {
 	void ComputeRaytracer::PrepareCompute()
 	{
 		// Create a compute capable device queue
-// The VulkanDevice::createLogicalDevice functions finds a compute capable queue and prefers queue families that only support compute
-// Depending on the implementation this may result in different queue family indices for graphics and computes,
-// requiring proper synchronization (see the memory barriers in buildComputeCommandBuffer)
+		// The VulkanDevice::createLogicalDevice functions finds a compute capable queue and prefers queue families that only support compute
+		// Depending on the implementation this may result in different queue family indices for graphics and computes,
+		// requiring proper synchronization (see the memory barriers in buildComputeCommandBuffer)
 		VkDeviceQueueCreateInfo queueCreateInfo = {};
 		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
 		queueCreateInfo.pNext = NULL;
@@ -921,6 +921,12 @@ namespace Principia {
 		prepared_ = true;
 	}
 
+
+	/*
+	* 1. Aquires Next Image
+	* 2. Sets the image as the framebuffer's color attachment
+	* 3. Sets the ImageAvailable and RenderFinished semaphores
+	*/
 	void ComputeRaytracer::StartFrame(uint32_t& image_index)
 	{
 		render_time_.start();
@@ -936,11 +942,11 @@ namespace Principia {
 		else if (result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR) {
 			throw std::runtime_error("failed to acquire swap chain image!");
 		}
-
+		
 		submit_info_.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO;
 		submit_info_.commandBufferCount = 1;
 		submit_info_.pCommandBuffers = &commandBuffers[image_index];
-
+		
 		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
 		submit_info_.waitSemaphoreCount = 1;
 		submit_info_.pWaitSemaphores = &imageAvailableSemaphore;// waitSemaphores;
@@ -951,6 +957,10 @@ namespace Principia {
 		VK_CHECKRESULT(vkQueueSubmit(graphicsQueue, 1, &submit_info_, VK_NULL_HANDLE), "GRAPHICS QUEUE SUBMIT");
 	}
 
+	// 1. Waits for that image based off hte image index
+	// 2. Presents the image
+	// 3. CPU waites for a compute fence
+	// 4. Cpu submits a compute fence
 	void ComputeRaytracer::EndFrame(const uint32_t& image_index)
 	{
 		VkPresentInfoKHR presentInfo = {};

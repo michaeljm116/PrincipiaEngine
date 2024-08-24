@@ -14,6 +14,7 @@ namespace Principia {
 	{
 		create_descriptor_pool();
 		create_render_pass();
+		create_frame_buffers();
 		create_command_pool();
 
 		// Setup Dear ImGui context
@@ -43,9 +44,13 @@ namespace Principia {
 		init_info.RenderPass = render_pass;
 		ImGui_ImplVulkan_Init(&init_info);
 
-		VkSemaphoreCreateInfo semaphoreInfo = {};
-		semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
-		VK_CHECKRESULT(vkCreateSemaphore(renderer->vkDevice.logicalDevice, &semaphoreInfo, nullptr, &ui_semaphore), " FAILED TO CREATE SEMAPHORE");
+		
+		ui_semaphores.resize(ui_framebuffers.size());
+		for (auto& ui_semaphore : ui_semaphores) {
+			VkSemaphoreCreateInfo semaphoreInfo = {};
+			semaphoreInfo.sType = VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO;
+			VK_CHECKRESULT(vkCreateSemaphore(renderer->vkDevice.logicalDevice, &semaphoreInfo, nullptr, &ui_semaphore), " FAILED TO CREATE SEMAPHORE");
+		}
 
 
 		create_command_buffers();
@@ -57,7 +62,10 @@ namespace Principia {
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
 
-		vkDestroySemaphore(renderer->vkDevice.logicalDevice, ui_semaphore, nullptr);
+		for (int i = 0; i < ui_framebuffers.size(); ++i) {
+			vkDestroySemaphore(renderer->vkDevice.logicalDevice, ui_semaphores[i], nullptr);
+			vkDestroyFramebuffer(renderer->vkDevice.logicalDevice, ui_framebuffers[i], nullptr);
+		}
 		vkDestroyRenderPass(renderer->vkDevice.logicalDevice, render_pass, nullptr);
 		vkDestroyDescriptorPool(renderer->vkDevice.logicalDevice, descriptor_pool, nullptr);
 		vkFreeCommandBuffers(renderer->vkDevice.logicalDevice, command_pool, static_cast<uint32_t>(command_buffers.size()), command_buffers.data());
@@ -65,17 +73,13 @@ namespace Principia {
 	}
 	void ImGuiRenderer::start_draw(VkSubmitInfo* submitInfo, int image_index)
 	{
-		VkPipelineStageFlags flags = 0x00000200;
-		const VkPipelineStageFlags* cf = &flags;
-
 		// First Wait for the compute to finish renderering
 		submitInfo->waitSemaphoreCount = 1;
 		submitInfo->pWaitSemaphores = submitInfo->pSignalSemaphores;
 		submitInfo->signalSemaphoreCount = 1;
-		submitInfo->pSignalSemaphores = &ui_semaphore;
+		submitInfo->pSignalSemaphores = &ui_semaphores[0];
 		submitInfo->commandBufferCount = 1;
 		submitInfo->pCommandBuffers = &command_buffers[image_index];
-		submitInfo->pWaitDstStageMask = cf;
 
 		// Now begin rendering imgui
 		VkCommandBufferBeginInfo cmdBufInfo = vks::initializers::commandBufferBeginInfo();
@@ -85,7 +89,7 @@ namespace Principia {
 		renderPassBeginInfo.renderArea.extent.height = renderer->swapChainExtent.height;
 		renderPassBeginInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
 		renderPassBeginInfo.pClearValues = clearValues.data();
-		renderPassBeginInfo.framebuffer = renderer->GetFrameBuffers()[image_index];
+		renderPassBeginInfo.framebuffer = ui_framebuffers[image_index];
 
 		VK_CHECKRESULT(vkBeginCommandBuffer(command_buffers[image_index], &cmdBufInfo), "BEGIN UI COMMAND BUFFER");
 		vkCmdBeginRenderPass(command_buffers[image_index], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
@@ -102,7 +106,9 @@ namespace Principia {
 
 		vkCmdEndRenderPass(command_buffers[ii]);
 		VK_CHECKRESULT(vkEndCommandBuffer(command_buffers[ii]), "END UI COMMAND BUFFER");
-		VK_CHECKRESULT(vkQueueSubmit(renderer->GetDeviceInfo().copyQueue, 1, submit_info, VK_NULL_HANDLE), "UI QUEUE SUBMIT");
+		VkPipelineStageFlags waitStages[] = { VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT };
+		submit_info->pWaitDstStageMask = waitStages;
+		VK_CHECKRESULT(vkQueueSubmit(renderer->graphicsQueue, 1, submit_info, VK_NULL_HANDLE), "UI QUEUE SUBMIT");
 	}
 	void ImGuiRenderer::create_descriptor_pool()
 	{
@@ -153,7 +159,7 @@ namespace Principia {
 		attachments[1].initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
 		attachments[1].finalLayout = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
 
-		VkAttachmentReference colorReference = {};
+		VkAttachmentReference colorReference  = {};
 		colorReference.attachment = 0;
 		colorReference.layout = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
 
@@ -205,6 +211,29 @@ namespace Principia {
 
 		VK_CHECKRESULT(vkCreateRenderPass(renderer->vkDevice.logicalDevice, &renderPassInfo, nullptr, &render_pass), "CREATE UI RENDER PASS");
 	}
+	void ImGuiRenderer::create_frame_buffers()
+	{
+		ui_framebuffers.resize(renderer->GetFrameBuffers().size());
+		for (auto i = 0; i < renderer->swapChainImageViews.size(); ++i) {
+			std::array<VkImageView, 2> attachments = {
+				renderer->swapChainImageViews[i],
+				renderer->depthImageView
+			};
+
+			VkFramebufferCreateInfo framebuffer_info = {
+				.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
+				.renderPass = render_pass,
+				.attachmentCount = attachments.size(),
+				.pAttachments = attachments.data(),
+				.width = renderer->swapChainExtent.width,
+				.height = renderer->swapChainExtent.height,
+				.layers = 1
+			};
+
+			VK_CHECKRESULT(vkCreateFramebuffer(renderer->vkDevice.logicalDevice, &framebuffer_info, nullptr, &ui_framebuffers[i]), "Creating UI FrameBuffer");
+		}
+	}
+
 	void ImGuiRenderer::create_command_pool()
 	{
 		VkCommandPoolCreateInfo cmdPoolInfo = {};
@@ -235,7 +264,7 @@ namespace Principia {
 		ImGuiIO& io = ImGui::GetIO();
 
 		for (size_t i = 0; i < command_buffers.size(); ++i) {
-			renderPassBeginInfo.framebuffer = renderer->GetFrameBuffers()[i];
+			renderPassBeginInfo.framebuffer = ui_framebuffers[i];
 			VK_CHECKRESULT(vkBeginCommandBuffer(command_buffers[i], &cmdBufInfo), "BEGIN UI COMMAND BUFFER");
 			vkCmdBeginRenderPass(command_buffers[i], &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE);
 
