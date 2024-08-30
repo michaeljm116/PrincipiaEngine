@@ -8,27 +8,7 @@
 #include "intersect_cylinder.glsl"
 #include "intersect_disk.glsl"
 #include "intersect_bvh.glsl"
-
-#define TRIINTERSECT false
-#define SHADOW 0.2
-//#define DEBUGLINES
-
-const uint TYPE_SPHERE = 0x1u;
-const uint TYPE_BOX = 0x2u;
-const uint TYPE_PLANE = 0x4u;
-const uint TYPE_MESH = 0x8u;
-const uint TYPE_CYLINDER = 0x10u;
-const uint TYPE_DISK = 0x20u;
-const uint TYPE_BVHNODE = 0x80u;
-const uint TYPE_QUAD = 0x100u;
-const int BIT_000_MAX = 268435455;
-const int SAMPLES = 1;
-const vec2[] SampleTable = {
-        vec2(-0.5, 0.5f),
-        vec2(0.5f, -0.5f),
-        vec2(0.5f, 0.5f),
-        vec2(-0.5f, -0.5f)
-    };
+#include "intersect/constants-intersect.glsl"
 
 void insertSectID(iSectID[3] ids, iSectID id) {
     // If the first one is empty, place something inside immediately and end
@@ -458,7 +438,7 @@ float calcShadowEmbreeBVH(inout Ray ray) {
         //if its a leaf do the regular intersection
         if (node.numChildren == 0) {
             int i = node.offset;
-            switch (primitives[i].id) 
+            switch (primitives[i].id)
             {
                 case -1:
                 {

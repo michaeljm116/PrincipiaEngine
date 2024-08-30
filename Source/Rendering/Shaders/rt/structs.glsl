@@ -111,17 +111,23 @@ struct finalmaterial{
 	float _pad;
 };
 
-struct sectID{
-	uint type;
-	int id;
-	int pId;
-};
-
 struct iSectID{
 	uint primType;
 	int  faceID;
 	int  primID;
 	int  nodeID;
 };
+
+struct HitInfo
+{
+    float t;
+    vec3 normal;
+
+    uint prim_type;
+    int prim_id;
+    int face_id;
+    int node_id;
+};
+
 
 #endif

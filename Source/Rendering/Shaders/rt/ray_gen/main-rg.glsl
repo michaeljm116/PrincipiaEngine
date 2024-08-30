@@ -1,5 +1,7 @@
 // Ray Generation Main
 // Mike Murrell (c) 8/27/2024
+#ifndef MAIN_RAYGEN_GLSL
+#define MAIN_RAYGEN_GLSL
 
 #include "../structs.glsl"
 #include "../layouts.glsl"
@@ -38,10 +40,9 @@ vec4 check_gui(vec2 uv)
     return txt;
 }
 
-Ray[SAMPLES] main_rg()
+Ray[SAMPLES] main_rg(inout vec4 txtr)
 {
     Ray rays[SAMPLES];
-    // Get normalized coordinate of the image
     for (int samp = 0; samp < SAMPLES; ++samp) {
         ivec2 dim = imageSize(resultImage);
         vec2 uv = vec2(0);
@@ -51,10 +52,9 @@ Ray[SAMPLES] main_rg()
             uv = vec2(gl_GlobalInvocationID.xy + SampleTable[samp]) / dim;
 
         // Check if it hits the GUI
-        vec4 ret_txtr = check_gui(uv);
-        // if the alpha is pretty much 1, then dont generate ray, return the image directly
-        if (ret_txtr.a > 0.99f){
-                imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), ret_txtr);
+        txtr = check_gui(uv);
+        if (txtr.a > 0.99f){
+                imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txtr);
                 return rays;
             }
         else
@@ -62,3 +62,5 @@ Ray[SAMPLES] main_rg()
     }
     return rays;
 }
+
+#endif

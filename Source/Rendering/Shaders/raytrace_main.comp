@@ -22,7 +22,8 @@ layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 #include "rt/pbr.glsl"
 #include "rt/structs.glsl"
 #include "rt/intersect_main.glsl"
-#include "rt/ray_gen/main_rg.glsl"
+#include "rt/ray_gen/main-rg.glsl"
+#include "rt/intersect/erp.glsl"
 
 void fresnel(in vec3 I, in vec3 N, in float ior, inout float kr)
 {
@@ -170,37 +171,7 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
 
     float shadow = 0;
     float power = 0;
-    //float shadow = 1;
 
-    ////////////////////////////////////paste here if messup////////////////////////////
-    /*
-                    	float diffuse = 0;
-                    	float specular = 0;
-                    	for(int i = 0; i < lights.length(); ++i){
-                    		vec3 distance = lights[i].pos - pos;
-                    		vec3 lightVec = normalize(distance);
-                    		float ld = length(distance);
-                    		diffuse += lightDiffuse(normal, lightVec);
-                    		specular += lightSpecular(normal, lightVec, 32.0f);
-                    		power += lights[i].intensity / (ld * ld);
-                    		if (power > 0.1){
-                    			Ray shadowRay = Ray(pos, ld, lightVec, 0);
-                                #ifdef USE_EMBREE
-                    			    shadow += calcShadowEmbreeBVH(shadowRay);
-                                #else
-                                    shadow += calcShadowBVH(shadowRay);
-                                #endif
-                    		}
-                    	}
-                    	if (power > 1) power = 1;
-
-
-                    	if(mat.textureID > 0)
-                    		fMat.color = txtr + mat.diffuse * diffuse + specular;
-                    	else
-                    		fMat.color = diffuse * mat.diffuse + specular;
-
-           	*/
     vec3 View = normalize(ubo.rotM[3].xyz - pos);
     for (int i = 0; i < lights.length(); ++i) {
         vec3 F0 = vec3(0.04);
@@ -239,20 +210,7 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
     fMat.refraction = mat.refractiveIndex;
     fMat.transparency = mat.transparency;
 
-    // Reflect ray for next render pass
-    /*if(fMat.transparency > EPSILON){
-                    		fMat.refraction /= ri;
-                    		fresnel(ray.d, normal, fMat.refraction, fMat.reflection);
-                    	}*/
 
-    //generate random number
-    /*int help = ubo.rand % int(gl_GlobalInvocationID.x);
-                    	float randx = mod(float(ubo.rand), float(gl_GlobalInvocationID.x + 1))/float(gl_GlobalInvocationID.x);
-                    	float randy = mod(float(ubo.rand), float(gl_GlobalInvocationID.y + 1))/float(gl_GlobalInvocationID.y);
-                    	//float randz = mod(float(ubo.rand), float(gl_GlobalInvocationID.x + gl_GlobalInvocationID.y + 1)) / float(gl_GlobalInvocationID.x + gl_GlobalInvocationID.y);
-                    	vec3 randVec = vec3(randx, randy, 0);
-                    	vec3 target = pos + normal + randVec;
-                    	ray.d = target - pos;*/
 
     ray.d = reflect(ray.d, normal);
 
@@ -261,78 +219,56 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
     return fMat;
 }
 
+// Casts ray into scene
+HitInfo[MAX_INTERSECTIONS] trace_ray_any(Ray ray)
+{
+    ray.t = MAXLEN;
+    ray.t2 = MAXLEN;
+    vec2 uv = vec2(0.0);
+    vec3 norm = vec3(0.0);
+
+    //iSectID intersectID[2] = intersectEmbreeBvh(ray, norm, uv);
+
+    HitInfo[MAX_INTERSECTIONS] id;
+    return id;
+}
+
+HitInfo trace_ray_closest(inout Ray ray)
+{
+    return intersect_closest(ray);
+}
+
 void main()
 {
     vec3 combinedColor = vec3(0);
     vec4 txt = vec4(0);
-    for (int samp = 0; samp < SAMPLES; ++samp) {
-        ivec2 dim = imageSize(resultImage);
-        vec2 uv;
-        if (SAMPLES == 1)
-            uv = vec2(gl_GlobalInvocationID.xy) / dim;
-        else
-            uv = vec2(gl_GlobalInvocationID.xy + SampleTable[samp]) / dim;
+    Ray[SAMPLES] rays = main_rg(txt);
 
-        ///////////////////////////////GUI CHECK///////////////////////////////
-        //uv = uv of whole screen
-        //guv = uv relative to the selected box
-        //txt = combined texture result, rgba
-        //		vec4 txt = texture(bindless_textures[nonuniformEXT(1)], uv);
-        //		if(txt.w > 0 && gl_GlobalInvocationID.y > .5f)
-        //			imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
+    for (int samp = 0; samp < SAMPLES; ++samp)
+    {
+        vec3 normal = vec3(0.f, 0.f, 0.f);
+        // Basic color path
+        float refractiveIndex = 1.0; //assuming its air
+        finalmaterial finalColor = renderScene(rays[samp], normal, refractiveIndex);
 
-        //vec4 txt = vec4(0);
-        for (int i = 0; i < guis.length(); ++i) {
-            if (guis[i].alpha > 0.f) {
-                vec2 diff = uv - guis[i].min;
-                if ((diff.x > 0) && (diff.y > 0)) {
-                    if ((diff.x < guis[i].extents.x) && (diff.y < guis[i].extents.y)) {
-                        vec2 guv = diff / guis[i].extents;
-                        guv.y = -guv.y;
-                        vec2 fin = guis[i].alignMin + guv * guis[i].alignExt;
-                        vec4 temp_txtr = texture(bindless_textures[nonuniformEXT(guis[i].id)], fin);
-                        txt += temp_txtr * temp_txtr.a;
-                    }
-                }
-            }
-        }
-        if (txt.a > .99f)
-            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txt);
-        else {
-            vec3 ps;
-            Ray ray;
-            ps.x = (2 * uv.x - 1) * ubo.aspectRatio * ubo.fov;
-            ps.y = (2 * uv.y - 1) * ubo.fov;
-            ps.z = -1;
-
-            ps = ps * mat3(ubo.rotM);
-
-            ray.d = normalize(ps.xzy);
-            ray.o = ubo.rotM[3].xyz; // * inverse(ubo.rotM);
-
-            vec3 normal = vec3(0.f, 0.f, 0.f);
-            // Basic color path
-            float refractiveIndex = 1.0; //assuming its air
-            finalmaterial finalColor = renderScene(ray, normal, refractiveIndex);
-
-            // Reflection
-            if (REFLECTIONS)
+        // Reflection
+        if (REFLECTIONS)
+        {
+            float reflectionStrength = finalColor.reflection; //REFLECTIONSTRENGTH;
+            float refractionStrength = 1 - reflectionStrength;
+            for (float i = 0; i < RAYBOUNCES; i++)
             {
-                float reflectionStrength = finalColor.reflection; //REFLECTIONSTRENGTH;
-                float refractionStrength = 1 - reflectionStrength;
-                for (float i = 0; i < RAYBOUNCES; i++)
-                {
-                    float fallmul = (i + 1) * (i + 1);
-                    if (reflectionStrength > 0.05F) {
-                        finalmaterial reflectionColor = renderScene(ray, normal, finalColor.refraction);
-                        finalColor.color = (1.0 - reflectionStrength) * finalColor.color + reflectionStrength * mix(reflectionColor.color, finalColor.color, 1.0 - reflectionStrength);
-                        reflectionStrength *= (REFLECTIONFALLOFF / fallmul) * reflectionColor.reflection;
-                    }
+                float fallmul = (i + 1) * (i + 1);
+                if (reflectionStrength > 0.05F) {
+                    finalmaterial reflectionColor = renderScene(rays[samp], normal, finalColor.refraction);
+                    finalColor.color = (1.0 - reflectionStrength) * finalColor.color + reflectionStrength * mix(reflectionColor.color, finalColor.color, 1.0 - reflectionStrength);
+                    reflectionStrength *= (REFLECTIONFALLOFF / fallmul) * reflectionColor.reflection;
                 }
             }
-            combinedColor += finalColor.color / SAMPLES;
-            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1 - txt.a), 0.0));
         }
+        combinedColor += finalColor.color / SAMPLES;
+        imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1 - txt.a), 0.0));
+
     }
     //imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), texture(bindless_textures[nonuniformEXT(1)], uv));
 }

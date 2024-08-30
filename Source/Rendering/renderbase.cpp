@@ -118,7 +118,7 @@ namespace Principia {
 			//if (queueFamily == qFams.computeFamily)
 			//	queueCreateInfo.queueCount = 1;
 			//else
-			queueCreateInfo.queueCount = 2;
+			queueCreateInfo.queueCount = 2;// uniqueQueueFamilies.size();
 			queueCreateInfo.pQueuePriorities = queuePriority;
 
 			//push it into a the set yo

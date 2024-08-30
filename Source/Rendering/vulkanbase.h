@@ -13,7 +13,8 @@ namespace Principia {
 	template<typename T>
 	inline void VK_CHECKRESULT(const T& res, std::string msg) {
 		if (res != VK_SUCCESS)
-			throw std::runtime_error("ERROR: Failed to " + msg);
+			//throw std::runtime_error("ERROR: Failed to " + msg);
+			std::cout << "error: failed to + " << msg;
 	}
 
 
