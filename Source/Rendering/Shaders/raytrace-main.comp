@@ -80,11 +80,13 @@ finalmaterial render_scene(inout Ray ray)
     // Get intersected primitive ID
     //
     HitInfo info = intersect_closest(ray);
+
     if(info.face_id == -1) return fMat; //MISS SHADER
     #ifdef DEBUGLINES
         //do an intersection test with the bvh node
-        if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[intersectID[0].nodeID])) {
+        if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[info.node_id])) {
             fMat.color = vec3(0, 1, 0);
+            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(fMat.color, 1.0));
             return fMat;
         }
     #endif
@@ -120,13 +122,13 @@ void main()
     vec4 txt = vec4(0);
     Ray[SAMPLES] rays = main_rg(txt);
 
-    for (int samp = 0; samp < SAMPLES; ++samp)
+    for (int samp = 0; samp < SAMPLES; samp++)
     {
         vec3 normal = vec3(0.f, 0.f, 0.f);
         // Basic color path
         float refractiveIndex = 1.0; //assuming its air
         finalmaterial finalColor = render_scene(rays[samp]);
-
+        return;
         // Reflection
         if (REFLECTIONS)
         {

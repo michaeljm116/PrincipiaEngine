@@ -53,12 +53,17 @@ Ray[SAMPLES] main_rg(inout vec4 txtr)
 
         // Check if it hits the GUI
         txtr = check_gui(uv);
-        if (txtr.a > 0.99f){
-                imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txtr);
-                return rays;
-            }
+        if (txtr.a > 0.99f)
+        {
+            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txtr);
+            return rays;
+        }
         else
+        {
             rays[samp] = generate_ray(uv);
+            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(1.0));
+            return rays;
+        }
     }
     return rays;
 }
