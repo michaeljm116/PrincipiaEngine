@@ -54,14 +54,14 @@ vec4 perform_basic_lighting(HitInfo info, vec3 ray_pos, Material mat, vec4 txtr)
         {
             color += specularContribution(lightDirection, view, info.normal, F0, txtr.xyz + mat.diffuse, mat.reflective, mat.roughness) * power;
         }
-        //if (shadow < 0.9f) {
-            //Ray shadowRay = Ray(ray_pos, length(distance), lightDirection, 0);
-            //shadow += calc_shadow_ray(shadowRay);
-        //}
+        if (shadow < 0.9f) {
+            Ray shadowRay = Ray(ray_pos, length(distance), lightDirection, 0);
+            shadow += calc_shadow_ray(shadowRay);
+        }
     }
 
-    //shadow = shadow * float(shadow < 0.9f) + float(shadow >= .9f);
-    //color *= shadow;
+    shadow = shadow * float(shadow < 0.9f) + float(shadow >= .9f);
+    color *= shadow;
 
     return vec4(color, 1.f);
 }
@@ -75,6 +75,9 @@ vec3 closest_hit_basic(HitInfo info, Ray ray, inout finalmaterial f_mat){
     Material mat = materials[primitives[info.face_id].matID];
     vec4 texture = get_texture(info, ray_pos, mat);
     vec4 color = perform_basic_lighting(info, ray_pos, mat, texture);
+
+    //imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(color));
+
 
     f_mat.color = color.xyz;
     f_mat.reflection = mat.reflective;

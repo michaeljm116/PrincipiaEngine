@@ -136,7 +136,7 @@ void main()
             {
                 float fallmul = (i + 1) * (i + 1);
                 if (reflectionStrength > 0.05F) {
-                    finalmaterial reflectionColor = render_scene(rays[samp], normal, finalColor.refraction);
+                    finalmaterial reflectionColor = render_scene(rays[samp]);
                     finalColor.color = (1.0 - reflectionStrength) * finalColor.color + reflectionStrength * mix(reflectionColor.color, finalColor.color, 1.0 - reflectionStrength);
                     reflectionStrength *= (REFLECTIONFALLOFF / fallmul) * reflectionColor.reflection;
                 }
