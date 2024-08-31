@@ -221,7 +221,7 @@ finalmaterial renderScene(inout Ray ray, inout vec3 norm, in float ri)
                 #else
                     shadow += calcShadowBVH(shadowRay);
                 #endif
-                                
+
             }
             //	if(shadow >= 0.9f){
             //		shadow = 1;

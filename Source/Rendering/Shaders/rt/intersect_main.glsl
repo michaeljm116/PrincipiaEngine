@@ -8,7 +8,7 @@
 #include "intersect_cylinder.glsl"
 #include "intersect_disk.glsl"
 #include "intersect_bvh.glsl"
-#include "intersect/constants-intersect.glsl"
+#include "constants.glsl"
 
 void insertSectID(iSectID[3] ids, iSectID id) {
     // If the first one is empty, place something inside immediately and end

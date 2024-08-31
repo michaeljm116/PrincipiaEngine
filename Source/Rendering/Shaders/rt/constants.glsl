@@ -1,5 +1,5 @@
-#ifndef CONSTANTS_INTERSECT_GLSL
-#define CONSTANTS_INTERSECT_GLSL
+#ifndef CONSTANTS_GLSL
+#define CONSTANTS_GLSL
 
 #define TRIINTERSECT false
 #define SHADOW 0.2
@@ -18,10 +18,10 @@ const int SAMPLES = 1;
 const uint MAX_INTERSECTIONS = 4;
 
 const vec2[] SampleTable = {
-    vec2(-0.5, 0.5f),
-    vec2(0.5f, -0.5f),
-    vec2(0.5f, 0.5f),
-    vec2(-0.5f, -0.5f)
-};
+        vec2(-0.5, 0.5f),
+        vec2(0.5f, -0.5f),
+        vec2(0.5f, 0.5f),
+        vec2(-0.5f, -0.5f)
+    };
 
 #endif
