@@ -40,6 +40,21 @@ void set_hit_with_normal(inout HitInfo hit, vec4 t_and_norm)
     hit.normal = t_and_norm.yzw;
 }
 
+void set_hit_w_normal(inout HitInfo hit, inout Ray ray, vec4 t_n){
+    if((t_n.x > EPSILON) && (t_n.x < ray.t)){
+        hit.t = t_n.x;
+        hit.normal = t_n.yzw;
+        ray.t = t_n.x;
+    }
+}
+
+void set_hit(inout HitInfo hit, inout Ray ray, float t){
+    if((t > EPSILON) && (t < ray.t)){
+        hit.t = t;
+        ray.t = t;
+    }
+}
+
 Ray get_inverse_ray(Ray ray, Primitive prim)
 {
     mat4 inv_world = inverse(prim.world);

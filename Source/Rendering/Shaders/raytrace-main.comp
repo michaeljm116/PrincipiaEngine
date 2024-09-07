@@ -93,19 +93,11 @@ finalmaterial render_scene(inout Ray ray)
     #endif
 
     if (info.face_id == -1) {
-        fMat.color = vec3(1, 0, 0);
+        fMat.color = vec3(0);
         return fMat;
     } //MISS SHADER
-    if (info.face_id == -2) {
-        fMat.color = vec3(0, 0, 1);
-        return fMat;
-    }
-    vec3 ray_pos = closest_hit_basic(info, ray, fMat);
 
-    if (ray.t <= 0) {
-        fMat.color = vec3(1);
-        return fMat;
-    }
+    vec3 ray_pos = closest_hit_basic(info, ray, fMat);
 
     ray.d = reflect(ray.d, info.normal);
     ray.o = ray_pos;

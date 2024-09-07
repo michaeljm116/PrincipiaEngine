@@ -1,10 +1,7 @@
 #ifndef NORMALS_GLSL
 #define NORMALS_GLSL
-
 #include "../structs.glsl"
 #include "../constants.glsl"
-
-
 
 vec3 sphere_normal(in vec3 pos, in Primitive sphere)
 {

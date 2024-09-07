@@ -36,40 +36,33 @@ HitInfo traverse(inout Ray ray, in int index, in int offset)
     switch (type) {
         case TYPE_SPHERE:
         {
-            hit.t = sphereIntersect(ray, prim);
-            set_ray_if_hit(hit.t, ray);
+            set_hit(hit, ray, sphereIntersect(ray,prim));
             break;
         }
         case TYPE_BOX:
         {
-            set_hit_with_normal(hit, boxIntersect(ray, prim));
-            if (hit.t > 0)
-                set_ray_if_hit(hit.t, ray);
+            set_hit_w_normal(hit, ray, boxIntersect(ray,prim));
             break;
         }
         case TYPE_CYLINDER:
         {
-            set_hit_with_normal(hit, cylinderIntersect(ray, prim));
-            set_ray_if_hit(hit.t, ray);
+            set_hit_w_normal(hit, ray, cylinderIntersect(ray,prim));
             break;
         }
         case TYPE_PLANE:
         {
-            hit.t = planeIntersect(ray, prim);
-            set_ray_if_hit(hit.t, ray);
+            set_hit(hit, ray, planeIntersect(ray,prim));
             break;
         }
         case TYPE_DISK:
         {
-            hit.t = diskIntersect(ray, prim);
-            set_ray_if_hit(hit.t, ray);
+            set_hit(hit, ray, diskIntersect(ray,prim));
             break;
         }
         case TYPE_QUAD:
         {
             vec2 uv = vec2(0);
-            set_hit_with_normal(hit, quadTexIntersect(ray, prim, uv));
-            set_ray_if_hit(hit.t, ray);
+            set_hit_w_normal(hit, ray, quadTexIntersect(ray,prim,uv));
             break;
         }
         case TYPE_MESH:
