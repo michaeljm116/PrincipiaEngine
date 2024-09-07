@@ -8,13 +8,13 @@ float check_hit(float t, float ray_t) {
     if ((t > EPSILON) && (t < ray_t)) return t;
     else return ray_t;
 }
-bool is_hit(float t, float ray_t){
+bool is_hit(float t, float ray_t) {
     return ((t > EPSILON) && (t < ray_t));
 }
-
 void set_ray_if_hit(float t, inout Ray ray) {
     if ((t > EPSILON) && (t < ray.t)) ray.t = t;
 }
+
 uint hit_type(int prim_id) {
     switch (prim_id) {
         case -1:
@@ -33,11 +33,13 @@ uint hit_type(int prim_id) {
         return TYPE_MESH;
     }
 }
+
 void set_hit_with_normal(inout HitInfo hit, vec4 t_and_norm)
 {
     hit.t = t_and_norm.x;
     hit.normal = t_and_norm.yzw;
 }
+
 Ray get_inverse_ray(Ray ray, Primitive prim)
 {
     mat4 inv_world = inverse(prim.world);

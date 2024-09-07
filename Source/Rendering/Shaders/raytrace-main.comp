@@ -13,7 +13,7 @@ layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 #define EPSILON 0.0001
 #define MAXLEN 1000.0
 #define RAYBOUNCES 4
-#define REFLECTIONS true
+#define REFLECTIONS false
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
 //#define DEBUGLINES
@@ -81,17 +81,32 @@ finalmaterial render_scene(inout Ray ray)
     //
     HitInfo info = intersect_closest(ray);
 
-    if(info.face_id == -1) return fMat; //MISS SHADER
+    //if (info.t != ray.t) return fMat;
+
     #ifdef DEBUGLINES
-        //do an intersection test with the bvh node
-        if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[info.node_id])) {
-            fMat.color = vec3(0, 1, 0);
-            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(fMat.color, 1.0));
-            return fMat;
-        }
+    //do an intersection test with the bvh node
+    if (bvhBoundsIntersect(ray, 1 / ray.d, bvhNodes[info.node_id])) {
+        fMat.color = vec3(0, 1, 0);
+        //imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(fMat.color, 1.0));
+        return fMat;
+    }
     #endif
 
+    if (info.face_id == -1) {
+        fMat.color = vec3(1, 0, 0);
+        return fMat;
+    } //MISS SHADER
+    if (info.face_id == -2) {
+        fMat.color = vec3(0, 0, 1);
+        return fMat;
+    }
     vec3 ray_pos = closest_hit_basic(info, ray, fMat);
+
+    if (ray.t <= 0) {
+        fMat.color = vec3(1);
+        return fMat;
+    }
+
     ray.d = reflect(ray.d, info.normal);
     ray.o = ray_pos;
     return fMat;
@@ -120,7 +135,9 @@ void main()
 {
     vec3 combinedColor = vec3(0);
     vec4 txt = vec4(0);
-    Ray[SAMPLES] rays = main_rg(txt);
+    bool gui_hit = false;
+    Ray[SAMPLES] rays = main_rg(txt, gui_hit);
+    if (gui_hit) return;
 
     for (int samp = 0; samp < SAMPLES; samp++)
     {
@@ -128,7 +145,6 @@ void main()
         // Basic color path
         float refractiveIndex = 1.0; //assuming its air
         finalmaterial finalColor = render_scene(rays[samp]);
-        return;
         // Reflection
         if (REFLECTIONS)
         {
@@ -144,8 +160,12 @@ void main()
                 }
             }
         }
+        //debug
+        //debug
         combinedColor += finalColor.color / SAMPLES;
-        imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1 - txt.a), 0.0));
+        //imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(combinedColor * (1 - txt.a), 0.0));
+
+        imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(finalColor.color, 1.0));
     }
     //imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), texture(bindless_textures[nonuniformEXT(1)], uv));
 }

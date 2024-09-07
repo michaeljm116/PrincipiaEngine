@@ -21,11 +21,10 @@ Ray generate_ray(in vec2 uv)
     return ray;
 }
 
-vec4 check_gui(vec2 uv)
+vec4 check_gui(vec2 uv, in vec4 txt)
 {
-    vec4 txt = vec4(0);
     for (int i = 0; i < guis.length(); ++i) {
-        if(guis[i].alpha < 0.f) continue;
+        if(guis[i].alpha <= 0.f) continue;
 
         vec2 diff = uv - guis[i].min;
         if(diff.x < 0.f || diff.y < 0.f) continue;
@@ -40,7 +39,7 @@ vec4 check_gui(vec2 uv)
     return txt;
 }
 
-Ray[SAMPLES] main_rg(inout vec4 txtr)
+Ray[SAMPLES] main_rg(inout vec4 txtr, inout bool gui_hit)
 {
     Ray rays[SAMPLES];
     for (int samp = 0; samp < SAMPLES; ++samp) {
@@ -52,16 +51,17 @@ Ray[SAMPLES] main_rg(inout vec4 txtr)
             uv = vec2(gl_GlobalInvocationID.xy + SampleTable[samp]) / dim;
 
         // Check if it hits the GUI
-        txtr = check_gui(uv);
+        txtr = check_gui(uv, txtr);
         if (txtr.a > 0.99f)
         {
             imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), txtr);
+            gui_hit = true;
             return rays;
         }
         else
         {
+            gui_hit = false;
             rays[samp] = generate_ray(uv);
-            imageStore(resultImage, ivec2(gl_GlobalInvocationID.xy), vec4(1.0));
             return rays;
         }
     }

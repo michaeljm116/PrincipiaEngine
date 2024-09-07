@@ -3,7 +3,7 @@
 
 #define TRIINTERSECT false
 #define SHADOW 0.2
-#define DEBUGLINES
+//#define DEBUGLINES
 
 const uint TYPE_SPHERE = 0x1u;
 const uint TYPE_BOX = 0x2u;

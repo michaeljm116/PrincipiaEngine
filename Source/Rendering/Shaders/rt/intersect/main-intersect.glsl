@@ -36,11 +36,10 @@ void insert_hit_info(HitInfo hits[MAX_INTERSECTIONS], HitInfo hit) {
     }
 }
 
-HitInfo intersect_closest(Ray ray)
+HitInfo intersect_closest(inout Ray ray)
 {
     // Set up
     HitInfo info = HitInfo(MAXLEN, vec3(0), 0, -1, -1, -1);
-    return info;
     int stack[16];
     int sp = 0; //stack pointer
     stack[0] = 0;
@@ -61,8 +60,11 @@ HitInfo intersect_closest(Ray ray)
         //Hit primitive if no children
         if (node.numChildren == 0)
         {
-            HitInfo temp = traverse(ray, node.offset);
-            if (temp.t < info.t) info = temp;
+            HitInfo temp_info = traverse(ray, node.offset, offset);
+            if (temp_info.t < info.t) {
+                info = temp_info;
+                ray.t = info.t;
+            }
         }
         else
         {
@@ -98,7 +100,7 @@ float calc_shadow_ray(inout Ray ray) {
         //if its a leaf do the regular intersection
         if (node.numChildren == 0) {
             float ret = quick_traverse(ray, node.offset, SHADOW);
-            if(ret == SHADOW) return SHADOW;
+            if (ret == SHADOW) return SHADOW;
         }
         //It's a node
         else {

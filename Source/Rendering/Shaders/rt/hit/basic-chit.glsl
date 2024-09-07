@@ -22,14 +22,14 @@ vec4 box_texture(in vec3 pos, in vec3 norm, in Primitive box, sampler2D t)
         abs(iNorm.x) * xTxtr.rgb * xTxtr.a +
             abs(iNorm.y) * yTxtr.rgb * yTxtr.a +
             abs(iNorm.z) * zTxtr.rgb * zTxtr.a;
-    return vec4(ret,1.f);
+    return vec4(ret, 1.f);
 }
 
 vec4 get_texture(HitInfo info, vec3 ray_pos, Material mat)
 {
-    if(mat.textureID > 0)
+    if (mat.textureID > 0)
     {
-        if(info.prim_type == TYPE_BOX) return box_texture(ray_pos, info.normal, primitives[info.face_id], bindless_textures[nonuniformEXT(mat.textureID)]);
+        if (info.prim_type == TYPE_BOX) return box_texture(ray_pos, info.normal, primitives[info.face_id], bindless_textures[nonuniformEXT(mat.textureID)]);
         else return texture(bindless_textures[nonuniformEXT(mat.textureID)], info.normal.xy);
     }
     return vec4(0);
@@ -61,7 +61,24 @@ vec4 perform_basic_lighting(HitInfo info, vec3 ray_pos, Material mat, vec4 txtr)
     }
 
     shadow = shadow * float(shadow < 0.9f) + float(shadow >= .9f);
-    color *= shadow;
+    //color *= shadow;
+
+    return vec4(color, 1.f);
+}
+
+vec4 basic_lighting(HitInfo info, vec3 ray_pos, Material mat, vec4 txtr)
+{
+    float power = 3;
+    float shadow = 0;
+    vec3 color = vec3(0);
+    vec3 view = normalize(ubo.rotM[3].xyz - ray_pos);
+    vec3 F0 = vec3(0.04);
+    F0 = mix(F0, mat.diffuse, mat.reflective);
+    vec3 distance = lights[0].pos - ray_pos;
+    float ld = length(distance);
+    power = lights[0].intensity; // / (ld * ld);
+    vec3 lightDirection = normalize(distance);
+    color = specularContribution(lightDirection, view, info.normal, F0, txtr.xyz + mat.diffuse, mat.reflective, mat.roughness) * power;
 
     return vec4(color, 1.f);
 }
@@ -69,7 +86,7 @@ vec4 perform_basic_lighting(HitInfo info, vec3 ray_pos, Material mat, vec4 txtr)
 // Given the hit info & ray position
 // Get the Normal,Material,Texture if it has one
 // Calculate the Light,Shadow, reflection contribtion
-vec3 closest_hit_basic(HitInfo info, Ray ray, inout finalmaterial f_mat){
+vec3 closest_hit_basic(HitInfo info, Ray ray, inout finalmaterial f_mat) {
     vec3 ray_pos = ray.o + ray.t * ray.d;
     set_normals(info, ray_pos);
     Material mat = materials[primitives[info.face_id].matID];
