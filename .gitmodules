@@ -7,3 +7,9 @@
 [submodule "Lib/flecs"]
 	path = Lib/flecs
 	url = https://github.com/SanderMertens/flecs.git
+[submodule "EngineLib"]
+	path = EngineLib
+	url = https://github.com/michaeljm116/EngineLib.git
+[submodule "Vendor"]
+	path = Vendor
+	url = https://github.com/michaeljm116/EngineLib.git
