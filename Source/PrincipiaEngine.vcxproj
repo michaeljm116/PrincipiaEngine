@@ -422,27 +422,25 @@
     <None Include="Rendering\Shaders\instancing.frag" />
     <None Include="Rendering\Shaders\instancing.vert" />
     <None Include="Rendering\Shaders\pbr.frag" />
-    <CustomBuild Include="Rendering\Shaders\raytracing.comp">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VULKAN_SDK)\Bin\glslangValidator -V -o %(Identity).spv %(Identity)</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">$(VULKAN_SDK)\Bin\glslangValidator -V -o %(Identity).spv %(Identity)</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling Shader</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">Compiling Shader</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Identity).spv</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">%(Identity).spv</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Editor|Win32'">false</LinkObjects>
-    </CustomBuild>
-    <None Include="Rendering\Shaders\rt\intersect_box.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_bvh.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_cylinder.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_disk.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_main.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_mesh.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_plane.glsl" />
-    <None Include="Rendering\Shaders\rt\intersect_sphere.glsl" />
+    <None Include="Rendering\Shaders\raytrace-main.comp" />
+    <None Include="Rendering\Shaders\rt\constants.glsl" />
+    <None Include="Rendering\Shaders\rt\hit\basic-chit.glsl" />
+    <None Include="Rendering\Shaders\rt\hit\lighting.glsl" />
+    <None Include="Rendering\Shaders\rt\hit\normals.glsl" />
+    <None Include="Rendering\Shaders\rt\hit\pbr.glsl" />
+    <None Include="Rendering\Shaders\rt\hit\shadow.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\box.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\bvh.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\cylinder.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\disk.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\helpers.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\main-intersect.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\mesh.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\plane.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\sphere.glsl" />
+    <None Include="Rendering\Shaders\rt\intersect\traverse.glsl" />
     <None Include="Rendering\Shaders\rt\layouts.glsl" />
-    <None Include="Rendering\Shaders\rt\pbr.glsl" />
+    <None Include="Rendering\Shaders\rt\ray_gen\main-rg.glsl" />
     <None Include="Rendering\Shaders\rt\structs.glsl" />
     <None Include="Rendering\Shaders\texture.frag" />
     <None Include="Rendering\Shaders\texture.vert" />

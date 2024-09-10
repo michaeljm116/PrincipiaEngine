@@ -1,17 +1,17 @@
 #ifndef _MAIN_INTERSECT_GLSL
 #define _MAIN_INTERSECT_GLSL
 
-#include "../intersect_plane.glsl"
-#include "../intersect_box.glsl"
-#include "../intersect_sphere.glsl"
-#include "../intersect_mesh.glsl"
-#include "../intersect_cylinder.glsl"
-#include "../intersect_disk.glsl"
-#include "../intersect_bvh.glsl"
-#include "../structs.glsl"
-#include "../layouts.glsl"
+#include "plane.glsl"
+#include "box.glsl"
+#include "sphere.glsl"
+#include "mesh.glsl"
+#include "cylinder.glsl"
+#include "disk.glsl"
+#include "bvh.glsl"
 #include "helpers.glsl"
 #include "traverse.glsl"
+#include "../structs.glsl"
+#include "../layouts.glsl"
 
 void insert_hit_info(HitInfo hits[MAX_INTERSECTIONS], HitInfo hit) {
 

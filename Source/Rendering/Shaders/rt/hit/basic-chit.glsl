@@ -2,9 +2,9 @@
 #define BASIC_HIT_GLSL
 
 #include "normals.glsl"
+#include "pbr.glsl"
 #include "../structs.glsl"
 #include "../constants.glsl"
-#include "../pbr.glsl"
 #include "../intersect/main-intersect.glsl"
 
 vec4 box_texture(in vec3 pos, in vec3 norm, in Primitive box, sampler2D t)

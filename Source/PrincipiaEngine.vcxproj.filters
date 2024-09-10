@@ -60,6 +60,15 @@
     <Filter Include="imgui\backends\vulkan">
       <UniqueIdentifier>{63473e07-aeb3-4cb4-97f0-974796fb4f98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Rendering\Shaders\rt\hit">
+      <UniqueIdentifier>{8cebf795-5ef1-441d-96a9-b3e6b5372eb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Shaders\rt\intersect">
+      <UniqueIdentifier>{02a0d655-bc4d-45cd-8dc0-57908f301734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Rendering\Shaders\rt\ray_gen">
+      <UniqueIdentifier>{95f1198e-92ba-4c65-bd42-fd016b36cf13}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Rendering\Texture.cpp">
@@ -185,9 +194,6 @@
     <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Rendering\compute-raytracer.cpp">
-      <Filter>Source Files\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\selectable-gui-system.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -202,6 +208,9 @@
     </ClCompile>
     <ClCompile Include="Utility\debug-system.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Rendering\compute-raytracer.cpp">
+      <Filter>Source Files\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -226,34 +235,7 @@
     <None Include="Rendering\Shaders\rt\structs.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
-    <None Include="Rendering\Shaders\rt\intersect_main.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_mesh.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_sphere.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_box.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_bvh.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_cylinder.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_disk.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\intersect_plane.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
     <None Include="Rendering\Shaders\rt\layouts.glsl">
-      <Filter>Source Files\Rendering\Shaders\rt</Filter>
-    </None>
-    <None Include="Rendering\Shaders\rt\pbr.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
     </None>
     <None Include="Rendering\Shaders\instancing.vert">
@@ -270,6 +252,60 @@
     </None>
     <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.vert">
       <Filter>imgui\backends\vulkan</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\constants.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\ray_gen\main-rg.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\ray_gen</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\box.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\bvh.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\cylinder.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\disk.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\helpers.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\main-intersect.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\mesh.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\plane.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\sphere.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\intersect\traverse.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\intersect</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\hit\normals.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\hit</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\hit\pbr.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\hit</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\hit\shadow.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\hit</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\hit\basic-chit.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\hit</Filter>
+    </None>
+    <None Include="Rendering\Shaders\rt\hit\lighting.glsl">
+      <Filter>Source Files\Rendering\Shaders\rt\hit</Filter>
+    </None>
+    <None Include="Rendering\Shaders\raytrace-main.comp">
+      <Filter>Source Files\Rendering\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -547,10 +583,5 @@
     <Xml Include="..\Assets\Levels\RayTracedInvaders\Materials.xml">
       <Filter>Resource Files</Filter>
     </Xml>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="Rendering\Shaders\raytracing.comp">
-      <Filter>Source Files\Rendering\Shaders</Filter>
-    </CustomBuild>
   </ItemGroup>
 </Project>

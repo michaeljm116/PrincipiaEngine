@@ -19,9 +19,8 @@ layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 //#define DEBUGLINES
 #define USE_EMBREE
 
-#include "rt/pbr.glsl"
 #include "rt/structs.glsl"
-#include "rt/intersect_main.glsl"
+#include "rt/constants.glsl"
 #include "rt/ray_gen/main-rg.glsl"
 #include "rt/intersect/main-intersect.glsl"
 #include "rt/hit/basic-chit.glsl"
