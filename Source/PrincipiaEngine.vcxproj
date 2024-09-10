@@ -629,20 +629,20 @@
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\x64\include;..\Lib\SDL2\include;$(IncludePath);..\Lib\imgui;..\Lib\embree\include</IncludePath>
-    <LibraryPath>..\Lib\glfw\x64\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet\x64;..\Lib\embree\include\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Vendor\glfw\x64\include;..\Vendor\SDL2\include;$(IncludePath);..\Vendor\imgui;..\Vendor\embree\include;..\Vendor\bullet</IncludePath>
+    <LibraryPath>..\Vendor\glfw\lib-vc2022;..\Vendor\SDL2\lib\x64;..\Vendor\bullet\lib;..\Vendor\embree\include\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Builds\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Editor|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\x64\include;..\Lib\SDL2\include;$(IncludePath);..\Lib\imgui;..\Lib\embree\include</IncludePath>
-    <LibraryPath>..\Lib\glfw\x64\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet\x64;..\Lib\embree\include\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Vendor\glfw\x64\include;..\Vendor\SDL2\include;$(IncludePath);..\Vendor\imgui;..\Vendor\embree\include;..\Vendor\bullet</IncludePath>
+    <LibraryPath>..\Vendor\glfw\lib-vc2022;..\Vendor\SDL2\lib\x64;..\Vendor\bullet\lib;..\Vendor\embree\include\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Builds\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>ArtemisFrameWork;..\Lib\glfw\x64\include;..\Lib\SDL2\include;$(IncludePath);..\Lib\imgui;..\Lib\embree\include</IncludePath>
-    <LibraryPath>..\Lib\glfw\x64\lib-vc2022;..\Lib\SDL2\lib\x64;..\Lib\bullet\x64;..\Lib\embree\include\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>ArtemisFrameWork;..\Vendor\glfw\x64\include;..\Vendor\SDL2\include;$(IncludePath);..\Vendor\imgui;..\Vendor\embree\include;..\Vendor\bullet</IncludePath>
+    <LibraryPath>..\Vendor\glfw\lib-vc2022;..\Vendor\SDL2\lib\x64;..\Vendor\bullet\lib;..\Vendor\embree\include\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Bin\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Builds\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
@@ -654,6 +654,9 @@
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Editor|x64'">
     <VcpkgUseStatic>true</VcpkgUseStatic>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -714,7 +717,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;..\Lib\gli;..\Lib\glm;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\x64\include;..\Lib\bullet\x64;..\Lib\embree\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;..\Vendor\glm;..\Vendor\stb;..\Vendor\tinyobjloader;ArtemisFrameWork;..\Vendor\glfw\include;..\Vendor\bullet;..\Vendor\embree\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -736,7 +739,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;..\Lib\gli;..\Lib\glm;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\x64\include;..\Lib\bullet\x64;..\Lib\embree\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;..\Vendor\glm;..\Vendor\stb;..\Vendor\tinyobjloader;ArtemisFrameWork;..\Vendor\glfw\include;..\Vendor\bullet;..\Vendor\embree\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UIIZON;GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -786,7 +789,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;..\Lib\gli;..\Lib\glm;..\Lib\stb;..\Lib\tinyobjloader;ArtemisFrameWork;..\Lib\glfw\x64\include;..\Lib\bullet\x64;..\Lib\embree\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VULKAN_SDK)\Include;..\Vendor\glm;..\Vendor\stb;..\Vendor\tinyobjloader;ArtemisFrameWork;..\Vendor\glfw\include;..\Vendor\bullet;..\Vendor\embree\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLFW_INCLUDE_VULKAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
