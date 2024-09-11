@@ -119,9 +119,6 @@
     <ClCompile Include="Rendering\renderbase.cpp">
       <Filter>Source Files\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="..\Lib\tinyxml2\tinyxml2.cpp">
-      <Filter>Source Files\tinyxml2</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\resourceManager.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -179,29 +176,8 @@
     <ClCompile Include="Utility\script-system.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui_demo.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui_draw.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui_tables.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
     <ClCompile Include="Utility\selectable-gui-system.cpp">
       <Filter>Source Files\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\backends\imgui_impl_glfw.cpp">
-      <Filter>imgui\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Lib\imgui\backends\imgui_impl_vulkan.cpp">
-      <Filter>imgui\backends</Filter>
     </ClCompile>
     <ClCompile Include="Rendering\imgui-renderer.cpp">
       <Filter>Source Files\Rendering</Filter>
@@ -211,6 +187,30 @@
     </ClCompile>
     <ClCompile Include="Rendering\compute-raytracer.cpp">
       <Filter>Source Files\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\backends\imgui_impl_glfw.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\backends\imgui_impl_vulkan.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\tinyxml2\tinyxml2.cpp">
+      <Filter>Source Files\tinyxml2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,15 +243,6 @@
     </None>
     <None Include="Rendering\Shaders\instancing.frag">
       <Filter>Source Files\Rendering\Shaders</Filter>
-    </None>
-    <None Include="..\Lib\imgui\backends\vulkan\generate_spv.sh">
-      <Filter>imgui\backends\vulkan</Filter>
-    </None>
-    <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.frag">
-      <Filter>imgui\backends\vulkan</Filter>
-    </None>
-    <None Include="..\Lib\imgui\backends\vulkan\glsl_shader.vert">
-      <Filter>imgui\backends\vulkan</Filter>
     </None>
     <None Include="Rendering\Shaders\rt\constants.glsl">
       <Filter>Source Files\Rendering\Shaders\rt</Filter>
@@ -306,6 +297,15 @@
     </None>
     <None Include="Rendering\Shaders\raytrace-main.comp">
       <Filter>Source Files\Rendering\Shaders</Filter>
+    </None>
+    <None Include="..\Vendor\imgui\backends\vulkan\generate_spv.sh">
+      <Filter>imgui\backends\vulkan</Filter>
+    </None>
+    <None Include="..\Vendor\imgui\backends\vulkan\glsl_shader.frag">
+      <Filter>imgui\backends\vulkan</Filter>
+    </None>
+    <None Include="..\Vendor\imgui\backends\vulkan\glsl_shader.vert">
+      <Filter>imgui\backends\vulkan</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -380,9 +380,6 @@
     </ClInclude>
     <ClInclude Include="Rendering\renderbase.h">
       <Filter>Source Files\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\tinyxml2\tinyxml2.h">
-      <Filter>Source Files\tinyxml2</Filter>
     </ClInclude>
     <ClInclude Include="Utility\resourceManager.h">
       <Filter>Source Files\Utility</Filter>
@@ -525,24 +522,6 @@
     <ClInclude Include="Physics\Components\physicsComponent.h">
       <Filter>Source Files\Physics\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imstb_rectpack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imstb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\imstb_truetype.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
     <ClInclude Include="Rendering\compute-raytracer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
@@ -555,12 +534,6 @@
     <ClInclude Include="Utility\memory-arena.h">
       <Filter>Source Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\Lib\imgui\backends\imgui_impl_glfw.h">
-      <Filter>imgui\backends</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Lib\imgui\backends\imgui_impl_vulkan.h">
-      <Filter>imgui\backends</Filter>
-    </ClInclude>
     <ClInclude Include="Rendering\imgui-renderer.h">
       <Filter>Source Files\Rendering</Filter>
     </ClInclude>
@@ -569,6 +542,33 @@
     </ClInclude>
     <ClInclude Include="Utility\debug-system.h">
       <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\backends\imgui_impl_glfw.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\backends\imgui_impl_vulkan.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\tinyxml2\tinyxml2.h">
+      <Filter>Source Files\tinyxml2</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
