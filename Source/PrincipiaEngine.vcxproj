@@ -699,8 +699,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessToFile>false</PreprocessToFile>
-      <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>-openmp:llvm</AdditionalOptions>
+      <OpenMPSupport>false</OpenMPSupport>
+      <AdditionalOptions>
+      </AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\Shared\$(Configuration)\engine.pch</PrecompiledHeaderOutputFile>
       <ConformanceMode>false</ConformanceMode>
@@ -721,8 +722,9 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessToFile>false</PreprocessToFile>
-      <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>-openmp:llvm</AdditionalOptions>
+      <OpenMPSupport>false</OpenMPSupport>
+      <AdditionalOptions>
+      </AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\Shared\$(Configuration)\engine.pch</PrecompiledHeaderOutputFile>
       <ConformanceMode>false</ConformanceMode>
@@ -770,8 +772,9 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <OpenMPSupport>true</OpenMPSupport>
-      <AdditionalOptions>-openmp:llvm</AdditionalOptions>
+      <OpenMPSupport>false</OpenMPSupport>
+      <AdditionalOptions>
+      </AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\Shared\$(Configuration)\engine.pch</PrecompiledHeaderOutputFile>
       <ConformanceMode>false</ConformanceMode>

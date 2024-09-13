@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <array>
-#include "vulkan/vulkan.h"
+#include <vulkan/vulkan.h>
 
 namespace Principia {
 
