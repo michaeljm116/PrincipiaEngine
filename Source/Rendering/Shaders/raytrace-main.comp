@@ -13,7 +13,7 @@ layout(binding = 0, rgba8) uniform writeonly image2D resultImage;
 #define EPSILON 0.0001
 #define MAXLEN 1000.0
 #define RAYBOUNCES 4
-#define REFLECTIONS false
+#define REFLECTIONS true
 #define REFLECTIONSTRENGTH 0.4
 #define REFLECTIONFALLOFF 0.5
 //#define DEBUGLINES

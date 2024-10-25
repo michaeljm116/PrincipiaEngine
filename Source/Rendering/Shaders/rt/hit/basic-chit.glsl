@@ -90,7 +90,7 @@ vec3 closest_hit_basic(HitInfo info, Ray ray, inout finalmaterial f_mat) {
     vec3 ray_pos = ray.o + ray.t * ray.d;
     set_normals(info, ray_pos);
     Material mat = materials[primitives[info.face_id].matID];
-    if(info.prim_type == TYPE_MESH) mat = materials[primitives[info.prim_id].matID];
+    if (info.prim_type == TYPE_MESH) mat = materials[primitives[info.prim_id].matID];
     vec4 texture = get_texture(info, ray_pos, mat);
     vec4 color = perform_basic_lighting(info, ray_pos, mat, texture);
 
