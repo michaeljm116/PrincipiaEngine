@@ -70,6 +70,8 @@ namespace Principia {
 		VkInstance instance;
 		VkDevice logicalDevice;
 		VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+		VkPhysicalDeviceFeatures deviceFeatures = {};
+		VkPhysicalDeviceProperties deviceProperties = {};
 		VkDebugReportCallbackEXT callback;
 
 		QueueFamilyIndices qFams;

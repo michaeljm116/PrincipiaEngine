@@ -65,7 +65,7 @@ namespace Principia {
 		appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 		appInfo.pEngineName = "Principium Engine";
 		appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
-		appInfo.apiVersion = VK_API_VERSION_1_0;
+		appInfo.apiVersion = VK_HEADER_VERSION_COMPLETE;
 
 		//Required struct to tell driver which extentions/validation layers to use
 		//*Pointer to Struct with creation Info
@@ -130,7 +130,7 @@ namespace Principia {
 
 		//add bindless support if it has it
 		VkPhysicalDeviceDescriptorIndexingFeatures indexing_features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES, nullptr };
-		VkPhysicalDeviceFeatures2 device_features{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &indexing_features };
+		VkPhysicalDeviceFeatures2 device_features	{ VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &indexing_features };
 		VkPhysicalDeviceFeatures2 physical_features { VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2, &device_features };
 		vkGetPhysicalDeviceFeatures2(vkDevice.physicalDevice, &device_features);
 		vkGetPhysicalDeviceFeatures2(vkDevice.physicalDevice, &physical_features);
@@ -400,12 +400,25 @@ namespace Principia {
 		vkEnumeratePhysicalDevices(vkDevice.instance, &deviceCount, devices.data());
 
 		//Make sure you pick suitable devices
+		std::remove_if(devices.begin(), devices.end(), [&](const VkPhysicalDevice& d) -> bool {
+			return isDeviceSuitable(d) == false;
+		});
+
+		//Find the descrete gpu
 		for (const auto& device : devices) {
-			if (isDeviceSuitable(device)) {
+			VkPhysicalDeviceFeatures features;
+			VkPhysicalDeviceProperties properties;
+			vkGetPhysicalDeviceProperties(device, &properties);
+			if (properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+			{
+				vkGetPhysicalDeviceFeatures(device, &features);
 				vkDevice.physicalDevice = device;
-				break;
+				vkDevice.deviceFeatures = features;
+				vkDevice.deviceProperties = properties;
+				return;
 			}
 		}
+
 		if (vkDevice.physicalDevice == VK_NULL_HANDLE) { throw std::runtime_error("failed to find a suitable GPU!"); }
 	}
 	VkFormat RenderBase::findDepthFormat() {
@@ -580,13 +593,25 @@ namespace Principia {
 		bool computeOnly = false;
 		uint32_t i = 0;
 		for (const auto qfam : queueFams) {
-			if (qfam.queueCount > 0 && (qfam.queueFlags & VK_QUEUE_COMPUTE_BIT)) {
+			if (qfam.queueCount > 0 && (qfam.queueFlags == VK_QUEUE_COMPUTE_BIT)) {
 				vkDevice.qFams.computeFamily = i;
 				computeOnly = true;
 				break;
 			}
 			else ++i;
 		}
+
+		//No compute only, find a compute but non graphics queue
+		i = 0;
+		for (const auto qFam : queueFams) {
+			if (qFam.queueCount > 0 && (qFam.queueFlags & VK_QUEUE_COMPUTE_BIT) && !(qFam.queueFlags & VK_QUEUE_GRAPHICS_BIT)) {
+				vkDevice.qFams.computeFamily = i;
+				computeOnly = true;
+				break;
+			}
+			else ++i;
+		}
+
 		//If you can't find any, then do any compute fam yo
 		if (!computeOnly) {
 			i = 0;
