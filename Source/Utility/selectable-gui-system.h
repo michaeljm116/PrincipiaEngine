@@ -3,7 +3,7 @@
 namespace Principia {
 
 	class Cmp_Selectable;
-	class GUIComponent;
+	struct GUIComponent;
 
 
 	class Sys_Selectable_GUI : public artemis::EntityProcessingSystem {

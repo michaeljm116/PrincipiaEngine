@@ -50,7 +50,7 @@ namespace Principia {
 
 		glm::vec3 eulerRotation;
 
-		TransformComponent() { local.scale = glm::vec4(1.f); local.rotation = glm::quat(); local.position = glm::vec4(0); world = glm::mat4(0); };
+		TransformComponent() { local.scale = glm::vec4(1.f); local.rotation = glm::quat(); local.position = glm::vec4(0); world = glm::mat4(0); TRM = glm::mat4(0); eulerRotation = glm::vec3(0); };
 		TransformComponent(glm::vec3 center, glm::vec3 extents) {
 			*this = TransformComponent(center, glm::vec3(0.f), extents);
 		}
@@ -67,16 +67,20 @@ namespace Principia {
 
 			world = rotationM;
 			world[3] = glm::vec4(pos, 1.f);
+			TRM = rotationM;
 			//global.rotation = local.rotation;
 			//global.position = local.position;
 			//global.scale = local.scale;
 		};
-		TransformComponent(const TransformComponent& tc) : world(tc.world), TRM(tc.TRM), local(tc.local), global(tc.global) {};
+		TransformComponent(const TransformComponent& tc) : world(tc.world), TRM(tc.TRM), local(tc.local), global(tc.global), eulerRotation(tc.eulerRotation) {
+
+		};
 		TransformComponent operator=(const TransformComponent& tc) {
 			this->world = tc.world;
 			this->TRM = tc.TRM;
 			this->local = tc.local;
 			this->global = tc.global;
+			this->eulerRotation = tc.eulerRotation;
 			return *this;
 		}
 	};

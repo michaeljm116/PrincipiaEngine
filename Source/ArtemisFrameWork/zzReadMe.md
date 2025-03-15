@@ -57,7 +57,7 @@ You can use Artemis-Cpp as a Framework for Mac OS X development using the _Artem
 `VelocityComponent` and `PositionComponent`.
 
 ``` cpp
-class VelocityComponent : public artemis::Component {
+struct VelocityComponent : public artemis::Component {
 public:
     float velocityX;
     float velocityY;
@@ -69,7 +69,7 @@ public:
     };
 };
 
-class PositionComponent : public artemis::Component
+struct PositionComponent : public artemis::Component
 {
 
 public:

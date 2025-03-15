@@ -4,9 +4,9 @@
 
 namespace Principia {
 
-	class NodeComponent;
-	class TransformComponent;
-	class PrimitiveComponent;
+	struct NodeComponent;
+	struct TransformComponent;
+	struct PrimitiveComponent;
 
 	class BvhSystem : public artemis::EntityProcessingSystem
 	{

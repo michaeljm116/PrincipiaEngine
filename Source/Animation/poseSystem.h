@@ -4,7 +4,7 @@
 //#include "resourceManager.h"
 
 namespace Principia {
-	class PoseComponent;
+	struct PoseComponent;
 
 	class PoseSystem : public artemis::EntityProcessingSystem {
 	public:

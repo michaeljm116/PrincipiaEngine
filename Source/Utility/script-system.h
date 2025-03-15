@@ -2,7 +2,7 @@
 #include <Artemis/EntityProcessingSystem.h>
 namespace Principia {
 
-	class ScriptComponent;
+	struct ScriptComponent;
 
 	class Sys_Scripting : public artemis::EntityProcessingSystem {
 	private:

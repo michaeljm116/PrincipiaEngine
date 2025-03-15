@@ -8,8 +8,8 @@
 #include "../Utility/timer.hpp"
 
 namespace Principia {
-	class TransformComponent;
-	class AnimateComponent;
+	struct TransformComponent;
+	struct AnimateComponent;
 
 	class AnimateSystem : public artemis::EntityProcessingSystem {
 	public:
