@@ -92,7 +92,7 @@ namespace Principia {
 		VkFormat findDepthFormat();
 		VkFormat findSupportedFormat(const std::vector<VkFormat>&, VkImageTiling, VkFormatFeatureFlags);
 
-		bool isDeviceSuitable(VkPhysicalDevice);
+		int isDeviceSuitable(VkPhysicalDevice);
 		QueueFamilyIndices findQueueFamilies(VkPhysicalDevice);
 
 		SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice);

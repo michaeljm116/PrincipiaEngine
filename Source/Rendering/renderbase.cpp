@@ -400,10 +400,13 @@ namespace Principia {
 		vkEnumeratePhysicalDevices(vkDevice.instance, &deviceCount, devices.data());
 
 		//Make sure you pick suitable devices
+		int maxSuitable = 0;
 		for (const auto& device : devices) {
-			if (isDeviceSuitable(device)) {
+			int currSuitable = isDeviceSuitable(device);
+			if (currSuitable > maxSuitable)
+			{
+				maxSuitable = currSuitable;
 				vkDevice.physicalDevice = device;
-				break;
 			}
 		}
 		if (vkDevice.physicalDevice == VK_NULL_HANDLE) { throw std::runtime_error("failed to find a suitable GPU!"); }
@@ -429,15 +432,14 @@ namespace Principia {
 	}
 
 	//Make sure you pick a suitable device
-	bool RenderBase::isDeviceSuitable(VkPhysicalDevice device) {
-		/*
+	int RenderBase::isDeviceSuitable(VkPhysicalDevice device) {
+		
 		//Details about basic device properties
 		VkPhysicalDeviceProperties deviceProperties;
 		vkGetPhysicalDeviceProperties(device, &deviceProperties);
+		int score = deviceProperties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU ? 1000 : 0;
+		score += deviceProperties.limits.maxImageDimension2D / 1000;
 
-		//Details about device features
-		VkPhysicalDeviceFeatures deviceFeatures;
-		vkGetPhysicalDeviceFeatures(device, &deviceFeatures);*/
 		QueueFamilyIndices indices = findQueueFamilies(device);
 
 		bool extensionsSupported = vkDevice.checkDeviceExtensionSupport(device);
@@ -448,8 +450,8 @@ namespace Principia {
 		}
 		VkPhysicalDeviceFeatures supportedFeatures;
 		vkGetPhysicalDeviceFeatures(device, &supportedFeatures);
-
-		return indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
+		int deviceSuitability = indices.isComplete() && extensionsSupported && swapChainAdequate && supportedFeatures.samplerAnisotropy;
+		return deviceSuitability * score;
 	}
 	QueueFamilyIndices RenderBase::findQueueFamilies(VkPhysicalDevice device) {
 		QueueFamilyIndices indices;
