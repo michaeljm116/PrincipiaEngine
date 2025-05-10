@@ -223,7 +223,7 @@ namespace Principia {
 			VkFramebufferCreateInfo framebuffer_info = {
 				.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO,
 				.renderPass = render_pass,
-				.attachmentCount = attachments.size(),
+				.attachmentCount = static_cast<uint32_t>(attachments.size()),
 				.pAttachments = attachments.data(),
 				.width = renderer->swapChainExtent.width,
 				.height = renderer->swapChainExtent.height,

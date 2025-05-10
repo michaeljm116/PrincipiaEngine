@@ -11,9 +11,9 @@
 namespace Principia {
 
 	struct SwapChainSupportDetails {
-		VkSurfaceCapabilitiesKHR capabilities;
-		std::vector<VkSurfaceFormatKHR> formats;
-		std::vector<VkPresentModeKHR> presentModes;
+		VkSurfaceCapabilitiesKHR capabilities = {};
+		std::vector<VkSurfaceFormatKHR> formats = {}; 
+		std::vector<VkPresentModeKHR> presentModes = {};
 	};
 
 	struct VkDeviceInfo {

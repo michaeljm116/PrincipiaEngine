@@ -14,11 +14,11 @@ namespace Principia {
 
 
 	struct Key {
-		unsigned char state;
-		int key;
-		std::string name;
+		unsigned char state = KEY_NONE;
+		int key = 0;
+		std::string name = "";
 
-		Key() { state = KEY_NONE; };
+		Key() {};
 		Key(int key, std::string name) : key(key), name(name) {};
 		void update(bool pressed) {
 			if (pressed) {

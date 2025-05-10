@@ -30,7 +30,7 @@ namespace Principia {
 		Input() {};
 		~Input();
 
-		GLFWwindow* window;
+		GLFWwindow* window = nullptr;
 
 		void KeyDirection(int key, bool pressed);
 

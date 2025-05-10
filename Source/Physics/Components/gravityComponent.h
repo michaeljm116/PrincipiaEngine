@@ -3,7 +3,7 @@
 namespace Principia {
 	struct CmpGravity : public artemis::Component {
 		bool grounded = false;
-		float gforce = 19.807;
+		float gforce = 19.807f;
 		float diff = 0;
 	};
 }

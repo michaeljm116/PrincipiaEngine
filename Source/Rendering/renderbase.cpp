@@ -430,6 +430,8 @@ namespace Principia {
 				return format;
 			throw std::runtime_error("failed to find supported format!");
 		}
+
+		return {};
 	}
 
 	//Make sure you pick a suitable device
@@ -582,8 +584,8 @@ namespace Principia {
 		//first find a compute-only queue
 		bool computeOnly = false;
 		uint32_t i = 0;
-		for (const auto qfam : queueFams) {
-			if (qfam.queueCount > 0 && (qfam.queueFlags == VK_QUEUE_COMPUTE_BIT)) {
+		for (const auto &qfam : queueFams) {
+			if (qfam.queueCount > 0 && (qfam.queueFlags & VK_QUEUE_COMPUTE_BIT)) {
 				vkDevice.qFams.computeFamily = i;
 				computeOnly = true;
 				break;
@@ -593,7 +595,7 @@ namespace Principia {
 
 		//No compute only, find a compute but non graphics queue
 		i = 0;
-		for (const auto qFam : queueFams) {
+		for (const auto &qFam : queueFams) {
 			if (qFam.queueCount > 0 && (qFam.queueFlags & VK_QUEUE_COMPUTE_BIT) && !(qFam.queueFlags & VK_QUEUE_GRAPHICS_BIT)) {
 				vkDevice.qFams.computeFamily = i;
 				computeOnly = true;
@@ -605,7 +607,7 @@ namespace Principia {
 		//If you can't find any, then do any compute fam yo
 		if (!computeOnly) {
 			i = 0;
-			for (auto qfamAgn : queueFams) {
+			for (const auto &qfamAgn : queueFams) {
 				if (qfamAgn.queueCount > 0 && (qfamAgn.queueFlags & VK_QUEUE_COMPUTE_BIT)) {
 					vkDevice.qFams.computeFamily = i;
 					break;

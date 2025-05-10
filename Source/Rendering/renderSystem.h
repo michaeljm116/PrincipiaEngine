@@ -8,7 +8,6 @@ much rework but brotha aint got time fo dat
 #include "compute-raytracer.h"
 
 #include "shaderStructures.hpp"
-#include "../Game/script.hpp"
 #include "../Utility/window.h"
 #include "../Utility/bvhComponent.hpp"
 #include "../Utility/timer.hpp"

@@ -2,7 +2,7 @@
 
 namespace Principia {
 
-	class Cmp_Selectable;
+	struct Cmp_Selectable;
 	struct GUIComponent;
 
 

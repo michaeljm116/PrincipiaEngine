@@ -203,7 +203,7 @@ namespace artemis {
     E *data;
     
     void grow() {
-      int newCapacity =(size * 3.0f) * 0.5f + 1.0f;
+        int newCapacity = static_cast<int>((size * 3.0f) * 0.5f + 1.0f);
       grow(newCapacity);
     };
     

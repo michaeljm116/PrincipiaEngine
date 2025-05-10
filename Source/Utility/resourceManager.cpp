@@ -92,7 +92,7 @@ namespace Principia {
 
 		for (int i = 0; i < 16; ++i) {
 			if (i < 6) {
-				gamepad.axis[i] = i;
+				gamepad.axis[i] = static_cast<float>(i);
 			}
 			gamepad.buttons[i] = i;
 		}
@@ -355,6 +355,7 @@ namespace Principia {
 
 		eResult = doc.SaveFile(materialsFileName.c_str());
 		XMLCheckResult(eResult);
+		return eResult;
 	}
 	tinyxml2::XMLError Resources::LoadMaterials(const char* file) {
 		materialsFileName = file;
@@ -497,7 +498,7 @@ namespace Principia {
 	{
 		fn = fn.substr(0, fn.size() - 4);
 		int index;
-		for (int i = fn.size() - 1; i > 0; --i) {
+		for (int i = static_cast<int>(fn.size()) - 1; i > 0; --i) {
 			if (fn.at(i) == '/') {
 				index = ++i;
 				break;

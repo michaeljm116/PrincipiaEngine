@@ -62,14 +62,14 @@ namespace Principia {
 			}
 		}
 		inline int			getModelIndex(std::string n) {
-			for (size_t i = 0; i < models.size(); ++i) {
+			for (int i = 0; i < static_cast<int>(models.size()); ++i) {
 				if (models[i].name == n)
 					return i;
 			}
 			return 0;
 		}
 		inline int			getModelIndex(int n) {
-			for (size_t i = 0; i < models.size(); ++i) {
+			for (int i = 0; i < static_cast<int>(models.size()); ++i) {
 				if (models[i].uniqueID == n)
 					return i;
 			}
@@ -96,7 +96,7 @@ namespace Principia {
 			return rMaterial();
 		}
 		inline int		  getMaterialIndex(std::string n) {
-			for (size_t i = 0; i < materials.size(); ++i) {
+			for (int i = 0; i < static_cast<int>(materials.size()); ++i) {
 				if (materials[i].name == n)
 					return i;
 			}
@@ -111,7 +111,7 @@ namespace Principia {
 			return materials[0];
 		}
 		inline int getMaterialIndexU(int i) {
-			for (size_t j = 0; j < materials.size(); ++j) {
+			for (int j = 0; j < static_cast<int>(materials.size()); ++j) {
 				if (materials[j].uniqueID == i)
 					return j;
 			}

@@ -47,8 +47,8 @@ namespace Principia {
 
 		typedef bool(*ct)(const CollisionComponent* const, const CollisionComponent* const, CollisionData&, CollisionData&);
 		bool SphereSphere(const CollisionComponent* const a, const CollisionComponent* const b, CollisionData& aD, CollisionData& bD) {
-			float distsqrd = pow(a->position.x - b->position.x, 2) + pow(a->position.y - b->position.y, 2) + pow(a->position.z - b->position.z, 2);
-			if (distsqrd < pow(a->extents.x + b->extents.x, 2)) {
+			float distsqrd = static_cast<float>(pow(a->position.x - b->position.x, 2) + pow(a->position.y - b->position.y, 2) + pow(a->position.z - b->position.z, 2));
+			if (distsqrd < static_cast<float>(pow(a->extents.x + b->extents.x, 2))) {
 				//A collision has occured, so return the normal and collision point
 				aD.normal = b->position - a->position;
 				aD.normal /= sqrt(aD.normal);
@@ -94,9 +94,9 @@ namespace Principia {
 			//A Collision has occured so find the normal and collision point
 			aD.normal = glm::vec3(0);
 			if ((b->position.x > (a->position.x - a->extents.x)) || (b->position.x <= (a->position.x + a->extents.x)))
-				aD.normal.z = sign(distance.z);
+				aD.normal.z = static_cast<float>(sign(distance.z));
 			else
-				aD.normal.x = sign(distance.x);
+				aD.normal.x = static_cast<float>(sign(distance.x));
 			//res.x < res.z ? aD.normal.x = sign(distance.x) : aD.normal.z = sign(distance.z);
 			bD.normal = -aD.normal;
 

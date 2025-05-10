@@ -456,6 +456,7 @@
     <ClInclude Include="ArtemisFrameWork\Artemis\World.h" />
     <ClInclude Include="Audio\audioComponents.h" />
     <ClInclude Include="Audio\audioSystem.h" />
+    <ClInclude Include="cast.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Physics\collidedWithSystem.h" />
     <ClInclude Include="Physics\collisionSystem.h" />
@@ -705,6 +706,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\Shared\$(Configuration)\engine.pch</PrecompiledHeaderOutputFile>
       <ConformanceMode>false</ConformanceMode>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -728,6 +730,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\Shared\$(Configuration)\engine.pch</PrecompiledHeaderOutputFile>
       <ConformanceMode>false</ConformanceMode>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>openAL32.lib;vulkan-1.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -778,6 +781,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>$(SolutionDir)\Shared\$(Configuration)\engine.pch</PrecompiledHeaderOutputFile>
       <ConformanceMode>false</ConformanceMode>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

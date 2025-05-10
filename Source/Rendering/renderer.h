@@ -12,7 +12,6 @@
 #include "renderbase.h"
 #include "shaderStructures.hpp"
 
-#include "../Game/script.hpp"
 #include "../Utility/timer.hpp"
 #include "../Utility/window.h"
 
@@ -97,9 +96,9 @@ namespace Principia {
 		VkDeviceInfo dev_info_ = {};
 		VkSubmitInfo submit_info_ = {};
 		Timer render_time_ = Timer("Renderer");
-		VkExtent2D scaled_swap_;
-		Camera camera_;
+		VkExtent2D scaled_swap_ = {};
+		Camera camera_ = {};
 		artemis::ComponentMapper<RenderComponent>* mapper_;
-		artemis::World* world;
+		artemis::World* world = nullptr;
 	};
 }

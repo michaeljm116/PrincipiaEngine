@@ -424,7 +424,7 @@ namespace Principia {
 			XMLElement* prefab = node->FirstChildElement("Prefab");
 			std::string name;
 			std::string dir;
-			bool save; bool load; bool can_serialize;
+			bool save = false, load = false,  can_serialize = false;
 		}
 		//if (eFlags & COMPONENT_CCONTROLLER) {
 		//	//XMLElement* cont = node->FirstChildElement("Controller");

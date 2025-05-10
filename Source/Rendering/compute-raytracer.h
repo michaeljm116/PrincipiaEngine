@@ -77,7 +77,7 @@ namespace Principia {
 				c /= 10;
 			}
 			std::vector<int> res;
-			for (int i = temp.size() - 1; i > -1; --i)
+			for (int i = static_cast<int>(temp.size()) - 1; i > -1; --i)
 				res.push_back(temp[i]);
 			return res;
 		}

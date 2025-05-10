@@ -570,6 +570,9 @@
     <ClInclude Include="..\Vendor\tinyxml2\tinyxml2.h">
       <Filter>Source Files\tinyxml2</Filter>
     </ClInclude>
+    <ClInclude Include="cast.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.h">

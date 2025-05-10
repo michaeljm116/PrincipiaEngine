@@ -58,7 +58,7 @@ namespace Principia {
 		gui.alpha = guiComp->alpha;
 
 		//Give the component a reference to it and initialize
-		guiComp->ref = guis_.size();
+		guiComp->ref = static_cast<int>(guis_.size());
 		guis_.push_back(gui);
 		compute_.storage_buffers.guis.InitStorageBufferCustomSize(vkDevice, guis_, guis_.size(), MAX_GUIS);
 
@@ -253,7 +253,7 @@ namespace Principia {
 		VkDescriptorSetLayoutCreateInfo descriptorLayout =
 			vks::initializers::descriptorSetLayoutCreateInfo(
 				setLayoutBindings.data(),
-				setLayoutBindings.size());
+				static_cast<uint32_t>(setLayoutBindings.size()));
 		descriptorLayout.flags = VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT_EXT;
 		
 		VkDescriptorBindingFlags bindless_flags = 
@@ -266,7 +266,7 @@ namespace Principia {
 			VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
 			nullptr
 		};
-		extended_flags_info.bindingCount = setLayoutBindings.size();
+		extended_flags_info.bindingCount = static_cast<uint32_t>(setLayoutBindings.size());
 		extended_flags_info.pBindingFlags = binding_flags;
 		descriptorLayout.pNext = &extended_flags_info;
 
@@ -380,10 +380,10 @@ namespace Principia {
 				compute_.descriptor_set,
 				VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
 				12,
-				bindless_image_infos.data(), num_textures)
+				bindless_image_infos.data(), static_cast<uint32_t>(num_textures))
 		};
 
-		vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
+		vkUpdateDescriptorSets(vkDevice.logicalDevice, static_cast<uint32_t>(compute_write_descriptor_sets_.size()), compute_write_descriptor_sets_.data(), 0, NULL);
 
 		// Create compute shader pipelines
 		VkComputePipelineCreateInfo computePipelineCreateInfo =
@@ -502,7 +502,7 @@ namespace Principia {
 	}
 	auto print_bvh_nodes = [](std::vector<ssBVHNode> bvh) {
 		int i = 0;
-		for (auto n : bvh) {
+		for (const auto &n : bvh) {
 
 				std::cout << "(" << i++ << ") Lower X:" << n.lower.x << " Y:" << n.lower.y << " Z:" << n.lower.z << " Upper X:" << n.upper.x << " Y:" << n.upper.y << " Z:" << n.upper.z
 				<< " Offset: " << n.offset << " Children: " << n.numChildren << std::endl;
@@ -511,7 +511,7 @@ namespace Principia {
 
 	void ComputeRaytracer::UpdateBVH(const std::vector<RTCBuildPrimitive>& ordered_prims, const std::vector<artemis::Entity*>& prims, BvhNode* root, int num_nodes)
 	{
-		size_t num_prims = ordered_prims.size();
+		int num_prims = static_cast<int>(ordered_prims.size());
 		if (num_prims == 0)return;
 		primitives_.clear();
 		primitives_.reserve(num_prims);
@@ -519,7 +519,7 @@ namespace Principia {
 		//fill in the new objects array; 
 		ordered_prims_map.clear();
 		ordered_prims_map.resize(num_prims);
-		for (size_t i = 0; i < num_prims; ++i) {
+		for (int i = 0; i < num_prims; ++i) {
 			ordered_prims_map[ordered_prims[i].primID] = i;
 			auto* prim = prims[ordered_prims[i].primID];
 			PrimitiveComponent* pc = (PrimitiveComponent*)prim->getComponent<PrimitiveComponent>();
@@ -639,7 +639,7 @@ namespace Principia {
 		VkPipelineDynamicStateCreateInfo dynamicState =
 			vks::initializers::pipelineDynamicStateCreateInfo(
 				dynamicStateEnables.data(),
-				dynamicStateEnables.size(),
+				static_cast<uint32_t>(dynamicStateEnables.size()),
 				0);
 		auto vertShaderCode = readFile("../Assets/Shaders/texture.vert.spv");
 		auto fragShaderCode = readFile("../Assets/Shaders/texture.frag.spv");
@@ -686,7 +686,7 @@ namespace Principia {
 		pipelineCreateInfo.pViewportState = &viewportState;
 		pipelineCreateInfo.pDepthStencilState = &depthStencilState;
 		pipelineCreateInfo.pDynamicState = &dynamicState;
-		pipelineCreateInfo.stageCount = shaderStages.size();
+		pipelineCreateInfo.stageCount = static_cast<uint32_t>(shaderStages.size());
 		pipelineCreateInfo.pStages = shaderStages.data();
 		pipelineCreateInfo.renderPass = renderPass;
 
@@ -711,7 +711,7 @@ namespace Principia {
 
 		VkDescriptorPoolCreateInfo descriptorPoolInfo =
 			vks::initializers::descriptorPoolCreateInfo(
-				poolSizes.size(),
+				static_cast<uint32_t>(poolSizes.size()),
 				poolSizes.data(),
 				3);
 		descriptorPoolInfo.flags = VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT_EXT;
@@ -739,7 +739,7 @@ namespace Principia {
 				&compute_texture_.descriptor)
 		};
 
-		vkUpdateDescriptorSets(vkDevice.logicalDevice, writeDescriptorSets.size(), writeDescriptorSets.data(), 0, NULL);
+		vkUpdateDescriptorSets(vkDevice.logicalDevice, static_cast<uint32_t>(writeDescriptorSets.size()), writeDescriptorSets.data(), 0, NULL);
 
 	}
 
@@ -757,7 +757,7 @@ namespace Principia {
 		VkDescriptorSetLayoutCreateInfo descriptorLayout =
 			vks::initializers::descriptorSetLayoutCreateInfo(
 				setLayoutBindings.data(),
-				setLayoutBindings.size());
+				static_cast<uint32_t>(setLayoutBindings.size()));
 
 		VK_CHECKRESULT(vkCreateDescriptorSetLayout(vkDevice.logicalDevice, &descriptorLayout, nullptr, &graphics_.descriptor_set_layout), "CREATE DESCRIPTOR SET LAYOUT");
 
@@ -879,7 +879,7 @@ namespace Principia {
 				10,
 				&compute_.storage_buffers.bvh.bufferInfo)
 		};
-		vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
+		vkUpdateDescriptorSets(vkDevice.logicalDevice, static_cast<uint32_t>(compute_write_descriptor_sets_.size()), compute_write_descriptor_sets_.data(), 0, NULL);
 		//vkUpdateDescriptorSets(vkDevice.logicalDevice, compute_write_descriptor_sets_.size(), compute_write_descriptor_sets_.data(), 0, NULL);
 		CreateComputeCommandBuffer();
 	}
@@ -1045,7 +1045,7 @@ namespace Principia {
 		if (t & RENDER_GUI) {
 			GUIComponent* gc = (GUIComponent*)e.getComponent<GUIComponent>();
 			ssGUI gui = ssGUI(gc->min, gc->extents, gc->alignMin, gc->alignExt, gc->layer, gc->id);
-			gc->ref = guis_.size();
+			gc->ref = static_cast<int>(guis_.size());
 			gui.alpha = gc->alpha;
 			guis_.push_back(gui);
 			SetRenderUpdate(kUpdateGui);
@@ -1056,7 +1056,7 @@ namespace Principia {
 			int num_size = static_cast<int>(nums.size());
 			for (int i = 0; i < num_size; ++i) {
 				ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
-				gnc->shaderReferences.push_back(guis_.size());
+				gnc->shaderReferences.push_back(static_cast<int>(guis_.size()));
 				gui.alpha = gnc->alpha;
 				guis_.push_back(gui);
 			}
@@ -1198,14 +1198,14 @@ namespace Principia {
 		const std::vector<rModel>& models = RESOURCEMANAGER.getModels();
 		for (const rModel& mod : models)
 		{
-			for (size_t i = 0; i < mod.meshes.size(); ++i) {
+			for (int i = 0; i < static_cast<int>(mod.meshes.size()); ++i) {
 				//map that connects the model with its index;
 				rMesh rmesh = mod.meshes[i];
 
 				//toss in the vertice data
-				int prevVertSize = verts.size();
-				int prevIndSize = faces.size();
-				int prevBlasSize = blas.size();
+				int prevVertSize = static_cast<int>(verts.size());
+				int prevIndSize = static_cast<int>(faces.size());
+				int prevBlasSize = static_cast<int>(blas.size());
 
 				//load up ze vertices;
 				verts.reserve(prevVertSize + rmesh.verts.size());
@@ -1260,7 +1260,7 @@ namespace Principia {
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/ARROW.png", vkDevice));
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/debugr.png", vkDevice));
 		bindless_textures.push_back(Texture("../Assets/Levels/1_Jungle/Textures/circuit.jpg", vkDevice));
-		NUM_BINDLESS_TEXTURES = bindless_textures.size();
+		NUM_BINDLESS_TEXTURES = static_cast<int>(bindless_textures.size());
 	}
 
 	void ComputeRaytracer::AddMaterial(glm::vec3 diff, float rfl, float rough, float trans, float ri)
@@ -1339,7 +1339,7 @@ namespace Principia {
 		std::vector<int> nums = intToArrayOfInts(gnc->number);
 		for (int i = 0; i < nums.size(); ++i) {
 			ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[i], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
-			gnc->shaderReferences.push_back(guis_.size());
+			gnc->shaderReferences.push_back(static_cast<int>(guis_.size()));
 			gui.alpha = gnc->alpha;
 			guis_.push_back(gui);
 		}
@@ -1363,12 +1363,12 @@ namespace Principia {
 			if (increased) {
 				bool needs_shader_ref = num_size > gnc->shaderReferences.size();
 				if (needs_shader_ref) {
-					for (int i = num_size - gnc->shaderReferences.size(); i > 0; --i) {
+					for (int i = num_size - static_cast<int>(gnc->shaderReferences.size()); i > 0; --i) {
 						ssGUI gui = ssGUI(gnc->min, gnc->extents, glm::vec2(0.1f * nums[num_size - 1], 0.f), glm::vec2(0.1f, 1.f), 0, 0);
-						gnc->shaderReferences.push_back(guis_.size());
+						gnc->shaderReferences.push_back(static_cast<int>(guis_.size()));
 						guis_.push_back(gui);
 					}
-					compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, guis_.size());
+					compute_.storage_buffers.guis.UpdateAndExpandBuffers(vkDevice, guis_, static_cast<int>(guis_.size()));
 				}
 				for (int i = 0; i < num_size; ++i) {
 					guis_[gnc->shaderReferences[i]].alignMin = glm::vec2(0.1f * nums[i], 0.f);

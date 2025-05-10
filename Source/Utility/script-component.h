@@ -154,7 +154,7 @@ namespace Principia {
 				std::uniform_real_distribution<float> dz(2, 14);
 				//std::uniform_real_distribution<float> dy(-4, 0);
 
-				unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+				unsigned seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
 				generator.seed(seed);
 				nextPos.x = dx(generator);
 				//nextPos.y = dy(generator);

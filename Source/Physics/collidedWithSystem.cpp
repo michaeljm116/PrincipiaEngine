@@ -53,7 +53,7 @@ void Principia::CollidedWithSystem::processEntity(artemis::Entity & e)
 	//Remove anything that's no longer colliding
 	cw.erase(std::remove_if(cw.begin(), cw.end(), [&](CollisionData& cd) {
 		if (cd.state == CollisionState::None) {
-			cd.state == CollisionState::Enter;
+			cd.state = CollisionState::Enter;
 			return false;
 		}
 
