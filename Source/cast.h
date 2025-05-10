@@ -15,8 +15,6 @@ inline unsigned to_u(T value) {
 	return static_cast<unsigned>(value);
 }
 
-
-
 template <typename T>
 inline float to_flt(T value) {
     return static_cast<float>(value);

@@ -6,7 +6,7 @@ namespace Principia {
 
 	class Sys_Scripting : public artemis::EntityProcessingSystem {
 	private:
-		artemis::ComponentMapper<ScriptComponent> scriptMapper;
+		artemis::ComponentMapper<ScriptComponent> scriptMapper = {};
 
 	public:
 		Sys_Scripting();

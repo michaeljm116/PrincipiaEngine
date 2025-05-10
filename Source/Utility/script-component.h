@@ -67,7 +67,7 @@ namespace Principia {
 		std::function<void(void)> added = nullptr;
 		std::function<void(float)> process = nullptr;
 		std::function<void(void)> removed = nullptr;
-		std::unique_ptr<Script> script;
+		std::unique_ptr<Script> script = nullptr;
 
 		//ScriptComponent(Script* s){
 		//	script = s;

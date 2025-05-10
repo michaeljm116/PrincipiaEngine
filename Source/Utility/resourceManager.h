@@ -18,13 +18,13 @@ namespace Principia {
 	{
 	private:
 		Resources();
-		std::string materialsFileName;
-		int numMeshFiles;
-		rConfig					 config;
-		std::vector<std::string> fileNames;
-		std::vector<rModel>		 models;
-		std::vector<rMaterial>	 materials;
-		std::vector<rPoseList>	 poses;
+		std::string materialsFileName = "";
+		int numMeshFiles = 0;
+		rConfig					 config = {};
+		std::vector<std::string> fileNames = {};
+		std::vector<rModel>		 models = {};
+		std::vector<rMaterial>	 materials = {};
+		std::vector<rPoseList>	 poses = {};
 
 	public:
 		~Resources() {};

@@ -4,8 +4,8 @@
 
 struct PrefabComponent : public artemis::Component
 {
-	std::string name;
-	std::string dir;
+	std::string name = "";
+	std::string dir = "";
 	bool save = false;				//If true, save the prefab
 	bool load_needed = false;		//If true, Load prefab on start-up
 	bool can_serialize = false;		//If true, Allow the prefab to saved 

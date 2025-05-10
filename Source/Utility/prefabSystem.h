@@ -20,7 +20,7 @@ namespace Principia {
 
 	private:
 		//artemis::ComponentMapper<NodeComponent> nodeMapper;
-		artemis::ComponentMapper<PrefabComponent> prefabMapper;
+		artemis::ComponentMapper<PrefabComponent> prefabMapper = {};
 
 		tinyxml2::XMLError SavePrefab(std::string prefab, NodeComponent* node);
 		tinyxml2::XMLError LoadPrefab(std::string prefab, artemis::Entity* e);

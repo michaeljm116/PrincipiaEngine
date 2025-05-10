@@ -135,9 +135,9 @@ namespace Principia {
 		TransformComponent* tc = (TransformComponent*)nc->data->getComponent<TransformComponent>();
 
 		//if you're a parent, transform based on world coords, else 
-		glm::mat4 rotationM;
-		glm::mat4 positionM;
-		glm::mat4 scaleM;
+		glm::mat4 rotationM = glm::mat4(1.f);
+		glm::mat4 positionM = glm::mat4(1.f);
+		glm::mat4 scaleM = glm::mat4(1.f);
 
 		//build rotation matrix;
 		rotationM = glm::rotate(rotationM, glm::radians(tc->eulerRotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -199,15 +199,17 @@ namespace Principia {
 	{
 		//set up cube
 		glm::vec3 extents = glm::vec3(1);
-		glm::vec3 v[8];
-		v[0] = extents;
-		v[1] = glm::vec3(extents.x, extents.y, -extents.z);
-		v[2] = glm::vec3(extents.x, -extents.y, -extents.z);
-		v[3] = glm::vec3(extents.x, -extents.y, extents.z);
-		v[4] = glm::vec3(-extents);
-		v[5] = glm::vec3(-extents.x, -extents.y, extents.z);
-		v[6] = glm::vec3(-extents.x, extents.y, -extents.z);
-		v[7] = glm::vec3(-extents.x, extents.y, extents.z);
+		glm::vec3 v[8] = 
+		{ 
+			glm::vec3(extents),
+			glm::vec3(extents.x, extents.y, -extents.z),
+			glm::vec3(extents.x, -extents.y, -extents.z),
+			glm::vec3(extents.x, -extents.y, extents.z),
+			glm::vec3(-extents),
+			glm::vec3(-extents.x, -extents.y, extents.z),
+			glm::vec3(-extents.x, extents.y, -extents.z),
+			glm::vec3(-extents.x, extents.y, extents.z)
+		};	
 
 		//transform them
 //#pragma omp parallel for

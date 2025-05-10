@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Artemis/EntityProcessingSystem.h"
 namespace Principia {
 
 	struct Cmp_Selectable;

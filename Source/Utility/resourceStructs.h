@@ -61,8 +61,8 @@ namespace Principia {
         float refractiveIndex = 0;
         int textureID = -1;
         int uniqueID = 0;
-        std::string Texture;
-        std::string name;
+		std::string Texture = "";
+		std::string name = "";
         ssMaterial* renderedMat = nullptr;
 
         rMaterial() = default;

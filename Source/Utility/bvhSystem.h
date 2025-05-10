@@ -35,9 +35,9 @@ namespace Principia {
 		std::vector<RTCBuildPrimitive> build_prims = {};
 		int num_nodes = 0;
 
-		artemis::ComponentMapper<NodeComponent> nodeMapper;
-		artemis::ComponentMapper<TransformComponent> transMapper;
-		artemis::ComponentMapper<PrimitiveComponent> primMapper;
+		artemis::ComponentMapper<NodeComponent> nodeMapper = {};
+		artemis::ComponentMapper<TransformComponent> transMapper = {};
+		artemis::ComponentMapper<PrimitiveComponent> primMapper = {};
 	};
 
 }

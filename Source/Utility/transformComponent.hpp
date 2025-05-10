@@ -48,7 +48,7 @@ namespace Principia {
 		sqt local;
 		sqt global;
 
-		glm::vec3 eulerRotation;
+		glm::vec3 eulerRotation = glm::vec3(0);
 
 		TransformComponent() { local.scale = glm::vec4(1.f); local.rotation = glm::quat(); local.position = glm::vec4(0); world = glm::mat4(0); TRM = glm::mat4(0); eulerRotation = glm::vec3(0); };
 		TransformComponent(glm::vec3 center, glm::vec3 extents) {
@@ -57,7 +57,7 @@ namespace Principia {
 		TransformComponent(glm::vec3 pos, glm::vec3 rot, glm::vec3 sca) : eulerRotation(rot) {
 
 
-			glm::mat4 rotationM;
+			glm::mat4 rotationM = glm::mat4(1.f);
 			rotationM = glm::rotate(rotationM, glm::radians(rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
 			rotationM = glm::rotate(rotationM, glm::radians(rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
 			rotationM = glm::rotate(rotationM, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
