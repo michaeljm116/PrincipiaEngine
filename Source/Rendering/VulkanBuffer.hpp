@@ -25,7 +25,7 @@ namespace Principia {
 		*/
 		struct Buffer
 		{
-			VkDevice device;
+			VkDevice device = {};
 			VkBuffer buffer = VK_NULL_HANDLE;
 			VkDeviceMemory memory = VK_NULL_HANDLE;
 			VkDescriptorBufferInfo descriptor;

@@ -69,7 +69,7 @@ namespace Principia {
 			kUpdateBvh = 0x800,
 		};
 
-		int32_t update_flags_;
+		int32_t update_flags_ = kUpdateNone;
 		void SetRenderUpdate(RenderUpdate ru) {
 			update_flags_ |= ru;
 			if (update_flags_ & kUpdateNone)
@@ -98,7 +98,7 @@ namespace Principia {
 		Timer render_time_ = Timer("Renderer");
 		VkExtent2D scaled_swap_ = {};
 		Camera camera_ = {};
-		artemis::ComponentMapper<RenderComponent>* mapper_;
+		artemis::ComponentMapper<RenderComponent>* mapper_ = nullptr;
 		artemis::World* world = nullptr;
 	};
 }

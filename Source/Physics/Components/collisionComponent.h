@@ -21,13 +21,13 @@ namespace Principia {
 	//This component is passed to any entity you wish to have collisions with
 	struct CollisionComponent : artemis::Component {
 		bool checked = false;
-		int id;
-		btRigidBody* body;
+		int id = -1;
+		btRigidBody* body = nullptr;
 		float mass = 0.f;
-		CollisionType type;
-		glm::vec3 extents;
-		glm::vec3 position;
-		glm::vec3 local;
+		CollisionType type = CollisionType::Sphere;
+		glm::vec3 extents = {};
+		glm::vec3 position = {};
+		glm::vec3 local = {};
 		CollisionComponent() {};
 		CollisionComponent(CollisionComponent* cc) : position(cc->position), local(cc->local), extents(cc->extents), type(cc->type),
 													 mass(cc->mass), body(cc->body), id(cc->id), checked(cc->checked) {}
@@ -40,12 +40,12 @@ namespace Principia {
 	//When you collide with an entity, this data is passed to it
 	static const int max_timer = 5;
 	struct CollisionData{
-		int id;
-		int timer = max_timer;
+		int id = -1;
+		int timer = max_timer - 1; //This is a timer to know how long the collision has been going on
 		//int prev = 0;
 		CollisionState state = CollisionState::None;
-		glm::vec3 colpoint;
-		glm::vec3 normal;
+		glm::vec3 colpoint = {};
+		glm::vec3 normal = {};
 		CollisionData() {};
 		CollisionData(int i) : id(i) {};
 		CollisionData(int i, glm::vec3 c, glm::vec3 n) : id(i), colpoint(c), normal(n) {};
